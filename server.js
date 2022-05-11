@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 var express = require('express')
 const cricLive = require('cric-live');
+const everyday=require('./controllers/matchDB-controller')
 /* Requiring body-parser package
 to fetch the data that is entered
 by the user in the HTML form.*/
@@ -14,6 +15,7 @@ app.use(express.json())
 const url = 'http://localhost:3000'
 const krl = 'https://stackoverflowclonefrontend.netlify.app'
 app.use(cors({ origin: krl, credentials: true }))
+
 
 
 const uri ='mongodb+srv://rajeshmn47:uni1ver%40se@cluster0.bpxam.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
@@ -28,8 +30,13 @@ mongoose.connect(
     }
   }
 )
-
+async function everydaybro(){
+await everyday.addMatchtoDb()
+}
+everydaybro()
+k=Buffer.from('jwalagutta', 'base64').toString();
 const PORT = process.env.PORT || 8000
 app.listen(PORT, () => {
+  console.log(k)
   console.warn(`App listening on http://localhost:${PORT}`)
 })
