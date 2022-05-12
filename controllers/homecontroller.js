@@ -5,8 +5,9 @@ var express = require('express')
 const router = express.Router()
 
 router.post('/postanswer',async (req, res)=>{
+    const matches=await Matches.find()
     res.status(200).json({
-        'k':'server_token'
+        data:matches
       });
 })
 
