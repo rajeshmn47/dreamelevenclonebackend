@@ -61,7 +61,7 @@ router.get('/home',async (req, res)=>{
         }
         else{
             mat.result = "Yes";
-            comletedMatches.results.push(mat);
+            completedMatches.results.push(mat);
         }
         
     }
