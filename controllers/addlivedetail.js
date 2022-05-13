@@ -28,10 +28,24 @@ console.log('matchalreadyexists')
 
        }
        else{
+        const options = {
+            method: 'GET',
+            url: `https://cricket-live-data.p.rapidapi.com/match/${matchId}`,
+            headers: {
+            'x-rapidapi-host': 'cricket-live-data.p.rapidapi.com',
+            'x-rapidapi-key': '773ece5d2bmsh8af64b6b53baed6p1e86c9jsnd416b0e51110',
+            useQueryString: true
+            }
+        };
         let promise = new Promise((resolve,reject) =>{
             if((matches[i].date - date)/(60 * 1000) <= 30){
-              s='r'
+                request(options,function(error,response,body){
+                    if (error){
+                        reject(error);
+                    }
+                    let s = JSON.parse(body);
                     resolve(s);
+                })
                 
             }else{
                 reject('Lineups not out before 30 minutes...');
