@@ -25,13 +25,21 @@ module.exports.addLivematchtodb = async function(){
        let match = await MatchLive.findOne({matchId : matchId});
        if(match){
 console.log('matchalreadyexists')
+
        }
        else{
-           var k=(((date-matches[i].date)/(60*1000))<30)
-           if(k){
-           console.log('its everyday bro')
-           console.log(k)
-           }
+        let promise = new Promise((resolve,reject) =>{
+            if((matches[i].date - date)/(60 * 1000) <= 30){
+              s='r'
+                    resolve(s);
+                
+            }else{
+                reject('Lineups not out before 30 minutes...');
+            }
+        })
+        promise.then((s)=>
+        console.log(s))
+        .catch((error)=>console.log(error))
        }
    }
     
