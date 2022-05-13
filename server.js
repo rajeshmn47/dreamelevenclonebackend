@@ -6,6 +6,7 @@ var express = require('express')
 const cricLive = require('cric-live');
 const home = require('./controllers/homecontroller')
 const everyday = require('./controllers/matchDB-controller')
+const everydayboy = require('./controllers/addlivedetail')
 /* Requiring body-parser package
 to fetch the data that is entered
 by the user in the HTML form.*/
@@ -32,6 +33,10 @@ mongoose.connect(
 async function everydaybro(){
 await everyday.addMatchtoDb()
 }
+async function everydayguy(){
+  await everydayboy.addLivematchtodb()
+  }
+  everydayguy()
 k=Buffer.from('jwalagutta', 'base64').toString();
 const PORT = process.env.PORT || 8000
 app.listen(PORT, () => {
