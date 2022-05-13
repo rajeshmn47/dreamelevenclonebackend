@@ -5,7 +5,14 @@ var express = require('express')
 const router = express.Router()
 
 router.get('/home',async (req, res)=>{
+
     let upcomingMatches = {
+        "results": []
+    };
+    let completedMatches = {
+        "results": []
+    };
+    let liveMatches = {
         "results": []
     };
     const matches=await Matches.find()
@@ -42,12 +49,31 @@ router.get('/home',async (req, res)=>{
         }
         
             liveStatus = "Line-ups are not out yet!";
-            mat.livestatus = liveStatus; 
+            mat.livestatus = liveStatus;
+        var matt=await LiveMatches.find({matchId:matchId})
+    if(matt){
+        if(matt.result == "No" || !matt.result){
+            if(matt.status){
+                mat.livestatus = matt.status;
+            }
+            mat.result = "No";
+            liveMatches.results.push(mat);
+        }
+        else{
+            mat.result = "Yes";
+            comletedMatches.results.push(mat);
+        }
+        
+    }
+    else{
         upcomingMatches.results.push(mat)
+    }
     }
     console.log(matches)
     res.status(200).json({
-        data:upcomingMatches
+        upcoming:upcomingMatches,
+        past:completedMatches,
+live:liveMatches
       });
 })
 

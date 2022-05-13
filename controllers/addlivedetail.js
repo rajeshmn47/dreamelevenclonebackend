@@ -28,6 +28,7 @@ console.log('matchalreadyexists')
 
        }
        else{
+        const date1 = matches[i].date;
         const options = {
             method: 'GET',
             url: `https://cricket-live-data.p.rapidapi.com/match/${matchId}`,
@@ -51,8 +52,48 @@ console.log('matchalreadyexists')
                 reject('Lineups not out before 30 minutes...');
             }
         })
-        promise.then((s)=>
-        console.log(s))
+        promise.then(async(s)=>
+        {
+            if(s.results.live_details != null && s.results.live_details.teamsheets.home.length != 0){
+                let LiveMatchDet = new MatchLive();
+                LiveMatchDet.matchId = matchId;
+                LiveMatchDet.date = date1;
+
+                for(let x of s.results.live_details.teamsheets.home){
+                    if(x.position == 'Unknown'){
+                        x.position = 'Batsman';
+                    }
+                    let playerDet = {
+                        playerId : x.player_id, 
+                        playerName : x.player_name,
+                        points : 4,
+                        position: x.position
+                    }
+                    LiveMatchDet.teamHomePlayers.push(playerDet);
+                }
+
+                for(let x of s.results.live_details.teamsheets.away){
+                    if(x.position == 'Unknown'){
+                        x.position = 'Batsman';
+                    }
+                    let playerDet = {
+                        playerId : x.player_id, 
+                        playerName : x.player_name,
+                        points : 4,
+                        position: x.position
+                    }
+                    LiveMatchDet.teamAwayPlayers.push(playerDet);
+                }
+                
+                let match = await MatchLive.create(LiveMatchDet);
+                if(match){
+                    console.log('Live Details of match is successfully added in db! ');
+                }
+                
+            }
+        }
+        
+        )
         .catch((error)=>console.log(error))
        }
    }
