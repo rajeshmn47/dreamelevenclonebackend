@@ -50,7 +50,7 @@ router.get('/home',async (req, res)=>{
         
             liveStatus = "Line-ups are not out yet!";
             mat.livestatus = liveStatus;
-        var matt=await LiveMatches.find({matchId:matchId})
+        var matt=await LiveMatches.find({matchId:matches[i].matchId})
     if(matt){
         if(matt.result == "No" || !matt.result){
             if(matt.status){
