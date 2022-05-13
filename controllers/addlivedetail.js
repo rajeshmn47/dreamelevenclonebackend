@@ -30,6 +30,7 @@ console.log('matchalreadyexists')
            var k=(((date-matches[i].date)/(60*1000))<30)
            if(k){
            console.log('its everyday bro')
+           console.log(k)
            }
        }
    }
