@@ -42,9 +42,7 @@ router.get('/home',async (req, res)=>{
         }
         
             liveStatus = "Line-ups are not out yet!";
-            mat.livestatus = liveStatus;
-         
-        
+            mat.livestatus = liveStatus; 
         upcomingMatches.results.push(mat)
     }
     console.log(matches)
