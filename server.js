@@ -36,7 +36,6 @@ await everyday.addMatchtoDb()
 async function everydayguy(){
   await everydayboy.addLivematchtodb()
   }
-  everydaybro()
 k=Buffer.from('jwalagutta', 'base64').toString();
 const PORT = process.env.PORT || 8000
 app.listen(PORT, () => {
