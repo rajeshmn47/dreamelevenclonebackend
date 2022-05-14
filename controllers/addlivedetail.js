@@ -15,6 +15,8 @@ function compare(a, b){
 }
 
 module.exports.addLivematchtodb = async function(){
+    const turing=await MatchLive()
+    console.log(turing,'coroma')
     let date=new Date()
     let endDate=date
    const matches=await Match.find({"match_date": {
@@ -39,12 +41,14 @@ console.log('matchalreadyexists')
             }
         };
         let promise = new Promise((resolve,reject) =>{
+            console.log(matches[i].date)
             if((matches[i].date - date)/(60 * 1000) <= 30){
                 request(options,function(error,response,body){
                     if (error){
                         reject(error);
                     }
                     let s = JSON.parse(body);
+                    console.log(s)
                     resolve(s);
                 })
                 
