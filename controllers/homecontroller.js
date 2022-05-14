@@ -61,15 +61,16 @@ router.get('/home',async (req, res)=>{
         }
         else{
             mat.result = "Yes";
+            console.log('lkjh')
             completedMatches.results.push(mat);
         }
         
     }
     else{
+        console.log(matt,'okvro')
         upcomingMatches.results.push(mat)
     }
     }
-    console.log(matches)
     res.status(200).json({
         upcoming:upcomingMatches,
         past:completedMatches,

@@ -24,7 +24,9 @@ module.exports.addLivematchtodb = async function(){
     $lt: Date(endDate)}})
    for(let i=0;i<matches.length;i++){
        let matchId=matches[i].matchId
+       console.log(matchId,'getid')
        let match = await MatchLive.findOne({matchId : matchId});
+       console.log(match,'gestid')
        if(match){
 console.log('matchalreadyexists')
 
