@@ -17,8 +17,6 @@ router.get('/home',async (req, res)=>{
     };
     const matches=await Matches.find()
     for(let i=0;i<matches.length;i++){
-        
-        console.log(matches[i])
         teamAwayFlagUrl=flagURLs.findFlagUrlByCountryName(matches[i].teamAwayName)
         teamHomeFlagUrl=flagURLs.findFlagUrlByCountryName(matches[i].teamHomeName)
         if(!teamAwayFlagUrl){
