@@ -1,6 +1,7 @@
 const Match = require('../models/match');
 const request = require('request');
 const MatchLive = require('../models/match_live_details');
+const { addLivematchtodb } = require('./addlivedetail');
 
 // function prizeBreakupRules(prize, numWinners){
 //     let prizeMoneyBreakup = [];
@@ -43,6 +44,8 @@ let promise = new Promise((resolve,reject) =>{
 })
 promise.then(async (s)=>{
 console.log(s)
+let match=new MatchLive()
+
 })
 .catch((error)=>{
     console.log(error)
