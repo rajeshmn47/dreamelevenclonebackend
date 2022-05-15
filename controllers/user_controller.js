@@ -20,8 +20,8 @@ function checkloggedinuser(req,res,next) {
   
       jwt.verify(tokenheader,activatekey, function(err, decoded){
           if (!err) {
-              req.body.uidfromtoken = decoded.uid;
-              console.log(decoded.uid,req.body,'rajesh')
+              req.body.uidfromtoken = decoded.userid;
+              console.log(decoded)
               console.log('rajesh')
           }
           next();
@@ -170,7 +170,7 @@ router.post('/login',async (req, res)=>{
   if(user){
     if(user.password===req.body.myform.password){
     var userid=user._id
-    const token = jwt.sign({userid},activatekey,{expiresIn : '500m'});
+    const token = jwt.sign({userid},activatekey,{expiresIn : '50000000m'});
     res.status(200).json({
       'message':'success',token:token,user:user
     });
