@@ -2,6 +2,7 @@ const Matches = require('../models/match');
 const LiveMatches = require('../models/match_live_details');
 const flagURLs = require('country-flags-svg');
 var express = require('express')
+const jwt = require('jsonwebtoken');
 const router = express.Router()
 const everydayboys = require('./addlivescores')
 const messageBird = require('messagebird')('W2tTRdqV8xxNjMYhIXSX3eEY6');
@@ -68,9 +69,9 @@ router.post('/otp',async (req, res)=>{
                 'Authorization': 'Basic cnpwX3Rlc3RfT0N0MTBGeGpuWFROV0s6RlpyNW9YQjFCWnFtbDBhUlRhd0IwSUh1'
               },
               body: JSON.stringify({
-                "name": user1.name,
+                "name": req.body.username,
                 "email": req.body.email,
-                "contact": user1.phonenumber,
+                "contact": req.body.phonenumber,
                 "type": "employee",
                 "reference_id": "Domino Contact ID 12345",
                 "notes": {
@@ -88,13 +89,14 @@ router.post('/otp',async (req, res)=>{
                   console.log(s.id);
                   contact_id = s.id;
                   console.log(s)
-                  user1.contact_id = 'contacty5g55';
+                  user1.contact_id = contact_id;
                   resolve();
               });
           });
           promise.then( async ()=>{
             console.log('rajesh')
-            User.findOne({email : user1.email}, async function(err , user){
+            User.findOne({email : req.body.email}, async function(err , user){
+            console.log(user,'okvor')
                 if(err){
                     
                     console.log('Error in finding user in Sign-in ');
@@ -104,16 +106,17 @@ router.post('/otp',async (req, res)=>{
                 }
                 
                 if(!user){
-                  console.log('rajesh')
+                  console.log('rajeshkkkkkkssssssssssss')
                     transaction.createTransaction(userId, "", 100, "extra cash");
                     User.create(user1,async function(err,user){
                         if(err){
+                          console.log('rajesh')
                             console.log('Error in creating a user while account activation', err);
                             res.status(200).json({
                               'message':'something went wrong',
                             });
                         }
-
+                 else{
                       var userid=user._id
                         console.log("SignUp successfull!");
                         
@@ -122,9 +125,10 @@ router.post('/otp',async (req, res)=>{
                         res.status(200).json({
                           'message':'signupsuccessfull',token:token
                         });
+                      }
                     });
                 }else{
-                    
+                    console.log('kuttheee')
                     res.status(200).json({
                       'message':'user already exists',
                     });
@@ -135,9 +139,25 @@ router.post('/otp',async (req, res)=>{
         })
     
 
+ 
+})
+
+router.post('/login',async (req, res)=>{
+  const user=await User.findOne({email : req.body.email})
+  if(user){
+    if(user.password===req.body.password){
+    var userid=user._id
+    const token = jwt.sign({userid},activatekey,{expiresIn : '500m'});
     res.status(200).json({
-        'upcoming':'upcomingMatches',
-      });
+      'message':'user already exists',token:token
+    });
+  }
+  }
+  else{
+  res.status(200).json({
+    'message':'user already exists',
+  });
+}
 })
 
 module.exports = router;
