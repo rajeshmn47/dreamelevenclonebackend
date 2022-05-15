@@ -12,6 +12,28 @@ const transaction = require('./transaction_details_controller');
 const request=require('request')
 
 
+function checkloggedinuser(req,res,next) {
+
+  const tokenheader = req.body.headers || req.headers['servertoken'];
+
+  if (tokenheader) {
+  
+      jwt.verify(tokenheader,activatekey, function(err, decoded){
+          if (!err) {
+              req.body.uidfromtoken = decoded.uid;
+              console.log(decoded.uid,req.body,'rajesh')
+              console.log('rajesh')
+          }
+          next();
+      });
+  }else {
+    res.status(200).json({
+      success: false
+    });
+  }
+
+}
+
 router.post('/register',async (req, res)=>{
     console.log(req.body)
     User.findOne({email : req.body.email}, function(err , user){
@@ -143,21 +165,29 @@ router.post('/otp',async (req, res)=>{
 })
 
 router.post('/login',async (req, res)=>{
-  const user=await User.findOne({email : req.body.email})
+  console.log(req.body)
+  const user=await User.findOne({email : req.body.myform.email})
   if(user){
-    if(user.password===req.body.password){
+    if(user.password===req.body.myform.password){
     var userid=user._id
     const token = jwt.sign({userid},activatekey,{expiresIn : '500m'});
     res.status(200).json({
-      'message':'user already exists',token:token
+      'message':'success',token:token,user:user
     });
   }
   }
   else{
   res.status(200).json({
-    'message':'user already exists',
+    'message':'no user exists',
   });
 }
 })
-
+router.get("/loaduser",checkloggedinuser,async function(req, res) {
+  console.log(req.headers)
+  console.log(req.body.uidfromtoken)
+  const user=await User.findOne({_id:{$eq:req.body.uidfromtoken }})
+  res.status(200).json({
+    message:user
+  });
+})
 module.exports = router;
