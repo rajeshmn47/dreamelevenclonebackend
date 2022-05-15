@@ -4,7 +4,7 @@ const flagURLs = require('country-flags-svg');
 var express = require('express')
 const router = express.Router()
 const everydayboys = require('./addlivescores')
-
+const User=require('../models/user')
 const messageBird = require('messagebird')('W2tTRdqV8xxNjMYhIXSX3eEY6');
 const activatekey = 'accountactivatekey123';
 

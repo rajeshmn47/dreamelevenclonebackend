@@ -21,7 +21,7 @@ const krl = 'https://stackoverflowclonefrontend.netlify.app'
 app.use(cors({ origin:url, credentials: true }))
 app.use('/',home)
 app.use('/auth',auth)
-const uri ='mongodb+srv://rajeshmn47:uni1ver%40se@cluster0.bpxam.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+const uri ='mongodb+srv://rajeshmn47:uni1ver%40se@cluster0.bpxam.mongodb.net/mydreamDatabase?retryWrites=true&w=majority'
 
 mongoose.Promise = global.Promise
 mongoose.connect(
