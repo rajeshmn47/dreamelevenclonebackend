@@ -4,9 +4,10 @@ const flagURLs = require('country-flags-svg');
 var express = require('express')
 const router = express.Router()
 const everydayboys = require('./addlivescores')
-const User=require('../models/user')
 const messageBird = require('messagebird')('W2tTRdqV8xxNjMYhIXSX3eEY6');
+const User=require('../models/user')
 const activatekey = 'accountactivatekey123';
+
 
 
 
@@ -18,29 +19,34 @@ router.post('/register',async (req, res)=>{
             res.status(200).json({
                 'message':'something went wrong'
               });
-        if(user){
-            res.status(200).json({
-                'message':'user already exists'
-              });}
-              if(!user){
-                messageBird.verify.create(req.body.phonenumber, {
+            }
+           
+    if(!user){console.log(req.body.phonenumber,'iuytr')
+    const phone=req.body.phonenumber
+                messageBird.verify.create(phone, {
                     template: "Your Verification code is %token."
                 }, function(err, resp){
+                    console.log(resp)
+                    if(err){
+                        console.log(err)
+                        res.status(200).json({
+                            'message':'something went wrong'
+                          });
+                        }
+                    else{
                     res.status(200).json({
-                        'id':resp.id
+                        'id':resp
                       });
+                    }
                     })
+                }
 
-                res.status(200).json({
-                    'message':'user already exists'
-                  });    
-        }
-
-        }
-    })
+else{
     res.status(200).json({
-        'upcoming':'upcomingMatches',
+        'message':'useralreadyexists',
       });
+    }
+})
 })
 
 router.post('/otp',async (req, res)=>{
