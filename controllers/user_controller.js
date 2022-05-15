@@ -12,7 +12,24 @@ const activatekey = 'accountactivatekey123';
 
 router.post('/register',async (req, res)=>{
     console.log(req.body)
+    User.findOne({email : req.body.email}, function(err , user){
+        if(err){
+            req.flash('error','Something went wrong, please sign-up again');
+            res.status(200).json({
+                'message':'something went wrong'
+              });
+        if(user){
+            res.status(200).json({
+                'message':'user already exists'
+              });}
+              if(!user){
+                res.status(200).json({
+                    'message':'user already exists'
+                  });    
+        }
 
+        }
+    })
     res.status(200).json({
         'upcoming':'upcomingMatches',
       });
