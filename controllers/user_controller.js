@@ -88,7 +88,7 @@ router.post('/otp',async (req, res)=>{
                   console.log(s.id);
                   contact_id = s.id;
                   console.log(s)
-                  user1.contact_id = contact_id;
+                  user1.contact_id = 'contacty5g55';
                   resolve();
               });
           });

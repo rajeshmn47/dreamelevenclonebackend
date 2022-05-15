@@ -5,6 +5,7 @@
     "country-flags-svg": "^1.1.6",
     "cric-live": "^1.0.19",
     "express": "^4.18.1",
+    "jsonwebtoken": "^8.5.1",
     "live-cricket-scores": "^3.0.0",
     "messagebird": "^3.8.0",
     "mongoose": "^6.3.3"

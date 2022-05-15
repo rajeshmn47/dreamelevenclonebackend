@@ -21,23 +21,7 @@ const userSchema = new mongoose.Schema({
         type : String,
         required : true,
     },
-
-    teamAwayCode : {
-        type : String,
-        trim : true,
-        required : true,
-        lowercase : true
-    },
-
-    date : {
-        type : Date,
-        required : true
-    },
-
-    matchTitle: {
-        type: String,
-        required: true
-    },
+ 
     matchIds: [
         {
             type : String,
