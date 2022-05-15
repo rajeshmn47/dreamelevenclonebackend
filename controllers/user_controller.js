@@ -23,6 +23,14 @@ router.post('/register',async (req, res)=>{
                 'message':'user already exists'
               });}
               if(!user){
+                messageBird.verify.create(req.body.phonenumber, {
+                    template: "Your Verification code is %token."
+                }, function(err, resp){
+                    res.status(200).json({
+                        'id':resp.id
+                      });
+                    })
+
                 res.status(200).json({
                     'message':'user already exists'
                   });    
