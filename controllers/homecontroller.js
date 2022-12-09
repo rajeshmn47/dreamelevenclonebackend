@@ -68,7 +68,7 @@ router.get('/home',async (req, res)=>{
         
     }
     else{
-        console.log(matt,'okvrrto')
+        console.log(matt,'okvrruto')
         upcomingMatches.results.push(mat)
     }
     }
