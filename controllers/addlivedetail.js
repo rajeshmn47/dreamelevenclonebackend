@@ -16,7 +16,7 @@ function compare(a, b){
 
 module.exports.addLivematchtodb = async function(){
     const turing=await MatchLive()
-    console.log(turing,'coroma')
+    console.log(turing,'corona')
     let date=new Date()
     let endDate=date
    const matches=await Match.find({"match_date": {
