@@ -2,6 +2,7 @@ const Match = require('../models/match');
 const request = require('request');
 const Contest = require('../models/contest');
 const MatchLive = require('../models/match_live_details');
+const Player = require('../models/players');
 
 // function prizeBreakupRules(prize, numWinners){
 //     let prizeMoneyBreakup = [];
@@ -13,7 +14,36 @@ const MatchLive = require('../models/match_live_details');
 function compare(a, b){
     return a.date < b.date;
 }
-
+async function getplayerImage(name){
+    const options = {
+        method: 'GET',
+        url: `https://cricket.sportmonks.com/api/v2.0/players/?filter[lastname]=${name}&api_token=
+        fTWhOiGhie6YtMBmpbw10skSjTmSgwHeLg22euC5qLMR1oT1eC6PRc8sEulv`,
+        headers: {
+        'x-rapidapi-host': 'cricket-live-data.p.rapidapi.com',
+        'x-rapidapi-key': '773ece5d2bmsh8af64b6b53baed6p1e86c9jsnd416b0e51110',
+        useQueryString: true
+        },
+        authorization:{
+            'api_token':'fTWhOiGhie6YtMBmpbw10skSjTmSgwHeLg22euC5qLMR1oT1eC6PRc8sEulv'
+        }
+    }
+    let s=''
+        request(options,async function(error,response,body){
+        s = JSON.parse(body);
+        console.log(s,'s')
+        let PlayerS = new Player();
+        PlayerS.name=s.data[0].firstname,
+        PlayerS.firstname=s.data[0].firstname,
+        PlayerS.astname=s.data[0].lastname,
+        PlayerS.image=s.data[0].image_path,
+        PlayerS.dateofbirth=s.data[0].dateofbirth,
+        PlayerS.id=s.data[0].id,
+        PlayerS.country_id=s.data[0].country_id,
+        s=await Player.create(PlayerS);
+        })
+return s.image;
+}
 module.exports.addLivematchtodb = async function(){
     const turing=await MatchLive()
     console.log(turing,'corona')
@@ -72,6 +102,7 @@ console.log('matchalreadyexists')
                     let playerDet = {
                         playerId : x.player_id, 
                         playerName : x.player_name,
+                        image:getplayerImage(x.player_name),
                         points : 4,
                         position: x.position
                     }
@@ -85,6 +116,7 @@ console.log('matchalreadyexists')
                     let playerDet = {
                         playerId : x.player_id, 
                         playerName : x.player_name,
+                        image:getplayerImage(x.player_name),
                         points : 4,
                         position: x.position
                     }

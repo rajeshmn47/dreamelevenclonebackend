@@ -13,6 +13,29 @@ function compare(a, b){
     return a.date < b.date;
 }
 
+function getplayerImage(name){
+    const options = {
+        method: 'GET',
+        url: `https://cricket.sportmonks.com/api/v2.0/players/?filter[lastname]=${name}&api_token=
+        fTWhOiGhie6YtMBmpbw10skSjTmSgwHeLg22euC5qLMR1oT1eC6PRc8sEulv`,
+        headers: {
+        'x-rapidapi-host': 'cricket-live-data.p.rapidapi.com',
+        'x-rapidapi-key': '773ece5d2bmsh8af64b6b53baed6p1e86c9jsnd416b0e51110',
+        'api_token':'fTWhOiGhie6YtMBmpbw10skSjTmSgwHeLg22euC5qLMR1oT1eC6PRc8sEulv',
+        useQueryString: true
+        },
+        Authorization:{
+            'api_token':'fTWhOiGhie6YtMBmpbw10skSjTmSgwHeLg22euC5qLMR1oT1eC6PRc8sEulv'
+        }
+    }
+    let s=''
+        request(options,function(error,response,body){
+        s = JSON.parse(body);
+        console.log(s,s.data[0].image_path,'s')
+        })
+return s;
+}
+
 module.exports.addMatchtoDb = async function(){
     function pad2(n) { 
         return (n < 10 ? '0' : '') + n;
@@ -21,6 +44,7 @@ module.exports.addMatchtoDb = async function(){
     let obj = {
         "results" : []
     };
+    getplayerImage('rahul')
     var date = new Date();
     var month = pad2(date.getMonth()+1);//months (0-11)
     var day = pad2(date.getDate());//day (1-31)
@@ -32,7 +56,6 @@ module.exports.addMatchtoDb = async function(){
     const numberOfDays = 4;
 
     for (let i = 0; i < numberOfDays; i++){
-        console.log(formattedDate);
         const options = {
             method: 'GET',
             url: `https://cricket-live-data.p.rapidapi.com/fixtures-by-date/${formattedDate}`,
@@ -55,7 +78,6 @@ module.exports.addMatchtoDb = async function(){
             })
         });
         promise.then( async (s)=>{
-            console.log(s);
             for(mat of s.results){
                 obj.results.push(mat);
             }

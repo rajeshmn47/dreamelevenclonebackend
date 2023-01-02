@@ -1,5 +1,6 @@
 const Matches = require('../models/match');
 const LiveMatches = require('../models/match_live_details');
+const Players = require('../models/players');
 const flagURLs = require('country-flags-svg');
 var express = require('express')
 const router = express.Router()
@@ -18,6 +19,8 @@ router.get('/home',async (req, res)=>{
         "results": []
     };
     const matches=await Matches.find()
+    const datawe = await LiveMatches.find()
+    const players = await Players.find()
     for(let i=0;i<matches.length;i++){
         teamAwayFlagUrl=flagURLs.findFlagUrlByCountryName(matches[i].teamAwayName)
         teamHomeFlagUrl=flagURLs.findFlagUrlByCountryName(matches[i].teamHomeName)
@@ -75,7 +78,9 @@ router.get('/home',async (req, res)=>{
     res.status(200).json({
         upcoming:upcomingMatches,
         past:completedMatches,
-live:liveMatches
+live:datawe,
+new:matches,
+players:players
       });
 })
 
