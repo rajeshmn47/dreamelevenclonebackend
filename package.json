@@ -8,6 +8,7 @@
     "jsonwebtoken": "^8.5.1",
     "live-cricket-scores": "^3.0.0",
     "messagebird": "^3.8.0",
-    "mongoose": "^6.3.3"
+    "mongoose": "^6.3.3",
+    "prettier": "^2.8.1"
   }
 }

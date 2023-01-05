@@ -1,70 +1,73 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const contestSchema = new mongoose.Schema({
+const contestSchema = new mongoose.Schema(
+  {
     price: {
-        type : Number,
-        required : true,
+      type: Number,
+      required: true,
     },
 
-    totalSpots:{
-        type : Number,
-        required : true,
+    totalSpots: {
+      type: Number,
+      required: true,
     },
 
-    numWinners:{
-        type : Number,
-        required : true,
+    numWinners: {
+      type: Number,
+      required: true,
     },
 
     spotsLeft: {
-        type : Number,
-        required : true,
+      type: Number,
+      required: true,
     },
 
-    teamsId : [
-        {
-            type : String,
-            trim : true,
-            lowercase : true
-        }
+    teamsId: [
+      {
+        type: String,
+        trim: true,
+        lowercase: true,
+      },
     ],
-    
+
     matchId: {
-        type : String,
-        trim : true,
-        required : true,
-        lowercase : true
+      type: String,
+      trim: true,
+      required: true,
+      lowercase: true,
     },
 
-    prizeDetails : [
-        {
-            prize : {
-                type : Number,
-            },
-            prizeHolder : {
-                type : String
-            }
-        }
+    prizeDetails: [
+      {
+        prize: {
+          type: Number,
+        },
+        prizeHolder: {
+          type: String,
+        },
+      },
     ],
 
     admin: {
-        type : String,
-        trim : true,
-        required : true,
-        lowercase : true,
-        default: "Server-Domino-Beton"
+      type: String,
+      trim: true,
+      required: true,
+      lowercase: true,
+      default: "Server-Domino-Beton",
     },
 
-    userIds : [
-        {
-            type : String,
-            trim : true,
-            lowercase : true
-        }
-    ]
-},{
-    timestamps : true
-});
+    userIds: [
+      {
+        type: String,
+        trim: true,
+        lowercase: true,
+      },
+    ],
+  },
+  {
+    timestamps: true,
+  }
+);
 
-const Contest = mongoose.model('Contest',contestSchema);
+const Contest = mongoose.model("Contest", contestSchema);
 module.exports = Contest;
