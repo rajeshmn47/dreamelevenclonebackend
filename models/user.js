@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const crypto = require("crypto");
 
-const userSchema = new mongoose.Schema(
+const usernewSchema = new mongoose.Schema(
   {
     username: {
       type: String,
@@ -12,7 +12,11 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-
+    verified: {
+      type: Boolean,
+      default:false,
+    },
+     
     phonenumber: {
       type: String,
       required: true,
@@ -36,7 +40,9 @@ const userSchema = new mongoose.Schema(
       required: true,
       default: 0,
     },
-
+    otp: {
+      type: Number,
+    },
     numberOfContestWon: {
       type: Number,
       required: true,
@@ -98,5 +104,5 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model("UserNew", usernewSchema);
 module.exports = User;

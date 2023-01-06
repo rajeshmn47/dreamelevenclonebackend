@@ -1,14 +1,20 @@
 {
   "dependencies": {
+    "axios": "^1.2.2",
     "body-parser": "^1.20.0",
     "cors": "^2.8.5",
     "country-flags-svg": "^1.1.6",
     "cric-live": "^1.0.19",
     "express": "^4.18.1",
+    "fast-two-sms": "^3.0.0",
     "jsonwebtoken": "^8.5.1",
     "live-cricket-scores": "^3.0.0",
     "messagebird": "^3.8.0",
     "mongoose": "^6.3.3",
-    "prettier": "^2.8.1"
+    "nodemailer": "^6.8.0",
+    "nodemailer-smtp-transport": "^2.7.4",
+    "otp-generator": "^4.0.0",
+    "prettier": "^2.8.1",
+    "unirest": "^0.6.0"
   }
 }

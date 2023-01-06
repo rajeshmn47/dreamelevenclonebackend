@@ -6,9 +6,10 @@ var express = require("express");
 const cricLive = require("cric-live");
 const home = require("./controllers/homecontroller");
 const contest = require("./controllers/getcontests");
+const teamdata = require("./controllers/getplayerscontroller");
 const auth = require("./controllers/user_controller");
 const everyday = require("./controllers/matchDB-controller");
-const everydayboy = require("./controllers/addlivedetail");
+const everydayboy = require("./controllers/addlivedetailsnew");
 const everydayboys = require("./controllers/addlivescores");
 /* Requiring body-parser package
 to fetch the data that is entered
@@ -22,9 +23,10 @@ const krl = "https://stackoverflowclonefrontend.netlify.app";
 app.use(cors({ origin: url, credentials: true }));
 app.use("/", home);
 app.use("/", contest);
+app.use("/", teamdata);
 app.use("/auth", auth);
 const uri =
-  "mongodb+srv://rajeshmn47:uni1ver%40se@cluster0.bpxam.mongodb.net/mydreamDatabase?retryWrites=true&w=majority";
+  "mongodb+srv://rajeshmn47:uni1ver%40se@cluster0.bpxam.mongodb.net/mydreamDatabaseFirst?retryWrites=true&w=majority";
 
 mongoose.Promise = global.Promise;
 mongoose.connect(
@@ -40,8 +42,9 @@ async function everydaybro() {
   await everyday.addMatchtoDb();
 }
 async function everydayguy() {
-  await everydayboys.addLivescorestodb();
+  await everydayboy.addLivematchtodb();
 }
+everydayguy()
 k = Buffer.from("jwalagutta", "base64").toString();
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {

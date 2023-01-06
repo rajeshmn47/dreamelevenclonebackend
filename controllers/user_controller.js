@@ -9,7 +9,29 @@ const messageBird = require("messagebird")("W2tTRdqV8xxNjMYhIXSX3eEY6");
 const User = require("../models/user");
 const activatekey = "accountactivatekey123";
 const transaction = require("./transaction_details_controller");
+var nodemailer = require("nodemailer");
 const request = require("request");
+var smtpTransport = require("nodemailer-smtp-transport");
+const otpGenerator = require('otp-generator')
+const fast2sms = require("fast-two-sms");
+var unirest = require("unirest");
+var req = unirest("GET", "https://www.fast2sms.com/dev/bulkV2");
+
+let api_key =
+  "s16rcBDzWjgNhJXPEUV9HA3QMSfvpen2GyL7a4F8ubdwICk5KOHPT32vI5b6cSxs8JpUhirCOjqogGwk";
+var transporter = nodemailer.createTransport(
+  smtpTransport({
+    service: "gmail",
+    host: "smtp.gmail.com",
+    port: 587,
+    secure: false,
+    requireTLS: true,
+    auth: {
+      user: "rajeshmn47@gmail.com",
+      pass: "nednygtvvsfgzvex",
+    },
+  })
+);
 
 function checkloggedinuser(req, res, next) {
   const tokenheader = req.body.headers || req.headers["servertoken"];
@@ -32,46 +54,7 @@ function checkloggedinuser(req, res, next) {
 
 router.post("/register", async (req, res) => {
   console.log(req.body);
-  User.findOne({ email: req.body.email }, function (err, user) {
-    if (err) {
-      req.flash("error", "Something went wrong, please sign-up again");
-      res.status(200).json({
-        message: "something went wrong",
-      });
-    }
-
-    if (!user) {
-      console.log(req.body.phonenumber, "iuytr");
-      const phone = req.body.phonenumber;
-      messageBird.verify.create(
-        phone,
-        {
-          template: "Your Verification code is %token.",
-        },
-        function (err, resp) {
-          console.log(resp);
-          if (err) {
-            console.log(err);
-            res.status(200).json({
-              message: "something went wrong",
-            });
-          } else {
-            res.status(200).json({
-              id: resp,
-            });
-          }
-        }
-      );
-    } else {
-      res.status(200).json({
-        message: "useralreadyexists",
-      });
-    }
-  });
-});
-
-router.post("/otp", async (req, res) => {
-  console.log(req.body);
+  const otp=otpGenerator.generate(8, {lowerCaseAlphabets:false,upperCaseAlphabets: false, specialChars: false,specialChars:false });
   const user1 = new User();
   const userId = req.body.email.split("@")[0];
   user1.userId = userId;
@@ -80,6 +63,21 @@ router.post("/otp", async (req, res) => {
   user1.password = req.body.password;
   user1.phonenumber = req.body.phonenumber;
   user1.wallet = 100;
+  user1.otp=otp;
+  var mailOptions = {
+    from: "rajeshmn47@gmail.com",
+    to: req.body.email,
+    subject: "Sending Email using Node.js[nodemailer]",
+    text: `enter this otp ${otp}`,
+  };
+
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("Email sent: " + info.response);
+    }
+  });
 
   var options = {
     method: "POST",
@@ -147,7 +145,7 @@ router.post("/otp", async (req, res) => {
               });
 
               res.status(200).json({
-                message: "signupsuccessfull",
+                message: "enter otp recieved on your mail to activate your account",
                 token: token,
               });
             }
@@ -163,6 +161,34 @@ router.post("/otp", async (req, res) => {
     .catch((err) => {
       console.log("Error : " + err);
     });
+})
+router.post("/otp", async (req, res) => {
+  console.log(req.body);
+  const user = await User.findOne({ email: req.body.email });
+  if(user.otp===req.body.otp){
+    user.verified=true;
+    let userid=user._id;
+    const token = jwt.sign({ userid }, activatekey, {
+      expiresIn: "500m",
+    });
+    user.save(function(err) {
+      if(!err) {
+          console.log("contact");
+      }
+      else {
+          console.log("Error: could not save contact " );
+          res.status(200).json({
+            message:"ure account created successfully u can login",
+            token: token,
+          });
+      }
+  });
+  }
+  else{
+  res.status(200).json({
+    message: "ure account failed to create successfully",
+  });
+}
 });
 
 router.post("/login", async (req, res) => {

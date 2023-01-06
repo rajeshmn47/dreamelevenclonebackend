@@ -1,5 +1,5 @@
 const Matches = require("../models/match");
-const LiveMatches = require("../models/match_live_details");
+const LiveMatches = require("../models/match_live_details_new");
 const Players = require("../models/players");
 const flagURLs = require("country-flags-svg");
 var express = require("express");
@@ -79,7 +79,7 @@ router.get("/home", async (req, res) => {
   res.status(200).json({
     upcoming: upcomingMatches,
     past: completedMatches,
-    live: datawe,
+    live: liveMatches,
     new: matches,
     players: players,
   });
