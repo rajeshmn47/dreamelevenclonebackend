@@ -16,25 +16,23 @@ function compare(a, b) {
   return a.date < b.date;
 }
 
-let io=1
+let io = 1;
 async function getplayerImage(name) {
-    var k=name.split(' ')[0]
-    var config = {
-        method: 'get',
-        url: `https://cricket.sportmonks.com/api/v2.0/players?filter[lastname]=sachin&api_token=
+  var k = name.split(" ")[0];
+  var config = {
+    method: "get",
+    url: `https://cricket.sportmonks.com/api/v2.0/players?filter[lastname]=sachin&api_token=
         fTWhOiGhie6YtMBmpbw10skSjTmSgwHeLg22euC5qLMR1oT1eC6PRc8sEulv`,
-        headers: { }
-      };
-      
-    let s=await axios(config).catch(function (error) {
-        console.log(error);
-      });
-      let PlayerS = new Player();
+    headers: {},
+  };
 
-  return s.data.data.length>0?s.data.data[0].image_path:'';
+  let s = await axios(config).catch(function (error) {
+    console.log(error);
+  });
+  let PlayerS = new Player();
 
+  return s.data.data.length > 0 ? s.data.data[0].image_path : "";
 }
-
 
 module.exports.addLivematchtodb = async function () {
   const turing = await MatchLive();
@@ -64,20 +62,18 @@ module.exports.addLivematchtodb = async function () {
         },
       };
       let promise = new Promise((resolve, reject) => {
-     
-       
-          request(options, function (error, response, body) {
-            if (error) {
-              reject(error);
-            }
-            let s = JSON.parse(body);
-        
-            resolve(s);
-          });
-      })
+        request(options, function (error, response, body) {
+          if (error) {
+            reject(error);
+          }
+          let s = JSON.parse(body);
+
+          resolve(s);
+        });
+      });
       promise
         .then(async (s) => {
-            console.log(s)
+          console.log(s);
           if (
             s.results.live_details != null &&
             s.results.live_details.teamsheets.home.length != 0
@@ -90,37 +86,35 @@ module.exports.addLivematchtodb = async function () {
               if (x.position == "Unknown") {
                 x.position = "Batsman";
               }
-             
-            let im=await getplayerImage(x.player_name)
+
+              let im = await getplayerImage(x.player_name);
               let playerDet = {
                 playerId: x.player_id,
                 playerName: x.player_name,
                 points: 4,
-                image:im,
+                image: im,
                 position: x.position,
               };
               LiveMatchDet.teamHomePlayers.push(playerDet);
             }
-        
 
             for (let x of s.results.live_details.teamsheets.away) {
               if (x.position == "Unknown") {
                 x.position = "Batsman";
               }
-            
-              let im=await getplayerImage(x.player_name)
+
+              let im = await getplayerImage(x.player_name);
               let playerDet = {
                 playerId: x.player_id,
                 playerName: x.player_name,
                 points: 4,
-                image:im,
+                image: im,
                 position: x.position,
               };
-            
+
               LiveMatchDet.teamAwayPlayers.push(playerDet);
             }
-        
-        
+
             let match = await MatchLive.create(LiveMatchDet);
             if (match) {
               console.log(

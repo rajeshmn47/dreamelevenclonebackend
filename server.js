@@ -10,7 +10,9 @@ const teamdata = require("./controllers/getplayerscontroller");
 const auth = require("./controllers/user_controller");
 const everyday = require("./controllers/matchDB-controller");
 const everydayboy = require("./controllers/addlivedetailsnew");
-const everydayboys = require("./controllers/addlivescores");
+const eva = require("./controllers/updatestandings");
+const evas = require("./controllers/updateteam");
+const team = require("./controllers/teamcontroller");
 /* Requiring body-parser package
 to fetch the data that is entered
 by the user in the HTML form.*/
@@ -20,13 +22,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 const url = "http://localhost:3000";
 const krl = "https://stackoverflowclonefrontend.netlify.app";
-app.use(cors({ origin: url, credentials: true }));
+app.use(cors({ origin: "*", credentials: true }));
 app.use("/", home);
 app.use("/", contest);
 app.use("/", teamdata);
+app.use("/", team);
 app.use("/auth", auth);
 const uri =
-  "mongodb+srv://rajeshmn47:uni1ver%40se@cluster0.bpxam.mongodb.net/mydreamDatabaseFirst?retryWrites=true&w=majority";
+  "mongodb+srv://rajeshmn47:uni1ver%40se@cluster0.bpxam.mongodb.net/mydreamDatabaseSecond?retryWrites=true&w=majority";
 
 mongoose.Promise = global.Promise;
 mongoose.connect(
@@ -39,12 +42,11 @@ mongoose.connect(
   }
 );
 async function everydaybro() {
-  await everyday.addMatchtoDb();
-}
-async function everydayguy() {
   await everydayboy.addLivematchtodb();
 }
-everydayguy()
+async function everydayguy() {
+  await evas.addTeamstandingstodb();
+}
 k = Buffer.from("jwalagutta", "base64").toString();
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {

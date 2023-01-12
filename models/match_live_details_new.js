@@ -26,12 +26,12 @@ const matchDetailsSecondSchema = new mongoose.Schema(
           lowercase: true,
         },
         image: {
-            type: String,
-            trim: true,
-            required: true,
-            lowercase: true,
-            default: '',
-          },
+          type: String,
+          trim: true,
+          required: true,
+          lowercase: true,
+          default: "",
+        },
         points: {
           type: Number,
           required: true,
@@ -124,12 +124,12 @@ const matchDetailsSecondSchema = new mongoose.Schema(
           lowercase: true,
         },
         image: {
-            type: String,
-            trim: true,
-            required: true,
-            lowercase: true,
-            default: '',
-          },
+          type: String,
+          trim: true,
+          required: true,
+          lowercase: true,
+          default: "",
+        },
         playerName: {
           type: String,
           trim: true,
@@ -294,5 +294,8 @@ const matchDetailsSecondSchema = new mongoose.Schema(
   }
 );
 
-const MatchLiveDetails = mongoose.model("MatchLiveDetailsSecond", matchDetailsSecondSchema);
+const MatchLiveDetails = mongoose.model(
+  "MatchLiveDetailsSecond",
+  matchDetailsSecondSchema
+);
 module.exports = MatchLiveDetails;

@@ -44,7 +44,6 @@ module.exports.addMatchtoDb = async function () {
   let obj = {
     results: [],
   };
-  getplayerImage("rahul");
   var date = new Date();
   var month = pad2(date.getMonth() + 1); //months (0-11)
   var day = pad2(date.getDate()); //day (1-31)
@@ -52,7 +51,7 @@ module.exports.addMatchtoDb = async function () {
   // var year = "2021";
   // var month = "09";
   // var day = 25;
-  var formattedDate = year + "-" + month + "-" + day;
+  var formattedDate = 2023 + "-" + 01 + "-" + 07;
   const numberOfDays = 4;
 
   for (let i = 0; i < numberOfDays; i++) {
@@ -61,7 +60,7 @@ module.exports.addMatchtoDb = async function () {
       url: `https://cricket-live-data.p.rapidapi.com/fixtures-by-date/${formattedDate}`,
       headers: {
         "x-rapidapi-host": "cricket-live-data.p.rapidapi.com",
-        "x-rapidapi-key": "773ece5d2bmsh8af64b6b53baed6p1e86c9jsnd416b0e51110",
+        "x-rapidapi-key": "0ca5f248dfmsh14b3f2bec1e6137p1edc89jsne867dd098231",
         useQueryString: true,
       },
     };
@@ -73,7 +72,7 @@ module.exports.addMatchtoDb = async function () {
         }
         // console.log(body)
         let s = JSON.parse(body);
-        // console.log(s);
+        console.log(s);
         resolve(s);
       });
     });
@@ -83,92 +82,90 @@ module.exports.addMatchtoDb = async function () {
           obj.results.push(mat);
         }
 
-        if (i == numberOfDays - 1) {
+        for (let i = 0; i < obj.results.length; i++) {
+          let match1 = new Match();
+          const matchId = obj.results[i].id;
+          // console.log(obj.results[i]);
+          match1.matchId = matchId;
           obj.results.sort(compare);
-          for (let i = 0; i < obj.results.length; i++) {
-            let match1 = new Match();
-            const matchId = obj.results[i].id;
-            // console.log(obj.results[i]);
-            match1.matchId = matchId;
-            match1.matchTitle = obj.results[i].match_title;
-            match1.teamHomeName = obj.results[i].home.name;
-            match1.teamAwayName = obj.results[i].away.name;
-            match1.date = obj.results[i].date;
-            if (obj.results[i].home.code == "") {
-              continue;
-            } else {
-              match1.teamHomeCode = obj.results[i].home.code;
-            }
-            if (obj.results[i].away.code == "") {
-              continue;
-            } else {
-              match1.teamAwayCode = obj.results[i].away.code;
-            }
-            try {
-              let match = await Match.findOne({ matchId: matchId });
-              if (!match) {
-                let prize = [50000, 40000, 30000, 10000];
-                // let prizeBreakup = [
-                //     5, 4, 3, 1
-                // ];
-                let totalspots = [50, 40, 30, 10];
-                for (let j = 0; j < 4; j++) {
-                  let contest1 = new Contest();
-                  contest1.price = prize[j];
-                  contest1.totalSpots = totalspots[j];
-                  contest1.spotsLeft = totalspots[j];
-                  contest1.matchId = matchId;
-                  let prizeDetails = [
-                    {
-                      prize: prize[j] * 0.35,
-                    },
-                    {
-                      prize: prize[j] * 0.25,
-                    },
-                    {
-                      prize: prize[j] * 0.15,
-                    },
-                    {
-                      prize: prize[j] * 0.1,
-                    },
-                    {
-                      prize: prize[j] * 0.05,
-                    },
-                  ];
-                  contest1.prizeDetails = prizeDetails;
-                  contest1.numWinners = 5;
-                  console.log(
-                    contest1.price +
-                      " " +
-                      contest1.totalSpots +
-                      contest1.spotsLeft +
-                      contest1.matchId
-                  );
-                  try {
-                    let contest2 = await Contest.create(contest1);
-                    console.log(obj.results[i].match_subtitle);
-                    if (contest2) {
-                      match1.contestId.push(contest2.id);
-                      console.log("Succesfully created the contest");
-                    }
-                  } catch (err) {
-                    console.log("Error : " + err);
-                  }
-                }
+          match1.matchTitle = obj.results[i].match_title;
+          match1.teamHomeName = obj.results[i].home.name;
+          match1.teamAwayName = obj.results[i].away.name;
+          match1.date = obj.results[i].date;
+          if (obj.results[i].home.code == "") {
+            continue;
+          } else {
+            match1.teamHomeCode = obj.results[i].home.code;
+          }
+          if (obj.results[i].away.code == "") {
+            continue;
+          } else {
+            match1.teamAwayCode = obj.results[i].away.code;
+          }
+          try {
+            let match = await Match.findOne({ matchId: matchId });
+            if (!match) {
+              let prize = [10000, 5000, 4000, 500];
+              // let prizeBreakup = [
+              //     5, 4, 3, 1
+              // ];
+              let totalspots = [50, 40, 30, 10];
+              for (let j = 0; j < 4; j++) {
+                let contest1 = new Contest();
+                contest1.price = prize[j];
+                contest1.totalSpots = totalspots[j];
+                contest1.spotsLeft = totalspots[j];
+                contest1.matchId = matchId;
+                let prizeDetails = [
+                  {
+                    prize: prize[j] * 0.35,
+                  },
+                  {
+                    prize: prize[j] * 0.25,
+                  },
+                  {
+                    prize: prize[j] * 0.15,
+                  },
+                  {
+                    prize: prize[j] * 0.1,
+                  },
+                  {
+                    prize: prize[j] * 0.05,
+                  },
+                ];
+                contest1.prizeDetails = prizeDetails;
+                contest1.numWinners = 5;
+                console.log(
+                  contest1.price +
+                    " " +
+                    contest1.totalSpots +
+                    contest1.spotsLeft +
+                    contest1.matchId
+                );
                 try {
-                  let match = await Match.create(match1);
-                  if (match) {
-                    console.log("match is successfully added in db! ");
+                  let contest2 = await Contest.create(contest1);
+                  console.log(obj.results[i].match_subtitle);
+                  if (contest2) {
+                    match1.contestId.push(contest2.id);
+                    console.log("Succesfully created the contest");
                   }
                 } catch (err) {
                   console.log("Error : " + err);
                 }
-              } else {
-                console.log("Match already exist in database! ");
               }
-            } catch (err) {
-              console.log("Error : " + err);
+              try {
+                let match = await Match.create(match1);
+                if (match) {
+                  console.log("match is successfully added in db! ");
+                }
+              } catch (err) {
+                console.log("Error : " + err);
+              }
+            } else {
+              console.log("Match already exist in database! ");
             }
+          } catch (err) {
+            console.log("Error : " + err);
           }
         }
       })

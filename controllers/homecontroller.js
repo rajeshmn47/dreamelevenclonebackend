@@ -5,6 +5,7 @@ const flagURLs = require("country-flags-svg");
 var express = require("express");
 const router = express.Router();
 const everydayboys = require("./addlivescores");
+const Match = require("../models/match");
 
 router.get("/home", async (req, res) => {
   let upcomingMatches = {
@@ -82,6 +83,13 @@ router.get("/home", async (req, res) => {
     live: liveMatches,
     new: matches,
     players: players,
+  });
+});
+
+router.get("/getmatch/:id", async (req, res) => {
+  const match = await Match.findOne({ matchId: req.params.id });
+  res.status(200).json({
+    match: match,
   });
 });
 

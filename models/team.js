@@ -3,7 +3,7 @@ const crypto = require("crypto");
 
 const teamSchema = new mongoose.Schema(
   {
-    matchId: {
+    teamId: {
       type: String,
       trim: true,
       required: true,
@@ -11,54 +11,79 @@ const teamSchema = new mongoose.Schema(
       lowercase: true,
     },
 
-    teamHomeName: {
-      type: String,
-      trim: true,
-      required: true,
-      lowercase: true,
-    },
-
-    teamAwayName: {
-      type: String,
-      trim: true,
-      required: true,
-      lowercase: true,
-    },
-
-    teamHomeCode: {
-      type: String,
-      trim: true,
-      required: true,
-      lowercase: true,
-    },
-
-    teamAwayCode: {
-      type: String,
-      trim: true,
-      required: true,
-      lowercase: true,
-    },
-
-    date: {
-      type: Date,
-      required: true,
-    },
-
-    matchTitle: {
-      type: String,
-      required: true,
-    },
-
-    contestId: [
+    players: [
       {
-        type: String,
+        playerId: {
+          type: String,
+          trim: true,
+          required: true,
+          lowercase: true,
+        },
+
+        playerName: {
+          type: String,
+          trim: true,
+          required: true,
+          lowercase: true,
+        },
+
+        position: {
+          type: String,
+          trim: true,
+          required: true,
+          lowercase: true,
+        },
+
+        point: {
+          type: Number,
+          required: true,
+          default: 4,
+        },
+        image: {
+          type: String,
+          trim: true,
+          required: true,
+          lowercase: true,
+        },
       },
     ],
+
+    points: {
+      type: Number,
+      required: true,
+    },
+
+    userId: {
+      type: String,
+      trim: true,
+      required: true,
+      lowercase: true,
+    },
+
+    matchId: {
+      type: String,
+      trim: true,
+      required: true,
+      lowercase: true,
+    },
+
+    captainId: {
+      type: String,
+      trim: true,
+      required: true,
+      lowercase: true,
+    },
+
+    viceCaptainId: {
+      type: String,
+      trim: true,
+      required: true,
+      lowercase: true,
+    },
   },
   {
     timestamps: true,
   }
 );
-
 const Team = mongoose.model("Team", teamSchema);
 module.exports = Team;

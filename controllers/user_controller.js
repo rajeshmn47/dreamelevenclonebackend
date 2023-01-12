@@ -12,7 +12,7 @@ const transaction = require("./transaction_details_controller");
 var nodemailer = require("nodemailer");
 const request = require("request");
 var smtpTransport = require("nodemailer-smtp-transport");
-const otpGenerator = require('otp-generator')
+const otpGenerator = require("otp-generator");
 const fast2sms = require("fast-two-sms");
 var unirest = require("unirest");
 var req = unirest("GET", "https://www.fast2sms.com/dev/bulkV2");
@@ -54,7 +54,12 @@ function checkloggedinuser(req, res, next) {
 
 router.post("/register", async (req, res) => {
   console.log(req.body);
-  const otp=otpGenerator.generate(8, {lowerCaseAlphabets:false,upperCaseAlphabets: false, specialChars: false,specialChars:false });
+  const otp = otpGenerator.generate(8, {
+    lowerCaseAlphabets: false,
+    upperCaseAlphabets: false,
+    specialChars: false,
+    specialChars: false,
+  });
   const user1 = new User();
   const userId = req.body.email.split("@")[0];
   user1.userId = userId;
@@ -63,7 +68,7 @@ router.post("/register", async (req, res) => {
   user1.password = req.body.password;
   user1.phonenumber = req.body.phonenumber;
   user1.wallet = 100;
-  user1.otp=otp;
+  user1.otp = otp;
   var mailOptions = {
     from: "rajeshmn47@gmail.com",
     to: req.body.email,
@@ -145,7 +150,8 @@ router.post("/register", async (req, res) => {
               });
 
               res.status(200).json({
-                message: "enter otp recieved on your mail to activate your account",
+                message:
+                  "enter otp recieved on your mail to activate your account",
                 token: token,
               });
             }
@@ -161,34 +167,33 @@ router.post("/register", async (req, res) => {
     .catch((err) => {
       console.log("Error : " + err);
     });
-})
+});
 router.post("/otp", async (req, res) => {
   console.log(req.body);
   const user = await User.findOne({ email: req.body.email });
-  if(user.otp===req.body.otp){
-    user.verified=true;
-    let userid=user._id;
+  console.log(user.otp, req.body.otp);
+  if (parseInt(user.otp) === parseInt(req.body.otp)) {
+    user.verified = true;
+    let userid = user._id;
     const token = jwt.sign({ userid }, activatekey, {
       expiresIn: "500m",
     });
-    user.save(function(err) {
-      if(!err) {
-          console.log("contact");
+    user.save(function (err) {
+      if (!err) {
+        console.log("contact");
+      } else {
+        console.log("Error: could not save contact ");
+        res.status(200).json({
+          message: "ure account created successfully u can login",
+          token: token,
+        });
       }
-      else {
-          console.log("Error: could not save contact " );
-          res.status(200).json({
-            message:"ure account created successfully u can login",
-            token: token,
-          });
-      }
-  });
+    });
+  } else {
+    res.status(200).json({
+      message: "ure account failed to create successfully",
+    });
   }
-  else{
-  res.status(200).json({
-    message: "ure account failed to create successfully",
-  });
-}
 });
 
 router.post("/login", async (req, res) => {
