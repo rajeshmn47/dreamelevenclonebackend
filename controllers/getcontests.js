@@ -25,6 +25,14 @@ router.get("/getcontest/:id", async (req, res) => {
   });
 });
 
+router.get("/", async (req, res) => {
+  console.log(req.params.id, "id");
+  const contest = await Contest.findOne({ _id: req.params.id });
+  res.status(200).json({
+    contest: contest,
+  });
+});
+
 router.get("/getcontestsofuser/:id", async (req, res) => {
   console.log(req.params.id, "rajeshid");
   const contests = await Contest.find({
