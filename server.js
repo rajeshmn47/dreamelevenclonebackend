@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 const url = "http://localhost:3000";
 const krl = "https://stackoverflowclonefrontend.netlify.app";
-app.use(cors({ origin: "*", credentials: true }));
+app.use(cors({ origin: "*", credentials: false }));
 app.use("/", home);
 app.use("/", contest);
 app.use("/", teamdata);
