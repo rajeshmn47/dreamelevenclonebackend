@@ -47,6 +47,7 @@ async function everydaybro() {
 async function everydayguy() {
   await evas.addTeamstandingstodb();
 }
+everydaybro();
 k = Buffer.from("jwalagutta", "base64").toString();
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {

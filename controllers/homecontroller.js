@@ -6,6 +6,7 @@ var express = require("express");
 const router = express.Router();
 const everydayboys = require("./addlivescores");
 const Match = require("../models/match");
+const User = require("../models/user");
 
 router.get("/home", async (req, res) => {
   let upcomingMatches = {
@@ -90,6 +91,13 @@ router.get("/getmatch/:id", async (req, res) => {
   const match = await Match.findOne({ matchId: req.params.id });
   res.status(200).json({
     match: match,
+  });
+});
+
+router.get("/userdata", async (req, res) => {
+  const users = await User.find();
+  res.status(200).json({
+    users: users,
   });
 });
 
