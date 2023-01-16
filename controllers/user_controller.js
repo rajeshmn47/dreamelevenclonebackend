@@ -40,8 +40,6 @@ function checkloggedinuser(req, res, next) {
     jwt.verify(tokenheader, activatekey, function (err, decoded) {
       if (!err) {
         req.body.uidfromtoken = decoded.userid;
-        console.log(decoded);
-        console.log("rajesh");
       }
       next();
     });
@@ -53,7 +51,6 @@ function checkloggedinuser(req, res, next) {
 }
 
 router.post("/register", async (req, res) => {
-  console.log(req.body);
   const otp = otpGenerator.generate(8, {
     lowerCaseAlphabets: false,
     upperCaseAlphabets: false,
@@ -109,18 +106,16 @@ router.post("/register", async (req, res) => {
     request(options, function (error, response) {
       if (error) reject(error);
       let s = JSON.parse(response.body);
-      console.log(s.id);
+
       contact_id = s.id;
-      console.log(s);
+
       user1.contact_id = contact_id;
       resolve();
     });
   });
   promise
     .then(async () => {
-      console.log("rajesh");
       User.findOne({ email: req.body.email }, async function (err, user) {
-        console.log(user, "okvor");
         if (err) {
           console.log("Error in finding user in Sign-in ");
           res.status(200).json({
@@ -129,7 +124,6 @@ router.post("/register", async (req, res) => {
         }
 
         if (!user) {
-          console.log("rajeshkkkkkkssssssssssss");
           transaction.createTransaction(userId, "", 100, "extra cash");
           User.create(user1, async function (err, user) {
             if (err) {
@@ -169,9 +163,8 @@ router.post("/register", async (req, res) => {
     });
 });
 router.post("/otp", async (req, res) => {
-  console.log(req.body);
   const user = await User.findOne({ email: req.body.email });
-  console.log(user.otp, req.body.otp);
+
   if (parseInt(user.otp) === parseInt(req.body.otp)) {
     user.verified = true;
     let userid = user._id;
@@ -197,7 +190,6 @@ router.post("/otp", async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
-  console.log(req.body);
   const user = await User.findOne({ email: req.body.myform.email });
   if (user) {
     if (user.password === req.body.myform.password) {
@@ -218,8 +210,6 @@ router.post("/login", async (req, res) => {
   }
 });
 router.get("/loaduser", checkloggedinuser, async function (req, res) {
-  console.log(req.headers);
-  console.log(req.body.uidfromtoken);
   const user = await User.findOne({ _id: { $eq: req.body.uidfromtoken } });
   res.status(200).json({
     message: user,

@@ -10,11 +10,9 @@ const router = express.Router();
 const everydayboys = require("./addlivescores");
 
 router.post("/saveteam/:id", async (req, res) => {
-  console.log(req.body);
   let players = [];
   var points = 0;
   for (p in req.body.players) {
-    console.log(p);
     players.push({
       playerId: req.body.players[p].playerId,
       playerName: req.body.players[p].playerName,
@@ -52,7 +50,6 @@ router.get("/getteam", async (req, res) => {
     matchId: req.query.matchId,
     userId: req.query.userid,
   });
-  console.log(team);
   res.status(200).json({
     message: "team created successfully",
     team: team,
@@ -60,9 +57,7 @@ router.get("/getteam", async (req, res) => {
 });
 
 router.get("/getteam/:id", async (req, res) => {
-  console.log(req.query, "ok");
   const team = await Team.findById(req.params.id);
-  console.log(team);
   res.status(200).json({
     message: "team got successfully",
     team: team,

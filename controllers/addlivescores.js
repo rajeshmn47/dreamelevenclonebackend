@@ -30,7 +30,6 @@ async function getplayerImage(name) {
   let s = "";
   request(options, function (error, response, body) {
     s = JSON.parse(body);
-    console.log(s.data[0].image_path, "saq");
   });
   return s;
 }

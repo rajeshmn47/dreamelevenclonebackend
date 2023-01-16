@@ -9,7 +9,6 @@ const everydayboys = require("./addlivescores");
 const MatchLiveDetails = require("../models/match_live_details_new");
 
 router.get("/getplayers/:id", async (req, res) => {
-  console.log(req.params.id, "id");
   const players = await MatchLiveDetails.findOne({ matchId: req.params.id });
   const matchdetails = await Matches.findOne({ matchId: req.params.id });
   res.status(200).json({

@@ -10,7 +10,6 @@ const router = express.Router();
 const everydayboys = require("./addlivescores");
 
 router.get("/getcontests/:id", async (req, res) => {
-  console.log(req.params.id, "id");
   const contests = await Contest.find({ matchId: req.params.id });
   res.status(200).json({
     contests: contests,
@@ -18,7 +17,6 @@ router.get("/getcontests/:id", async (req, res) => {
 });
 
 router.get("/getcontest/:id", async (req, res) => {
-  console.log(req.params.id, "id");
   const contest = await Contest.findOne({ _id: req.params.id });
   res.status(200).json({
     contest: contest,
@@ -26,7 +24,6 @@ router.get("/getcontest/:id", async (req, res) => {
 });
 
 router.get("/", async (req, res) => {
-  console.log(req.params.id, "id");
   const contest = await Contest.findOne({ _id: req.params.id });
   res.status(200).json({
     contest: contest,
@@ -34,7 +31,6 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/getcontestsofuser/:id", async (req, res) => {
-  console.log(req.params.id, "rajeshid");
   const contests = await Contest.find({
     matchId: req.params.id,
     userIds: req.query.userid,
@@ -45,7 +41,6 @@ router.get("/getcontestsofuser/:id", async (req, res) => {
 });
 
 router.get("/getteamsofcontest/:id", async (req, res) => {
-  console.log(req.params.id, "rajeshid");
   const contest = await Contest.findOne({ _id: req.params.id });
   let teams = await Team.find({
     _id: { $in: contest.teamsId },
@@ -63,7 +58,6 @@ router.get("/getteamsofcontest/:id", async (req, res) => {
 });
 
 router.get("/joincontest/:id", async (req, res) => {
-  console.log(req.params.id, "id", req.query);
   const contest = await Contest.findOne({ _id: req.params.id });
   const user = await User.findOne({ _id: req.query.userid });
   if (user.wallet > contest.price / contest.totalSpots) {
@@ -71,14 +65,11 @@ router.get("/joincontest/:id", async (req, res) => {
     contest.userIds.push(req.query.userid);
     contest.teamsId.push(req.query.teamid);
     contest.spotsLeft = contest.spotsLeft - 1;
-    console.log("if");
     await contest.save();
-    console.log(contest, "contest");
     res.status(200).json({
       contest: contest,
     });
   } else {
-    console.log("else");
     res.status(200).json({
       contest: contest,
     });

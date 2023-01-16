@@ -73,7 +73,6 @@ module.exports.addLivematchtodb = async function () {
       });
       promise
         .then(async (s) => {
-          console.log(s);
           if (
             s.results.live_details != null &&
             s.results.live_details.teamsheets.home.length != 0

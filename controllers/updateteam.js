@@ -27,9 +27,7 @@ async function getplayerImage(name) {
     headers: {},
   };
 
-  let s = await axios(config).catch(function (error) {
-    console.log(error);
-  });
+  let s = await axios(config).catch(function (error) {});
   let PlayerS = new Player();
 
   return s.data.data.length > 0 ? s.data.data[0].image_path : "";
@@ -53,7 +51,6 @@ module.exports.addTeamstandingstodb = async function () {
             parseInt(matches[i].teamHomePlayers[j].playerId) ===
             parseInt(team.players[z].playerId)
           ) {
-            console.log(team.players[z].point, "po");
             team.players[z].point = matches[i].teamHomePlayers[j].points;
           }
         }
@@ -69,18 +66,12 @@ module.exports.addTeamstandingstodb = async function () {
             parseInt(matches[i].teamAwayPlayers[k].playerId) ===
             parseInt(team.players[y].playerId)
           ) {
-            console.log(
-              team.players[y].point,
-              matches[i].teamAwayPlayers[k].points,
-              "po"
-            );
             team.players[y].point = matches[i].teamAwayPlayers[k].points;
           }
         }
         team.points = matches[i].teamHomePlayers[k].points + team.points;
       }
       let d = await team.save();
-      console.log(d);
     }
   }
 };

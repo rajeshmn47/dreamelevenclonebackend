@@ -12,5 +12,4 @@ async function getnames() {
 }
 (async () => {
   let o = await getnames();
-  console.log(o);
 })();

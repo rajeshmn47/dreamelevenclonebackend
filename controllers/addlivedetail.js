@@ -31,7 +31,6 @@ async function getplayerImage(name) {
   let s = "";
   request(options, async function (error, response, body) {
     s = JSON.parse(body);
-    console.log(s, "s");
     let PlayerS = new Player();
     (PlayerS.name = s.data[0].firstname),
       (PlayerS.firstname = s.data[0].firstname),
@@ -46,7 +45,6 @@ async function getplayerImage(name) {
 }
 module.exports.addLivematchtodb = async function () {
   const turing = await MatchLive();
-  console.log(turing, "corona");
   let date = new Date();
   let endDate = date;
   const matches = await Match.find({
@@ -57,11 +55,8 @@ module.exports.addLivematchtodb = async function () {
   });
   for (let i = 0; i < matches.length; i++) {
     let matchId = matches[i].matchId;
-    console.log(matchId, "getid");
     let match = await MatchLive.findOne({ matchId: matchId });
-    console.log(match, "gestid");
     if (match) {
-      console.log("matchalreadyexists");
     } else {
       const date1 = matches[i].date;
       const options = {
@@ -75,14 +70,12 @@ module.exports.addLivematchtodb = async function () {
         },
       };
       let promise = new Promise((resolve, reject) => {
-        console.log(matches[i].date);
         if ((matches[i].date - date) / (60 * 1000) <= 30) {
           request(options, function (error, response, body) {
             if (error) {
               reject(error);
             }
             let s = JSON.parse(body);
-            console.log(s, "kuthhe");
             resolve(s);
           });
         } else {

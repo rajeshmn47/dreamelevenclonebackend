@@ -63,12 +63,10 @@ module.exports.addTeamstandingstodb = async function () {
       const match = await MatchLive.findOne({ matchId: matchId });
       for (let x of s.results.live_details.scorecard[0].batting) {
         for (let i = 0; i < match.teamHomePlayers.length; i++) {
-          console.log(match.teamHomePlayers[i].playerId, x);
           if (
             parseInt(match.teamHomePlayers[i].playerId) ===
             parseInt(x.player_id)
           ) {
-            console.log(x.runs + 1 * x.fours + 2 * x.sixes);
             match.teamHomePlayers[i].points =
               x.runs + 1 * x.fours + 2 * x.sixes;
             match.teamHomePlayers[i].runs = x.runs;
@@ -86,7 +84,6 @@ module.exports.addTeamstandingstodb = async function () {
             parseInt(match.teamHomePlayers[i].playerId) ===
             parseInt(x.player_id)
           ) {
-            console.log(x.runs + 1 * x.fours + 2 * x.sixes);
             match.teamAwayPlayers[i].overs = x.overs;
             match.teamAwayPlayers[i].maidens = x.maidens;
             match.teamAwayPlayers[i].runsConceded = x.runs_conceded;

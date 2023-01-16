@@ -10,7 +10,7 @@ const teamdata = require("./controllers/getplayerscontroller");
 const auth = require("./controllers/user_controller");
 const everyday = require("./controllers/matchDB-controller");
 const everydayboy = require("./controllers/addlivedetailsnew");
-const eva = require("./controllers/updatestandings");
+const eva = require("./controllers/addlivescoresdetails");
 const evas = require("./controllers/updateteam");
 const team = require("./controllers/teamcontroller");
 /* Requiring body-parser package
@@ -47,9 +47,7 @@ async function everydaybro() {
 async function everydayguy() {
   await evas.addTeamstandingstodb();
 }
-k = Buffer.from("jwalagutta", "base64").toString();
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
-  console.log(k);
   console.warn(`App listening on http://localhost:${PORT}`);
 });

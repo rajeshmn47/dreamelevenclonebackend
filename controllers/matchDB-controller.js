@@ -31,7 +31,6 @@ function getplayerImage(name) {
   let s = "";
   request(options, function (error, response, body) {
     s = JSON.parse(body);
-    console.log(s, s.data[0].image_path, "s");
   });
   return s;
 }
@@ -72,7 +71,6 @@ module.exports.addMatchtoDb = async function () {
         }
         // console.log(body)
         let s = JSON.parse(body);
-        console.log(s);
         resolve(s);
       });
     });
@@ -135,19 +133,10 @@ module.exports.addMatchtoDb = async function () {
                 ];
                 contest1.prizeDetails = prizeDetails;
                 contest1.numWinners = 5;
-                console.log(
-                  contest1.price +
-                    " " +
-                    contest1.totalSpots +
-                    contest1.spotsLeft +
-                    contest1.matchId
-                );
                 try {
                   let contest2 = await Contest.create(contest1);
-                  console.log(obj.results[i].match_subtitle);
                   if (contest2) {
                     match1.contestId.push(contest2.id);
-                    console.log("Succesfully created the contest");
                   }
                 } catch (err) {
                   console.log("Error : " + err);

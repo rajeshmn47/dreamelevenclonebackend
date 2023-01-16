@@ -60,7 +60,6 @@ router.get("/home", async (req, res) => {
     liveStatus = "Line-ups are not out yet!";
     mat.livestatus = liveStatus;
     var matt = await LiveMatches.findOne({ matchId: matches[i].matchId });
-    console.log(matt, "try");
     if (matt) {
       if (matt.result == "No" || !matt.result) {
         if (matt.status) {
@@ -70,11 +69,9 @@ router.get("/home", async (req, res) => {
         liveMatches.results.push(mat);
       } else {
         mat.result = "Yes";
-        console.log("lkjh");
         completedMatches.results.push(mat);
       }
     } else {
-      console.log(matt, "okvrruto");
       upcomingMatches.results.push(mat);
     }
   }
