@@ -6,9 +6,13 @@ var express = require("express");
 const router = express.Router();
 const everydayboys = require("./addlivescores");
 const Match = require("../models/match");
+const Team = require("../models/team");
 const User = require("../models/user");
+const Contest = require("../models/contest");
+const MatchLiveDetails = require("../models/match_live_details_new");
 
-router.get("/home", async (req, res) => {
+router.get("/home/:userid", async (req, res) => {
+  console.log(req.params.userid, "userid");
   let upcomingMatches = {
     results: [],
   };
@@ -60,6 +64,17 @@ router.get("/home", async (req, res) => {
     liveStatus = "Line-ups are not out yet!";
     mat.livestatus = liveStatus;
     var matt = await LiveMatches.findOne({ matchId: matches[i].matchId });
+    let contests = [];
+    let teams = [];
+    if (req.params.userid) {
+      contests = await Contest.find({
+        userIds: req.params.userid,
+        matchId: matches[i].matchId,
+      });
+      teams = await Team.find({
+        $and: [{ matchId: matches[i].matchId }, { userId: req.params.userid }],
+      });
+    }
     if (matt) {
       if (matt.result == "No" || !matt.result) {
         if (matt.status) {
@@ -69,7 +84,11 @@ router.get("/home", async (req, res) => {
         liveMatches.results.push(mat);
       } else {
         mat.result = "Yes";
-        completedMatches.results.push(mat);
+        if (contests.length > 0 || teams.length > 0) {
+          mat.contests = contests;
+          mat.teams = teams;
+          completedMatches.results.push(mat);
+        }
       }
     } else {
       upcomingMatches.results.push(mat);
@@ -86,6 +105,13 @@ router.get("/home", async (req, res) => {
 
 router.get("/getmatch/:id", async (req, res) => {
   const match = await Match.findOne({ matchId: req.params.id });
+  res.status(200).json({
+    match: match,
+  });
+});
+
+router.get("/getmatchlive/:id", async (req, res) => {
+  const match = await MatchLiveDetails.findOne({ matchId: req.params.id });
   res.status(200).json({
     match: match,
   });
