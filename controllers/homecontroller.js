@@ -118,7 +118,7 @@ router.get("/getmatchlive/:id", async (req, res) => {
 });
 
 router.get("/userdata", async (req, res) => {
-  const users = await User.find();
+  const users = await User.find()
   res.status(200).json({
     users: users,
   });
