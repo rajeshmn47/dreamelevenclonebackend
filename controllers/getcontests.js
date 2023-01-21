@@ -9,6 +9,13 @@ var express = require("express");
 const router = express.Router();
 const everydayboys = require("./addlivescores");
 
+function findrank(id, arr) {
+  let aid = id.toString();
+  var y = arr.find((a, index) => index == id);
+  console.log(y, "why");
+  return y.rank;
+}
+
 router.get("/getcontests/:id", async (req, res) => {
   const contests = await Contest.find({ matchId: req.params.id });
   res.status(200).json({
@@ -61,23 +68,44 @@ router.get("/getteamsofcontest/:id", async (req, res) => {
 });
 
 router.get("/getjoinedcontest/:id", async (req, res) => {
-  console.log(req.query,'query')
+  console.log(req.query, "query");
   const contests = await Contest.find({
     matchId: req.params.id,
     userIds: req.query.userid,
   });
   const teams = [];
   const contestsArray = [];
-  console.log(contests.length,'lenmghth')
+  const teamsarray = [];
   for (let i = 0; i < contests.length; i++) {
+    let arr = [];
     for (let j = 0; j < contests[i].teamsId.length; j++) {
-      console.log(contests[i].teamsId[j]);
       const team = await Team.findById(contests[i].teamsId[j]);
-      if(team?.userId==req.query.userid){
-        team.number=j;
-      contestsArray.push({ contests: contests[i], team: team });
+      if (team) {
+        if (!team.points) {
+          team.points = 44;
+        }
+        arr.push(team);
       }
+    }
+
+    arr = arr.sort(function (a, b) {
+      return b?.points - a?.points;
+    });
+    for (let x = 0; x < arr.length; x++) {
+      console.log(x, "x");
+      const user = await User.findById(arr[x].userId);
+      if (arr[x].userId == req.query.userid) {
+        contestsArray.push({
+          contests: contests[i],
+          team: {
+            ...arr[x]._doc,
+            rank: x + 1,
+            username: user.username,
+            teamnumber: x + 1,
+          },
+        });
       }
+    }
   }
   res.status(200).json({
     contests: contestsArray,

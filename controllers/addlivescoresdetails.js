@@ -136,7 +136,7 @@ module.exports.addLivematchtodb = async function () {
 
             let batting = batting1.concat(batting2);
             let bowling = bowling1.concat(bowling2);
-         
+
             for (let i = 0; i < teamHomePlayers.length; i++) {
               for (let j = 0; j < batting.length; j++) {
                 if (teamHomePlayers[i].playerID == batting[j].player_id) {
