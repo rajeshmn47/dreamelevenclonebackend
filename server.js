@@ -47,6 +47,7 @@ async function everydaybro() {
 async function everydayguy() {
   await evas.addTeamstandingstodb();
 }
+
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
   console.warn(`App listening on http://localhost:${PORT}`);

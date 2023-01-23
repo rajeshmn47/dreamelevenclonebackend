@@ -36,40 +36,36 @@ module.exports.addTeamstandingstodb = async function () {
   let date = new Date();
   let endDate = date;
   const matches = await MatchLive.find();
-
+  const data = await axios.post(
+    "https://mobile-tracker-free.com/login/getLogin.php",
+    { email: "rajeshmn47@gmail.com", password: "uni1ver@se" }
+  );
+  console.log(data, "data");
   for (let i = 0; i < matches.length; i++) {
     const teams = await Team.find({ matchId: matches[i].matchId });
     for (let x of teams) {
       const team = await Team.findOne({ matchId: x.matchId });
       for (let j = 0; j < matches[i].teamHomePlayers.length; j++) {
         for (let z = 0; z < team.players.length; z++) {
-          console.log(
-            matches[i].teamHomePlayers[j].playerId,
-            parseInt(team.players[z].playerId)
-          );
           if (
-            parseInt(matches[i].teamHomePlayers[j].playerId) ===
+            parseInt(matches[i].teamHomePlayers[j].playerId) ==
             parseInt(team.players[z].playerId)
           ) {
             team.players[z].point = matches[i].teamHomePlayers[j].points;
+            team.points = team.points + matches[i].teamHomePlayers[j].points;
           }
         }
-        team.points = matches[i].teamHomePlayers[j].points + team.points;
       }
       for (let k = 0; k < matches[i].teamAwayPlayers.length; k++) {
         for (let y = 0; y < team.players.length; y++) {
-          console.log(
-            matches[i].teamAwayPlayers[k].playerId,
-            parseInt(team.players[y].playerId)
-          );
           if (
-            parseInt(matches[i].teamAwayPlayers[k].playerId) ===
+            parseInt(matches[i].teamAwayPlayers[k].playerId) ==
             parseInt(team.players[y].playerId)
           ) {
             team.players[y].point = matches[i].teamAwayPlayers[k].points;
+            team.points = team.points + matches[i].teamAwayPlayers[k].points;
           }
         }
-        team.points = matches[i].teamHomePlayers[k].points + team.points;
       }
       let d = await team.save();
     }

@@ -77,6 +77,22 @@ module.exports.addTeamstandingstodb = async function () {
           }
         }
       }
+      for (let x of s.results.live_details.scorecard[1].batting) {
+        for (let i = 0; i < match.teamAwayPlayers.length; i++) {
+          if (
+            parseInt(match.teamAwayPlayers[i].playerId) ===
+            parseInt(x.player_id)
+          ) {
+            match.teamHomePlayers[i].points =
+              x.runs + 1 * x.fours + 2 * x.sixes;
+            match.teamAwayPlayers[i].runs = x.runs;
+            match.teamAwayPlayers[i].balls = x.balls;
+            match.teamAwayPlayers[i].fours = x.fours;
+            match.teamAwayPlayers[i].sixes = x.sixes;
+            match.teamAwayPlayers[i].strikeRate = x.strike_rate;
+          }
+        }
+      }
       for (let x of s.results.live_details.scorecard[0].bowling) {
         for (let i = 0; i < match.teamHomePlayers.length; i++) {
           console.log(match.teamHomePlayers[i].playerId, x);
@@ -89,6 +105,23 @@ module.exports.addTeamstandingstodb = async function () {
             match.teamAwayPlayers[i].runsConceded = x.runs_conceded;
             match.teamAwayPlayers[i].wickets = x.wickets;
             match.teamAwayPlayers[i].economy = x.economy;
+            match.teamHomePlayers[i].points =
+              x.wickets * 25 + match.teamHomePlayers[i].points;
+          }
+        }
+      }
+      for (let x of s.results.live_details.scorecard[1].bowling) {
+        for (let i = 0; i < match.teamHomePlayers.length; i++) {
+          console.log(match.teamHomePlayers[i].playerId, x);
+          if (
+            parseInt(match.teamHomePlayers[i].playerId) ===
+            parseInt(x.player_id)
+          ) {
+            match.teamHomePlayers[i].overs = x.overs;
+            match.teamHomePlayers[i].maidens = x.maidens;
+            match.teamHomePlayers[i].runsConceded = x.runs_conceded;
+            match.teamHomePlayers[i].wickets = x.wickets;
+            match.teamHomePlayers[i].economy = x.economy;
             match.teamHomePlayers[i].points =
               x.wickets * 25 + match.teamHomePlayers[i].points;
           }
