@@ -92,7 +92,7 @@ router.get("/getjoinedcontest/:id", async (req, res) => {
       return b?.points - a?.points;
     });
     for (let x = 0; x < arr.length; x++) {
-      console.log(x, "x");
+      console.log(x, "xyz");
       const user = await User.findById(arr[x].userId);
       if (arr[x].userId == req.query.userid) {
         contestsArray.push({
