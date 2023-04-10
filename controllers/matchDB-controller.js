@@ -90,6 +90,7 @@ module.exports.addMatchtoDb = async function () {
           match1.teamHomeName = obj.results[i].home.name;
           match1.teamAwayName = obj.results[i].away.name;
           match1.date = obj.results[i].date;
+          console.log(obj.results[i]);
           if (obj.results[i].home.code == "") {
             continue;
           } else {
@@ -101,6 +102,7 @@ module.exports.addMatchtoDb = async function () {
             match1.teamAwayCode = obj.results[i].away.code;
           }
           try {
+            console.log(obj.results[i].home, "tch");
             let match = await Match.findOne({ matchId: matchId });
             if (!match) {
               let prize = [10000, 5000, 4000, 500];

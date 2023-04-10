@@ -17,4 +17,12 @@ router.get("/getplayers/:id", async (req, res) => {
   });
 });
 
+router.get("/getplayers", async (req, res) => {
+  console.log("getplayers");
+  const players = await Players.find();
+  res.status(200).json({
+    players: players,
+  });
+});
+
 module.exports = router;

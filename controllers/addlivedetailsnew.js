@@ -18,20 +18,7 @@ function compare(a, b) {
 
 let io = 1;
 async function getplayerImage(name) {
-  var k = name.split(" ")[0];
-  var config = {
-    method: "get",
-    url: `https://cricket.sportmonks.com/api/v2.0/players?filter[lastname]=sachin&api_token=
-        fTWhOiGhie6YtMBmpbw10skSjTmSgwHeLg22euC5qLMR1oT1eC6PRc8sEulv`,
-    headers: {},
-  };
-
-  let s = await axios(config).catch(function (error) {
-    console.log(error);
-  });
-  let PlayerS = new Player();
-
-  return s.data.data.length > 0 ? s.data.data[0].image_path : "";
+  return "https://cdn.sportmonks.com/images/cricket/placeholder.png";
 }
 
 module.exports.addLivematchtodb = async function () {
@@ -73,6 +60,7 @@ module.exports.addLivematchtodb = async function () {
       });
       promise
         .then(async (s) => {
+          console.log(s.results);
           if (
             s.results.live_details != null &&
             s.results.live_details.teamsheets.home.length != 0
@@ -113,7 +101,6 @@ module.exports.addLivematchtodb = async function () {
 
               LiveMatchDet.teamAwayPlayers.push(playerDet);
             }
-
             let match = await MatchLive.create(LiveMatchDet);
             if (match) {
               console.log(

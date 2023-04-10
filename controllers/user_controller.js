@@ -192,7 +192,9 @@ router.post("/otp", async (req, res) => {
 router.post("/login", async (req, res) => {
   const user = await User.findOne({ email: req.body.myform.email });
   if (user) {
+    console.log(user, "user");
     if (user.password === req.body.myform.password) {
+      console.log(user, "user");
       var userid = user._id;
       const token = jwt.sign({ userid }, activatekey, {
         expiresIn: "50000000m",

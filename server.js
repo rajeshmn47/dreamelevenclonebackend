@@ -20,8 +20,6 @@ const bodyParser = require("body-parser");
 // Allowing app to use body parser
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
-const url = "http://localhost:3000";
-const krl = "https://stackoverflowclonefrontend.netlify.app";
 app.use(cors({ origin: "*", credentials: false }));
 app.use("/", home);
 app.use("/", contest);
@@ -41,13 +39,12 @@ mongoose.connect(
     }
   }
 );
-async function everydaybro() {
-  await everydayboy.addLivematchtodb();
+async function add() {
+  await everyday.addMatchtoDb();
 }
-async function everydayguy() {
+async function addmore() {
   await evas.addTeamstandingstodb();
 }
-
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
   console.warn(`App listening on http://localhost:${PORT}`);
