@@ -64,7 +64,12 @@ cron.schedule(
   "*/5 * * * *",
   function () {
     console.log(new Date().getHours(), new Date().getMinutes(), "hours");
-    if (new Date().getHours() > 14 && (new Date().getHours() < 18 && new Date().getMinutes()<20)) {
+    if (
+      new Date().getHours() > 13 &&
+      new Date().getMinutes() > 20 &&
+      new Date().getHours() < 17 &&
+      new Date().getMinutes() < 20
+    ) {
       console.log("rajesh");
       addmore();
     }
@@ -73,7 +78,6 @@ cron.schedule(
   true,
   "America/Los_Angeles"
 );
-
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
