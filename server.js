@@ -61,12 +61,25 @@ cron.schedule(
   "America/Los_Angeles"
 );
 cron.schedule(
-  "*/1 * * * *",
+  "*/5 * * * *",
   function () {
-    console.log(new Date().getHours(),new Date().getMinutes(), "hours");
+    console.log(new Date().getHours(), new Date().getMinutes(), "hours");
     if (new Date().getHours() > 12 && new Date().getHours() < 17) {
       console.log("rajesh");
       addmore();
+    }
+  },
+  null,
+  true,
+  "America/Los_Angeles"
+);
+
+cron.schedule(
+  "*/5 * * * * *",
+  function () {
+    console.log(new Date().getHours(), new Date().getMinutes(), "hours");
+    if (new Date().getHours() > 12 && new Date().getHours() < 17) {
+      console.log("rajesh");
     }
   },
   null,
