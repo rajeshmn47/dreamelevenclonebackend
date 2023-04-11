@@ -63,8 +63,8 @@ cron.schedule(
 cron.schedule(
   "*/1 * * * *",
   function () {
-    console.log(date.getHours(),date.getMinutes(), "hours");
-    if (date.getHours() > 12 && date.getHours() < 17) {
+    console.log(new Date().getHours(),new Date().getMinutes(), "hours");
+    if (new Date().getHours() > 12 && new Date().getHours() < 17) {
       console.log("rajesh");
       addmore();
     }
