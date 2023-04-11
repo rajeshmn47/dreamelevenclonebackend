@@ -48,9 +48,15 @@ function pointCalculator(runs, fours, sixes, strikeRate, wicket, economy) {
   }
   return totalPoints;
 }
-
+let date = new Date();
+let endDate = date;
 module.exports.addLivematchtodb = async function () {
-  const matches = await MatchLive.find();
+  const matches = await MatchLive.find({
+    date: {
+      $gte: Date(date),
+      $lt: Date(endDate),
+    },
+  });
   for (let i = 0; i < matches.length; i++) {
     let matchId = matches[i].matchId;
     console.log(matchId, "matchid");

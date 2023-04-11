@@ -4,6 +4,9 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 var express = require("express");
 const cricLive = require("cric-live");
+var cron = require("node-cron");
+var nodemailer = require("nodemailer");
+var smtpTransport = require("nodemailer-smtp-transport");
 const home = require("./controllers/homecontroller");
 const contest = require("./controllers/getcontests");
 const teamdata = require("./controllers/getplayerscontroller");
@@ -39,12 +42,38 @@ mongoose.connect(
     }
   }
 );
+let api_key =
+  "s16rcBDzWjgNhJXPEUV9HA3QMSfvpen2GyL7a4F8ubdwICk5KOHPT32vI5b6cSxs8JpUhirCOjqogGwk";
 async function add() {
-  await everyday.addMatchtoDb();
+  await everydayboy.addLivematchtodb();
 }
 async function addmore() {
-  await evas.addTeamstandingstodb();
+  await eva.addLivematchtodb();
 }
+let date = new Date();
+cron.schedule(
+  "05 19 * * *",
+  function () {
+    add();
+  },
+  null,
+  true,
+  "America/Los_Angeles"
+);
+cron.schedule(
+  "*/1 * * * *",
+  function () {
+    console.log(date.getHours(), "hours");
+    if (date.getHours() > 18 && date.getHours() < 23) {
+      console.log("rajesh");
+      addmore();
+    }
+  },
+  null,
+  true,
+  "America/Los_Angeles"
+);
+
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
   console.warn(`App listening on http://localhost:${PORT}`);
