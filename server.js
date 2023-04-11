@@ -52,7 +52,7 @@ async function addmore() {
 }
 let date = new Date();
 cron.schedule(
-  "05 13 * * *",
+  "05 12 * * *",
   function () {
     add();
   },
@@ -64,7 +64,7 @@ cron.schedule(
   "*/5 * * * *",
   function () {
     console.log(new Date().getHours(), new Date().getMinutes(), "hours");
-    if (new Date().getHours() > 12 && new Date().getHours() < 17) {
+    if (new Date().getHours() > 14 && (new Date().getHours() < 18 && new Date().getMinutes()<20)) {
       console.log("rajesh");
       addmore();
     }
@@ -74,18 +74,6 @@ cron.schedule(
   "America/Los_Angeles"
 );
 
-cron.schedule(
-  "*/5 * * * * *",
-  function () {
-    console.log(new Date().getHours(), new Date().getMinutes(), "hours");
-    if (new Date().getHours() > 12 && new Date().getHours() < 17) {
-      console.log("rajesh");
-    }
-  },
-  null,
-  true,
-  "America/Los_Angeles"
-);
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
