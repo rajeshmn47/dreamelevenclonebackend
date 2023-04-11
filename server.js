@@ -52,7 +52,7 @@ async function addmore() {
 }
 let date = new Date();
 cron.schedule(
-  "05 19 * * *",
+  "05 13 * * *",
   function () {
     add();
   },
@@ -63,8 +63,8 @@ cron.schedule(
 cron.schedule(
   "*/1 * * * *",
   function () {
-    console.log(date.getHours(), "hours");
-    if (date.getHours() > 18 && date.getHours() < 23) {
+    console.log(date.getHours(),date.getMinutes(), "hours");
+    if (date.getHours() > 12 && date.getHours() < 17) {
       console.log("rajesh");
       addmore();
     }
