@@ -61,6 +61,7 @@ module.exports.addLivematchtodb = async function () {
     let matchId = matches[i].matchId;
     console.log(matchId, "matchid");
     let match = await MatchLive.findOne({ matchId: matchId });
+    let matid = await Match.findOne({ matchId: matchId });
     if (!match) {
       console.log("matchalreadyexists");
     } else {

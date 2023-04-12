@@ -112,6 +112,7 @@ router.get("/getmatch/:id", async (req, res) => {
 
 router.get("/getmatchlive/:id", async (req, res) => {
   const match = await MatchLiveDetails.findOne({ matchId: req.params.id });
+  console.log('masthhudgi',match)
   res.status(200).json({
     match: match,
   });

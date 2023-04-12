@@ -10,6 +10,28 @@ const matchDetailsSecondSchema = new mongoose.Schema(
       unique: true,
       lowercase: true,
     },
+    commentary: [
+      {
+        comment_text: {
+          type: String,
+          trim: true,
+          required: true,
+          lowercase: true,
+        },
+        eventType: {
+          type: String,
+          trim: true,
+          required: true,
+          lowercase: true,
+        },
+        overNum: {
+          type: String,
+          trim: true,
+          required: true,
+          lowercase: true,
+        },
+      },
+    ],
     teamHomePlayers: [
       {
         playerId: {

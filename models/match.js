@@ -10,7 +10,13 @@ const matchSchema = new mongoose.Schema(
       unique: true,
       lowercase: true,
     },
-
+    cmtMatchId: {
+      type: String,
+      trim: true,
+      required: false,
+      unique: true,
+      lowercase: true,
+    },
     teamHomeName: {
       type: String,
       trim: true,
