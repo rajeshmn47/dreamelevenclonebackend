@@ -16,6 +16,7 @@ const matchSchema = new mongoose.Schema(
       required: false,
       unique: true,
       lowercase: true,
+      default: "",
     },
     teamHomeName: {
       type: String,

@@ -16,6 +16,7 @@ const everydayboy = require("./controllers/addlivedetailsnew");
 const eva = require("./controllers/addlivescoresdetails");
 const evas = require("./controllers/updateteam");
 const team = require("./controllers/teamcontroller");
+const comment = require("./controllers/addCommentary");
 /* Requiring body-parser package
 to fetch the data that is entered
 by the user in the HTML form.*/
@@ -64,12 +65,7 @@ cron.schedule(
   "*/5 * * * *",
   function () {
     console.log(new Date().getHours(), new Date().getMinutes(), "hours");
-    if (
-      new Date().getHours() > 13 &&
-      new Date().getMinutes() > 20 &&
-      new Date().getHours() < 17 &&
-      new Date().getMinutes() < 20
-    ) {
+    if (new Date().getHours() > 13 && new Date().getHours() < 17) {
       console.log("rajesh");
       addmore();
     }
@@ -78,7 +74,7 @@ cron.schedule(
   true,
   "America/Los_Angeles"
 );
-
+comment.addcommentary();
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
   console.warn(`App listening on http://localhost:${PORT}`);

@@ -25,13 +25,68 @@ module.exports.addLivematchtodb = async function () {
   const turing = await MatchLive();
   let date = new Date();
   let endDate = new Date(date.getTime() + 0.5 * 60 * 60 * 1000);
-  const matches = await Match.find({
-    date: {
-      $gte: Date(date),
-      $lt: Date(endDate),
+  const matches = await Match.find();
+  const axios = require("axios");
+
+  const optionss = {
+    method: "GET",
+    url: "https://unofficial-cricbuzz.p.rapidapi.com/matches/get-scorecard",
+    params: { matchId: "40381" },
+    headers: {
+      "X-RapidAPI-Key": "3ddef92f6emsh8301b1a8e1fd478p15bb8bjsnd0bb5446cadc",
+      "X-RapidAPI-Host": "unofficial-cricbuzz.p.rapidapi.com",
     },
+  };
+  let promise = new Promise((resolve, reject) => {
+    request(optionss, function (error, response, body) {
+      if (error) {
+        reject(error);
+      }
+      console.log(body, "software");
+      resolve(body);
+    });
   });
-  console.log(matches, "matches");
+  promise.then(async (s) => {
+    for (let i = 0; i < s.scheduleAdWrapper.length; i++) {
+      matches.forEach((e) => console.log(new Date(e.date).getDate(), "rajesh"));
+      let ms = matches.filter(
+        (m) =>
+          new Date(m.date).getDate() ==
+            new Date(
+              parseInt(
+                s.scheduleAdWrapper[i]?.matchScheduleMap?.matchScheduleList[0]
+                  ?.matchInfo[0].startDate
+              )
+            ).getDate() &&
+          new Date(m.date).getMonth() ==
+            new Date(
+              parseInt(
+                s.scheduleAdWrapper[i]?.matchScheduleMap?.matchScheduleList[0]
+                  ?.matchInfo[0].startDate
+              )
+            ).getMonth()
+      );
+      let mt = ms.filter(
+        (m) =>
+          m.teamHomeCode.toUpperCase() ==
+          s.scheduleAdWrapper[i].matchScheduleMap.matchScheduleList[0]
+            .matchInfo[0].team1.teamSName
+      );
+      for (let t = 0; t < mt.length; t++) {
+        const matchUpdate = await Match.updateOne(
+          { matchId: mt[t].matchId },
+          {
+            $set: {
+              cmtMatchId:
+                s.scheduleAdWrapper[i]?.matchScheduleMap?.matchScheduleList[0]
+                  ?.matchInfo[0].matchId,
+            },
+          }
+        );
+        console.log(matchUpdate, mt, "datopposite");
+      }
+    }
+  });
   for (let i = 0; i < matches.length; i++) {
     let matchId = matches[i].matchId;
     let match = await MatchLive.findOne({ matchId: matchId });

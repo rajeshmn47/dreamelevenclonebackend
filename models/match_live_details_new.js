@@ -10,25 +10,33 @@ const matchDetailsSecondSchema = new mongoose.Schema(
       unique: true,
       lowercase: true,
     },
+    cmtMatchId: {
+      type: String,
+      trim: true,
+      required: false,
+      unique: true,
+      lowercase: true,
+      default: "",
+    },
     commentary: [
       {
         comment_text: {
           type: String,
           trim: true,
-          required: true,
           lowercase: true,
+          default: "",
         },
         eventType: {
           type: String,
           trim: true,
-          required: true,
           lowercase: true,
+          default: "",
         },
         overNum: {
           type: String,
           trim: true,
-          required: true,
           lowercase: true,
+          default: "",
         },
       },
     ],

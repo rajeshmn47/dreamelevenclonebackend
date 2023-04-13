@@ -23,7 +23,9 @@ router.get("/home/:userid", async (req, res) => {
     results: [],
   };
   const matches = await Matches.find();
+  var my = await Matches.findOne({ matchId: "2679235" });
   const datawe = await LiveMatches.find();
+  console.log(datawe, "dta");
   const players = await Players.find();
   for (let i = 0; i < matches.length; i++) {
     teamAwayFlagUrl = flagURLs.findFlagUrlByCountryName(
