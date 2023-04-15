@@ -24,83 +24,28 @@ async function getplayerImage(name) {
 module.exports.addLivematchtodb = async function () {
   const turing = await MatchLive();
   let date = new Date();
-  let endDate = new Date(date.getTime() + 0.5 * 60 * 60 * 1000);
-  const matches = await Match.find();
-  const axios = require("axios");
-
-  const optionss = {
-    method: "GET",
-    url: "https://unofficial-cricbuzz.p.rapidapi.com/matches/get-scorecard",
-    params: { matchId: "40381" },
-    headers: {
-      "X-RapidAPI-Key": "3ddef92f6emsh8301b1a8e1fd478p15bb8bjsnd0bb5446cadc",
-      "X-RapidAPI-Host": "unofficial-cricbuzz.p.rapidapi.com",
+  let endDate = new Date(date.getTime() + 24 * 60 * 60 * 1000);
+  date = new Date(date.getTime() - 24 * 60 * 60 * 1000);
+  const matches = await Match.find({
+    date: {
+      $gte: new Date(date),
+      $lt: new Date(endDate),
     },
-  };
-  let promise = new Promise((resolve, reject) => {
-    request(optionss, function (error, response, body) {
-      if (error) {
-        reject(error);
-      }
-      console.log(body, "software");
-      resolve(body);
-    });
   });
-  promise.then(async (s) => {
-    for (let i = 0; i < s.scheduleAdWrapper.length; i++) {
-      matches.forEach((e) => console.log(new Date(e.date).getDate(), "rajesh"));
-      let ms = matches.filter(
-        (m) =>
-          new Date(m.date).getDate() ==
-            new Date(
-              parseInt(
-                s.scheduleAdWrapper[i]?.matchScheduleMap?.matchScheduleList[0]
-                  ?.matchInfo[0].startDate
-              )
-            ).getDate() &&
-          new Date(m.date).getMonth() ==
-            new Date(
-              parseInt(
-                s.scheduleAdWrapper[i]?.matchScheduleMap?.matchScheduleList[0]
-                  ?.matchInfo[0].startDate
-              )
-            ).getMonth()
-      );
-      let mt = ms.filter(
-        (m) =>
-          m.teamHomeCode.toUpperCase() ==
-          s.scheduleAdWrapper[i].matchScheduleMap.matchScheduleList[0]
-            .matchInfo[0].team1.teamSName
-      );
-      for (let t = 0; t < mt.length; t++) {
-        const matchUpdate = await Match.updateOne(
-          { matchId: mt[t].matchId },
-          {
-            $set: {
-              cmtMatchId:
-                s.scheduleAdWrapper[i]?.matchScheduleMap?.matchScheduleList[0]
-                  ?.matchInfo[0].matchId,
-            },
-          }
-        );
-        console.log(matchUpdate, mt, "datopposite");
-      }
-    }
-  });
+  console.log(matches, "iamr");
   for (let i = 0; i < matches.length; i++) {
-    let matchId = matches[i].matchId;
+    let matchId =matches[i].matchId
     let match = await MatchLive.findOne({ matchId: matchId });
     if (match) {
       console.log("matchalreadyexists");
     } else {
-      const date1 = matches[i].date;
+      const date1 = '2679243';
       const options = {
         method: "GET",
         url: `https://cricket-live-data.p.rapidapi.com/match/${matchId}`,
         headers: {
           "x-rapidapi-host": "cricket-live-data.p.rapidapi.com",
-          "x-rapidapi-key":
-            "29c032b76emsh6616803b28338c2p19f6c1jsn8c7ad47ac806",
+          "X-RapidAPI-Key": "0ca5f248dfmsh14b3f2bec1e6137p1edc89jsne867dd098231",
           useQueryString: true,
         },
       };
@@ -116,6 +61,7 @@ module.exports.addLivematchtodb = async function () {
       });
       promise
         .then(async (s) => {
+          console.log(s, "s");
           if (
             s.results.live_details != null &&
             s.results.live_details.teamsheets.home.length != 0

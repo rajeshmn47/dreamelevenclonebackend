@@ -2,9 +2,25 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const cors = require("cors");
+const mongoose = require("mongoose");
 const server = require("http").createServer(app);
 const User = require("./models/user");
 const Matches = require("./models/match_live_details_new");
+const { setTimeout } = require("timers");
+
+const uri =
+  "mongodb+srv://rajeshmn47:uni1ver%40se@cluster0.bpxam.mongodb.net/mydreamDatabaseSecond?retryWrites=true&w=majority";
+
+mongoose.Promise = global.Promise;
+mongoose.connect(
+  uri,
+  { useNewUrlParser: true, useUnifiedTopology: true },
+  function (error) {
+    if (error) {
+      console.log("Error!" + error);
+    }
+  }
+);
 
 const io = require("socket.io")(server, {
   cors: {
@@ -42,23 +58,36 @@ io.on("connection", (socket) => {
   });
   socket.on("join", (data) => {
     const { matchid } = data;
-    console.log(data,matchid,'da') // Data sent from client when join_room event emitted
+    socket.join("timer");
+    console.log(data, matchid, "da"); // Data sent from client when join_room event emitted
     socket.join(matchid);
-    rooms = [matchid, ...rooms];
+    k = rooms.find((r) => r == matchid);
+    if (!k) {
+      rooms = [matchid, ...rooms];
+    }
+  });
+  socket.on("leave", (data) => {
+    console.log(data, "leftroom");
+    socket.leave(data.matchid);
   });
   // echo globally (all clients) that a person has connected
-  setInterval(async () => {
-    for (let i = 0; i < rooms.length; i++) {
-      io.to('2679235').emit("newcommentary", {
-        commentary: 'my',
-      });
-      console.log(i,'room',rooms)
-      var my = await Matches.find();
-      console.log(my,'my')
-    }
-  }, 8000);
+
   // when the client emits 'add user', this listens and executes
-
 });
+let k = 0;
 
-// when
+
+
+setInterval(async() => {
+  for (let i = 0; i < rooms.length; i++) {
+    Matches.findOne({ matchId:  rooms[i]}, function (err, match) {
+      if (!err) {
+            io.sockets.in(rooms[i]).emit("newcommentary", {
+              commentary: match?.commentary,
+            });
+      } else {
+        console.log(err);
+      }
+    });
+  }
+}, 10000);
