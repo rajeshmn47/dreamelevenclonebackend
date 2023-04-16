@@ -74,7 +74,6 @@ cron.schedule(
   true,
   "America/Los_Angeles"
 );
-eva.addLivematchtodb()
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
   console.warn(`App listening on http://localhost:${PORT}`);
