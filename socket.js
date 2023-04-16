@@ -35,17 +35,8 @@ server.listen(port, () => {
 
 // Routing
 app.use(express.static(path.join(__dirname, "public")));
-app.use(
-  cors({
-    origin: [
-      "https://addictivemediafrontend.vercel.app",
-      "http://127.0.0.1:3000/",
-      "http://127.0.0.1:3001",
-      "http://localhost:3000",
-      "http://localhost:8000",
-    ],
-  })
-);
+app.use(cors({ origin: "*", credentials: false }));
+
 // Chatroom
 
 let rooms = [];
@@ -80,14 +71,14 @@ let k = 0;
 
 setInterval(async() => {
   for (let i = 0; i < rooms.length; i++) {
-    Matches.findOne({ matchId:  rooms[i]}, function (err, match) {
-      if (!err) {
+    console.log(rooms[i],'room')
+    const match=await Matches.findOne({ matchId:  rooms[i]})
+      if (match) {
             io.sockets.in(rooms[i]).emit("newcommentary", {
-              commentary: match?.commentary,
+              commentary: match?.commentary[(match?.commentary?.length)-1],
             });
       } else {
         console.log(err);
       }
-    });
   }
 }, 10000);
