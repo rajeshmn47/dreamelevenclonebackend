@@ -59,6 +59,7 @@ router.get("/home/:userid", async (req, res) => {
       result: "",
       status: "",
       inPlay: "",
+      lineups: "",
       teamHomeFlagUrl: teamHomeFlagUrl,
       teamAwayFlagUrl: teamAwayFlagUrl,
     };
@@ -83,6 +84,7 @@ router.get("/home/:userid", async (req, res) => {
           mat.livestatus = matt.status;
         }
         mat.result = "No";
+        mat.lineups = "Lineups are out";
         liveMatches.results.push(mat);
       } else {
         mat.result = "Yes";
@@ -93,6 +95,9 @@ router.get("/home/:userid", async (req, res) => {
         }
       }
     } else {
+      if (matt?.teamHomePlayers?.length > 0) {
+        mat.lineups = "Lineups are out";
+      }
       upcomingMatches.results.push(mat);
     }
   }

@@ -48,15 +48,18 @@ function pointCalculator(runs, fours, sixes, strikeRate, wicket, economy) {
   }
   return totalPoints;
 }
-let date = new Date();
-let endDate = date;
+
 module.exports.addLivematchtodb = async function () {
-  const matches = await MatchLive.find({
+  let date = new Date();
+  let endDate = new Date(date.getTime() + 24 * 60 * 60 * 1000 * 2);
+  date = new Date(date.getTime() - 24 * 60 * 60 * 1000 * 2);
+  const matches = await Match.find({
     date: {
-      $gte: Date(date),
-      $lt: Date(endDate),
+      $gte: new Date(date),
+      $lt: new Date(endDate),
     },
   });
+  console.log(matches, "testing");
   for (let i = 0; i < matches.length; i++) {
     let matchId = matches[i].matchId;
     console.log(matchId, "matchid");
@@ -71,8 +74,7 @@ module.exports.addLivematchtodb = async function () {
         url: `https://cricket-live-data.p.rapidapi.com/match/${matchId}`,
         headers: {
           "x-rapidapi-host": "cricket-live-data.p.rapidapi.com",
-          "x-rapidapi-key":
-            "29c032b76emsh6616803b28338c2p19f6c1jsn8c7ad47ac806",
+          "X-RapidAPI-Key": `${process.env.API_KEY}`,
           useQueryString: true,
         },
       };

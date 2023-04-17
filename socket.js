@@ -67,18 +67,16 @@ io.on("connection", (socket) => {
 });
 let k = 0;
 
-
-
-setInterval(async() => {
+setInterval(async () => {
   for (let i = 0; i < rooms.length; i++) {
-    console.log(rooms[i],'room')
-    const match=await Matches.findOne({ matchId:  rooms[i]})
-      if (match) {
-            io.sockets.in(rooms[i]).emit("newcommentary", {
-              commentary: match?.commentary[(match?.commentary?.length)-1],
-            });
-      } else {
-        console.log(err);
-      }
+    console.log(rooms[i], "room");
+    const match = await Matches.findOne({ matchId: rooms[i] });
+    if (match) {
+      io.sockets.in(rooms[i]).emit("newcommentary", {
+        commentary: match?.commentary[match?.commentary?.length - 1],
+      });
+    } else {
+      console.log(err);
+    }
   }
 }, 10000);

@@ -45,7 +45,7 @@ module.exports.addTeamstandingstodb = async function () {
       url: `https://cricket-live-data.p.rapidapi.com/match/${matchId}`,
       headers: {
         "x-rapidapi-host": "cricket-live-data.p.rapidapi.com",
-        "x-rapidapi-key": "29c032b76emsh6616803b28338c2p19f6c1jsn8c7ad47ac806",
+        "x-rapidapi-key": `${process.env.API_KEY}`,
         useQueryString: true,
       },
     };
@@ -61,7 +61,7 @@ module.exports.addTeamstandingstodb = async function () {
     });
     promise.then(async (s) => {
       const match = await MatchLive.findOne({ matchId: matchId });
-      for (let x of s.results.live_details.scorecard[0].batting) {
+      for (let x of s?.results?.live_details?.scorecard[0]?.batting) {
         for (let i = 0; i < match.teamHomePlayers.length; i++) {
           if (
             parseInt(match.teamHomePlayers[i].playerId) ===

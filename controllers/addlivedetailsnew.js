@@ -34,18 +34,18 @@ module.exports.addLivematchtodb = async function () {
   });
   console.log(matches, "iamr");
   for (let i = 0; i < matches.length; i++) {
-    let matchId =matches[i].matchId
+    let matchId = matches[i].matchId;
     let match = await MatchLive.findOne({ matchId: matchId });
     if (match) {
       console.log("matchalreadyexists");
     } else {
-      const date1 = '2679243';
+      const date1 = "2679243";
       const options = {
         method: "GET",
         url: `https://cricket-live-data.p.rapidapi.com/match/${matchId}`,
         headers: {
           "x-rapidapi-host": "cricket-live-data.p.rapidapi.com",
-          "X-RapidAPI-Key": "0ca5f248dfmsh14b3f2bec1e6137p1edc89jsne867dd098231",
+          "X-RapidAPI-Key": `${process.env.API_KEY}`,
           useQueryString: true,
         },
       };

@@ -1,3 +1,4 @@
+require("dotenv").config();
 var express = require("express");
 var app = express();
 const mongoose = require("mongoose");
@@ -14,9 +15,10 @@ const auth = require("./controllers/user_controller");
 const everyday = require("./controllers/matchDB-controller");
 const everydayboy = require("./controllers/addlivedetailsnew");
 const eva = require("./controllers/addlivescoresdetails");
-const evas = require("./controllers/updateteam");
+const evas = require("./controllers/updatestandings");
 const team = require("./controllers/teamcontroller");
 const comment = require("./controllers/addCommentary");
+// Environment variables
 /* Requiring body-parser package
 to fetch the data that is entered
 by the user in the HTML form.*/
@@ -32,7 +34,6 @@ app.use("/", team);
 app.use("/auth", auth);
 const uri =
   "mongodb+srv://rajeshmn47:uni1ver%40se@cluster0.bpxam.mongodb.net/mydreamDatabaseSecond?retryWrites=true&w=majority";
-
 mongoose.Promise = global.Promise;
 mongoose.connect(
   uri,

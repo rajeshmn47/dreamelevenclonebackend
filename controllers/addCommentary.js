@@ -64,7 +64,7 @@ module.exports.addcommentary = async function () {
     url: "https://unofficial-cricbuzz.p.rapidapi.com/matches/get-commentaries",
     params: { matchId: "41881" },
     headers: {
-      "X-RapidAPI-Key": "3ddef92f6emsh8301b1a8e1fd478p15bb8bjsnd0bb5446cadc",
+      "X-RapidAPI-Key": `${process.env.API_KEY}`,
       "X-RapidAPI-Host": "unofficial-cricbuzz.p.rapidapi.com",
     },
   };

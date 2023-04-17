@@ -6,6 +6,7 @@
     "country-flags-svg": "^1.1.6",
     "cric-live": "^1.0.19",
     "cron": "^2.3.0",
+    "dotenv": "^16.0.3",
     "express": "^4.18.1",
     "fast-two-sms": "^3.0.0",
     "jsonwebtoken": "^8.5.1",
