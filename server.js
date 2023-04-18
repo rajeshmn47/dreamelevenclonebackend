@@ -56,7 +56,7 @@ let date = new Date();
 cron.schedule(
   "05 12 * * *",
   function () {
-    add();
+    //add();
   },
   null,
   true,
@@ -68,7 +68,7 @@ cron.schedule(
     console.log(new Date().getHours(), new Date().getMinutes(), "hours");
     if (new Date().getHours() > 13 && new Date().getHours() < 17) {
       console.log("rajesh");
-      addmore();
+      //addmore();
     }
   },
   null,

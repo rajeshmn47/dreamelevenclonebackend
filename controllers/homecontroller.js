@@ -12,6 +12,7 @@ const Contest = require("../models/contest");
 const MatchLiveDetails = require("../models/match_live_details_new");
 
 router.get("/home/:userid", async (req, res) => {
+  let stime = new Date().getSeconds();
   console.log(req.params.userid, "userid");
   let upcomingMatches = {
     results: [],
@@ -23,10 +24,6 @@ router.get("/home/:userid", async (req, res) => {
     results: [],
   };
   const matches = await Matches.find();
-  var my = await Matches.findOne({ matchId: "2679235" });
-  const datawe = await LiveMatches.find();
-  console.log(datawe, "dta");
-  const players = await Players.find();
   for (let i = 0; i < matches.length; i++) {
     teamAwayFlagUrl = flagURLs.findFlagUrlByCountryName(
       matches[i].teamAwayName
@@ -69,15 +66,6 @@ router.get("/home/:userid", async (req, res) => {
     var matt = await LiveMatches.findOne({ matchId: matches[i].matchId });
     let contests = [];
     let teams = [];
-    if (req.params.userid) {
-      contests = await Contest.find({
-        userIds: req.params.userid,
-        matchId: matches[i].matchId,
-      });
-      teams = await Team.find({
-        $and: [{ matchId: matches[i].matchId }, { userId: req.params.userid }],
-      });
-    }
     if (matt) {
       if (matt.result == "No" || !matt.result) {
         if (matt.status) {
@@ -88,6 +76,20 @@ router.get("/home/:userid", async (req, res) => {
         liveMatches.results.push(mat);
       } else {
         mat.result = "Yes";
+        if (matt && (completedMatches.results.length < 1)) {
+          if (req.params.userid) {
+            contests = await Contest.find({
+              userIds: req.params.userid,
+              matchId: matches[i].matchId,
+            });
+            teams = await Team.find({
+              $and: [
+                { matchId: matches[i].matchId },
+                { userId: req.params.userid },
+              ],
+            });
+          }
+        }
         if (contests.length > 0 || teams.length > 0) {
           mat.contests = contests;
           mat.teams = teams;
@@ -101,12 +103,22 @@ router.get("/home/:userid", async (req, res) => {
       upcomingMatches.results.push(mat);
     }
   }
+  const etime = new Date().getSeconds();
+  console.log(etime - stime, "totlal time");
   res.status(200).json({
     upcoming: upcomingMatches,
     past: completedMatches,
     live: liveMatches,
     new: matches,
-    players: players,
+  });
+});
+
+router.get("/completed/:userid", async (req, res) => {
+  res.status(200).json({
+    upcoming: upcomingMatches,
+    past: completedMatches,
+    live: liveMatches,
+    new: matches,
   });
 });
 
