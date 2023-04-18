@@ -23,7 +23,18 @@ router.get("/home/:userid", async (req, res) => {
   let liveMatches = {
     results: [],
   };
-  const matches = await Matches.find();
+  let date = new Date();
+  date.setDate(date.getDate() - 1);
+  let startDate = date.toISOString();
+  date.setDate(date.getDate() + 6);
+  let endDate = date.toISOString();
+  let matches = await Matches.find({
+    date: {
+      $gte: new Date(startDate),
+      $lt: new Date(endDate),
+    },
+  });
+  console.log(matches, "mathes");
   for (let i = 0; i < matches.length; i++) {
     teamAwayFlagUrl = flagURLs.findFlagUrlByCountryName(
       matches[i].teamAwayName
@@ -76,7 +87,7 @@ router.get("/home/:userid", async (req, res) => {
         liveMatches.results.push(mat);
       } else {
         mat.result = "Yes";
-        if (matt && (completedMatches.results.length < 1)) {
+        if (matt && completedMatches.results.length < 1) {
           if (req.params.userid) {
             contests = await Contest.find({
               userIds: req.params.userid,
