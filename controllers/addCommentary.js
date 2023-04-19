@@ -60,12 +60,12 @@ module.exports.addcommentary = async function () {
   const matches = await Match.find();
 
   const options = {
-    method: 'GET',
-    url: 'https://cricbuzz-cricket.p.rapidapi.com/mcenter/v1/66285/comm',
+    method: "GET",
+    url: "https://cricbuzz-cricket.p.rapidapi.com/mcenter/v1/66285/comm",
     headers: {
-      'X-RapidAPI-Key': '3ddef92f6emsh8301b1a8e1fd478p15bb8bjsnd0bb5446cadc',
-      'X-RapidAPI-Host': 'cricbuzz-cricket.p.rapidapi.com'
-    }
+      "X-RapidAPI-Key": "3ddef92f6emsh8301b1a8e1fd478p15bb8bjsnd0bb5446cadc",
+      "X-RapidAPI-Host": "cricbuzz-cricket.p.rapidapi.com",
+    },
   };
 
   axios
@@ -80,7 +80,7 @@ module.exports.addcommentary = async function () {
         ms.commentary.push({
           comment_text: e?.commText ? e.commText : "",
           eventType: e?.event ? e.event : "",
-          over: e?.overNumber ? e.overNumber: "",
+          over: e?.overNumber ? e.overNumber : "",
         })
       );
       await ms.save();

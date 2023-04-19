@@ -82,30 +82,29 @@ router.get("/home/:userid", async (req, res) => {
         if (matt.status) {
           mat.livestatus = matt.status;
         }
-        if((!(matt.inPlay=="Yes"))&&(matt?.teamHomePlayers?.length > 0)){
-          upcomingMatches.results.push(mat)
-          mat.lineups = "LineUps are out";
-        }
-        else{
-        mat.result = "No";
-        mat.lineups = "LineUps are out";
-        if (req.params.userid) {
-          contests = await Contest.find({
-            userIds: req.params.userid,
-            matchId: matches[i].matchId,
-          });
-          teams = await Team.find({
-            $and: [
-              { matchId: matches[i].matchId },
-              { userId: req.params.userid },
-            ],
-          });
-        }
-        if (contests.length > 0 || teams.length > 0) {
-          mat.contests = contests;
-          mat.teams = teams;
-          liveMatches.results.push(mat);
-        }
+        if (!(matt.inPlay == "Yes") && matt?.teamHomePlayers?.length > 0) {
+          upcomingMatches.results.push(mat);
+          mat.lineups = "Lineups Out";
+        } else {
+          mat.result = "No";
+          mat.lineups = "Lineups Out";
+          if (req.params.userid) {
+            contests = await Contest.find({
+              userIds: req.params.userid,
+              matchId: matches[i].matchId,
+            });
+            teams = await Team.find({
+              $and: [
+                { matchId: matches[i].matchId },
+                { userId: req.params.userid },
+              ],
+            });
+          }
+          if (contests.length > 0 || teams.length > 0) {
+            mat.contests = contests;
+            mat.teams = teams;
+            liveMatches.results.push(mat);
+          }
         }
       } else {
         mat.result = "Yes";
@@ -131,7 +130,7 @@ router.get("/home/:userid", async (req, res) => {
       }
     } else {
       if (matt?.teamHomePlayers?.length > 0) {
-        mat.lineups = "LineUps are out";
+        mat.lineups = "Lineups Out";
       }
       upcomingMatches.results.push(mat);
     }
@@ -147,11 +146,85 @@ router.get("/home/:userid", async (req, res) => {
 });
 
 router.get("/completed/:userid", async (req, res) => {
+  let stime = new Date().getSeconds();
+  console.log(req.params.userid, "userid");
+  let completedMatches = {
+    results: [],
+  };
+  let date = new Date();
+  date.setDate(date.getDate() - 1);
+  let startDate = date.toISOString();
+  date.setDate(date.getDate() + 6);
+  let endDate = date.toISOString();
+  let matches = await Matches.find();
+  console.log(matches, "mathes");
+  for (let i = 0; i < matches.length; i++) {
+    teamAwayFlagUrl = flagURLs.findFlagUrlByCountryName(
+      matches[i].teamAwayName
+    );
+    teamHomeFlagUrl = flagURLs.findFlagUrlByCountryName(
+      matches[i].teamHomeName
+    );
+    if (!teamAwayFlagUrl) {
+      teamAwayFlagUrl =
+        "https://i.pinimg.com/originals/1b/56/5b/1b565bb93bbc6968be498ccb00504e8f.jpg";
+    }
+    if (!teamHomeFlagUrl) {
+      teamHomeFlagUrl =
+        "https://i.pinimg.com/originals/1b/56/5b/1b565bb93bbc6968be498ccb00504e8f.jpg";
+    }
+    let match = matches[i];
+    let mat = {
+      match_title: match.matchTitle,
+      home: {
+        name: match.teamHomeName,
+        code: match.teamHomeCode.toUpperCase(),
+      },
+      away: {
+        name: match.teamAwayName,
+        code: match.teamAwayCode.toUpperCase(),
+      },
+      date: match.date,
+      id: match.matchId,
+      livestatus: "",
+      result: "",
+      status: "",
+      inPlay: "",
+      lineups: "",
+      teamHomeFlagUrl: teamHomeFlagUrl,
+      teamAwayFlagUrl: teamAwayFlagUrl,
+    };
+
+    liveStatus = "Line-ups are not out yet!";
+    mat.livestatus = liveStatus;
+    var matt = await LiveMatches.findOne({ matchId: matches[i].matchId });
+    let contests = [];
+    let teams = [];
+    if (matt && matt.inPlay == "Yes") {
+      mat.result = "Yes";
+      if (req.params.userid) {
+        contests = await Contest.find({
+          userIds: req.params.userid,
+          matchId: matches[i].matchId,
+        });
+        teams = await Team.find({
+          $and: [
+            { matchId: matches[i].matchId },
+            { userId: req.params.userid },
+          ],
+        });
+      }
+    }
+    if (contests.length > 0 || teams.length > 0) {
+      mat.contests = contests;
+      mat.teams = teams;
+      completedMatches.results.push(mat);
+    }
+  }
+  const etime = new Date().getSeconds();
+  console.log(etime - stime, "totlal time");
   res.status(200).json({
-    upcoming: upcomingMatches,
-    past: completedMatches,
-    live: liveMatches,
-    new: matches,
+    completed: completedMatches,
   });
 });
 

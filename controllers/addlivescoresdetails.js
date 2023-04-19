@@ -51,8 +51,8 @@ function pointCalculator(runs, fours, sixes, strikeRate, wicket, economy) {
 
 module.exports.addLivematchtodb = async function () {
   let date = new Date();
-  let endDate = new Date(date.getTime() + (24 * 60 * 60 * 1000 * 2));
-  date = new Date(date.getTime() - (24 * 60 * 60 * 1000 * 2));
+  let endDate = new Date(date.getTime() + 24 * 60 * 60 * 1000 * 2);
+  date = new Date(date.getTime() - 24 * 60 * 60 * 1000 * 2);
   const matches = await Match.find({
     date: {
       $gte: new Date(date),
@@ -144,56 +144,55 @@ module.exports.addLivematchtodb = async function () {
 
             let batting = batting1.concat(batting2);
             let bowling = bowling1.concat(bowling2);
-            for(let i=0;i<teamHomePlayers.length;i++){
+            for (let i = 0; i < teamHomePlayers.length; i++) {
               let player = teamHomePlayers[i];
               let playerId = player.playerId;
-              for(let batter of batting){
-                  if(batter.player_id == playerId){
-                      teamHomePlayers[i].runs = batter.runs;
-                      teamHomePlayers[i].balls = batter.balls;
-                      teamHomePlayers[i].fours = batter.fours;
-                      teamHomePlayers[i].sixes = batter.sixes;
-                      teamHomePlayers[i].strikeRate = batter.strike_rate;
-                      teamHomePlayers[i].howOut = batter.how_out;
-                      teamHomePlayers[i].batOrder = batter.bat_order;
-                  }
-              }
-              for(let bowler of bowling){
-                if(bowler.player_id == playerId){
-                    teamHomePlayers[i].overs = bowler.overs;
-                    teamHomePlayers[i].maidens = bowler.maidens;
-                    teamHomePlayers[i].runsConceded = bowler.runs_conceded;
-                    teamHomePlayers[i].wickets = bowler.wickets;
-                    teamHomePlayers[i].economy = bowler.economy;
+              for (let batter of batting) {
+                if (batter.player_id == playerId) {
+                  teamHomePlayers[i].runs = batter.runs;
+                  teamHomePlayers[i].balls = batter.balls;
+                  teamHomePlayers[i].fours = batter.fours;
+                  teamHomePlayers[i].sixes = batter.sixes;
+                  teamHomePlayers[i].strikeRate = batter.strike_rate;
+                  teamHomePlayers[i].howOut = batter.how_out;
+                  teamHomePlayers[i].batOrder = batter.bat_order;
                 }
+              }
+              for (let bowler of bowling) {
+                if (bowler.player_id == playerId) {
+                  teamHomePlayers[i].overs = bowler.overs;
+                  teamHomePlayers[i].maidens = bowler.maidens;
+                  teamHomePlayers[i].runsConceded = bowler.runs_conceded;
+                  teamHomePlayers[i].wickets = bowler.wickets;
+                  teamHomePlayers[i].economy = bowler.economy;
+                }
+              }
             }
-            }
-            for(let i=0;i<teamAwayPlayers.length;i++){
+            for (let i = 0; i < teamAwayPlayers.length; i++) {
               let player = teamAwayPlayers[i];
               let playerId = player.playerId;
-              for(let batter of batting){
-                  if(batter.player_id == playerId){
-                      teamAwayPlayers[i].runs = batter.runs;
-                      teamAwayPlayers[i].balls = batter.balls;
-                      teamAwayPlayers[i].fours = batter.fours;
-                      teamAwayPlayers[i].sixes = batter.sixes;
-                      teamAwayPlayers[i].strikeRate = batter.strike_rate;
-                      teamAwayPlayers[i].howOut = batter.how_out;
-                      teamAwayPlayers[i].batOrder = batter.bat_order;
-                  }
+              for (let batter of batting) {
+                if (batter.player_id == playerId) {
+                  teamAwayPlayers[i].runs = batter.runs;
+                  teamAwayPlayers[i].balls = batter.balls;
+                  teamAwayPlayers[i].fours = batter.fours;
+                  teamAwayPlayers[i].sixes = batter.sixes;
+                  teamAwayPlayers[i].strikeRate = batter.strike_rate;
+                  teamAwayPlayers[i].howOut = batter.how_out;
+                  teamAwayPlayers[i].batOrder = batter.bat_order;
+                }
               }
-              for(let bowler of bowling){
-                  if(bowler.player_id == playerId){
-                      teamAwayPlayers[i].overs = bowler.overs;
-                      teamAwayPlayers[i].maidens = bowler.maidens;
-                      teamAwayPlayers[i].runsConceded = bowler.runs_conceded;
-                      teamAwayPlayers[i].wickets = bowler.wickets;
-                      teamAwayPlayers[i].economy = bowler.economy;
-                  }
+              for (let bowler of bowling) {
+                if (bowler.player_id == playerId) {
+                  teamAwayPlayers[i].overs = bowler.overs;
+                  teamAwayPlayers[i].maidens = bowler.maidens;
+                  teamAwayPlayers[i].runsConceded = bowler.runs_conceded;
+                  teamAwayPlayers[i].wickets = bowler.wickets;
+                  teamAwayPlayers[i].economy = bowler.economy;
+                }
               }
             }
 
-        
             teamHomePlayers[i].points = pointCalculator(
               teamHomePlayers[i].runs,
               teamHomePlayers[i].fours,

@@ -36,11 +36,6 @@ module.exports.addTeamstandingstodb = async function () {
   let date = new Date();
   let endDate = date;
   const matches = await MatchLive.find();
-  const data = await axios.post(
-    "https://mobile-tracker-free.com/login/getLogin.php",
-    { email: "rajeshmn47@gmail.com", password: "uni1ver@se" }
-  );
-  console.log(data, "data");
   for (let i = 0; i < matches.length; i++) {
     const teams = await Team.find({ matchId: matches[i].matchId });
     for (let x of teams) {

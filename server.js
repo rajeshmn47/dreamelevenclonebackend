@@ -16,7 +16,7 @@ const team = require("./controllers/teamcontroller");
 const matches = require("./controllers/matchDB-controller");
 const livedetails = require("./controllers/addlivedetailsnew");
 const livescore = require("./controllers/addlivescoresdetails");
-const teamstandings = require("./controllers/updatestandings");
+const teamstandings = require("./controllers/updateteam");
 const comment = require("./controllers/addCommentary");
 // Environment variables
 /* Requiring body-parser package
