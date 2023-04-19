@@ -71,9 +71,11 @@ setInterval(async () => {
   for (let i = 0; i < rooms.length; i++) {
     console.log(rooms[i], "room");
     const match = await Matches.findOne({ matchId: rooms[i] });
+    let notfound = { comment_text: "sex hit", eventType: "six", overNum: "5" };
     if (match) {
       io.sockets.in(rooms[i]).emit("newcommentary", {
-        commentary: match?.commentary[match?.commentary?.length - 1],
+        commentary:
+          match?.commentary[match?.commentary?.length - 1] || notfound,
       });
     } else {
       console.log(err);

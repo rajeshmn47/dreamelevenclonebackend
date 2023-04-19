@@ -60,28 +60,27 @@ module.exports.addcommentary = async function () {
   const matches = await Match.find();
 
   const options = {
-    method: "GET",
-    url: "https://unofficial-cricbuzz.p.rapidapi.com/matches/get-commentaries",
-    params: { matchId: "41881" },
+    method: 'GET',
+    url: 'https://cricbuzz-cricket.p.rapidapi.com/mcenter/v1/66285/comm',
     headers: {
-      "X-RapidAPI-Key": `${process.env.API_KEY}`,
-      "X-RapidAPI-Host": "unofficial-cricbuzz.p.rapidapi.com",
-    },
+      'X-RapidAPI-Key': '3ddef92f6emsh8301b1a8e1fd478p15bb8bjsnd0bb5446cadc',
+      'X-RapidAPI-Host': 'cricbuzz-cricket.p.rapidapi.com'
+    }
   };
 
   axios
     .request(options)
     .then(async function (response) {
-      console.log(response.data.commentaryLines, "helbeda");
+      console.log(response.data, "helbeda");
       let gnu = [];
       const ms = await MatchLiveDetails.findOne({
-        matchId: "2679235",
+        matchId: "2719011",
       });
-      response.data.commentaryLines.forEach((e) =>
+      response.data.commentaryList.forEach((e) =>
         ms.commentary.push({
-          comment_text: e?.commentary?.commtxt ? e.commentary.commtxt : "",
-          eventType: e?.commentary?.eventType ? e.commentary.eventType : "",
-          over: e?.commentary?.overNum ? e.commentary.overNum : "",
+          comment_text: e?.commText ? e.commText : "",
+          eventType: e?.event ? e.event : "",
+          over: e?.overNumber ? e.overNumber: "",
         })
       );
       await ms.save();
