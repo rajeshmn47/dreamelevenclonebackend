@@ -82,9 +82,31 @@ router.get("/home/:userid", async (req, res) => {
         if (matt.status) {
           mat.livestatus = matt.status;
         }
+        if((!(matt.inPlay=="Yes"))&&(matt?.teamHomePlayers?.length > 0)){
+          upcomingMatches.results.push(mat)
+          mat.lineups = "LineUps are out";
+        }
+        else{
         mat.result = "No";
-        mat.lineups = "Lineups are out";
-        liveMatches.results.push(mat);
+        mat.lineups = "LineUps are out";
+        if (req.params.userid) {
+          contests = await Contest.find({
+            userIds: req.params.userid,
+            matchId: matches[i].matchId,
+          });
+          teams = await Team.find({
+            $and: [
+              { matchId: matches[i].matchId },
+              { userId: req.params.userid },
+            ],
+          });
+        }
+        if (contests.length > 0 || teams.length > 0) {
+          mat.contests = contests;
+          mat.teams = teams;
+          liveMatches.results.push(mat);
+        }
+        }
       } else {
         mat.result = "Yes";
         if (matt && completedMatches.results.length < 1) {
@@ -109,7 +131,7 @@ router.get("/home/:userid", async (req, res) => {
       }
     } else {
       if (matt?.teamHomePlayers?.length > 0) {
-        mat.lineups = "Lineups are out";
+        mat.lineups = "LineUps are out";
       }
       upcomingMatches.results.push(mat);
     }

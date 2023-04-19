@@ -12,11 +12,11 @@ const home = require("./controllers/homecontroller");
 const contest = require("./controllers/getcontests");
 const teamdata = require("./controllers/getplayerscontroller");
 const auth = require("./controllers/user_controller");
-const everyday = require("./controllers/matchDB-controller");
-const everydayboy = require("./controllers/addlivedetailsnew");
-const eva = require("./controllers/addlivescoresdetails");
-const evas = require("./controllers/updatestandings");
 const team = require("./controllers/teamcontroller");
+const matches = require("./controllers/matchDB-controller");
+const livedetails = require("./controllers/addlivedetailsnew");
+const livescore = require("./controllers/addlivescoresdetails");
+const teamstandings = require("./controllers/updatestandings");
 const comment = require("./controllers/addCommentary");
 // Environment variables
 /* Requiring body-parser package
