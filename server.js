@@ -18,6 +18,7 @@ const livedetails = require("./controllers/addlivedetailsnew");
 const livescore = require("./controllers/addlivescoresdetails");
 const teamstandings = require("./controllers/updateteam");
 const comment = require("./controllers/addCommentary");
+const addIds = require("./controllers/addMatchIds");
 // Environment variables
 /* Requiring body-parser package
 to fetch the data that is entered
@@ -75,6 +76,7 @@ cron.schedule(
   true,
   "America/Los_Angeles"
 );
+addIds.addMatchIds();
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
   console.warn(`App listening on http://localhost:${PORT}`);

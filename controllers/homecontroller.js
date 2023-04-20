@@ -24,9 +24,9 @@ router.get("/home/:userid", async (req, res) => {
     results: [],
   };
   let date = new Date();
-  date.setDate(date.getDate() - 1);
+  date.setDate(date.getDate() - 13);
   let startDate = date.toISOString();
-  date.setDate(date.getDate() + 6);
+  date.setDate(date.getDate() + 16);
   let endDate = date.toISOString();
   let matches = await Matches.find({
     date: {
