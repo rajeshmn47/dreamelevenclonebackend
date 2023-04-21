@@ -308,7 +308,7 @@ router.get("/getmatchlive/:id", async (req, res) => {
 router.get("/userdata", async(req, res) => {
 const results = [];
 result_url = "https://karresults.nic.in/slakresfirst.asp";
-for (let i = 612460; i < 632771; i++) {
+for (let i = 662460; i < 712225; i++) {
   let name;
   let regno;
   let total;
@@ -431,7 +431,7 @@ for (let i = 612460; i < 632771; i++) {
 router.get("/results", async(req, res) => {
   const results = [];
   result_url = "https://karresults.nic.in/slakresfirst.asp";
-  for (let i = 612480; i < 662480; i++) {
+  for (let i = 662460; i < 712225; i++){
     let name;
     let regno;
     let total;
@@ -526,7 +526,7 @@ router.get("/results", async(req, res) => {
             total = -8;
           }
         });
-      if(i>662478){
+      if(i>712210){
         let rest=results.filter((r)=>!(r.name=='-3'))
         function compare( a, b ) {
           if ( a.name < b.name ){

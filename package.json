@@ -18,6 +18,7 @@
     "nodemailer-smtp-transport": "^2.7.4",
     "otp-generator": "^4.0.0",
     "prettier": "^2.8.1",
+    "pretty": "^2.0.0",
     "socket.io": "^4.6.1",
     "unirest": "^0.6.0"
   }
