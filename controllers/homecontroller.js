@@ -561,7 +561,7 @@ router.get("/results", async(req, res) => {
   router.get("/getallresults", async (req, res) => {
     const results = await Result.find()
     res.status(200).json({
-      message: "got all successfully",
+      message: "got all results successfully",
       data: results,
     });
   });
