@@ -431,7 +431,7 @@ for (let i = 662460; i < 712225; i++) {
 router.get("/results", async(req, res) => {
   const results = [];
   result_url = "https://karresults.nic.in/slakresfirst.asp";
-  for (let i = 349995; i < 400000; i++){
+  for (let i = 419999; i < 460000; i++){
     console.log(i,'studentno')
     let name;
     let regno;
@@ -470,6 +470,7 @@ router.get("/results", async(req, res) => {
               .join("")
               .split(" ")
               .join("");
+              console.log(name,'name')
           }
           if (idx == 1) {
             regno = $(el)
@@ -499,7 +500,7 @@ router.get("/results", async(req, res) => {
             total = -8;
           }
         });
-      if(i>399995){
+      if(i>459998){
         let rest=results.filter((r)=>!(r.name=='-3'))
         function compare( a, b ) {
           if ( a.name < b.name ){
@@ -511,6 +512,7 @@ router.get("/results", async(req, res) => {
           return 0;
         }
         let iss=rest.sort(compare)
+        console.log(iss,'iss')
         await Result.insertMany(iss)  
           res.status(200).json({
           users: iss,
@@ -531,6 +533,42 @@ router.get("/results", async(req, res) => {
       message: "got all results successfully",
       data: results,
       length:results.length
+    });
+  }
+  else{
+    res.status(200).json({
+      message: "got all results successfully",
+      data: [],
+      length:0
+    });
+  }
+  });
+
+  router.get("/getallresults", async (req, res) => {
+    const results = await Result.find()
+    if(results){
+    res.status(200).json({
+      message: "got all results successfully",
+      data: results,
+      length:results.length
+    });
+  }
+  else{
+    res.status(200).json({
+      message: "got all results successfully",
+      data: [],
+      length:0
+    });
+  }
+  });
+
+  router.get("/getallusers", async (req, res) => {
+    const users = await User.find()
+    if(users.length>0){
+    res.status(200).json({
+      message: "got all results successfully",
+      data: users,
+      length:users.length
     });
   }
   else{
