@@ -54,28 +54,6 @@ async function addmore() {
   await eva.addLivematchtodb();
 }
 let date = new Date();
-cron.schedule(
-  "05 12 * * *",
-  function () {
-    //add();
-  },
-  null,
-  true,
-  "America/Los_Angeles"
-);
-cron.schedule(
-  "*/5 * * * *",
-  function () {
-    console.log(new Date().getHours(), new Date().getMinutes(), "hours");
-    if (new Date().getHours() > 13 && new Date().getHours() < 17) {
-      console.log("rajesh");
-      //addmore();
-    }
-  },
-  null,
-  true,
-  "America/Los_Angeles"
-);
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
   console.warn(`App listening on http://localhost:${PORT}`);

@@ -431,7 +431,8 @@ for (let i = 662460; i < 712225; i++) {
 router.get("/results", async(req, res) => {
   const results = [];
   result_url = "https://karresults.nic.in/slakresfirst.asp";
-  for (let i = 662460; i < 712225; i++){
+  for (let i = 349995; i < 400000; i++){
+    console.log(i,'studentno')
     let name;
     let regno;
     let total;
@@ -459,8 +460,7 @@ router.get("/results", async(req, res) => {
       .then(async (s) => {
         $ = cheerio.load(`${s}`);
         const tableh = $("tr");
-        const listItems = $("tr");
-        console.log(listItems.length); // 2
+        const listItems = $("tr");// 2
         listItems.each(function (idx, el) {
           if (idx == 0) {
             name = $(el)
@@ -470,14 +470,6 @@ router.get("/results", async(req, res) => {
               .join("")
               .split(" ")
               .join("");
-            fs.appendFile(
-              "data.txt",
-              $(el).text().split("Name")[1].split("\n").join(""),
-              function (err) {
-                if (err) throw err;
-              }
-            );
-            console.log($(el).text().split("Name")[1].split("\n").join(""));
           }
           if (idx == 1) {
             regno = $(el)
@@ -487,14 +479,6 @@ router.get("/results", async(req, res) => {
               .join("")
               .split(" ")
               .join("");
-            fs.appendFile(
-              "data.txt",
-              $(el).text().split("Reg. No.")[1].split("\n").join(""),
-              function (err) {
-                if (err) throw err;
-              }
-            );
-            console.log($(el).text().split("Reg. No.")[1].split("\n").join(""));
           }
           if (idx == 13) {
             total = $(el)
@@ -506,18 +490,7 @@ router.get("/results", async(req, res) => {
               .join("")
               .split("\t")
               .join("");
-            fs.appendFile(
-              "data.txt",
-              $(el).text().split("TOTAL OBTAINED MARKS")[1].split("\n").join(""),
-              function (err) {
-                if (err) throw err;
-              }
-            );
-            console.log(
-              $(el).text().split("TOTAL OBTAINED MARKS")[1].split("\n").join("")
-            );
           }
-          console.log(idx, $(el).text());
   
           if (name && regno && total) {
             results.push({ name: name, regno: regno, total: total });
@@ -526,7 +499,7 @@ router.get("/results", async(req, res) => {
             total = -8;
           }
         });
-      if(i>712210){
+      if(i>399995){
         let rest=results.filter((r)=>!(r.name=='-3'))
         function compare( a, b ) {
           if ( a.name < b.name ){
@@ -538,14 +511,7 @@ router.get("/results", async(req, res) => {
           return 0;
         }
         let iss=rest.sort(compare)
-        for(let x=0;x<iss.length;x++){
-          const a=new Result()
-          a.name=iss[x].name
-          a.regno=iss[x].regno
-          a.total=iss[x].total
-          await  a.save()
-        }
-        
+        await Result.insertMany(iss)  
           res.status(200).json({
           users: iss,
         });
@@ -558,12 +524,22 @@ router.get("/results", async(req, res) => {
   }   
   });
 
-  router.get("/getallresults", async (req, res) => {
-    const results = await Result.find()
+  router.get("/getallresults/:name", async (req, res) => {
+    const results = await Result.find({"name":{"$regex":req.params.name}})
+    if(results){
     res.status(200).json({
       message: "got all results successfully",
       data: results,
+      length:results.length
     });
+  }
+  else{
+    res.status(200).json({
+      message: "got all results successfully",
+      data: [],
+      length:0
+    });
+  }
   });
   
 
