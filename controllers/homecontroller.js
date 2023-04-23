@@ -4,7 +4,10 @@ const cheerio = require("cheerio");
 const axios = require("axios");
 const request = require("request");
 const pretty = require("pretty");
-const Result = require("../models/results")
+var randomname = require("random-indian-name");
+const createMobilePhoneNumber = require("random-mobile-numbers");
+var randomEmail = require("random-email");
+const Result = require("../models/results");
 const fs = require("fs");
 const Players = require("../models/players");
 const flagURLs = require("country-flags-svg");
@@ -305,134 +308,12 @@ router.get("/getmatchlive/:id", async (req, res) => {
   });
 });
 
-router.get("/userdata", async(req, res) => {
-const results = [];
-result_url = "https://karresults.nic.in/slakresfirst.asp";
-for (let i = 662460; i < 712225; i++) {
-  let name;
-  let regno;
-  let total;
-  data = { reg: i, ddlsub: "S" };
-  const options = {
-    method: "post",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    url: result_url,
-    body: `frmpuc_tokens=0.7482416&reg=${i}&ddlsub=S`,
-  };
-  let dom;
-  let promise = new Promise((resolve, reject) => {
-    request(options, function (error, response, body) {
-      if (error) {
-        reject(error);
-      }
-      // console.log(body)
-      resolve(body);
-    });
-  });
 
-  promise
-    .then(async (s) => {
-      $ = cheerio.load(`${s}`);
-      const tableh = $("tr");
-      const listItems = $("tr");
-      console.log(listItems.length); // 2
-      listItems.each(function (idx, el) {
-        if (idx == 0) {
-          name = $(el)
-            .text()
-            .split("Name")[1]
-            .split("\n")
-            .join("")
-            .split(" ")
-            .join("");
-          fs.appendFile(
-            "data.txt",
-            $(el).text().split("Name")[1].split("\n").join(""),
-            function (err) {
-              if (err) throw err;
-            }
-          );
-          console.log($(el).text().split("Name")[1].split("\n").join(""));
-        }
-        if (idx == 1) {
-          regno = $(el)
-            .text()
-            .split("Reg. No.")[1]
-            .split("\n")
-            .join("")
-            .split(" ")
-            .join("");
-          fs.appendFile(
-            "data.txt",
-            $(el).text().split("Reg. No.")[1].split("\n").join(""),
-            function (err) {
-              if (err) throw err;
-            }
-          );
-          console.log($(el).text().split("Reg. No.")[1].split("\n").join(""));
-        }
-        if (idx == 13) {
-          total = $(el)
-            .text()
-            .split("TOTAL OBTAINED MARKS")[1]
-            .split("\n")
-            .join("")
-            .split(" ")
-            .join("")
-            .split("\t")
-            .join("");
-          fs.appendFile(
-            "data.txt",
-            $(el).text().split("TOTAL OBTAINED MARKS")[1].split("\n").join(""),
-            function (err) {
-              if (err) throw err;
-            }
-          );
-          console.log(
-            $(el).text().split("TOTAL OBTAINED MARKS")[1].split("\n").join("")
-          );
-        }
-        console.log(idx, $(el).text());
 
-        if (name && regno && total) {
-          results.push({ name: name, regno: regno, total: total });
-          name = -3;
-          regno = -4;
-          total = -8;
-        }
-      });
-    if(results.length>20000){
-      let rest=results.filter((r)=>!(r.name=='-3'))
-      function compare( a, b ) {
-        if ( a.last_nom < b.last_nom ){
-          return -1;
-        }
-        if ( a.last_nom > b.last_nom ){
-          return 1;
-        }
-        return 0;
-      }
-      let iss=rest.sort(compare)
-        res.status(200).json({
-        users: iss,
-      });
-    }   
-})
-    .catch((err) => {
-      console.log("Error : " + err);
-    });
-
-}   
-
-});
-
-router.get("/results", async(req, res) => {
+router.get("/results", async (req, res) => {
   const results = [];
   result_url = "https://karresults.nic.in/slakresfirst.asp";
-  for (let i = 419999; i < 460000; i++){
-    console.log(i,'studentno')
+  for (let i = 800000; i < 900000; i++) {
     let name;
     let regno;
     let total;
@@ -455,12 +336,12 @@ router.get("/results", async(req, res) => {
         resolve(body);
       });
     });
-  
+
     promise
       .then(async (s) => {
         $ = cheerio.load(`${s}`);
         const tableh = $("tr");
-        const listItems = $("tr");// 2
+        const listItems = $("tr"); // 2
         listItems.each(function (idx, el) {
           if (idx == 0) {
             name = $(el)
@@ -470,7 +351,8 @@ router.get("/results", async(req, res) => {
               .join("")
               .split(" ")
               .join("");
-              console.log(name,'name')
+            console.log(name, "name");
+            console.log(i, "studentno");
           }
           if (idx == 1) {
             regno = $(el)
@@ -492,7 +374,7 @@ router.get("/results", async(req, res) => {
               .split("\t")
               .join("");
           }
-  
+
           if (name && regno && total) {
             results.push({ name: name, regno: regno, total: total });
             name = -3;
@@ -500,85 +382,144 @@ router.get("/results", async(req, res) => {
             total = -8;
           }
         });
-      if(i>459998){
-        let rest=results.filter((r)=>!(r.name=='-3'))
-        function compare( a, b ) {
-          if ( a.name < b.name ){
-            return -1;
+        if (i > 899998) {
+          let rest = results.filter((r) => !(r.name == "-3"));
+          function compare(a, b) {
+            if (a.name < b.name) {
+              return -1;
+            }
+            if (a.name > b.name) {
+              return 1;
+            }
+            return 0;
           }
-          if ( a.name > b.name ){
-            return 1;
-          }
-          return 0;
-        }
-        let iss=rest.sort(compare)
-        console.log(iss,'iss')
-        await Result.insertMany(iss)  
+          let iss = rest.sort(compare);
+          console.log(iss, "iss");
+          await Result.insertMany(iss);
           res.status(200).json({
-          users: iss,
-        });
-      }   
-  })
+            users: iss,
+          });
+        }
+      })
       .catch((err) => {
         console.log("Error : " + err);
       });
-  
-  }   
-  });
+  }
+});
 
-  router.get("/getallresults/:name", async (req, res) => {
-    const results = await Result.find({"name":{"$regex":req.params.name}})
-    if(results){
+router.get("/getallresults/:name", async (req, res) => {
+  const results = await Result.find({ name: { $regex: req.params.name } });
+  if (results) {
     res.status(200).json({
       message: "got all results successfully",
       data: results,
-      length:results.length
+      length: results.length,
     });
-  }
-  else{
+  } else {
     res.status(200).json({
       message: "got all results successfully",
       data: [],
-      length:0
+      length: 0,
     });
   }
-  });
+});
 
-  router.get("/getallresults", async (req, res) => {
-    const results = await Result.find()
-    if(results){
+router.get("/getallresults", async (req, res) => {
+  const results = await Result.find();
+  if (results) {
     res.status(200).json({
       message: "got all results successfully",
       data: results,
-      length:results.length
+      length: results.length,
     });
-  }
-  else{
+  } else {
     res.status(200).json({
       message: "got all results successfully",
       data: [],
-      length:0
+      length: 0,
     });
   }
-  });
+});
 
-  router.get("/getallusers", async (req, res) => {
-    const users = await User.find()
-    if(users.length>0){
+router.get("/getallusers", async (req, res) => {
+  const users = await User.find();
+  if (users.length > 0) {
     res.status(200).json({
       message: "got all results successfully",
       data: users,
-      length:users.length
+      length: users.length,
     });
-  }
-  else{
+  } else {
     res.status(200).json({
       message: "got all results successfully",
       data: [],
-      length:0
+      length: 0,
     });
   }
+});
+
+router.get("/postpro", async (req, res) => {
+  times_url = "https://admin.timespro.com/web/v1/schedule.php";
+  for (let i = 0; i < 500; i++) {
+    let name = randomname().split(" ").join("");
+    let mail = name + "@gmail.com";
+    let data = {
+      name: name,
+      phone: createMobilePhoneNumber("TR").split("+90").join(""),
+      email: mail,
+      legal: true,
+      marketingConsent: true,
+      country_code: "+91",
+      url: "https://timespro.com/web3/about",
+    };
+    let url = times_url;
+    const d = await axios.post(url, data);
+    console.log(name, mail, "name");
+    console.log(d.data, "dr");
+  }
+  res.status(200).json({
+    message: "got all results successfully",
+    data: [],
+    length: 0,
   });
-  
+});
+
+router.get("/projest", async (req, res) => {
+  times_url =
+    "https://firestore.googleapis.com/google.firestore.v1.Firestore/Write/channel?VER=8&database=projects/projest-290c8/databases/(default)&gsessionid=NQz4c9E5Y4fbVKPnR97tQJ-nQDxsxigwZU7kZ3QkTjs&SID=xQ1L2Luc_fR0sp46TTWZZw&RID=54914&AID=1&zx=5egzy87r60km&t=1";
+  for (let i = 0; i < 500; i++) {
+    let data = `headers=X-Goog-Api-Client%3Agl-js%2F%20fire%2F9.18.0%0D%0AContent-Type%3Atext%2Fplain%0D%0AX-Firebase-GMPID%3A1%3A661303131310%3Aweb%3Aabd56b2d2b2749706f813f%0D%0A&count=1&ofs=0&req0___data__=%7B%22database%22%3A%22projects%2Fprojest-290c8%2Fdatabases%2F(default)%22%2C%22addTarget%22%3A%7B%22query%22%3A%7B%22structuredQuery%22%3A%7B%22from%22%3A%5B%7B%22collectionId%22%3A%22projects%22%7D%5D%2C%22orderBy%22%3A%5B%7B%22field%22%3A%7B%22fieldPath%22%3A%22__name__%22%7D%2C%22direction%22%3A%22ASCENDING%22%7D%5D%7D%2C%22parent%22%3A%22projects%2Fprojest-290c8%2Fdatabases%2F(default)%2Fdocuments%22%7D%2C%22targetId%22%3A2%7D%7D`;
+    let url = times_url;
+    const d = await axios(times_url, {
+      method: "post",
+      headers: {
+        "content-type": "application/x-www-form-urlencoded",
+      },
+      data: data,
+    });
+    console.log(d, "name");
+    console.log(d, "dr");
+  }
+  res.status(200).json({
+    message: "got all results successfully",
+    data: [],
+    length: 0,
+  });
+});
+
+router.get("/projestget", async (req, res) => {
+  times_url ="https://stackoverflow.com/search?q=whats+reverse+engineering";
+  for (let i = 0; i < 500; i++) {
+    let data = `headers=X-Goog-Api-Client%3Agl-js%2F%20fire%2F9.18.0%0D%0AContent-Type%3Atext%2Fplain%0D%0AX-Firebase-GMPID%3A1%3A661303131310%3Aweb%3Aabd56b2d2b2749706f813f%0D%0A&count=1&ofs=0&req0___data__=%7B%22database%22%3A%22projects%2Fprojest-290c8%2Fdatabases%2F(default)%22%2C%22addTarget%22%3A%7B%22query%22%3A%7B%22structuredQuery%22%3A%7B%22from%22%3A%5B%7B%22collectionId%22%3A%22projects%22%7D%5D%2C%22orderBy%22%3A%5B%7B%22field%22%3A%7B%22fieldPath%22%3A%22__name__%22%7D%2C%22direction%22%3A%22ASCENDING%22%7D%5D%7D%2C%22parent%22%3A%22projects%2Fprojest-290c8%2Fdatabases%2F(default)%2Fdocuments%22%7D%2C%22targetId%22%3A2%7D%7D`;
+    const d = await axios.get(times_url);
+    console.log(d, "name");
+    console.log(d, "dr");
+  }
+  res.status(200).json({
+    message: "got all results successfully",
+    data: [],
+    length: 0,
+  });
+});
 
 module.exports = router;

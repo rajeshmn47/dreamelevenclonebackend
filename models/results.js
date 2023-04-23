@@ -8,21 +8,21 @@ const results = new mongoose.Schema(
       trim: true,
       required: true,
       lowercase: true,
-      default:''
+      default: "",
     },
     regno: {
       type: String,
       trim: true,
       required: true,
       lowercase: true,
-      default:''
+      default: "",
     },
     total: {
       type: String,
       trim: true,
       required: true,
       lowercase: true,
-      default:''
+      default: "",
     },
   },
   {
