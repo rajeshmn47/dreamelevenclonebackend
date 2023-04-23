@@ -54,6 +54,7 @@ async function addmore() {
   await eva.addLivematchtodb();
 }
 let date = new Date();
+livescore.addLivematchtodb()
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
   console.warn(`App listening on http://localhost:${PORT}`);
