@@ -20,6 +20,7 @@ const livescore = require("./controllers/addlivescoresdetails");
 const teamstandings = require("./controllers/updateteam");
 const comment = require("./controllers/addCommentary");
 const addIds = require("./controllers/addMatchIds");
+const teamstandingsA=require("./controllers/updatestandings");
 // Environment variables
 /* Requiring body-parser package
 to fetch the data that is entered
@@ -58,6 +59,8 @@ let date = new Date();
 //addplayers.addPlayers()
 //livedetails.addLivematchtodb()
 //livescore.addLivematchtodb()
+//teamstandings.addTeamstandingstodb()
+//teamstandingsA.addTeamstandingstodb()
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
   console.warn(`App listening on http://localhost:${PORT}`);

@@ -59,6 +59,7 @@ module.exports.addLivematchtodb = async function () {
       $lt: new Date(endDate),
     },
   });
+  console.log(matches,'mat')
   for (let i = 0; i < matches.length; i++) {
     let matchId = matches[i].matchId;
     let match = await MatchLive.findOne({ matchId: matchId });
@@ -167,6 +168,15 @@ module.exports.addLivematchtodb = async function () {
                   teamHomePlayers[i].economy = bowler.economy;
                 }
               }
+              teamHomePlayers[i].points = pointCalculator(
+                teamHomePlayers[i].runs,
+                teamHomePlayers[i].fours,
+                teamHomePlayers[i].sixes,
+                teamHomePlayers[i].sixes,
+                teamHomePlayers[i].wickets,
+                teamHomePlayers[i].economy
+              );
+            
             }
             for (let i = 0; i < teamAwayPlayers.length; i++) {
               let player = teamAwayPlayers[i];
@@ -191,25 +201,15 @@ module.exports.addLivematchtodb = async function () {
                   teamAwayPlayers[i].economy = bowler.economy;
                 }
               }
-            }
-
-            teamHomePlayers[i].points = pointCalculator(
-              teamHomePlayers[i].runs,
-              teamHomePlayers[i].fours,
-              teamHomePlayers[i].sixes,
-              teamHomePlayers[i].sixes,
-              teamHomePlayers[i].wickets,
-              teamHomePlayers[i].economy
-            );
-            teamAwayPlayers[i].points = pointCalculator(
-              teamAwayPlayers[i].runs,
-              teamAwayPlayers[i].fours,
-              teamAwayPlayers[i].sixes,
-              teamAwayPlayers[i].sixes,
-              teamAwayPlayers[i].wickets,
-              teamAwayPlayers[i].economy
-            );
-
+              teamAwayPlayers[i].points = pointCalculator(
+                teamAwayPlayers[i].runs,
+                teamAwayPlayers[i].fours,
+                teamAwayPlayers[i].sixes,
+                teamAwayPlayers[i].sixes,
+                teamAwayPlayers[i].wickets,
+                teamAwayPlayers[i].economy
+              );
+              }
             try {
               const matchUpdate = await MatchLive.updateOne(
                 { matchId: matchId },

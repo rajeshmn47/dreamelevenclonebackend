@@ -34,12 +34,14 @@ async function getplayerImage(name) {
 }
 module.exports.addTeamstandingstodb = async function () {
   let date = new Date();
-  let endDate = date;
+  let endDate = new Date(date.getTime() + 24 * 60 * 60 * 1000 * 2);
+  date = new Date(date.getTime() - 24 * 60 * 60 * 1000 * 2);
   const matches = await MatchLive.find();
   for (let i = 0; i < matches.length; i++) {
     const teams = await Team.find({ matchId: matches[i].matchId });
     for (let x of teams) {
-      const team = await Team.findOne({ matchId: x.matchId });
+      console.log(x.matchId,'id')
+      const team = await Team.findById(x._id);
       for (let j = 0; j < matches[i].teamHomePlayers.length; j++) {
         for (let z = 0; z < team.players.length; z++) {
           if (
@@ -65,4 +67,5 @@ module.exports.addTeamstandingstodb = async function () {
       let d = await team.save();
     }
   }
-};
+  }
+;
