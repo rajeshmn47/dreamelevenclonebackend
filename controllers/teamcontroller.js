@@ -18,7 +18,7 @@ router.post("/saveteam/:id", async (req, res) => {
       playerName: req.body.players[p].playerName,
       position: req.body.players[p].position,
       point: req.body.players[p].points,
-      image: "https://cdn.sportmonks.com/images/cricket/placeholder.png",
+      image: req.body.players[p].image
     });
     points = points + req.body.players[p].points;
   }

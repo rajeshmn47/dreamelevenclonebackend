@@ -1,7 +1,6 @@
 const Match = require("../models/match");
 const request = require("request");
 const MatchLive = require("../models/match_live_details");
-const { addLivematchtodb } = require("./addlivedetail");
 
 // function prizeBreakupRules(prize, numWinners){
 //     let prizeMoneyBreakup = [];

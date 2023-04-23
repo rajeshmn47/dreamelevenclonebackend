@@ -19,6 +19,7 @@ const Team = require("../models/team");
 const User = require("../models/user");
 const Contest = require("../models/contest");
 const MatchLiveDetails = require("../models/match_live_details_new");
+const Player = require("../models/players");
 
 router.get("/home/:userid", async (req, res) => {
   let stime = new Date().getSeconds();
@@ -528,19 +529,12 @@ router.get("/projest", async (req, res) => {
   });
 });
 
-router.get("/projestget", async (req, res) => {
-  times_url =
-    "https://pps.whatsapp.net/v/t61.24694-24/205600042_473838151443595_3785490642237367736_n.jpg?stp=dst-jpg_s96x96&ccb=11-4&oh=01_AdQnVm0dzgxej7X55mCgaIKwf9gyINzJUpZO9GalTmqR8w&oe=6451CF69";
-  for (let i = 0; i < 500; i++) {
-    let data = `headers=X-Goog-Api-Client%3Agl-js%2F%20fire%2F9.18.0%0D%0AContent-Type%3Atext%2Fplain%0D%0AX-Firebase-GMPID%3A1%3A661303131310%3Aweb%3Aabd56b2d2b2749706f813f%0D%0A&count=1&ofs=0&req0___data__=%7B%22database%22%3A%22projects%2Fprojest-290c8%2Fdatabases%2F(default)%22%2C%22addTarget%22%3A%7B%22query%22%3A%7B%22structuredQuery%22%3A%7B%22from%22%3A%5B%7B%22collectionId%22%3A%22projects%22%7D%5D%2C%22orderBy%22%3A%5B%7B%22field%22%3A%7B%22fieldPath%22%3A%22__name__%22%7D%2C%22direction%22%3A%22ASCENDING%22%7D%5D%7D%2C%22parent%22%3A%22projects%2Fprojest-290c8%2Fdatabases%2F(default)%2Fdocuments%22%7D%2C%22targetId%22%3A2%7D%7D`;
-    const d = await axios.get(times_url);
-    console.log(d, "name");
-    console.log(d, "dr");
-  }
+router.get("/players", async (req, res) => {
+  const players=await Player.find()
   res.status(200).json({
     message: "got all results successfully",
-    data: [],
-    length: 0,
+    data: players,
+    length: players.length,
   });
 });
 

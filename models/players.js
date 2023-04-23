@@ -36,6 +36,7 @@ const playerSchema = new mongoose.Schema(
       trim: true,
       required: true,
       lowercase: true,
+      default: "",
     },
 
     id: {
@@ -46,6 +47,7 @@ const playerSchema = new mongoose.Schema(
     country_id: {
       type: Number,
       required: true,
+      default: "",
     },
   },
   {

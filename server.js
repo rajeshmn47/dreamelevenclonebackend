@@ -15,6 +15,7 @@ const auth = require("./controllers/user_controller");
 const team = require("./controllers/teamcontroller");
 const matches = require("./controllers/matchDB-controller");
 const livedetails = require("./controllers/addlivedetailsnew");
+const addplayers = require("./controllers/addplayers");
 const livescore = require("./controllers/addlivescoresdetails");
 const teamstandings = require("./controllers/updateteam");
 const comment = require("./controllers/addCommentary");
@@ -54,7 +55,9 @@ async function addmore() {
   await eva.addLivematchtodb();
 }
 let date = new Date();
-livescore.addLivematchtodb()
+//addplayers.addPlayers()
+//livedetails.addLivematchtodb()
+//livescore.addLivematchtodb()
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
   console.warn(`App listening on http://localhost:${PORT}`);
