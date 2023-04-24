@@ -50,8 +50,8 @@ module.exports.addMatchtoDb = async function () {
   // var year = "2021";
   // var month = "09";
   // var day = 25;
-  var formattedDate = 2023 + "-" + 01 + "-" + 13;
-  const numberOfDays = 4;
+  var formattedDate = new Date();
+  const numberOfDays = 10;
   let getim = new Date().getTime();
 
   for (let i = 0; i < numberOfDays; i++) {

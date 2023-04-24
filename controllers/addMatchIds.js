@@ -46,10 +46,11 @@ module.exports.addMatchIds = async function () {
       let teams = await Team.find({
         $and: [{ matchId: matches[i].matchId }, { userId: users[x]._id }],
       });
-      if (teams.length > 0) {
+      let isTheir = users[x].matchIds.includes(matches.matchId);
+      if (teams.length > 0 && !isTheir) {
         users[x].matchIds.push(matches[i].matchId);
-        await users[x].save();
       }
     }
+    await users[x].save();
   }
 };

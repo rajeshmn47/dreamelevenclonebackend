@@ -121,6 +121,7 @@ router.get("/joincontest/:id", async (req, res) => {
     contest.teamsId.push(req.query.teamid);
     contest.spotsLeft = contest.spotsLeft - 1;
     await contest.save();
+    await user.save();
     res.status(200).json({
       contest: contest,
     });

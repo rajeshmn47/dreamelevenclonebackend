@@ -26,7 +26,7 @@ module.exports.addLivematchtodb = async function () {
   const turing = await MatchLive();
   let date = new Date();
   let endDate = new Date(date.getTime() + 24 * 60 * 60 * 1000);
-  date = new Date(date.getTime() - 24 * 60 * 60 * 1000 * 1);
+  date = new Date(date.getTime() - 24 * 60 * 60 * 1000);
   const matches = await Match.find({
     date: {
       $gte: new Date(date),
@@ -36,72 +36,8 @@ module.exports.addLivematchtodb = async function () {
   for (let i = 0; i < matches.length; i++) {
     let matchId = matches[i].matchId;
     let match = await MatchLive.findOne({ matchId: matchId });
-    if (match && i < 4) {
-      for (let i = 0; i < match.teamAwayPlayers.length; i++) {
-        getplayerImage(match.teamAwayPlayers[i].playerName);
-        let name = match.teamAwayPlayers[i].playerName.split(" ")[1];
-        console.log(name, "name");
-        if (i < 11) {
-          let options = {
-            method: "GET",
-            url: `https://cricket.sportmonks.com/api/v2.0/players/?filter[lastname]=${name}&api_token=
-        ${process.env.TOKEN}`,
-            headers: {
-              "x-rapidapi-host": "cricket-live-data.p.rapidapi.com",
-              "x-rapidapi-key":
-                "773ece5d2bmsh8af64b6b53baed6p1e86c9jsnd416b0e51110",
-              api_token: process.env.TOKEN,
-              useQueryString: true,
-            },
-            Authorization: {
-              api_token: process.env.TOKEN,
-            },
-          };
-
-          let s = "";
-          request(options, async function (error, response, body) {
-            s = JSON.parse(body);
-            console.log(s.data[0].image_path, s.data[0], "image", i);
-            match.teamAwayPlayers[i].image = s?.data[0]?.image_path
-              ? s.data[0]?.image_path
-              : null;
-            await match.save();
-          });
-        }
-      }
-      for (let i = 0; i < match.teamHomePlayers.length; i++) {
-        getplayerImage(match.teamHomePlayers[i].playerName);
-        let name = match.teamHomePlayers[i].playerName.split(" ")[1];
-        console.log(name, "name");
-        if (i < 11) {
-          let options = {
-            method: "GET",
-            url: `https://cricket.sportmonks.com/api/v2.0/players/?filter[lastname]=${name}&api_token=
-        ${process.env.TOKEN}`,
-            headers: {
-              "x-rapidapi-host": "cricket-live-data.p.rapidapi.com",
-              "x-rapidapi-key":
-                "773ece5d2bmsh8af64b6b53baed6p1e86c9jsnd416b0e51110",
-              api_token: process.env.TOKEN,
-              useQueryString: true,
-            },
-            Authorization: {
-              api_token: process.env.TOKEN,
-            },
-          };
-
-          let s = "";
-          request(options, async function (error, response, body) {
-            s = JSON.parse(body);
-            console.log(s.data[0].image_path, s.data[0], "image", i);
-            match.teamHomePlayers[i].image = s?.data[0]?.image_path
-              ? s.data[0]?.image_path
-              : null;
-            await match.save();
-          });
-        }
-      }
-      console.log(match.teamHomePlayers[i].image, "image");
+    if (match) {
+      console.log("image");
     } else {
       const date1 = "2679243";
       const options = {

@@ -40,8 +40,9 @@ module.exports.addTeamstandingstodb = async function () {
   for (let i = 0; i < matches.length; i++) {
     const teams = await Team.find({ matchId: matches[i].matchId });
     for (let x of teams) {
-      console.log(x.matchId,'id')
+      console.log(x.matchId, "id");
       const team = await Team.findById(x._id);
+      team.points = 0;
       for (let j = 0; j < matches[i].teamHomePlayers.length; j++) {
         for (let z = 0; z < team.players.length; z++) {
           if (
@@ -67,5 +68,4 @@ module.exports.addTeamstandingstodb = async function () {
       let d = await team.save();
     }
   }
-  }
-;
+};

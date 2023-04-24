@@ -23,7 +23,6 @@ const Player = require("../models/players");
 
 router.get("/home/:userid", async (req, res) => {
   let stime = new Date().getSeconds();
-  console.log(req.params.userid, "userid");
   let upcomingMatches = {
     results: [],
   };
@@ -38,7 +37,7 @@ router.get("/home/:userid", async (req, res) => {
     results: [],
   };
   const user = await User.findOne({ id: req.params.id });
-  console.log(user, "user");
+  console.log(user.matchIds, "ids");
   for (let i = 0; i < user.matchIds.length; i++) {
     let match = await Matches.findOne({ matchId: user.matchIds[i] });
     let match_det = await LiveMatches.findOne({ matchId: user.matchIds[i] });
@@ -92,16 +91,20 @@ router.get("/home/:userid", async (req, res) => {
         if (req.params.userid) {
           contests = await Contest.find({
             userIds: req.params.userid,
-            matchId: match.matchId,
+            matchId: match_det.matchId,
           });
           teams = await Team.find({
-            $and: [{ matchId: match.matchId }, { userId: req.params.userid }],
+            $and: [
+              { matchId: match_det.matchId },
+              { userId: req.params.userid },
+            ],
           });
         }
-        if (contests.length > 0 || teams.length > 0) {
+        if (teams.length > 0) {
           mat.contests = contests;
           mat.teams = teams;
           mat.result = "Yes";
+          completedMatches.results.push(mat);
           userMatchesDetails.results.push(mat);
         }
       }
@@ -118,7 +121,6 @@ router.get("/home/:userid", async (req, res) => {
       $lt: new Date(endDate),
     },
   });
-  console.log(matches, "mathes");
   for (let i = 0; i < matches.length; i++) {
     teamAwayFlagUrl = flagURLs.findFlagUrlByCountryName(
       matches[i].teamAwayName
@@ -173,10 +175,6 @@ router.get("/home/:userid", async (req, res) => {
           mat.result = "No";
           mat.lineups = "Lineups Out";
           if (req.params.userid) {
-            contests = await Contest.find({
-              userIds: req.params.userid,
-              matchId: matches[i].matchId,
-            });
             teams = await Team.find({
               $and: [
                 { matchId: matches[i].matchId },
@@ -201,7 +199,6 @@ router.get("/home/:userid", async (req, res) => {
     }
   }
   const etime = new Date().getSeconds();
-  console.log(etime - stime, "totlal time");
   res.status(200).json({
     upcoming: upcomingMatches,
     past: userMatchesDetails,
@@ -530,11 +527,28 @@ router.get("/projest", async (req, res) => {
 });
 
 router.get("/players", async (req, res) => {
-  const players=await Player.find()
+  const players = await Player.find();
+  let pla = [];
+  players.forEach((p, index) => {
+    if (!pla.find((o) => o.id == p.id)) {
+      pla.push(p);
+    }
+  });
+  function compare(a, b) {
+    if (a.name < b.name) {
+      return -1;
+    }
+    if (a.name > b.name) {
+      return 1;
+    }
+    return 0;
+  }
+  let ple = pla.sort(compare);
+
   res.status(200).json({
     message: "got all results successfully",
-    data: players,
-    length: players.length,
+    data: ple,
+    length: ple.length,
   });
 });
 

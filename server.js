@@ -20,7 +20,8 @@ const livescore = require("./controllers/addlivescoresdetails");
 const teamstandings = require("./controllers/updateteam");
 const comment = require("./controllers/addCommentary");
 const addIds = require("./controllers/addMatchIds");
-const teamstandingsA=require("./controllers/updatestandings");
+const transaction = require("./controllers/transaction");
+const teamstandingsA = require("./controllers/updatestandings");
 // Environment variables
 /* Requiring body-parser package
 to fetch the data that is entered
@@ -56,12 +57,37 @@ async function addmore() {
   await eva.addLivematchtodb();
 }
 let date = new Date();
-//addplayers.addPlayers()
-//livedetails.addLivematchtodb()
-//livescore.addLivematchtodb()
-//teamstandings.addTeamstandingstodb()
+//livedetails.addLivematchtodb();
+//livescore.addLivematchtodb();
+//addIds.addMatchIds();
+//teamstandings.addTeamstandingstodb();
+//matches.addMatchtoDb()
 //teamstandingsA.addTeamstandingstodb()
-const PORT = process.env.PORT || 8000;
+//addplayers.addPlayers();
+//transaction.startTransaction();
+cron.schedule(
+  "05 12 * * *",
+  function () {
+    //add();
+  },
+  null,
+  true,
+  "America/Los_Angeles"
+);
+cron.schedule(
+  "*/28 * * * *",
+  function () {
+    console.log(new Date().getHours(), new Date().getMinutes(), "hours");
+    //livedetails.addLivematchtodb();
+    //livescore.addLivematchtodb();
+    //teamstandings.addTeamstandingstodb(); //addmore();
+  },
+  null,
+  true,
+  "America/Los_Angeles"
+);
+
+const PORT = process.env.PORT || 9000;
 app.listen(PORT, () => {
   console.warn(`App listening on http://localhost:${PORT}`);
 });
