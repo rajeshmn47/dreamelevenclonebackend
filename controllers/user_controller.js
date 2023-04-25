@@ -118,7 +118,7 @@ router.post("/register", async (req, res) => {
       User.findOne({ email: req.body.email }, async function (err, user) {
         if (err) {
           console.log("Error in finding user in Sign-in ");
-          res.status(200).json({
+          res.status(400).json({
             message: "something went wrong",
           });
         }
@@ -132,7 +132,7 @@ router.post("/register", async (req, res) => {
                 "Error in creating a user while account activation",
                 err
               );
-              res.status(200).json({
+              res.status(400).json({
                 message: "something went wrong",
               });
             } else {
@@ -146,7 +146,7 @@ router.post("/register", async (req, res) => {
               res.status(200).json({
                 message:
                   "enter otp recieved on your mail to activate your account",
-                token: token,
+                success: true,
               });
             }
           });
@@ -154,6 +154,7 @@ router.post("/register", async (req, res) => {
           console.log("kuttheee");
           res.status(200).json({
             message: "user already exists",
+            success: false,
           });
         }
       });
@@ -164,8 +165,8 @@ router.post("/register", async (req, res) => {
 });
 router.post("/otp", async (req, res) => {
   const user = await User.findOne({ email: req.body.email });
-
-  if (parseInt(user.otp) === parseInt(req.body.otp)) {
+  console.log(user.otp, req.body.otp, "otp");
+  if (parseInt(user.otp) == parseInt(req.body.otp)) {
     user.verified = true;
     let userid = user._id;
     const token = jwt.sign({ userid }, activatekey, {
@@ -174,6 +175,10 @@ router.post("/otp", async (req, res) => {
     user.save(function (err) {
       if (!err) {
         console.log("contact");
+        res.status(200).json({
+          message: "ure account created successfully u can login",
+          token: token,
+        });
       } else {
         console.log("Error: could not save contact ");
         res.status(200).json({
@@ -193,7 +198,7 @@ router.post("/login", async (req, res) => {
   const user = await User.findOne({ email: req.body.myform.email });
   if (user) {
     console.log(user, "user");
-    if (user.password === req.body.myform.password) {
+    if (user.password == req.body.myform.password) {
       console.log(user, "user");
       var userid = user._id;
       const token = jwt.sign({ userid }, activatekey, {
@@ -204,13 +209,123 @@ router.post("/login", async (req, res) => {
         token: token,
         user: user,
       });
+    } else {
+      res.status(400).json({
+        message: "password is wrong",
+      });
     }
   } else {
-    res.status(200).json({
+    res.status(400).json({
       message: "no user exists",
     });
   }
 });
+
+router.get("/forgot-password/:email", async (req, res) => {
+  const otp = otpGenerator.generate(8, {
+    lowerCaseAlphabets: false,
+    upperCaseAlphabets: false,
+    specialChars: false,
+    specialChars: false,
+  });
+  console.log(req.params.email, "email");
+  try {
+    const user1 = await User.findOne({ email: req.params.email });
+    console.log(user1, "user1");
+    if (user1) {
+      user1.otp = otp;
+      var mailOptions = {
+        from: "rajeshmn47@gmail.com",
+        to: req.params.email,
+        subject: "Sending Email using Node.js[nodemailer]",
+        text: `enter this otp ${otp}`,
+      };
+
+      transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("Email sent: " + info.response);
+        }
+      });
+      await user1.save();
+      var userid = user1._id;
+      const token = jwt.sign({ userid }, activatekey, {
+        expiresIn: "500m",
+      });
+
+      res.status(200).json({
+        message: "enter otp recieved on your mail to activate your account",
+        success: true,
+      });
+    } else {
+      console.log("kuttheee");
+      res.status(200).json({
+        message: "could not send",
+        success: false,
+      });
+    }
+  } catch (err) {
+    console.log("Error : " + err);
+    res.status(200).json({
+      message: "their was some error",
+      success: false,
+    });
+  }
+});
+
+router.post("/forgot-password-otp", async (req, res) => {
+  const user = await User.findOne({ email: req.body.email });
+  console.log(user.otp, req.body.otp, "otp");
+  if (parseInt(user.otp) == parseInt(req.body.otp)) {
+    let userid = user._id;
+    const token = jwt.sign({ userid }, activatekey, {
+      expiresIn: "500m",
+    });
+    user.save(function (err) {
+      if (!err) {
+        console.log("contact");
+        res.status(200).json({
+          message: "u can change your password",
+          token: token,
+          success: true,
+        });
+      } else {
+        console.log("Error: could not save contact ");
+        res.status(200).json({
+          message: "found some error",
+          success: false,
+        });
+      }
+    });
+  } else {
+    res.status(200).json({
+      message: "entered otp is wrong",
+    });
+  }
+});
+
+router.post("/changepassword", async (req, res) => {
+  const user = await User.findOne({ email: req.body.email });
+  console.log(user.otp, req.body.otp, "otp");
+  user.password = req.body.password;
+  user.save(function (err) {
+    if (!err) {
+      console.log("contact");
+      res.status(200).json({
+        message: "password changed successfully please login",
+        success: true,
+      });
+    } else {
+      console.log("Error: could not save contact ");
+      res.status(200).json({
+        message: "could not change password",
+        success: false,
+      });
+    }
+  });
+});
+
 router.get("/loaduser", checkloggedinuser, async function (req, res) {
   const user = await User.findOne({ _id: { $eq: req.body.uidfromtoken } });
   res.status(200).json({

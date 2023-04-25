@@ -37,7 +37,7 @@ router.get("/home/:userid", async (req, res) => {
     results: [],
   };
   const user = await User.findOne({ _id: req.params.userid });
-  console.log(user, "ids",req.params.userid);
+  console.log(user, "ids", req.params.userid);
   for (let i = 0; i < user.matchIds.length; i++) {
     let match = await Matches.findOne({ matchId: user.matchIds[i] });
     let match_det = await LiveMatches.findOne({ matchId: user.matchIds[i] });
@@ -90,9 +90,12 @@ router.get("/home/:userid", async (req, res) => {
       } else {
         if (req.params.userid) {
           console.log("finding", req.params.userid, match_det.matchId);
-          console.log("no result",match_det.result);
+          console.log("no result", match_det.result);
           let teams = await Team.find({
-            $and: [{ matchId: match_det.matchId }, { userId: req.params.userid }],
+            $and: [
+              { matchId: match_det.matchId },
+              { userId: req.params.userid },
+            ],
           });
           contests = await Contest.find({
             userIds: req.params.userid,

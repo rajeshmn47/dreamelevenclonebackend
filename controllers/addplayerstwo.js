@@ -30,8 +30,8 @@ module.exports.addPlayers = async function () {
   date = new Date(date.getTime());
   const matches = await Match.find();
   const user = await User.findById("63c18c9f2d217ea120307e30");
-  for (let i = 0; i < user.matchIds.length; i++) {
-    let match = await MatchLive.findOne({ matchId: user.matchIds[i] });
+  for (let i = 0; i < matches.length; i++) {
+    let match = await MatchLive.findOne({ matchId: matches[i].matchId });
     if (match) {
       for (let i = 0; i < match.teamAwayPlayers.length; i++) {
         let name = match.teamAwayPlayers[i].playerName.split(" ")[1];
@@ -53,14 +53,18 @@ module.exports.addPlayers = async function () {
                     s?.data[ik]?.fullname.toLowerCase(),
                   "decent"
                 );
-                if (
+                const foundpl = await Player.findOne({
+                  id: match.teamAwayPlayers[i].playerId,
+                });
+                if (foundpl) {
+                  match.teamAwayPlayers[i].image = found.image;
+                } else if (
                   match.teamAwayPlayers[i].playerName.toLowerCase() ==
                   s?.data[ik]?.fullname.toLowerCase()
                 ) {
                   console.log("equal", s?.data[ik]?.image_path);
                   match.teamAwayPlayers[i].image = s?.data[ik]?.image_path;
                   console.log(ik, "ik");
-
                   await Player.create({
                     name: s?.data[ik]?.fullname,
                     firstname: s?.data[ik]?.firstname,
@@ -103,7 +107,12 @@ module.exports.addPlayers = async function () {
             request(options, async function (error, response, body) {
               s = JSON.parse(body);
               for (let ik = 0; ik < s?.data?.length; ik++) {
-                if (
+                const foundpl = await Player.findOne({
+                  id: match.teamAwayPlayers[i].playerId,
+                });
+                if (foundpl) {
+                  match.teamAwayPlayers[i].image = found.image;
+                } else if (
                   match.teamHomePlayers[i].playerName.toLowerCase() ==
                   s?.data[ik]?.fullname.toLowerCase()
                 ) {
