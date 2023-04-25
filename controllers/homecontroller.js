@@ -36,8 +36,8 @@ router.get("/home/:userid", async (req, res) => {
   let userMatchesDetails = {
     results: [],
   };
-  const user = await User.findOne({ id: req.params.id });
-  console.log(user.matchIds, "ids");
+  const user = await User.findOne({ _id: req.params.userid });
+  console.log(user, "ids",req.params.userid);
   for (let i = 0; i < user.matchIds.length; i++) {
     let match = await Matches.findOne({ matchId: user.matchIds[i] });
     let match_det = await LiveMatches.findOne({ matchId: user.matchIds[i] });
@@ -89,23 +89,23 @@ router.get("/home/:userid", async (req, res) => {
         mat.result = "No";
       } else {
         if (req.params.userid) {
+          console.log("finding", req.params.userid, match_det.matchId);
+          console.log("no result",match_det.result);
+          let teams = await Team.find({
+            $and: [{ matchId: match_det.matchId }, { userId: req.params.userid }],
+          });
           contests = await Contest.find({
             userIds: req.params.userid,
             matchId: match_det.matchId,
           });
-          teams = await Team.find({
-            $and: [
-              { matchId: match_det.matchId },
-              { userId: req.params.userid },
-            ],
-          });
-        }
-        if (teams.length > 0) {
-          mat.contests = contests;
-          mat.teams = teams;
-          mat.result = "Yes";
-          completedMatches.results.push(mat);
-          userMatchesDetails.results.push(mat);
+          console.log(teams, "teams");
+          if (teams.length > 0) {
+            mat.contests = contests;
+            mat.teams = teams;
+            mat.result = "Yes";
+            completedMatches.results.push(mat);
+            userMatchesDetails.results.push(mat);
+          }
         }
       }
     }
@@ -181,6 +181,10 @@ router.get("/home/:userid", async (req, res) => {
                 { userId: req.params.userid },
               ],
             });
+            contests = await Contest.find({
+              userIds: req.params.userid,
+              matchId: matches[i].matchId,
+            });
           }
           if (contests.length > 0 || teams.length > 0) {
             mat.contests = contests;
@@ -210,7 +214,6 @@ router.get("/home/:userid", async (req, res) => {
 
 router.get("/completed/:userid", async (req, res) => {
   let stime = new Date().getSeconds();
-  console.log(req.params.userid, "userid");
   let completedMatches = {
     results: [],
   };
@@ -220,7 +223,6 @@ router.get("/completed/:userid", async (req, res) => {
   date.setDate(date.getDate() + 6);
   let endDate = date.toISOString();
   let matches = await Matches.find();
-  console.log(matches, "mathes");
   for (let i = 0; i < matches.length; i++) {
     teamAwayFlagUrl = flagURLs.findFlagUrlByCountryName(
       matches[i].teamAwayName
