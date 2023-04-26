@@ -21,6 +21,7 @@ const teamstandings = require("./controllers/updateteam");
 const comment = require("./controllers/addCommentary");
 const addIds = require("./controllers/addMatchIds");
 const transaction = require("./controllers/transaction");
+const payments = require("./controllers/payment");
 const teamstandingsA = require("./controllers/updatestandings");
 // Environment variables
 /* Requiring body-parser package
@@ -35,6 +36,7 @@ app.use("/", home);
 app.use("/", contest);
 app.use("/", teamdata);
 app.use("/", team);
+app.use("/payment", payments);
 app.use("/auth", auth);
 const uri =
   "mongodb+srv://rajeshmn47:uni1ver%40se@cluster0.bpxam.mongodb.net/mydreamDatabaseSecond?retryWrites=true&w=majority";
@@ -58,7 +60,7 @@ async function addmore() {
 }
 let date = new Date();
 //livedetails.addLivematchtodb();
-//livescore.addLivematchtodb();
+livescore.addLivematchtodb();
 //addIds.addMatchIds();
 //teamstandings.addTeamstandingstodb();
 //matches.addMatchtoDb()

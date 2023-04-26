@@ -26,9 +26,14 @@ async function getplayerImage(name) {
 module.exports.addPlayers = async function () {
   const turing = await MatchLive();
   let date = new Date();
-  let endDate = new Date(date.getMonth() - 3);
-  date = new Date(date.getTime());
-  const matches = await Match.find();
+  let endDate = new Date(date.getTime() + 2 * 60 * 60 * 1000);
+  date = new Date(date.getTime() - 2 * 60 * 60 * 1000);
+  const matches = await Match.find({
+    date: {
+      $gte: new Date(date),
+      $lt: new Date(endDate),
+    },
+  });
   const user = await User.findById("63c18c9f2d217ea120307e30");
   for (let i = 0; i < matches.length; i++) {
     let match = await MatchLive.findOne({ matchId: matches[i].matchId });
@@ -57,7 +62,7 @@ module.exports.addPlayers = async function () {
                   id: match.teamAwayPlayers[i].playerId,
                 });
                 if (foundpl) {
-                  match.teamAwayPlayers[i].image = found.image;
+                  match.teamAwayPlayers[i].image = foundpl.image;
                 } else if (
                   match.teamAwayPlayers[i].playerName.toLowerCase() ==
                   s?.data[ik]?.fullname.toLowerCase()
@@ -111,7 +116,7 @@ module.exports.addPlayers = async function () {
                   id: match.teamAwayPlayers[i].playerId,
                 });
                 if (foundpl) {
-                  match.teamAwayPlayers[i].image = found.image;
+                  match.teamAwayPlayers[i].image = foundpl.image;
                 } else if (
                   match.teamHomePlayers[i].playerName.toLowerCase() ==
                   s?.data[ik]?.fullname.toLowerCase()

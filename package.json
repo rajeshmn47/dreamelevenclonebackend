@@ -23,7 +23,9 @@
     "random-indian-name": "^1.0.0",
     "random-mobile-numbers": "^1.0.1",
     "random-names-places": "^1.2.1",
+    "razorpay": "^2.8.6",
     "socket.io": "^4.6.1",
-    "unirest": "^0.6.0"
+    "unirest": "^0.6.0",
+    "uuid": "^9.0.0"
   }
 }
