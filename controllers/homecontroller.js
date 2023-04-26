@@ -220,6 +220,9 @@ router.get("/completed/:userid", async (req, res) => {
   let completedMatches = {
     results: [],
   };
+  let liveMatches = {
+    results: [],
+  };
   let date = new Date();
   date.setDate(date.getDate() - 1);
   let startDate = date.toISOString();
@@ -269,7 +272,7 @@ router.get("/completed/:userid", async (req, res) => {
     let contests = [];
     let teams = [];
     if (matt && matt.inPlay == "Yes") {
-      mat.result = "Yes";
+      mat.result = "No";
       if (req.params.userid) {
         contests = await Contest.find({
           userIds: req.params.userid,
@@ -281,12 +284,29 @@ router.get("/completed/:userid", async (req, res) => {
             { userId: req.params.userid },
           ],
         });
+        mat.contests = contests;
+        mat.teams = teams;
+        console.log(matt.result, "mattresult");
+        liveMatches.results.push(mat);
       }
     }
-    if (contests.length > 0 || teams.length > 0) {
+    if (req.params.userid && matt?.result == "Yes") {
+      mat.result = "Yes";
+      contests = await Contest.find({
+        userIds: req.params.userid,
+        matchId: matches[i].matchId,
+      });
+      teams = await Team.find({
+        $and: [{ matchId: matches[i].matchId }, { userId: req.params.userid }],
+      });
       mat.contests = contests;
       mat.teams = teams;
-      completedMatches.results.push(mat);
+      if (contests.length > 0 || teams.length > 0) {
+        console.log(matt.result, "mattresult");
+        mat.contests = contests;
+        mat.teams = teams;
+        completedMatches.results.push(mat);
+      }
     }
   }
   const etime = new Date().getSeconds();

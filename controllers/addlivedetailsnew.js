@@ -26,7 +26,7 @@ module.exports.addLivematchtodb = async function () {
   const turing = await MatchLive();
   let date = new Date();
   let endDate = new Date(date.getTime() + 2 * 60 * 60 * 1000);
-  date = new Date(date.getTime() - 4 * 60 * 60 * 1000);
+  date = new Date(date.getTime() - 2 * 60 * 60 * 1000);
   const matches = await Match.find({
     date: {
       $gte: new Date(date),
@@ -61,7 +61,7 @@ module.exports.addLivematchtodb = async function () {
       });
       promise
         .then(async (s) => {
-          console.log(s, "s");
+          console.log(s.results.live_details.teamsheets, "s");
           if (
             s.results.live_details != null &&
             s.results.live_details.teamsheets.home.length != 0

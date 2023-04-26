@@ -23,6 +23,7 @@ const addIds = require("./controllers/addMatchIds");
 const transaction = require("./controllers/transaction");
 const payments = require("./controllers/payment");
 const teamstandingsA = require("./controllers/updatestandings");
+const updatedata = require("./controllers/updatedata");
 // Environment variables
 /* Requiring body-parser package
 to fetch the data that is entered
@@ -36,6 +37,7 @@ app.use("/", home);
 app.use("/", contest);
 app.use("/", teamdata);
 app.use("/", team);
+app.use("/", updatedata);
 app.use("/payment", payments);
 app.use("/auth", auth);
 const uri =
@@ -60,7 +62,7 @@ async function addmore() {
 }
 let date = new Date();
 //livedetails.addLivematchtodb();
-livescore.addLivematchtodb();
+//livescore.addLivematchtodb();
 //addIds.addMatchIds();
 //teamstandings.addTeamstandingstodb();
 //matches.addMatchtoDb()

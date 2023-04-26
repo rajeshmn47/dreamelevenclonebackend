@@ -26,8 +26,8 @@ async function getplayerImage(name) {
 module.exports.addPlayers = async function () {
   const turing = await MatchLive();
   let date = new Date();
-  let endDate = new Date(date.getTime() + 2 * 60 * 60 * 1000);
-  date = new Date(date.getTime() - 2 * 60 * 60 * 1000);
+  let endDate = new Date(date.getTime() + 60 * 60 * 1000);
+  date = new Date(date.getTime() - 60 * 60 * 1000);
   const matches = await Match.find({
     date: {
       $gte: new Date(date),
@@ -38,106 +38,116 @@ module.exports.addPlayers = async function () {
   for (let i = 0; i < matches.length; i++) {
     let match = await MatchLive.findOne({ matchId: matches[i].matchId });
     if (match) {
-      for (let i = 0; i < match.teamAwayPlayers.length; i++) {
-        let name = match.teamAwayPlayers[i].playerName.split(" ")[1];
-        if (i < 11) {
-          let options = {
-            method: "GET",
-            url: `https://cricket.sportmonks.com/api/v2.0/players/?filter[lastname]=${name}&api_token=
+      try {
+        for (let i = 0; i < match.teamAwayPlayers.length; i++) {
+          let name = match.teamAwayPlayers[i].playerName.split(" ")[1];
+          if (i < 11) {
+            let options = {
+              method: "GET",
+              url: `https://cricket.sportmonks.com/api/v2.0/players/?filter[lastname]=${name}&api_token=
         ${process.env.TOKEN}`,
-          };
+            };
 
-          let s = "";
-          try {
-            request(options, async function (error, response, body) {
-              s = JSON.parse(body);
-              console.log("awayplayers", s);
-              for (let ik = 0; ik < s?.data?.length; ik++) {
-                console.log(
-                  match.teamAwayPlayers[i].playerName.toLowerCase() ==
-                    s?.data[ik]?.fullname.toLowerCase(),
-                  "decent"
-                );
-                const foundpl = await Player.findOne({
-                  id: match.teamAwayPlayers[i].playerId,
-                });
-                if (foundpl) {
-                  match.teamAwayPlayers[i].image = foundpl.image;
-                } else if (
-                  match.teamAwayPlayers[i].playerName.toLowerCase() ==
-                  s?.data[ik]?.fullname.toLowerCase()
-                ) {
-                  console.log("equal", s?.data[ik]?.image_path);
-                  match.teamAwayPlayers[i].image = s?.data[ik]?.image_path;
-                  console.log(ik, "ik");
-                  await Player.create({
-                    name: s?.data[ik]?.fullname,
-                    firstname: s?.data[ik]?.firstname,
-                    lastname: s?.data[ik]?.lastname,
-                    image: s?.data[ik]?.image_path
-                      ? s?.data[ik]?.image_path
-                      : "https://cdn.sportmonks.com/images/cricket/placeholder.png",
-                    id: match.teamAwayPlayers[i].playerId,
-                    country_id: s?.data[ik]?.country_id,
-                    dateofbirth: s?.data[ik]?.dateofbirth,
-                  });
-                }
-              }
+            let s = "";
+
+            const foundpl = await Player.findOne({
+              id: match.teamAwayPlayers[i].playerId,
             });
-          } catch (error) {
-            console.log(error);
+            if (foundpl) {
+              match.teamAwayPlayers[i].image = foundpl.image;
+            } else {
+              request(options, async function (error, response, body) {
+                s = JSON.parse(body);
+                console.log("awayplayers", s);
+                for (let ik = 0; ik < s?.data?.length; ik++) {
+                  console.log(
+                    match.teamAwayPlayers[i].playerName.toLowerCase() ==
+                      s?.data[ik]?.fullname.toLowerCase(),
+                    "decent"
+                  );
+                  if (
+                    match.teamAwayPlayers[i].playerName.toLowerCase() ==
+                    s?.data[ik]?.fullname.toLowerCase()
+                  ) {
+                    console.log("equal", s?.data[ik]?.image_path);
+                    match.teamAwayPlayers[i].image = s?.data[ik]?.image_path;
+                    console.log(ik, "ik");
+                    await Player.create({
+                      name: s?.data[ik]?.fullname,
+                      firstname: s?.data[ik]?.firstname,
+                      lastname: s?.data[ik]?.lastname,
+                      image: s?.data[ik]?.image_path
+                        ? s?.data[ik]?.image_path
+                        : "https://cdn.sportmonks.com/images/cricket/placeholder.png",
+                      id: match.teamAwayPlayers[i].playerId,
+                      country_id: s?.data[ik]?.country_id,
+                      dateofbirth: s?.data[ik]?.dateofbirth,
+                    });
+                  }
+                }
+              });
+            }
           }
         }
+      } catch (error) {
+        console.log(error);
       }
       for (let i = 0; i < match.teamHomePlayers.length; i++) {
         let name = match.teamHomePlayers[i].playerName.split(" ")[1];
         if (i < 11) {
-          let options = {
-            method: "GET",
-            url: `https://cricket.sportmonks.com/api/v2.0/players/?filter[lastname]=${name}&api_token=
-        ${process.env.TOKEN}`,
-            headers: {
-              "x-rapidapi-host": "cricket-live-data.p.rapidapi.com",
-              "x-rapidapi-key":
-                "773ece5d2bmsh8af64b6b53baed6p1e86c9jsnd416b0e51110",
-              api_token: process.env.TOKEN,
-              useQueryString: true,
-            },
-            Authorization: {
-              api_token: process.env.TOKEN,
-            },
-          };
           let s = "";
           try {
-            request(options, async function (error, response, body) {
-              s = JSON.parse(body);
-              for (let ik = 0; ik < s?.data?.length; ik++) {
+            for (let i = 0; i < match.teamHomePlayers.length; i++) {
+              let name = match.teamHomePlayers[i].playerName.split(" ")[1];
+              if (i < 11) {
+                let options = {
+                  method: "GET",
+                  url: `https://cricket.sportmonks.com/api/v2.0/players/?filter[lastname]=${name}&api_token=
+            ${process.env.TOKEN}`,
+                };
+
+                let s = "";
+
                 const foundpl = await Player.findOne({
-                  id: match.teamAwayPlayers[i].playerId,
+                  id: match.teamHomePlayers[i].playerId,
                 });
                 if (foundpl) {
-                  match.teamAwayPlayers[i].image = foundpl.image;
-                } else if (
-                  match.teamHomePlayers[i].playerName.toLowerCase() ==
-                  s?.data[ik]?.fullname.toLowerCase()
-                ) {
-                  console.log("equal", s?.data[ik]?.image_path);
-                  match.teamHomePlayers[i].image = s?.data[ik]?.image_path;
-                  console.log(ik, "ik");
-                  await Player.create({
-                    name: s?.data[ik]?.fullname,
-                    firstname: s?.data[ik]?.firstname,
-                    lastname: s?.data[ik]?.lastname,
-                    image: s?.data[ik]?.image_path
-                      ? s?.data[ik]?.image_path
-                      : "https://cdn.sportmonks.com/images/cricket/placeholder.png",
-                    id: match.teamHomePlayers[i].playerId,
-                    country_id: s?.data[ik]?.country_id,
-                    dateofbirth: s?.data[ik]?.dateofbirth,
+                  match.teamHomePlayers[i].image = foundpl.image;
+                } else {
+                  request(options, async function (error, response, body) {
+                    s = JSON.parse(body);
+                    console.log("awayplayers", s);
+                    for (let ik = 0; ik < s?.data?.length; ik++) {
+                      console.log(
+                        match.teamHomePlayers[i].playerName.toLowerCase() ==
+                          s?.data[ik]?.fullname.toLowerCase(),
+                        "decent"
+                      );
+                      if (
+                        match.teamHomePlayers[i].playerName.toLowerCase() ==
+                        s?.data[ik]?.fullname.toLowerCase()
+                      ) {
+                        console.log("equal", s?.data[ik]?.image_path);
+                        match.teamHomePlayers[i].image =
+                          s?.data[ik]?.image_path;
+                        console.log(ik, "ik");
+                        await Player.create({
+                          name: s?.data[ik]?.fullname,
+                          firstname: s?.data[ik]?.firstname,
+                          lastname: s?.data[ik]?.lastname,
+                          image: s?.data[ik]?.image_path
+                            ? s?.data[ik]?.image_path
+                            : "https://cdn.sportmonks.com/images/cricket/placeholder.png",
+                          id: match.teamHomePlayers[i].playerId,
+                          country_id: s?.data[ik]?.country_id,
+                          dateofbirth: s?.data[ik]?.dateofbirth,
+                        });
+                      }
+                    }
                   });
                 }
               }
-            });
+            }
           } catch (error) {
             console.log(error);
           }

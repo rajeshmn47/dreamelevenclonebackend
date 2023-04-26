@@ -8,7 +8,7 @@ const everydayboys = require("./addlivescores");
 const messageBird = require("messagebird")("W2tTRdqV8xxNjMYhIXSX3eEY6");
 const User = require("../models/user");
 const activatekey = "accountactivatekey123";
-const transaction = require("./transaction_details_controller");
+const transaction = require("./transaction");
 var nodemailer = require("nodemailer");
 const request = require("request");
 var smtpTransport = require("nodemailer-smtp-transport");
@@ -16,14 +16,13 @@ const otpGenerator = require("otp-generator");
 const fast2sms = require("fast-two-sms");
 var unirest = require("unirest");
 var req = unirest("GET", "https://www.fast2sms.com/dev/bulkV2");
-const matches = require("./controllers/matchDB-controller");
-const livedetails = require("./controllers/addlivedetailsnew");
-const addplayers = require("./controllers/addplayerstwo");
-const livescore = require("./controllers/addlivescoresdetails");
-const teamstandings = require("./controllers/updateteam");
-const comment = require("./controllers/addCommentary");
-const addIds = require("./controllers/addMatchIds");
-const transaction = require("./controllers/transaction");
+const matches = require("./matchDB-controller");
+const livedetails = require("./addlivedetailsnew");
+const addplayers = require("./addplayerstwo");
+const livescore = require("./addlivescoresdetails");
+const teamstandings = require("./updateteam");
+const comment = require("./addCommentary");
+const addIds = require("./addMatchIds");
 
 let api_key =
   "s16rcBDzWjgNhJXPEUV9HA3QMSfvpen2GyL7a4F8ubdwICk5KOHPT32vI5b6cSxs8JpUhirCOjqogGwk";
@@ -41,7 +40,7 @@ var transporter = nodemailer.createTransport(
   })
 );
 
-router.post("/addlivedetails", async (req, res) => {
+router.get("/addlivedetails", async (req, res) => {
   try {
     livedetails.addLivematchtodb();
     res.status(200).json({
@@ -50,18 +49,73 @@ router.post("/addlivedetails", async (req, res) => {
     });
   } catch (err) {
     console.log("Error : " + err);
+    res.status(200).json({
+      message: "could not save",
+      success: false,
+    });
   }
 });
 
-router.post("/addlivescore", async (req, res) => {
+router.get("/addlivescore", async (req, res) => {
   try {
-    livescore.addLivescoretodb();
+    livescore.addLivematchtodb();
     res.status(200).json({
-      message: "user already exists",
-      success: false,
+      message: "saved successfully",
+      success: true,
     });
   } catch (err) {
     console.log("Error : " + err);
+    res.status(200).json({
+      message: "could not save",
+      success: false,
+    });
+  }
+});
+
+router.get("/addplayers", async (req, res) => {
+  try {
+    addplayers.addPlayers();
+    res.status(200).json({
+      message: "saved successfully",
+      success: true,
+    });
+  } catch (err) {
+    console.log("Error : " + err);
+    res.status(200).json({
+      message: "could not save",
+      success: false,
+    });
+  }
+});
+
+router.get("/updateteams", async (req, res) => {
+  try {
+    teamstandings.addTeamstandingstodb();
+    res.status(200).json({
+      message: "saved successfully",
+      success: true,
+    });
+  } catch (err) {
+    console.log("Error : " + err);
+    res.status(200).json({
+      message: "could not save",
+      success: false,
+    });
+  }
+});
+router.get("/addtransaction", async (req, res) => {
+  try {
+    transaction.startTransaction();
+    res.status(200).json({
+      message: "saved successfully",
+      success: true,
+    });
+  } catch (err) {
+    console.log("Error : " + err);
+    res.status(200).json({
+      message: "could not save",
+      success: false,
+    });
   }
 });
 
