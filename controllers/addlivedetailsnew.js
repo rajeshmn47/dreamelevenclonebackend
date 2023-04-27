@@ -25,14 +25,15 @@ async function getplayerImage(name) {
 module.exports.addLivematchtodb = async function () {
   const turing = await MatchLive();
   let date = new Date();
-  let endDate = new Date(date.getTime() + 2 * 60 * 60 * 1000);
-  date = new Date(date.getTime() - 2 * 60 * 60 * 1000);
+  let endDate = new Date(date.getTime() + 3 * 60 * 60 * 1000);
+  date = new Date(date.getTime() - 4 * 60 * 60 * 1000);
   const matches = await Match.find({
     date: {
       $gte: new Date(date),
       $lt: new Date(endDate),
     },
   });
+  console.log(matches,'matches')
   for (let i = 0; i < matches.length; i++) {
     let matchId = matches[i].matchId;
     let match = await MatchLive.findOne({ matchId: matchId });
@@ -61,7 +62,8 @@ module.exports.addLivematchtodb = async function () {
       });
       promise
         .then(async (s) => {
-          console.log(s.results.live_details.teamsheets, "s");
+          console.log(s?.results?.live_details?.teamsheets, "s");
+          try{
           if (
             s.results.live_details != null &&
             s.results.live_details.teamsheets.home.length != 0
@@ -109,6 +111,10 @@ module.exports.addLivematchtodb = async function () {
               );
             }
           }
+        }
+        catch(err){
+          console.log(err)
+        }
         })
         .catch((error) => console.log(error));
     }

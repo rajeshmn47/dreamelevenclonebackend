@@ -216,6 +216,7 @@ router.get("/home/:userid", async (req, res) => {
 });
 
 router.get("/completed/:userid", async (req, res) => {
+  var notAllowed = ["", false, null, 0, undefined, NaN];
   let stime = new Date().getSeconds();
   let completedMatches = {
     results: [],
@@ -262,6 +263,7 @@ router.get("/completed/:userid", async (req, res) => {
       status: "",
       inPlay: "",
       lineups: "",
+      won: 0,
       teamHomeFlagUrl: teamHomeFlagUrl,
       teamAwayFlagUrl: teamAwayFlagUrl,
     };
@@ -305,6 +307,53 @@ router.get("/completed/:userid", async (req, res) => {
         console.log(matt.result, "mattresult");
         mat.contests = contests;
         mat.teams = teams;
+        for (let i = 0; i < contests?.length; i++) {
+          let totalwon = 0;
+          let arr = [];
+          for (let j = 0; j < contests[i]?.teamsId?.length; j++) {
+            console.log(
+              !notAllowed.includes(contests[i]?.teamsId[j]),
+              contests[i]?.teamsId[j],
+              "outside"
+            );
+            if (
+              !notAllowed.includes(contests[i]?.teamsId[j]) &&
+              !(contests[i]?.teamsId[j] == false)
+            ) {
+              console.log(
+                !notAllowed.includes(contests[i]?.teamsId[j]),
+                contests[i]?.teamsId[j],
+                "inside"
+              );
+              try {
+                const t = await Team.findById(contests[i]?.teamsId[j]);
+                if (t) {
+                  if (!t.points) {
+                    t.points = 44;
+                  }
+                  arr.push(t);
+                }
+              } catch (err) {
+                console.log(err, "err");
+              }
+            }
+          }
+          arr = arr.sort(function (a, b) {
+            return b?.points - a?.points;
+          });
+          for (let x = 0; x < arr.length; x++) {
+            const user = await User.findById(arr[x].userId);
+            if (arr[x].userId == req.query.userid) {
+            }
+            try{
+            totalwon = contests[i].prizeDetails[x + 1].prize + totalwon;
+            }
+            catch(err){
+              console.log(err,'err')
+            }
+          }
+          mat.won = totalwon+mat.won;
+        }
         completedMatches.results.push(mat);
       }
     }
