@@ -25,15 +25,15 @@ async function getplayerImage(name) {
 module.exports.addLivematchtodb = async function () {
   const turing = await MatchLive();
   let date = new Date();
-  let endDate = new Date(date.getTime() + 3 * 60 * 60 * 1000);
-  date = new Date(date.getTime() - 4 * 60 * 60 * 1000);
+  let endDate = new Date(date.getTime() + 24 * 60 * 60 * 1000);
+  date = new Date(date.getTime() - 24 * 60 * 60 * 1000);
   const matches = await Match.find({
     date: {
       $gte: new Date(date),
       $lt: new Date(endDate),
     },
   });
-  console.log(matches,'matches')
+  console.log(matches, "matches");
   for (let i = 0; i < matches.length; i++) {
     let matchId = matches[i].matchId;
     let match = await MatchLive.findOne({ matchId: matchId });
@@ -63,58 +63,57 @@ module.exports.addLivematchtodb = async function () {
       promise
         .then(async (s) => {
           console.log(s?.results?.live_details?.teamsheets, "s");
-          try{
-          if (
-            s.results.live_details != null &&
-            s.results.live_details.teamsheets.home.length != 0
-          ) {
-            let LiveMatchDet = new MatchLive();
-            LiveMatchDet.matchId = matchId;
-            LiveMatchDet.date = date1;
+          try {
+            if (
+              s.results.live_details != null &&
+              s.results.live_details.teamsheets.home.length != 0
+            ) {
+              let LiveMatchDet = new MatchLive();
+              LiveMatchDet.matchId = matchId;
+              LiveMatchDet.date = date1;
 
-            for (let x of s.results.live_details.teamsheets.home) {
-              if (x.position == "Unknown") {
-                x.position = "Batsman";
+              for (let x of s.results.live_details.teamsheets.home) {
+                if (x.position == "Unknown") {
+                  x.position = "Batsman";
+                }
+
+                let im = await getplayerImage(x.player_name);
+                let playerDet = {
+                  playerId: x.player_id,
+                  playerName: x.player_name,
+                  points: 4,
+                  image: im,
+                  position: x.position,
+                };
+                LiveMatchDet.teamHomePlayers.push(playerDet);
               }
 
-              let im = await getplayerImage(x.player_name);
-              let playerDet = {
-                playerId: x.player_id,
-                playerName: x.player_name,
-                points: 4,
-                image: im,
-                position: x.position,
-              };
-              LiveMatchDet.teamHomePlayers.push(playerDet);
-            }
+              for (let x of s.results.live_details.teamsheets.away) {
+                if (x.position == "Unknown") {
+                  x.position = "Batsman";
+                }
 
-            for (let x of s.results.live_details.teamsheets.away) {
-              if (x.position == "Unknown") {
-                x.position = "Batsman";
+                let im = await getplayerImage(x.player_name);
+                let playerDet = {
+                  playerId: x.player_id,
+                  playerName: x.player_name,
+                  points: 4,
+                  image: im,
+                  position: x.position,
+                };
+
+                LiveMatchDet.teamAwayPlayers.push(playerDet);
               }
-
-              let im = await getplayerImage(x.player_name);
-              let playerDet = {
-                playerId: x.player_id,
-                playerName: x.player_name,
-                points: 4,
-                image: im,
-                position: x.position,
-              };
-
-              LiveMatchDet.teamAwayPlayers.push(playerDet);
+              let match = await MatchLive.create(LiveMatchDet);
+              if (match) {
+                console.log(
+                  "Live Details of match is successfully added in db! "
+                );
+              }
             }
-            let match = await MatchLive.create(LiveMatchDet);
-            if (match) {
-              console.log(
-                "Live Details of match is successfully added in db! "
-              );
-            }
+          } catch (err) {
+            console.log(err);
           }
-        }
-        catch(err){
-          console.log(err)
-        }
         })
         .catch((error) => console.log(error));
     }
