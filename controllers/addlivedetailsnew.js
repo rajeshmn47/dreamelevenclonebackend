@@ -4,6 +4,7 @@ const Contest = require("../models/contest");
 const MatchLive = require("../models/match_live_details_new");
 const Player = require("../models/players");
 const axios = require("axios");
+const addplayers = require("./addplayerstwo");
 
 // function prizeBreakupRules(prize, numWinners){
 //     let prizeMoneyBreakup = [];
@@ -62,7 +63,7 @@ module.exports.addLivematchtodb = async function () {
       });
       promise
         .then(async (s) => {
-          console.log(s?.results?.live_details?.teamsheets, "s");
+          console.log(s?.results?.live_details?.teamsheets, s, "s");
           try {
             if (
               s.results.live_details != null &&
@@ -109,6 +110,7 @@ module.exports.addLivematchtodb = async function () {
                 console.log(
                   "Live Details of match is successfully added in db! "
                 );
+                addplayers.addPlayers();
               }
             }
           } catch (err) {
