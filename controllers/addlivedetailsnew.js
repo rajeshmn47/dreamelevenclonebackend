@@ -5,7 +5,7 @@ const MatchLive = require("../models/match_live_details_new");
 const Player = require("../models/players");
 const axios = require("axios");
 const addplayers = require("./addplayerstwo");
-const  getkeys  = require("../apikeys");
+const getkeys = require("../apikeys");
 
 // function prizeBreakupRules(prize, numWinners){
 //     let prizeMoneyBreakup = [];

@@ -3,6 +3,7 @@ const request = require("request");
 const Contest = require("../models/contest");
 const MatchLive = require("../models/match_live_details_new");
 const Player = require("../models/players");
+const User = require("../models/user");
 const axios = require("axios");
 const getkeys = require("../apikeys");
 

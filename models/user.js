@@ -27,6 +27,12 @@ const usernewSchema = new mongoose.Schema(
       required: true,
     },
 
+    totalhits: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+
     matchIds: [
       {
         type: String,

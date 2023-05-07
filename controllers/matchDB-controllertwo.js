@@ -1,7 +1,7 @@
 const Match = require("../models/match");
 const request = require("request");
 const Contest = require("../models/contest");
-const { getkeys } = require("../apikeys");
+const getkeys = require("../apikeys");
 
 // function prizeBreakupRules(prize, numWinners){
 //     let prizeMoneyBreakup = [];
