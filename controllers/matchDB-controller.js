@@ -53,7 +53,7 @@ module.exports.addMatchtoDb = async function () {
   // var day = 25;
   var formattedDate = new Date();
   const numberOfDays = 10;
-  let getim = new Date().getTime(date.getTime() + 24 * 10 * 60 * 60 * 1000);
+  let getim = new Date().getTime(date.getTime() + 24 * 15 * 60 * 60 * 1000);
 
   for (let i = 0; i < numberOfDays; i++) {
     console.log(`${process.env.API_KEY}`, "envkey");
