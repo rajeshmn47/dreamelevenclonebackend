@@ -5,6 +5,7 @@ const Team = require("../models/team");
 const MatchLive = require("../models/match_live_details_new");
 const Player = require("../models/players");
 const axios = require("axios");
+const getkeys = require("../apikeys");
 
 // function prizeBreakupRules(prize, numWinners){
 //     let prizeMoneyBreakup = [];
@@ -45,7 +46,7 @@ module.exports.addTeamstandingstodb = async function () {
       url: `https://cricket-live-data.p.rapidapi.com/match/${matchId}`,
       headers: {
         "x-rapidapi-host": "cricket-live-data.p.rapidapi.com",
-        "x-rapidapi-key": `${process.env.API_KEY}`,
+        "x-rapidapi-key": getkeys.getkeys(),
         useQueryString: true,
       },
     };

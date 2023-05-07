@@ -1,6 +1,7 @@
 const Match = require("../models/match");
 const request = require("request");
 const Contest = require("../models/contest");
+const { getkeys } = require("../apikeys");
 
 // function prizeBreakupRules(prize, numWinners){
 //     let prizeMoneyBreakup = [];
@@ -82,14 +83,14 @@ module.exports.addMatchtoDb = async function () {
       parseInt(endDate.getDate())
   );
   for (let i = 0; i < numberOfDays; i++) {
-    console.log(`${process.env.API_KEY}`, "envkey");
+    console.log("envkey");
     const options = {
       method: "GET",
       url: `https://cricket.sportmonks.com/api/v2.0/fixtures?filter[starts_between]=2023-04-27,2019-04-30&api_token=
       ${process.env.TOKEN}`,
       headers: {
         "x-rapidapi-host": "cricket-live-data.p.rapidapi.com",
-        "x-rapidapi-key": `${process.env.TOKEN}`,
+        "x-rapidapi-key": getkeys.getkeys(),
         useQueryString: true,
       },
     };

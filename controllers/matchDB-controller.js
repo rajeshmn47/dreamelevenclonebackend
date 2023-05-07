@@ -1,6 +1,7 @@
 const Match = require("../models/match");
 const request = require("request");
 const Contest = require("../models/contest");
+const getkeys = require("../apikeys");
 
 // function prizeBreakupRules(prize, numWinners){
 //     let prizeMoneyBreakup = [];
@@ -52,7 +53,7 @@ module.exports.addMatchtoDb = async function () {
   // var day = 25;
   var formattedDate = new Date();
   const numberOfDays = 10;
-  let getim = new Date().getTime();
+  let getim = new Date().getTime(date.getTime() + 24 * 10 * 60 * 60 * 1000);
 
   for (let i = 0; i < numberOfDays; i++) {
     console.log(`${process.env.API_KEY}`, "envkey");
@@ -61,7 +62,7 @@ module.exports.addMatchtoDb = async function () {
       url: `https://cricket-live-data.p.rapidapi.com/fixtures-by-date/${formattedDate}`,
       headers: {
         "x-rapidapi-host": "cricket-live-data.p.rapidapi.com",
-        "x-rapidapi-key": `${process.env.API_KEY}`,
+        "x-rapidapi-key": getkeys.getkeys(),
         useQueryString: true,
       },
     };
@@ -78,6 +79,7 @@ module.exports.addMatchtoDb = async function () {
     });
     promise
       .then(async (s) => {
+        console.log(s, "s");
         for (mat of s.results) {
           obj.results.push(mat);
         }
@@ -93,12 +95,12 @@ module.exports.addMatchtoDb = async function () {
           match1.teamAwayName = obj.results[i].away.name;
           match1.date = obj.results[i].date;
           if (obj.results[i].home.code == "") {
-            continue;
+            match1.teamHomeCode = obj.results[i].home.name.slice(0, 3);
           } else {
             match1.teamHomeCode = obj.results[i].home.code;
           }
           if (obj.results[i].away.code == "") {
-            continue;
+            match1.teamAwayCode = obj.results[i].away.name.slice(0, 3);
           } else {
             match1.teamAwayCode = obj.results[i].away.code;
           }

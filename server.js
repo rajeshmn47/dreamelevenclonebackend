@@ -24,6 +24,7 @@ const transaction = require("./controllers/transaction");
 const payments = require("./controllers/payment");
 const teamstandingsA = require("./controllers/updatestandings");
 const updatedata = require("./controllers/updatedata");
+const getkeys = require("./apikeys");
 // Environment variables
 /* Requiring body-parser package
 to fetch the data that is entered
@@ -69,7 +70,7 @@ let date = new Date();
 //teamstandingsA.addTeamstandingstodb()
 //addplayers.addPlayers();
 //transaction.startTransaction();
-
+console.log(getkeys.getkeys());
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
   console.warn(`App listening on http://localhost:${PORT}`);
