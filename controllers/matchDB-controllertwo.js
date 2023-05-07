@@ -84,13 +84,14 @@ module.exports.addMatchtoDb = async function () {
   );
   for (let i = 0; i < numberOfDays; i++) {
     console.log("envkey");
+    let keys = await getkeys.getkeys();
     const options = {
       method: "GET",
       url: `https://cricket.sportmonks.com/api/v2.0/fixtures?filter[starts_between]=2023-04-27,2019-04-30&api_token=
       ${process.env.TOKEN}`,
       headers: {
         "x-rapidapi-host": "cricket-live-data.p.rapidapi.com",
-        "x-rapidapi-key": getkeys.getkeys(),
+        "x-rapidapi-key": keys,
         useQueryString: true,
       },
     };

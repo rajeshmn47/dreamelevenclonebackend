@@ -41,12 +41,13 @@ module.exports.addTeamstandingstodb = async function () {
   const matches = await MatchLive.find();
   for (let i = 0; i < matches.length; i++) {
     let matchId = matches[i].matchId;
+    let keys = await getkeys.getkeys();
     const options = {
       method: "GET",
       url: `https://cricket-live-data.p.rapidapi.com/match/${matchId}`,
       headers: {
         "x-rapidapi-host": "cricket-live-data.p.rapidapi.com",
-        "x-rapidapi-key": getkeys.getkeys(),
+        "x-rapidapi-key": keys,
         useQueryString: true,
       },
     };

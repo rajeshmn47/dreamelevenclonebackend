@@ -1,5 +1,10 @@
-module.exports.getkeys = function () {
+const User = require("./models/user");
+
+module.exports.getkeys = async function () {
+  const user = await User.findById("63c18c9f2d217ea120307e30");
+  let totalhits = user.totalhits;
   let date = new Date().getDate();
+  console.log(totalhits, "totalhits");
   let keyindex = Math.floor(date / 2);
   console.log(keyindex, "index");
   let keys = [

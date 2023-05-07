@@ -69,13 +69,17 @@ module.exports.addLivematchtodb = async function () {
     if (!match) {
       console.log("matchalreadyexists");
     } else {
+      let keys = await getkeys.getkeys();
       const date1 = matches[i].date;
+      const user = await User.findById("63c18c9f2d217ea120307e30");
+      user.totalhits = user.totalhits + 1;
+      await user.save();
       const options = {
         method: "GET",
         url: `https://cricket-live-data.p.rapidapi.com/match/${matchId}`,
         headers: {
           "x-rapidapi-host": "cricket-live-data.p.rapidapi.com",
-          "X-RapidAPI-Key": getkeys.getkeys(),
+          "X-RapidAPI-Key": keys,
           useQueryString: true,
         },
       };

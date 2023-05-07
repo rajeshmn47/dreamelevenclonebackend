@@ -1,6 +1,7 @@
 const Match = require("../models/match");
 const request = require("request");
 const Contest = require("../models/contest");
+const User = require("../models/user");
 const getkeys = require("../apikeys");
 
 // function prizeBreakupRules(prize, numWinners){
@@ -57,12 +58,16 @@ module.exports.addMatchtoDb = async function () {
 
   for (let i = 0; i < numberOfDays; i++) {
     console.log(`${process.env.API_KEY}`, "envkey");
+    const user = await User.findById("63c18c9f2d217ea120307e30");
+    user.totalhits = user.totalhits + 1;
+    await user.save();
+    let keys = await getkeys.getkeys();
     const options = {
       method: "GET",
       url: `https://cricket-live-data.p.rapidapi.com/fixtures-by-date/${formattedDate}`,
       headers: {
         "x-rapidapi-host": "cricket-live-data.p.rapidapi.com",
-        "x-rapidapi-key": getkeys.getkeys(),
+        "x-rapidapi-key": keys,
         useQueryString: true,
       },
     };
