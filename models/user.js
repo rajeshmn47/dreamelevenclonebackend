@@ -67,6 +67,14 @@ const usernewSchema = new mongoose.Schema(
       default: 0,
     },
 
+    image: {
+      type: String,
+      trim: true,
+      required: true,
+      lowercase: true,
+      default: "https://cdn.sportmonks.com/images/cricket/placeholder.png",
+    },
+
     contact_id: {
       type: String,
       required: true,

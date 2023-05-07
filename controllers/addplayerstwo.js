@@ -27,7 +27,7 @@ module.exports.addPlayers = async function () {
   const turing = await MatchLive();
   let date = new Date();
   let endDate = new Date(date.getTime() + 60 * 60 * 1000);
-  date = new Date(date.getTime() - 60 * 60 * 1000*10);
+  date = new Date(date.getTime() - 60 * 60 * 1000 * 10);
   const matches = await Match.find({
     date: {
       $gte: new Date(date),

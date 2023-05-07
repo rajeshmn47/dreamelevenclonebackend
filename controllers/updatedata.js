@@ -17,6 +17,7 @@ const fast2sms = require("fast-two-sms");
 var unirest = require("unirest");
 var req = unirest("GET", "https://www.fast2sms.com/dev/bulkV2");
 const matches = require("./matchDB-controller");
+const matchestwo = require("./matchDB-controllertwo");
 const livedetails = require("./addlivedetailsnew");
 const addplayers = require("./addplayerstwo");
 const livescore = require("./addlivescoresdetails");
@@ -109,6 +110,38 @@ router.get("/addtransaction", async (req, res) => {
     res.status(200).json({
       message: "saved successfully",
       success: true,
+    });
+  } catch (err) {
+    console.log("Error : " + err);
+    res.status(200).json({
+      message: "could not save",
+      success: false,
+    });
+  }
+});
+
+router.get("/addmatchtodb", async (req, res) => {
+  try {
+    matches.addMatchtoDb();
+    res.status(200).json({
+      message: "user already exists",
+      success: false,
+    });
+  } catch (err) {
+    console.log("Error : " + err);
+    res.status(200).json({
+      message: "could not save",
+      success: false,
+    });
+  }
+});
+
+router.get("/addmatchids", async (req, res) => {
+  try {
+    addIds.addMatchIds();
+    res.status(200).json({
+      message: "user already exists",
+      success: false,
     });
   } catch (err) {
     console.log("Error : " + err);

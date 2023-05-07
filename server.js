@@ -69,29 +69,8 @@ let date = new Date();
 //teamstandingsA.addTeamstandingstodb()
 //addplayers.addPlayers();
 //transaction.startTransaction();
-cron.schedule(
-  "05 12 * * *",
-  function () {
-    //add();
-  },
-  null,
-  true,
-  "America/Los_Angeles"
-);
-cron.schedule(
-  "*/28 * * * *",
-  function () {
-    console.log(new Date().getHours(), new Date().getMinutes(), "hours");
-    //livedetails.addLivematchtodb();
-    //livescore.addLivematchtodb();
-    //teamstandings.addTeamstandingstodb(); //addmore();
-  },
-  null,
-  true,
-  "America/Los_Angeles"
-);
 
-const PORT = process.env.PORT || 9000;
+const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
   console.warn(`App listening on http://localhost:${PORT}`);
 });

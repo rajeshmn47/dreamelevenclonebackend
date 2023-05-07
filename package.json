@@ -9,6 +9,7 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.1",
     "fast-two-sms": "^3.0.0",
+    "google-auth-library": "^8.8.0",
     "jsonwebtoken": "^8.5.1",
     "live-cricket-scores": "^3.0.0",
     "messagebird": "^3.8.0",

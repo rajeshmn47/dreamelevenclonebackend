@@ -14,9 +14,11 @@ const request = require("request");
 var smtpTransport = require("nodemailer-smtp-transport");
 const otpGenerator = require("otp-generator");
 const fast2sms = require("fast-two-sms");
+const { OAuth2Client } = require("google-auth-library");
 var unirest = require("unirest");
 var req = unirest("GET", "https://www.fast2sms.com/dev/bulkV2");
-
+const server_secret_key =
+  "iamrajesh675gjhchshskijdiucacuijnuijniusjiudjcsdijcjsijcisjijsoisju";
 let api_key =
   "s16rcBDzWjgNhJXPEUV9HA3QMSfvpen2GyL7a4F8ubdwICk5KOHPT32vI5b6cSxs8JpUhirCOjqogGwk";
 var transporter = nodemailer.createTransport(
@@ -32,6 +34,135 @@ var transporter = nodemailer.createTransport(
     },
   })
 );
+
+const client = new OAuth2Client(
+  "711974125982-gaeieriu9q60ctbps2qpbjitv0374d7l.apps.googleusercontent.com"
+);
+
+const clientId =
+  "711974125982-gaeieriu9q60ctbps2qpbjitv0374d7l.apps.googleusercontent.com";
+
+router.post("/googlelogin", async function (req, res, next) {
+  var tokenId = req.body.tokenId;
+  var verifyObject = {};
+  verifyObject.idToken = tokenId;
+  verifyObject.audience = clientId;
+  var response = await client.verifyIdToken(verifyObject);
+  const { email_verified } = response.payload;
+  if (email_verified) {
+    console.log(response.payload);
+    const usert = await User.findOne({
+      email: { $eq: response.payload.email },
+    });
+    if (usert) {
+      usert.image = response.payload.picture;
+      await usert.save();
+      let userid = usert._id;
+      const server_token = jwt.sign({ userid }, activatekey, {
+        expiresIn: "500m",
+      });
+      res.status(200).json({
+        success: true,
+        usert,
+        server_token,
+      });
+    } else {
+      const user1 = new User();
+      const userId = response.payload.email.split("@")[0];
+      user1.userId = userId;
+      user1.username = response.payload.name;
+      user1.email = response.payload.email;
+      user1.image = response.payload.picture;
+      user1.password = "password";
+      user1.phonenumber = 7259293140;
+      user1.wallet = 100;
+      var options = {
+        method: "POST",
+        url: "https://api.razorpay.com/v1/contacts",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization:
+            "Basic cnpwX3Rlc3RfT0N0MTBGeGpuWFROV0s6RlpyNW9YQjFCWnFtbDBhUlRhd0IwSUh1",
+        },
+        body: JSON.stringify({
+          name: response.payload.name,
+          email: response.payload.email,
+          contact: 7259293140,
+          type: "employee",
+          reference_id: "Domino Contact ID 12345",
+          notes: {
+            random_key_1: "Make it so.",
+            random_key_2: "Tea. Earl Grey. Hot.",
+          },
+        }),
+      };
+      let contact_id = "";
+      let promise = new Promise((resolve, reject) => {
+        request(options, function (error, response) {
+          if (error) reject(error);
+          let s = JSON.parse(response.body);
+          contact_id = s.id;
+          user1.contact_id = contact_id;
+          resolve();
+        });
+      });
+      promise
+        .then(async () => {
+          User.findOne(
+            { email: response.payload.email },
+            async function (err, user) {
+              if (err) {
+                console.log("Error in finding user in Sign-in ");
+                res.status(400).json({
+                  message: "something went wrong",
+                });
+              }
+              if (!user) {
+                transaction.createTransaction(userId, "", 100, "extra cash");
+                User.create(user1, async function (err, user) {
+                  if (err) {
+                    console.log("rajesh");
+                    console.log(
+                      "Error in creating a user while account activation",
+                      err
+                    );
+                    res.status(400).json({
+                      message: "something went wrong",
+                    });
+                  } else {
+                    var userid = user._id;
+                    console.log("SignUp successfull!");
+                    const token = jwt.sign({ userid }, activatekey, {
+                      expiresIn: "500m",
+                    });
+                    res.status(200).json({
+                      success: true,
+                      user,
+                      server_token,
+                    });
+                  }
+                });
+              } else {
+                console.log("kuttheee");
+                res.status(200).json({
+                  message: "user already exists",
+                  success: false,
+                });
+              }
+            }
+          );
+        })
+        .catch((err) => {
+          console.log("Error : " + err);
+        });
+    }
+  } else {
+    res.json({
+      status: 403,
+      message: "Email Not Verified, use another method to login!",
+    });
+  }
+});
 
 function checkloggedinuser(req, res, next) {
   const tokenheader = req.body.headers || req.headers["servertoken"];

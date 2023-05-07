@@ -38,7 +38,7 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/getcontestsofuser/:id", async (req, res) => {
-  console.log(req.query,'bheemana')
+  console.log(req.query, "bheemana");
   const contests = await Contest.find({
     matchId: req.params.id,
     userIds: req.query.userid,
@@ -101,7 +101,9 @@ router.get("/getjoinedcontest/:id", async (req, res) => {
           team: {
             ...arr[x]._doc,
             rank: x + 1,
-            won: (contests[i]?.prizeDetails[x + 1]?.prize)?(contests[i]?.prizeDetails[x + 1]?.prize):0,
+            won: contests[i]?.prizeDetails[x + 1]?.prize
+              ? contests[i]?.prizeDetails[x + 1]?.prize
+              : 0,
             username: user.username,
             teamnumber: x + 1,
           },

@@ -345,14 +345,13 @@ router.get("/completed/:userid", async (req, res) => {
             const user = await User.findById(arr[x].userId);
             if (arr[x].userId == req.query.userid) {
             }
-            try{
-            totalwon = contests[i].prizeDetails[x + 1].prize + totalwon;
-            }
-            catch(err){
-              console.log(err,'err')
+            try {
+              totalwon = contests[i].prizeDetails[x + 1].prize + totalwon;
+            } catch (err) {
+              console.log(err, "err");
             }
           }
-          mat.won = totalwon+mat.won;
+          mat.won = totalwon + mat.won;
         }
         completedMatches.results.push(mat);
       }
