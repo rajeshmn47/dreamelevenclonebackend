@@ -1,7 +1,7 @@
 module.exports.getkeys = function () {
   let date = new Date().getDate();
   let keyindex = Math.floor(date / 2);
-  console.log(keyindex,'index')
+  console.log(keyindex, "index");
   let keys = [
     "5658c3593amshd74d634f219e8d1p148490jsna5981aed9d41",
     "3e774772f1mshd335b4ddbbd2512p194714jsnb9cc15174c3b",
