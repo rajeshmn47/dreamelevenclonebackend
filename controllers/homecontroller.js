@@ -217,6 +217,8 @@ router.get("/home/:userid", async (req, res) => {
 
 router.get("/completed/:userid", async (req, res) => {
   var notAllowed = ["", false, null, 0, undefined, NaN];
+  const user = await User.findOne({ _id: req.params.userid });
+  console.log(user, "ids", req.params.userid);
   let stime = new Date().getSeconds();
   let completedMatches = {
     results: [],
@@ -231,6 +233,7 @@ router.get("/completed/:userid", async (req, res) => {
   let endDate = date.toISOString();
   let matches = await Matches.find();
   for (let i = 0; i < matches.length; i++) {
+    if(user.matchIds.includes(matches[i].matchId)){
     teamAwayFlagUrl = flagURLs.findFlagUrlByCountryName(
       matches[i].teamAwayName
     );
@@ -354,6 +357,7 @@ router.get("/completed/:userid", async (req, res) => {
           mat.won = totalwon + mat.won;
         }
         completedMatches.results.push(mat);
+      }
       }
     }
   }
