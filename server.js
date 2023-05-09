@@ -62,6 +62,7 @@ async function addmore() {
   await eva.addLivematchtodb();
 }
 let date = new Date();
+console.log(date.getHours(), "hours");
 //livedetails.addLivematchtodb();
 //livescore.addLivematchtodb();
 //addIds.addMatchIds();
@@ -77,5 +78,9 @@ async function gettingkeys() {
 gettingkeys();
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
+  let rt = new Date();
+  setInterval(() => {
+    console.log(rt.getHours(), rt.getMinutes(), "hours");
+  }, 1000);
   console.warn(`App listening on http://localhost:${PORT}`);
 });
