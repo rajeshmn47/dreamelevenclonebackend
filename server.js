@@ -80,6 +80,7 @@ const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
   setInterval(() => {
     let rt = new Date();
+     rt=new Date(rt.getTime() + 5.5 * 60 * 60 * 1000);
     console.log(rt.getHours(), rt.getMinutes(), "hours", "minutes");
   }, 2000);
   console.warn(`App listening on http://localhost:${PORT}`);
