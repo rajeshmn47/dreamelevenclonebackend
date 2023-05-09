@@ -54,6 +54,7 @@ function pointCalculator(runs, fours, sixes, strikeRate, wicket, economy) {
 module.exports.addLivematchtodb = async function () {
   let date = new Date();
   let endDate = new Date(date.getTime() + 12.5 * 60 * 60 * 1000);
+  console.log(endDate.getHours(),endDate.getMinutes(),'gettimelive')
   date = new Date(
     date.getTime() + ((12.5 * 60 * 60 * 1000) - (9 * 60 * 60 * 1000 * 1))
   );
@@ -63,7 +64,7 @@ module.exports.addLivematchtodb = async function () {
       $lt: new Date(endDate),
     },
   });
-  console.log(matches, "mat");
+  console.log(matches, "match");
   for (let i = 0; i < matches.length; i++) {
     let matchId = matches[i].matchId;
     let match = await MatchLive.findOne({ matchId: matchId });
