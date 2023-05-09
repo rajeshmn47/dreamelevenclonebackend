@@ -81,6 +81,6 @@ app.listen(PORT, () => {
   let rt = new Date();
   setInterval(() => {
     console.log(rt.getHours(), rt.getMinutes(), "hours");
-  }, 1000);
+  }, 2000);
   console.warn(`App listening on http://localhost:${PORT}`);
 });
