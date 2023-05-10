@@ -59,7 +59,7 @@ router.post("/googlelogin", async function (req, res, next) {
       await usert.save();
       let userid = usert._id;
       const server_token = jwt.sign({ userid }, activatekey, {
-        expiresIn: "500m",
+        expiresIn: "5000000m",
       });
       res.status(200).json({
         success: true,
@@ -133,7 +133,7 @@ router.post("/googlelogin", async function (req, res, next) {
                     var userid = user._id;
                     console.log("SignUp successfull!");
                     const token = jwt.sign({ userid }, activatekey, {
-                      expiresIn: "500m",
+                      expiresIn: "500000m",
                     });
                     res.status(200).json({
                       success: true,
@@ -271,7 +271,7 @@ router.post("/register", async (req, res) => {
               console.log("SignUp successfull!");
 
               const token = jwt.sign({ userid }, activatekey, {
-                expiresIn: "500m",
+                expiresIn: "5000000m",
               });
 
               res.status(200).json({
@@ -301,7 +301,7 @@ router.post("/otp", async (req, res) => {
     user.verified = true;
     let userid = user._id;
     const token = jwt.sign({ userid }, activatekey, {
-      expiresIn: "500m",
+      expiresIn: "5000000m",
     });
     user.save(function (err) {
       if (!err) {

@@ -42,7 +42,7 @@ module.exports.addMatchIds = async function () {
   const matches = await MatchLiveDetails.find();
   const users = await User.find();
   for (let x = 0; x < users.length; x++) {
-    users[x].matchIds=0
+    users[x].matchIds = 0;
     for (let i = 0; i < matches.length; i++) {
       let teams = await Team.find({
         $and: [{ matchId: matches[i].matchId }, { userId: users[x]._id }],

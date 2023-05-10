@@ -6,6 +6,7 @@ module.exports.getkeys = async function () {
   if (totalhits > 5000) {
     totalhits = 0;
   }
+
   let date = new Date().getDate();
   console.log(totalhits, "totalhits");
   let keyindex = Math.floor(date / 2);

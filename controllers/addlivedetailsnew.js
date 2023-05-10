@@ -31,7 +31,7 @@ module.exports.addLivematchtodb = async function () {
   let endDate = new Date(
     date.getTime() + 5.5 * 60 * 60 * 1000 + 0.6 * 60 * 60 * 1000
   );
-  date = new Date(date.getTime() + 5.5 * 60 * 60 * 1000);
+  date = new Date(date.getTime() - 5.5 * 60 * 60 * 1000);
   const matches = await Match.find({
     date: {
       $gte: new Date(date),
