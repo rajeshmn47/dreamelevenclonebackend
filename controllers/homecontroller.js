@@ -647,7 +647,7 @@ router.get("/livematches", async (req, res) => {
     let matchid = matches[i].matchId;
     let match = await MatchLiveDetails.findOne({ matchId: matchid });
     console.log(match?.result,'match')
-    if (match && ((match?.result == "Yes"))) {
+    if (match && (!(match?.result == "Yes"))) {
       console.log(matches[i].cmtMatchId,'matchid')
       matchess.push(matches[i]);
     }
