@@ -10,32 +10,6 @@ const MatchLiveDetails = require("../models/match_live_details_new");
 //     }
 // }
 
-function compare(a, b) {
-  return a.date < b.date;
-}
-
-function getplayerImage(name) {
-  const options = {
-    method: "GET",
-    url: `https://cricket.sportmonks.com/api/v2.0/players/?filter[lastname]=${name}&api_token=
-        fTWhOiGhie6YtMBmpbw10skSjTmSgwHeLg22euC5qLMR1oT1eC6PRc8sEulv`,
-    headers: {
-      "x-rapidapi-host": "cricket-live-data.p.rapidapi.com",
-      "x-rapidapi-key": "773ece5d2bmsh8af64b6b53baed6p1e86c9jsnd416b0e51110",
-      api_token: "fTWhOiGhie6YtMBmpbw10skSjTmSgwHeLg22euC5qLMR1oT1eC6PRc8sEulv",
-      useQueryString: true,
-    },
-    Authorization: {
-      api_token: "fTWhOiGhie6YtMBmpbw10skSjTmSgwHeLg22euC5qLMR1oT1eC6PRc8sEulv",
-    },
-  };
-  let s = "";
-  request(options, function (error, response, body) {
-    s = JSON.parse(body);
-  });
-  return s;
-}
-
 module.exports.addcommentary = async function () {
   function pad2(n) {
     return (n < 10 ? "0" : "") + n;
@@ -44,10 +18,7 @@ module.exports.addcommentary = async function () {
   let obj = {
     results: [],
   };
-  var date = new Date();
-  var month = pad2(date.getMonth() + 1); //months (0-11)
-  var day = pad2(date.getDate()); //day (1-31)
-  var year = date.getFullYear();
+  //months (0-11)
   // var year = "2021";
   // var month = "09";
   // var day = 25;
@@ -57,37 +28,63 @@ module.exports.addcommentary = async function () {
 
   const axios = require("axios");
 
-  const matches = await Match.find();
-
-  const options = {
-    method: "GET",
-    url: "https://cricbuzz-cricket.p.rapidapi.com/mcenter/v1/66285/comm",
-    headers: {
-      "X-RapidAPI-Key": "3ddef92f6emsh8301b1a8e1fd478p15bb8bjsnd0bb5446cadc",
-      "X-RapidAPI-Host": "cricbuzz-cricket.p.rapidapi.com",
+  let date = new Date();
+  let endDate = new Date(date.getTime() + 2 * 60 * 60 * 1000);
+  date = new Date(date.getTime()- 24 * 60 * 60 * 1000);
+  const matches = await Match.find({
+    date: {
+      $gte: new Date(date),
+      $lt: new Date(endDate),
     },
-  };
+  });
+  let type = ["international", "league", "domestic", "women"];
+  for (let ty = 0; ty < type.length; ty++) {
+    const options = {
+      method: "GET",
+      url: `https://cricbuzz-cricket.p.rapidapi.com/schedule/v1/${type[ty]}`,
+      headers: {
+        "X-RapidAPI-Key": "3e774772f1mshd335b4ddbbd2512p194714jsnb9cc15174c3b",
+        "X-RapidAPI-Host": "cricbuzz-cricket.p.rapidapi.com",
+      },
+    };
 
-  axios
-    .request(options)
-    .then(async function (response) {
-      console.log(response.data, "helbeda");
-      let gnu = [];
-      const ms = await MatchLiveDetails.findOne({
-        matchId: "2719011",
-      });
-      response.data.commentaryList.forEach((e) =>
-        ms.commentary.push({
-          comment_text: e?.commText ? e.commText : "",
-          eventType: e?.event ? e.event : "",
-          over: e?.overNumber ? e.overNumber : "",
-        })
-      );
-      await ms.save();
-    })
-    .catch(function (error) {
+    try {
+      const response = await axios.request(options);
+      let list = response.data.matchScheduleMap;
+      for (let i = 0; i < list.length; i++) {
+        for (
+          let j = 0;
+          j < list[i].scheduleAdWrapper?.matchScheduleList?.length;
+          j++
+        ) {
+          let info =
+            list[i]?.scheduleAdWrapper?.matchScheduleList[j]?.matchInfo[0];
+          for (let k = 0; k < matches.length; k++) {
+            let b = new Date(parseInt(info.startDate));
+            let a = new Date(matches[k].date);
+            if (a.getMonth() == b.getMonth() && a.getDate() == b.getDate()) {
+              let teama = info.team1.teamName.toLowerCase();
+              let teamb = info.team2.teamName.toLowerCase();
+              let teamab = matches[k].teamHomeName.toLowerCase();
+              let teamcd = matches[k].teamAwayName.toLowerCase();
+              if (teama == teamab && teamb == teamcd) {
+                matches[k].cmtMatchId = info.matchId;
+                let ab=await MatchLiveDetails.findOne(
+                  { matchId: matches[k].matchId }
+                );
+                if(ab){
+                  console.log(ab,'ab')
+                ab.cmtMatchId=info.matchId
+                await ab.save()
+                }
+                let at=await matches[k].save();
+              }
+            }
+          }
+        }
+      }
+    } catch (error) {
       console.error(error);
-    });
-
-  // Doubt in this part, is request is synchronous or non synchronous?
+    }
+  }
 };

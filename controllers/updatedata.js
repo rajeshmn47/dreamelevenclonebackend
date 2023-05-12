@@ -152,4 +152,20 @@ router.get("/addmatchids", async (req, res) => {
   }
 });
 
+router.get("/addcommentary", async (req, res) => {
+  try {
+    comment.addcommentary();
+    res.status(200).json({
+      message: "user already exists",
+      success: false,
+    });
+  } catch (err) {
+    console.log("Error : " + err);
+    res.status(200).json({
+      message: "could not save",
+      success: false,
+    });
+  }
+});
+
 module.exports = router;

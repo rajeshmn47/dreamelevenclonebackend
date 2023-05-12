@@ -114,7 +114,7 @@ router.get("/home/:userid", async (req, res) => {
     }
   }
   let date = new Date();
-  date.setDate(date.getDate() - 2);
+  date.setDate(date.getDate() - 1);
   let startDate = date.toISOString();
   date.setDate(date.getDate() + 4);
   let endDate = date.toISOString();
@@ -629,6 +629,33 @@ router.get("/players", async (req, res) => {
     message: "got all results successfully",
     data: ple,
     length: ple.length,
+  });
+});
+
+router.get("/livematches", async (req, res) => {
+  let date = new Date();
+  let matchess = [];
+  let endDate = new Date(date.getTime() + 10 * 60 * 60 * 1000);
+  date = new Date(date.getTime() - 10 * 60 * 60 * 1000);
+  const matches = await Matches.find({
+    date: {
+      $gte: new Date(date),
+      $lt: new Date(endDate),
+    },
+  });
+  for (let i = 0; i < matches.length; i++) {
+    let matchid = matches[i].matchId;
+    let match = await MatchLiveDetails.findOne({ matchId: matchid });
+    console.log(match?.result,'match')
+    if (match && ((match?.result == "Yes"))) {
+      console.log(matches[i].cmtMatchId,'matchid')
+      matchess.push(matches[i]);
+    }
+  }
+  console.log(matchess,'matchids')
+  res.status(200).json({
+    message: "got all results successfully",
+    matches: matchess,
   });
 });
 
