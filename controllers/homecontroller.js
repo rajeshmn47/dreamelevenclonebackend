@@ -386,6 +386,13 @@ router.get("/getmatchlive/:id", async (req, res) => {
   });
 });
 
+router.get("/getmatch/:id", async (req, res) => {
+  const match = await Matches.findOne({ matchId: req.params.id });
+  res.status(200).json({
+    match: match,
+  });
+});
+
 router.get("/results", async (req, res) => {
   const results = [];
   result_url = "https://karresults.nic.in/slakresfirst.asp";
@@ -646,13 +653,13 @@ router.get("/livematches", async (req, res) => {
   for (let i = 0; i < matches.length; i++) {
     let matchid = matches[i].matchId;
     let match = await MatchLiveDetails.findOne({ matchId: matchid });
-    console.log(match?.result,'match')
-    if (match && (!(match?.result == "Yes"))) {
-      console.log(matches[i].cmtMatchId,'matchid')
+    console.log(match?.result, "match");
+    if (match && !(match?.result == "Yes")) {
+      console.log(matches[i].cmtMatchId, "matchid");
       matchess.push(matches[i]);
     }
   }
-  console.log(matchess,'matchids')
+  console.log(matchess, "matchids");
   res.status(200).json({
     message: "got all results successfully",
     matches: matchess,

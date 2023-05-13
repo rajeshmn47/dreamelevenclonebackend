@@ -2,6 +2,7 @@ const Match = require("../models/match");
 const request = require("request");
 const Contest = require("../models/contest");
 const MatchLiveDetails = require("../models/match_live_details_new");
+const addLiveCommentary = require("./firebase");
 
 // function prizeBreakupRules(prize, numWinners){
 //     let prizeMoneyBreakup = [];
@@ -29,8 +30,8 @@ module.exports.addcommentary = async function () {
   const axios = require("axios");
 
   let date = new Date();
-  let endDate = new Date(date.getTime() + 2 * 60 * 60 * 1000);
-  date = new Date(date.getTime()- 24 * 60 * 60 * 1000);
+  let endDate = new Date(date.getTime() + 5 * 60 * 60 * 1000);
+  date = new Date(date.getTime() - 5 * 60 * 60 * 1000);
   const matches = await Match.find({
     date: {
       $gte: new Date(date),
@@ -43,7 +44,7 @@ module.exports.addcommentary = async function () {
       method: "GET",
       url: `https://cricbuzz-cricket.p.rapidapi.com/schedule/v1/${type[ty]}`,
       headers: {
-        "X-RapidAPI-Key": "3e774772f1mshd335b4ddbbd2512p194714jsnb9cc15174c3b",
+        "X-RapidAPI-Key": "a5da117d90msh3e694894d3b7dbfp12cc3bjsn8167b3fc201c",
         "X-RapidAPI-Host": "cricbuzz-cricket.p.rapidapi.com",
       },
     };
@@ -69,15 +70,16 @@ module.exports.addcommentary = async function () {
               let teamcd = matches[k].teamAwayName.toLowerCase();
               if (teama == teamab && teamb == teamcd) {
                 matches[k].cmtMatchId = info.matchId;
-                let ab=await MatchLiveDetails.findOne(
-                  { matchId: matches[k].matchId }
-                );
-                if(ab){
-                  console.log(ab,'ab')
-                ab.cmtMatchId=info.matchId
-                await ab.save()
+                let ab = await MatchLiveDetails.findOne({
+                  matchId: matches[k].matchId,
+                });
+                console.log(ab, "ab");
+                if (ab) {
+                  console.log(ab, "ab");
+                  ab.cmtMatchId = info.matchId;
+                  await ab.save();
                 }
-                let at=await matches[k].save();
+                let at = await matches[k].save();
               }
             }
           }

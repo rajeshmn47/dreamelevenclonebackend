@@ -23,6 +23,7 @@ const addplayers = require("./addplayerstwo");
 const livescore = require("./addlivescoresdetails");
 const teamstandings = require("./updateteam");
 const comment = require("./addCommentary");
+const addLiveCommentary = require("./firebase");
 const addIds = require("./addMatchIds");
 
 let api_key =
@@ -155,6 +156,22 @@ router.get("/addmatchids", async (req, res) => {
 router.get("/addcommentary", async (req, res) => {
   try {
     comment.addcommentary();
+    res.status(200).json({
+      message: "user already exists",
+      success: false,
+    });
+  } catch (err) {
+    console.log("Error : " + err);
+    res.status(200).json({
+      message: "could not save",
+      success: false,
+    });
+  }
+});
+
+router.get("/addlivecommentary", async (req, res) => {
+  try {
+    await addLiveCommentary.addLivecommentary();
     res.status(200).json({
       message: "user already exists",
       success: false,

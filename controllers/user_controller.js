@@ -75,7 +75,7 @@ router.post("/googlelogin", async function (req, res, next) {
       user1.image = response.payload.picture;
       user1.password = "password";
       user1.phonenumber = 7259293140;
-      user1.wallet = 100;
+      user1.wallet = 10000;
       var options = {
         method: "POST",
         url: "https://api.razorpay.com/v1/contacts",
@@ -195,7 +195,7 @@ router.post("/register", async (req, res) => {
   user1.email = req.body.email;
   user1.password = req.body.password;
   user1.phonenumber = req.body.phonenumber;
-  user1.wallet = 100;
+  user1.wallet = 10000;
   user1.otp = otp;
   var mailOptions = {
     from: "rajeshmn47@gmail.com",

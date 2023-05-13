@@ -1,6 +1,7 @@
-const MatchLiveDetails = require("./models/match_live_details_new");
-const Matches = require("./models/match");
-
+const MatchLiveDetails = require("../models/match_live_details_new");
+const Matches = require("../models/match");
+const getkeys = require("../apikeys");
+const axios = require("axios");
 const {
   initializeApp,
   applicationDefault,
@@ -39,7 +40,7 @@ module.exports.addLivecommentary = async function addcommentry() {
     console.log("rajesh");
     let date = new Date();
     let matchess = [];
-    let endDate = new Date(date.getTime() + 10 * 60 * 60 * 1000);
+    let endDate = new Date(date.getTime() + 1 * 60 * 60 * 1000);
     date = new Date(date.getTime() - 10 * 60 * 60 * 1000);
     const matches = await Matches.find({
       date: {
@@ -47,51 +48,46 @@ module.exports.addLivecommentary = async function addcommentry() {
         $lt: new Date(endDate),
       },
     });
-    console.log(matches, "matches");
+    console.log(matches, "live");
     for (let i = 0; i < matches.length; i++) {
       let matchid = matches[i].matchId;
       let match = await MatchLiveDetails.findOne({ matchId: matchid });
 
-      console.log(match?.result, "match");
       if (match && !(match?.result == "Yes")) {
         console.log(matches[i].cmtMatchId, "matchid");
         matchess.push(matches[i]);
       }
     }
+    let m = matchess;
     for (let i = 0; i < matchess.length; i++) {
-      if (matchess[i].cmtMatchId.length > 3) {
-        console.log(matchess[i].cmtMatchId, "id");
+      if (m[i].cmtMatchId.length > 3) {
+        console.log(m, "id");
+        let keys = await getkeys.getkeys();
         const options = {
           method: "GET",
-          url: `https://cricbuzz-cricket.p.rapidapi.com/mcenter/v1/${matchess[i].cmtMatchId}/comm`,
+          url: `https://cricbuzz-cricket.p.rapidapi.com/mcenter/v1/${m[i].cmtMatchId}/comm`,
           headers: {
             "X-RapidAPI-Key":
-              "22e5eb9581msh463d68b77f60aedp15ca87jsn7178d984f2fc",
+              "a5da117d90msh3e694894d3b7dbfp12cc3bjsn8167b3fc201c",
             "X-RapidAPI-Host": "cricbuzz-cricket.p.rapidapi.com",
           },
         };
         try {
-          const washingtonRef = doc(db, "cities", matchess[i].cmtMatchId);
           const response = await axios.request(options);
-          const docRef = doc(db, "cities", matchess[i].cmtMatchId);
-          const docSnap = await getDoc(docRef);
-
-          if (docSnap.exists()) {
-            console.log("Document data:", docSnap.data());
-          } else {
-            // docSnap.data() will be undefined in this case
-            console.log("No such document!");
-          }
-          console.log(response.data.commentaryList);
           let a = response.data.commentaryList[0];
-          if (docSnap?.data()?.capital) {
-            await setDoc(washingtonRef, {
-              capital: [...docSnap.data().capital, a],
-            });
+          const cityRef = db.collection("cities").doc(m[i].cmtMatchId);
+          const doc = await cityRef.get();
+          if (!doc.exists) {
+            console.log("No such document!");
           } else {
-            await setDoc(washingtonRef, {
-              capital: [a],
-            });
+            console.log("Document data:", doc.data());
+            const citRef = db.collection("cities").doc(m[i].cmtMatchId);
+            const res = await citRef.set(
+              {
+                capital: [...doc.data().capital, a],
+              },
+              { merge: true }
+            );
           }
         } catch (error) {
           console.error(error);
@@ -101,10 +97,4 @@ module.exports.addLivecommentary = async function addcommentry() {
   } catch (error) {
     console.error(error);
   }
-  const res = await db.collection("cities").add({
-    name: "bangalore",
-    country: "karnataka",
-  });
-  console.log("Added document with ID: ", res.id);
-  return res;
 };
