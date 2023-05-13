@@ -68,7 +68,7 @@ module.exports.addLivecommentary = async function addcommentry() {
           url: `https://cricbuzz-cricket.p.rapidapi.com/mcenter/v1/${m[i].cmtMatchId}/comm`,
           headers: {
             "X-RapidAPI-Key":
-              "3827482ab0msh2682459121bc4e9p182f86jsn5e5bf239f56d",
+              "29c032b76emsh6616803b28338c2p19f6c1jsn8c7ad47ac806",
             "X-RapidAPI-Host": "cricbuzz-cricket.p.rapidapi.com",
           },
         };
