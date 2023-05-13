@@ -68,7 +68,7 @@ module.exports.addLivecommentary = async function addcommentry() {
           url: `https://cricbuzz-cricket.p.rapidapi.com/mcenter/v1/${m[i].cmtMatchId}/comm`,
           headers: {
             "X-RapidAPI-Key":
-              "a5da117d90msh3e694894d3b7dbfp12cc3bjsn8167b3fc201c",
+              "3827482ab0msh2682459121bc4e9p182f86jsn5e5bf239f56d",
             "X-RapidAPI-Host": "cricbuzz-cricket.p.rapidapi.com",
           },
         };
@@ -79,6 +79,13 @@ module.exports.addLivecommentary = async function addcommentry() {
           const doc = await cityRef.get();
           if (!doc.exists) {
             console.log("No such document!");
+            const citRef = db.collection("cities").doc(m[i].cmtMatchId);
+            const res = await citRef.set(
+              {
+                capital: [a],
+              },
+              { merge: true }
+            );
           } else {
             console.log("Document data:", doc.data());
             const citRef = db.collection("cities").doc(m[i].cmtMatchId);
