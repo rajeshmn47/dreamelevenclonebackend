@@ -10,7 +10,7 @@ module.exports.getkeys = async function () {
   let date = new Date().getDate();
   console.log(totalhits, "totalhits");
   let keyindex = Math.floor(date / 2);
-  let keyi = Math.floor(totalhits / 250);
+  let keyi = Math.floor(totalhits / 100);
   console.log(keyi, "index");
   let keys = [
     "3e774772f1mshd335b4ddbbd2512p194714jsnb9cc15174c3b",
