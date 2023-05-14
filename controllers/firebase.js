@@ -1,6 +1,7 @@
 const MatchLiveDetails = require("../models/match_live_details_new");
 const Matches = require("../models/match");
-const getkeys = require("../apikeys");
+const User = require("../models/user");
+const getkeys = require("../crickeys");
 const axios = require("axios");
 const {
   initializeApp,
@@ -63,12 +64,14 @@ module.exports.addLivecommentary = async function addcommentry() {
       if (m[i].cmtMatchId.length > 3) {
         console.log(m, "id");
         let keys = await getkeys.getkeys();
+        const us = await User.findById("63c18c9f2d217ea120307e30");
+        us.totalhitscom = us.totalhitscom + 1;
+        await us.save();
         const options = {
           method: "GET",
           url: `https://cricbuzz-cricket.p.rapidapi.com/mcenter/v1/${m[i].cmtMatchId}/comm`,
           headers: {
-            "X-RapidAPI-Key":
-              "29c032b76emsh6616803b28338c2p19f6c1jsn8c7ad47ac806",
+            "X-RapidAPI-Key": keys,
             "X-RapidAPI-Host": "cricbuzz-cricket.p.rapidapi.com",
           },
         };

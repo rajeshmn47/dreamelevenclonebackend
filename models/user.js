@@ -33,6 +33,12 @@ const usernewSchema = new mongoose.Schema(
       default: 0,
     },
 
+    totalhitscom: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+
     matchIds: [
       {
         type: String,

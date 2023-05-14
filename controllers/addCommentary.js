@@ -1,6 +1,7 @@
 const Match = require("../models/match");
 const request = require("request");
 const Contest = require("../models/contest");
+const getkeys = require("../crickeys");
 const MatchLiveDetails = require("../models/match_live_details_new");
 const addLiveCommentary = require("./firebase");
 
@@ -40,15 +41,18 @@ module.exports.addcommentary = async function () {
   });
   let type = ["international", "league", "domestic", "women"];
   for (let ty = 0; ty < type.length; ty++) {
+    let keys = await getkeys.getkeys();
     const options = {
       method: "GET",
       url: `https://cricbuzz-cricket.p.rapidapi.com/schedule/v1/${type[ty]}`,
       headers: {
-        "X-RapidAPI-Key": "a5da117d90msh3e694894d3b7dbfp12cc3bjsn8167b3fc201c",
+        "X-RapidAPI-Key": keys,
         "X-RapidAPI-Host": "cricbuzz-cricket.p.rapidapi.com",
       },
     };
-
+    const us = await User.findById("63c18c9f2d217ea120307e30");
+    us.totalhitscom = us.totalhitscom + 1;
+    await us.save();
     try {
       const response = await axios.request(options);
       let list = response.data.matchScheduleMap;
