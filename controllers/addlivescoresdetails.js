@@ -36,13 +36,21 @@ async function getplayerImage(name) {
   return s.data.data.length > 0 ? s.data.data[0].image_path : "";
 }
 
-function pointCalculator(runs, fours, sixes, strikeRate, wicket, economy) {
+function pointCalculator(
+  runs,
+  fours,
+  sixes,
+  strikeRate,
+  wicket,
+  economy,
+  balls
+) {
   let totalPoints = runs + fours * 1 + sixes * 2 + 25 * wicket;
   while (runs >= 50) {
     totalPoints += 20;
     runs -= 50;
   }
-  if (strikeRate < 100) {
+  if (strikeRate < 100 && balls > 10) {
     totalPoints -= 10;
   }
   if (economy >= 12) {
@@ -180,9 +188,10 @@ module.exports.addLivematchtodb = async function () {
                 teamHomePlayers[i].runs,
                 teamHomePlayers[i].fours,
                 teamHomePlayers[i].sixes,
-                teamHomePlayers[i].sixes,
+                teamHomePlayers[i].strikeRate,
                 teamHomePlayers[i].wickets,
-                teamHomePlayers[i].economy
+                teamHomePlayers[i].economy,
+                teamHomePlayers[i].balls
               );
             }
             for (let i = 0; i < teamAwayPlayers.length; i++) {
@@ -212,9 +221,10 @@ module.exports.addLivematchtodb = async function () {
                 teamAwayPlayers[i].runs,
                 teamAwayPlayers[i].fours,
                 teamAwayPlayers[i].sixes,
-                teamAwayPlayers[i].sixes,
+                teamAwayPlayers[i].strikeRate,
                 teamAwayPlayers[i].wickets,
-                teamAwayPlayers[i].economy
+                teamAwayPlayers[i].economy,
+                teamAwayPlayers[i].balls
               );
             }
             try {
