@@ -78,6 +78,8 @@ module.exports.addLivecommentary = async function addcommentry() {
         try {
           const response = await axios.request(options);
           let a = response.data.commentaryList[0];
+          let matchdata = response.data.matchHeader;
+          let miniscore = response.data.miniscore;
           const cityRef = db.collection("cities").doc(m[i].cmtMatchId);
           const doc = await cityRef.get();
           if (!doc.exists) {
@@ -86,6 +88,8 @@ module.exports.addLivecommentary = async function addcommentry() {
             const res = await citRef.set(
               {
                 capital: [a],
+                livedata: matchdata,
+                miniscore: miniscore,
               },
               { merge: true }
             );
@@ -95,6 +99,8 @@ module.exports.addLivecommentary = async function addcommentry() {
             const res = await citRef.set(
               {
                 capital: [...doc.data().capital, a],
+                livedata: matchdata,
+                miniscore: miniscore,
               },
               { merge: true }
             );
