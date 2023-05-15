@@ -145,7 +145,7 @@ module.exports.addMatchtoDb = async function () {
                 try {
                   let contest2 = await Contest.create(contest1);
                   if (contest2) {
-                    match1.contestId.push(contest2.id);
+                    match1.contestId.push(contest2._id);
                   }
                 } catch (err) {
                   console.log("Error : " + err);
