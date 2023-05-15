@@ -116,7 +116,7 @@ router.get("/home/:userid", async (req, res) => {
   let date = new Date();
   date.setDate(date.getDate() - 1);
   let startDate = date.toISOString();
-  date.setDate(date.getDate() + 4);
+  date.setDate(date.getDate() + 6);
   let endDate = date.toISOString();
   let matches = await Matches.find({
     date: {

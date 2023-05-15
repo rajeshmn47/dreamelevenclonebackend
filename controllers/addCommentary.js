@@ -1,6 +1,7 @@
 const Match = require("../models/match");
 const request = require("request");
 const Contest = require("../models/contest");
+const User = require("../models/user");
 const getkeys = require("../crickeys");
 const MatchLiveDetails = require("../models/match_live_details_new");
 const addLiveCommentary = require("./firebase");
@@ -31,8 +32,8 @@ module.exports.addcommentary = async function () {
   const axios = require("axios");
 
   let date = new Date();
-  let endDate = new Date(date.getTime() + 5 * 60 * 60 * 1000);
-  date = new Date(date.getTime() - 5 * 60 * 60 * 1000);
+  let endDate = new Date(date.getTime() + 200 * 60 * 60 * 1000);
+  date = new Date(date.getTime() - 4 * 60 * 60 * 1000);
   const matches = await Match.find({
     date: {
       $gte: new Date(date),
