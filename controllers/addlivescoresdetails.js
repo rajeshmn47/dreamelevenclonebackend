@@ -51,10 +51,10 @@ function pointCalculator(
     runs -= 50;
   }
   if (strikeRate < 100 && balls > 10) {
-    totalPoints -= 10;
+    totalPoints -= 5;
   }
   if (economy >= 12) {
-    totalPoints -= 10;
+    totalPoints -= 5;
   }
   return totalPoints;
 }
