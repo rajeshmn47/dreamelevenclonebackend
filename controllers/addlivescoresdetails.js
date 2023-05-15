@@ -56,7 +56,7 @@ function pointCalculator(
   if (economy >= 12) {
     totalPoints -= 5;
   }
-  return totalPoints;
+  return totalPoints+4;
 }
 
 module.exports.addLivematchtodb = async function () {
