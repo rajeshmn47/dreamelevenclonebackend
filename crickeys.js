@@ -4,7 +4,8 @@ module.exports.getkeys = async function () {
   const user = await User.findById("63c18c9f2d217ea120307e30");
   let totalhits = user.totalhitscom;
   if (totalhits > 1200) {
-    totalhits = 0;
+    user.totalhitscom = 0;
+    await user.save()
   }
 
   let date = new Date().getDate();
