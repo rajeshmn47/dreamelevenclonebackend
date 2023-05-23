@@ -138,7 +138,7 @@ router.post("/googlelogin", async function (req, res, next) {
                     res.status(200).json({
                       success: true,
                       user,
-                      server_token,
+                      server_token: token,
                     });
                   }
                 });
