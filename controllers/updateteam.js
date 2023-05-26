@@ -1,10 +1,10 @@
-const Match = require("../models/match");
 const request = require("request");
+const axios = require("axios");
+const Match = require("../models/match");
 const Contest = require("../models/contest");
 const Team = require("../models/team");
-const MatchLive = require("../models/match_live_details_new");
+const MatchLive = require("../models/match_live_details_scores_copy");
 const Player = require("../models/players");
-const axios = require("axios");
 
 // function prizeBreakupRules(prize, numWinners){
 //     let prizeMoneyBreakup = [];
@@ -17,29 +17,29 @@ function compare(a, b) {
   return a.date < b.date;
 }
 
-let io = 1;
+const io = 1;
 async function getplayerImage(name) {
-  var k = name.split(" ")[0];
-  var config = {
+  const k = name.split(" ")[0];
+  const config = {
     method: "get",
     url: `https://cricket.sportmonks.com/api/v2.0/players?filter[lastname]=sachin&api_token=
         fTWhOiGhie6YtMBmpbw10skSjTmSgwHeLg22euC5qLMR1oT1eC6PRc8sEulv`,
     headers: {},
   };
 
-  let s = await axios(config).catch(function (error) {});
-  let PlayerS = new Player();
+  const s = await axios(config).catch((error) => {});
+  const PlayerS = new Player();
 
   return s.data.data.length > 0 ? s.data.data[0].image_path : "";
 }
 module.exports.addTeamstandingstodb = async function () {
   let date = new Date();
-  let endDate = new Date(date.getTime() + 24 * 60 * 60 * 1000 * 2);
+  const endDate = new Date(date.getTime() + 24 * 60 * 60 * 1000 * 2);
   date = new Date(date.getTime() - 24 * 60 * 60 * 1000 * 2);
   const matches = await MatchLive.find();
   for (let i = 0; i < matches.length; i++) {
     const teams = await Team.find({ matchId: matches[i].matchId });
-    for (let x of teams) {
+    for (const x of teams) {
       console.log(x.matchId, "id");
       const team = await Team.findById(x._id);
       team.points = 0;
@@ -50,7 +50,7 @@ module.exports.addTeamstandingstodb = async function () {
             parseInt(team.players[z].playerId)
           ) {
             team.players[z].point = matches[i].teamHomePlayers[j].points;
-            team.points = team.points + matches[i].teamHomePlayers[j].points;
+            team.points += matches[i].teamHomePlayers[j].points;
           }
         }
       }
@@ -61,11 +61,11 @@ module.exports.addTeamstandingstodb = async function () {
             parseInt(team.players[y].playerId)
           ) {
             team.players[y].point = matches[i].teamAwayPlayers[k].points;
-            team.points = team.points + matches[i].teamAwayPlayers[k].points;
+            team.points += matches[i].teamAwayPlayers[k].points;
           }
         }
       }
-      let d = await team.save();
+      const d = await team.save();
     }
   }
 };

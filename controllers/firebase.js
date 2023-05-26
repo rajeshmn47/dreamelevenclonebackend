@@ -1,7 +1,3 @@
-const MatchLiveDetails = require("../models/match_live_details_new");
-const Matches = require("../models/match");
-const User = require("../models/user");
-const getkeys = require("../crickeys");
 const axios = require("axios");
 const {
   initializeApp,
@@ -13,6 +9,11 @@ const {
   Timestamp,
   FieldValue,
 } = require("firebase-admin/firestore");
+const MatchLiveDetails = require("../models/match_live_details_new");
+const Matches = require("../models/matchtwo");
+const User = require("../models/user");
+const getkeys = require("../crickeys");
+
 const serviceAccount = {
   type: "service_account",
   project_id: "dreamelevenclone",
@@ -40,67 +41,60 @@ module.exports.addLivecommentary = async function addcommentry() {
   try {
     console.log("rajesh");
     let date = new Date();
-    let matchess = [];
-    let endDate = new Date(date.getTime() + 1 * 60 * 60 * 1000);
-    date = new Date(date.getTime() - 10 * 60 * 60 * 1000);
+    const matchess = [];
+    const endDate = new Date(date.getTime() + 1 * 60 * 60 * 1000);
+    date = new Date(date.getTime() - 60 * 60 * 60 * 1000);
     const matches = await Matches.find({
       date: {
         $gte: new Date(date),
         $lt: new Date(endDate),
       },
     });
-    console.log(matches, "live");
     for (let i = 0; i < matches.length; i++) {
-      let matchid = matches[i].matchId;
-      let match = await MatchLiveDetails.findOne({ matchId: matchid });
-
-      if (match && !(match?.result == "Yes")) {
-        console.log(matches[i].cmtMatchId, "matchid");
-        matchess.push(matches[i]);
-      }
+      const matchid = matches[i].matchId;
+      const match = await MatchLiveDetails.findOne({ matchId: matchid });
+      matchess.push(matches[i]);
     }
-    let m = matchess;
+    const m = matchess;
     for (let i = 0; i < matchess.length; i++) {
-      if (m[i].cmtMatchId.length > 3) {
-        console.log(m, "id");
-        let keys = await getkeys.getkeys();
-        const us = await User.findById("63c18c9f2d217ea120307e30");
-        us.totalhitscom = us.totalhitscom + 1;
-        await us.save();
+      if (m[i].matchId.length > 3) {
+        const keys = await getkeys.getkeys();
+        console.log(m[i].matchId, "matchid");
         const options = {
           method: "GET",
-          url: `https://cricbuzz-cricket.p.rapidapi.com/mcenter/v1/${m[i].cmtMatchId}/comm`,
+          url: `https://cricbuzz-cricket.p.rapidapi.com/mcenter/v1/${m[i].matchId}/comm`,
           headers: {
-            "X-RapidAPI-Key": keys,
+            "X-RapidAPI-Key":
+              "29c032b76emsh6616803b28338c2p19f6c1jsn8c7ad47ac806",
             "X-RapidAPI-Host": "cricbuzz-cricket.p.rapidapi.com",
           },
         };
         try {
           const response = await axios.request(options);
-          let a = response.data.commentaryList[0];
-          let matchdata = response.data.matchHeader;
-          let miniscore = response.data.miniscore;
-          const cityRef = db.collection("cities").doc(m[i].cmtMatchId);
+          console.log(response.data.commentaryList[0], "commentary");
+          const a = response.data.commentaryList[0];
+          const matchdata = response.data.matchHeader;
+          const { miniscore } = response.data;
+          const cityRef = db.collection("cities").doc(m[i].matchId);
           const doc = await cityRef.get();
           if (!doc.exists) {
             console.log("No such document!");
-            const citRef = db.collection("cities").doc(m[i].cmtMatchId);
+            const citRef = db.collection("cities").doc(m[i].matchId);
             const res = await citRef.set(
               {
                 capital: [a],
                 livedata: matchdata,
-                miniscore: miniscore,
+                miniscore,
               },
               { merge: true }
             );
           } else {
-            console.log("Document data:", doc.data());
-            const citRef = db.collection("cities").doc(m[i].cmtMatchId);
+            const citRef = db.collection("cities").doc(m[i].matchId);
             const res = await citRef.set(
               {
                 capital: [...doc.data().capital, a],
                 livedata: matchdata,
-                miniscore: miniscore,
+                miniscore,
               },
               { merge: true }
             );

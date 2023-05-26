@@ -1,12 +1,18 @@
 const express = require("express");
+
 const app = express();
 const path = require("path");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const server = require("http").createServer(app);
+const { setTimeout } = require("timers");
+const io = require("socket.io")(server, {
+  cors: {
+    origin: "*",
+  },
+});
 const User = require("./models/user");
 const Matches = require("./models/match_live_details_new");
-const { setTimeout } = require("timers");
 
 const uri =
   "mongodb+srv://rajeshmn47:uni1ver%40se@cluster0.bpxam.mongodb.net/mydreamDatabaseSecond?retryWrites=true&w=majority";
@@ -15,18 +21,13 @@ mongoose.Promise = global.Promise;
 mongoose.connect(
   uri,
   { useNewUrlParser: true, useUnifiedTopology: true },
-  function (error) {
+  (error) => {
     if (error) {
-      console.log("Error!" + error);
+      console.log(`Error!${error}`);
     }
   }
 );
 
-const io = require("socket.io")(server, {
-  cors: {
-    origin: "*",
-  },
-});
 const port = 4000;
 
 server.listen(port, () => {
@@ -42,7 +43,7 @@ app.use(cors({ origin: "*", credentials: false }));
 let rooms = [];
 
 io.on("connection", (socket) => {
-  let addedUser = false;
+  const addedUser = false;
   // when the client emits 'new message', this listens and executes
   socket.on("new message", (data) => {
     // we tell the client to execute 'new message'
@@ -71,7 +72,11 @@ setInterval(async () => {
   for (let i = 0; i < rooms.length; i++) {
     console.log(rooms[i], "room");
     const match = await Matches.findOne({ matchId: rooms[i] });
-    let notfound = { comment_text: "six hit", eventType: "six", overNum: "5" };
+    const notfound = {
+      comment_text: "six hit",
+      eventType: "six",
+      overNum: "5",
+    };
     if (match) {
       io.sockets.in(rooms[i]).emit("newcommentary", {
         commentary:

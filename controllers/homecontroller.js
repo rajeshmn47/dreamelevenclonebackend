@@ -1,46 +1,46 @@
-const Matches = require("../models/match");
-const LiveMatches = require("../models/match_live_details_new");
 const cheerio = require("cheerio");
 const axios = require("axios");
 const request = require("request");
 const pretty = require("pretty");
-var randomname = require("random-indian-name");
+const randomname = require("random-indian-name");
 const createMobilePhoneNumber = require("random-mobile-numbers");
-var randomEmail = require("random-email");
-const Result = require("../models/results");
+const randomEmail = require("random-email");
 const fs = require("fs");
-const Players = require("../models/players");
 const flagURLs = require("country-flags-svg");
-var express = require("express");
+const express = require("express");
+const Players = require("../models/players");
+const Result = require("../models/results");
+const LiveMatches = require("../models/match_live_details_scores_copy");
+const Matches = require("../models/matchtwo");
+
 const router = express.Router();
 const everydayboys = require("./addlivescores");
-const Match = require("../models/match");
+const Match = require("../models/matchtwo");
 const Team = require("../models/team");
 const User = require("../models/user");
 const Contest = require("../models/contest");
-const MatchLiveDetails = require("../models/match_live_details_new");
 const Player = require("../models/players");
 
 router.get("/home/:userid", async (req, res) => {
-  let stime = new Date().getSeconds();
-  let upcomingMatches = {
+  const stime = new Date().getSeconds();
+  const upcomingMatches = {
     results: [],
   };
-  let completedMatches = {
+  const completedMatches = {
     results: [],
   };
-  let liveMatches = {
+  const liveMatches = {
     results: [],
   };
-  let userMatches = [];
-  let userMatchesDetails = {
+  const userMatches = [];
+  const userMatchesDetails = {
     results: [],
   };
   const user = await User.findOne({ _id: req.params.userid });
   console.log(user, "ids", req.params.userid);
   for (let i = 0; i < user.matchIds.length; i++) {
-    let match = await Matches.findOne({ matchId: user.matchIds[i] });
-    let match_det = await LiveMatches.findOne({ matchId: user.matchIds[i] });
+    const match = await Matches.findOne({ matchId: user.matchIds[i] });
+    const match_det = await LiveMatches.findOne({ matchId: user.matchIds[i] });
 
     if (match_det) {
       let teamHomeFlagUrl = flagURLs.findFlagUrlByCountryName(
@@ -57,7 +57,7 @@ router.get("/home/:userid", async (req, res) => {
         teamHomeFlagUrl =
           "https://i.pinimg.com/originals/1b/56/5b/1b565bb93bbc6968be498ccb00504e8f.jpg";
       }
-      let mat = {
+      const mat = {
         match_title: match.matchTitle,
         home: {
           name: match.teamHomeName,
@@ -73,52 +73,47 @@ router.get("/home/:userid", async (req, res) => {
         result: "",
         status: "",
         inPlay: "",
-        teamHomeFlagUrl: teamHomeFlagUrl,
-        teamAwayFlagUrl: teamAwayFlagUrl,
+        teamHomeFlagUrl,
+        teamAwayFlagUrl,
       };
       mat.status = match_det.status;
       mat.inPlay = match_det.inPlay;
       liveStatus = "Line-ups are out!";
       mat.livestatus = liveStatus;
       let contests = [];
-      let teams = [];
+      const teams = [];
       if (match_det.result == "No") {
         if (match_det.status) {
           mat.livestatus = match_det.status;
         }
         mat.result = "No";
-      } else {
-        if (req.params.userid) {
-          console.log("finding", req.params.userid, match_det.matchId);
-          console.log("no result", match_det.result);
-          let teams = await Team.find({
-            $and: [
-              { matchId: match_det.matchId },
-              { userId: req.params.userid },
-            ],
-          });
-          contests = await Contest.find({
-            userIds: req.params.userid,
-            matchId: match_det.matchId,
-          });
-          console.log(teams, "teams");
-          if (teams.length > 0) {
-            mat.contests = contests;
-            mat.teams = teams;
-            mat.result = "Yes";
-            completedMatches.results.push(mat);
-            userMatchesDetails.results.push(mat);
-          }
+      } else if (req.params.userid) {
+        console.log("finding", req.params.userid, match_det.matchId);
+        console.log("no result", match_det.result);
+        const teams = await Team.find({
+          $and: [{ matchId: match_det.matchId }, { userId: req.params.userid }],
+        });
+        contests = await Contest.find({
+          userIds: req.params.userid,
+          matchId: match_det.matchId,
+        });
+        console.log(teams, "teams");
+        if (teams.length > 0) {
+          mat.contests = contests;
+          mat.teams = teams;
+          mat.result = "Yes";
+          completedMatches.results.push(mat);
+          userMatchesDetails.results.push(mat);
         }
       }
     }
   }
-  let date = new Date();
+  const date = new Date();
   date.setDate(date.getDate() - 1);
-  let startDate = date.toISOString();
-  date.setDate(date.getDate() + 6);
-  let endDate = date.toISOString();
-  let matches = await Matches.find({
+  const startDate = date.toISOString();
+  date.setDate(date.getDate() + 10);
+  const endDate = date.toISOString();
+  const matches = await Matches.find({
     date: {
       $gte: new Date(startDate),
       $lt: new Date(endDate),
@@ -139,8 +134,8 @@ router.get("/home/:userid", async (req, res) => {
       teamHomeFlagUrl =
         "https://i.pinimg.com/originals/1b/56/5b/1b565bb93bbc6968be498ccb00504e8f.jpg";
     }
-    let match = matches[i];
-    let mat = {
+    const match = matches[i];
+    const mat = {
       match_title: match.matchTitle,
       home: {
         name: match.teamHomeName,
@@ -157,13 +152,13 @@ router.get("/home/:userid", async (req, res) => {
       status: "",
       inPlay: "",
       lineups: "",
-      teamHomeFlagUrl: teamHomeFlagUrl,
-      teamAwayFlagUrl: teamAwayFlagUrl,
+      teamHomeFlagUrl,
+      teamAwayFlagUrl,
     };
 
     liveStatus = "Line-ups are not out yet!";
     mat.livestatus = liveStatus;
-    var matt = await LiveMatches.findOne({ matchId: matches[i].matchId });
+    const matt = await LiveMatches.findOne({ matchId: matches[i].matchId });
     let contests = [];
     let teams = [];
     if (matt) {
@@ -216,22 +211,22 @@ router.get("/home/:userid", async (req, res) => {
 });
 
 router.get("/completed/:userid", async (req, res) => {
-  var notAllowed = ["", false, null, 0, undefined, NaN];
+  const notAllowed = ["", false, null, 0, undefined, NaN];
   const user = await User.findOne({ _id: req.params.userid });
   console.log(user, "ids", req.params.userid);
-  let stime = new Date().getSeconds();
-  let completedMatches = {
+  const stime = new Date().getSeconds();
+  const completedMatches = {
     results: [],
   };
-  let liveMatches = {
+  const liveMatches = {
     results: [],
   };
-  let date = new Date();
+  const date = new Date();
   date.setDate(date.getDate() - 1);
-  let startDate = date.toISOString();
+  const startDate = date.toISOString();
   date.setDate(date.getDate() + 6);
-  let endDate = date.toISOString();
-  let matches = await Matches.find();
+  const endDate = date.toISOString();
+  const matches = await Matches.find();
   for (let i = 0; i < matches.length; i++) {
     if (user.matchIds.includes(matches[i].matchId)) {
       teamAwayFlagUrl = flagURLs.findFlagUrlByCountryName(
@@ -248,8 +243,8 @@ router.get("/completed/:userid", async (req, res) => {
         teamHomeFlagUrl =
           "https://i.pinimg.com/originals/1b/56/5b/1b565bb93bbc6968be498ccb00504e8f.jpg";
       }
-      let match = matches[i];
-      let mat = {
+      const match = matches[i];
+      const mat = {
         match_title: match.matchTitle,
         home: {
           name: match.teamHomeName,
@@ -267,13 +262,13 @@ router.get("/completed/:userid", async (req, res) => {
         inPlay: "",
         lineups: "",
         won: 0,
-        teamHomeFlagUrl: teamHomeFlagUrl,
-        teamAwayFlagUrl: teamAwayFlagUrl,
+        teamHomeFlagUrl,
+        teamAwayFlagUrl,
       };
 
       liveStatus = "Line-ups are not out yet!";
       mat.livestatus = liveStatus;
-      var matt = await LiveMatches.findOne({ matchId: matches[i].matchId });
+      const matt = await LiveMatches.findOne({ matchId: matches[i].matchId });
       let contests = [];
       let teams = [];
       if (matt && matt.inPlay == "Yes") {
@@ -344,9 +339,7 @@ router.get("/completed/:userid", async (req, res) => {
                 }
               }
             }
-            arr = arr.sort(function (a, b) {
-              return b?.points - a?.points;
-            });
+            arr = arr.sort((a, b) => b?.points - a?.points);
             for (let x = 0; x < arr.length; x++) {
               const user = await User.findById(arr[x].userId);
               if (arr[x].userId == req.query.userid) {
@@ -374,22 +367,22 @@ router.get("/completed/:userid", async (req, res) => {
 router.get("/getmatch/:id", async (req, res) => {
   const match = await Match.findOne({ matchId: req.params.id });
   res.status(200).json({
-    match: match,
+    match,
   });
 });
 
 router.get("/getmatchlive/:id", async (req, res) => {
-  const match = await MatchLiveDetails.findOne({ matchId: req.params.id });
+  const match = await LiveMatches.findOne({ matchId: req.params.id });
   console.log("masthhudgi", match);
   res.status(200).json({
-    match: match,
+    match,
   });
 });
 
 router.get("/getmatch/:id", async (req, res) => {
-  const match = await Matches.findOne({ matchId: req.params.id });
+  const match = await LiveMatches.findOne({ matchId: req.params.id });
   res.status(200).json({
-    match: match,
+    match,
   });
 });
 
@@ -410,8 +403,8 @@ router.get("/results", async (req, res) => {
       body: `frmpuc_tokens=0.7482416&reg=${i}&ddlsub=S`,
     };
     let dom;
-    let promise = new Promise((resolve, reject) => {
-      request(options, function (error, response, body) {
+    const promise = new Promise((resolve, reject) => {
+      request(options, (error, response, body) => {
         if (error) {
           reject(error);
         }
@@ -425,7 +418,7 @@ router.get("/results", async (req, res) => {
         $ = cheerio.load(`${s}`);
         const tableh = $("tr");
         const listItems = $("tr"); // 2
-        listItems.each(function (idx, el) {
+        listItems.each((idx, el) => {
           if (idx == 0) {
             name = $(el)
               .text()
@@ -459,14 +452,14 @@ router.get("/results", async (req, res) => {
           }
 
           if (name && regno && total) {
-            results.push({ name: name, regno: regno, total: total });
+            results.push({ name, regno, total });
             name = -3;
             regno = -4;
             total = -8;
           }
         });
         if (i > 899998) {
-          let rest = results.filter((r) => !(r.name == "-3"));
+          const rest = results.filter((r) => !(r.name == "-3"));
           function compare(a, b) {
             if (a.name < b.name) {
               return -1;
@@ -476,7 +469,7 @@ router.get("/results", async (req, res) => {
             }
             return 0;
           }
-          let iss = rest.sort(compare);
+          const iss = rest.sort(compare);
           console.log(iss, "iss");
           await Result.insertMany(iss);
           res.status(200).json({
@@ -485,7 +478,7 @@ router.get("/results", async (req, res) => {
         }
       })
       .catch((err) => {
-        console.log("Error : " + err);
+        console.log(`Error : ${err}`);
       });
   }
 });
@@ -545,10 +538,10 @@ router.get("/postpro", async (req, res) => {
   times_url =
     "https://exedadmin.timespro.com/SalesForceAPI/insertLeadreact.php";
   for (let i = 0; i < 500; i++) {
-    let name = randomname().split(" ").join("");
-    let mail = name + "@gmail.com";
-    let data = {
-      name: name,
+    const name = randomname().split(" ").join("");
+    const mail = `${name}@gmail.com`;
+    const data = {
+      name,
       phone: createMobilePhoneNumber("TR").split("+90").join(""),
       email: mail,
       legal: true,
@@ -556,7 +549,7 @@ router.get("/postpro", async (req, res) => {
       country_code: "+91",
       url: "https://timespro.com/web3/about",
     };
-    let deta = {
+    const deta = {
       cityName: "chennai",
       companyName: "infosys",
       country_code: "+91",
@@ -576,7 +569,7 @@ router.get("/postpro", async (req, res) => {
       state: "Tamil Nadu",
       url: "https://timespro.com/executive-education/xlri-jamshedpur-post-graduate-certificate-in-human-resource-management",
     };
-    let url = times_url;
+    const url = times_url;
     const d = await axios.post(url, deta);
     console.log(name, mail, "name");
     console.log(d.data, "dr");
@@ -593,14 +586,15 @@ router.get("/projest", async (req, res) => {
   times_url =
     "https://firestore.googleapis.com/google.firestore.v1.Firestore/Write/channel?VER=8&database=projects/projest-290c8/databases/(default)&gsessionid=NQz4c9E5Y4fbVKPnR97tQJ-nQDxsxigwZU7kZ3QkTjs&SID=xQ1L2Luc_fR0sp46TTWZZw&RID=54914&AID=1&zx=5egzy87r60km&t=1";
   for (let i = 0; i < 500; i++) {
-    let data = `headers=X-Goog-Api-Client%3Agl-js%2F%20fire%2F9.18.0%0D%0AContent-Type%3Atext%2Fplain%0D%0AX-Firebase-GMPID%3A1%3A661303131310%3Aweb%3Aabd56b2d2b2749706f813f%0D%0A&count=1&ofs=0&req0___data__=%7B%22database%22%3A%22projects%2Fprojest-290c8%2Fdatabases%2F(default)%22%2C%22addTarget%22%3A%7B%22query%22%3A%7B%22structuredQuery%22%3A%7B%22from%22%3A%5B%7B%22collectionId%22%3A%22projects%22%7D%5D%2C%22orderBy%22%3A%5B%7B%22field%22%3A%7B%22fieldPath%22%3A%22__name__%22%7D%2C%22direction%22%3A%22ASCENDING%22%7D%5D%7D%2C%22parent%22%3A%22projects%2Fprojest-290c8%2Fdatabases%2F(default)%2Fdocuments%22%7D%2C%22targetId%22%3A2%7D%7D`;
-    let url = times_url;
+    const data =
+      "headers=X-Goog-Api-Client%3Agl-js%2F%20fire%2F9.18.0%0D%0AContent-Type%3Atext%2Fplain%0D%0AX-Firebase-GMPID%3A1%3A661303131310%3Aweb%3Aabd56b2d2b2749706f813f%0D%0A&count=1&ofs=0&req0___data__=%7B%22database%22%3A%22projects%2Fprojest-290c8%2Fdatabases%2F(default)%22%2C%22addTarget%22%3A%7B%22query%22%3A%7B%22structuredQuery%22%3A%7B%22from%22%3A%5B%7B%22collectionId%22%3A%22projects%22%7D%5D%2C%22orderBy%22%3A%5B%7B%22field%22%3A%7B%22fieldPath%22%3A%22__name__%22%7D%2C%22direction%22%3A%22ASCENDING%22%7D%5D%7D%2C%22parent%22%3A%22projects%2Fprojest-290c8%2Fdatabases%2F(default)%2Fdocuments%22%7D%2C%22targetId%22%3A2%7D%7D";
+    const url = times_url;
     const d = await axios(times_url, {
       method: "post",
       headers: {
         "content-type": "application/x-www-form-urlencoded",
       },
-      data: data,
+      data,
     });
     console.log(i, "i");
     console.log(d, "name");
@@ -615,7 +609,7 @@ router.get("/projest", async (req, res) => {
 
 router.get("/players", async (req, res) => {
   const players = await Player.find();
-  let pla = [];
+  const pla = [];
   players.forEach((p, index) => {
     if (!pla.find((o) => o.id == p.id)) {
       pla.push(p);
@@ -630,7 +624,7 @@ router.get("/players", async (req, res) => {
     }
     return 0;
   }
-  let ple = pla.sort(compare);
+  const ple = pla.sort(compare);
 
   res.status(200).json({
     message: "got all results successfully",
@@ -641,8 +635,8 @@ router.get("/players", async (req, res) => {
 
 router.get("/livematches", async (req, res) => {
   let date = new Date();
-  let matchess = [];
-  let endDate = new Date(date.getTime() + 10 * 60 * 60 * 1000);
+  const matchess = [];
+  const endDate = new Date(date.getTime() + 10 * 60 * 60 * 1000);
   date = new Date(date.getTime() - 10 * 60 * 60 * 1000);
   const matches = await Matches.find({
     date: {
@@ -651,8 +645,8 @@ router.get("/livematches", async (req, res) => {
     },
   });
   for (let i = 0; i < matches.length; i++) {
-    let matchid = matches[i].matchId;
-    let match = await MatchLiveDetails.findOne({ matchId: matchid });
+    const matchid = matches[i].matchId;
+    const match = await LiveMatches.findOne({ matchId: matchid });
     console.log(match?.result, "match");
     if (match && !(match?.result == "Yes")) {
       console.log(matches[i].cmtMatchId, "matchid");

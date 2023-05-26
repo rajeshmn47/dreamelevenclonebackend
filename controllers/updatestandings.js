@@ -1,10 +1,10 @@
-const Match = require("../models/match");
 const request = require("request");
+const axios = require("axios");
+const Match = require("../models/match");
 const Contest = require("../models/contest");
 const Team = require("../models/team");
 const MatchLive = require("../models/match_live_details_new");
 const Player = require("../models/players");
-const axios = require("axios");
 const getkeys = require("../apikeys");
 
 // function prizeBreakupRules(prize, numWinners){
@@ -18,30 +18,30 @@ function compare(a, b) {
   return a.date < b.date;
 }
 
-let io = 1;
+const io = 1;
 async function getplayerImage(name) {
-  var k = name.split(" ")[0];
-  var config = {
+  const k = name.split(" ")[0];
+  const config = {
     method: "get",
     url: `https://cricket.sportmonks.com/api/v2.0/players?filter[lastname]=sachin&api_token=
         fTWhOiGhie6YtMBmpbw10skSjTmSgwHeLg22euC5qLMR1oT1eC6PRc8sEulv`,
     headers: {},
   };
 
-  let s = await axios(config).catch(function (error) {
+  const s = await axios(config).catch((error) => {
     console.log(error);
   });
-  let PlayerS = new Player();
+  const PlayerS = new Player();
 
   return s.data.data.length > 0 ? s.data.data[0].image_path : "";
 }
 module.exports.addTeamstandingstodb = async function () {
-  let date = new Date();
-  let endDate = date;
+  const date = new Date();
+  const endDate = date;
   const matches = await MatchLive.find();
   for (let i = 0; i < matches.length; i++) {
-    let matchId = matches[i].matchId;
-    let keys = await getkeys.getkeys();
+    const { matchId } = matches[i];
+    const keys = await getkeys.getkeys();
     const options = {
       method: "GET",
       url: `https://cricket-live-data.p.rapidapi.com/match/${matchId}`,
@@ -51,19 +51,19 @@ module.exports.addTeamstandingstodb = async function () {
         useQueryString: true,
       },
     };
-    let promise = new Promise((resolve, reject) => {
-      request(options, function (error, response, body) {
+    const promise = new Promise((resolve, reject) => {
+      request(options, (error, response, body) => {
         if (error) {
           reject(error);
         }
-        let s = JSON.parse(body);
+        const s = JSON.parse(body);
 
         resolve(s);
       });
     });
     promise.then(async (s) => {
-      const match = await MatchLive.findOne({ matchId: matchId });
-      for (let x of s?.results?.live_details?.scorecard[0]?.batting) {
+      const match = await MatchLive.findOne({ matchId });
+      for (const x of s?.results?.live_details?.scorecard[0]?.batting) {
         for (let i = 0; i < match.teamHomePlayers.length; i++) {
           if (
             parseInt(match.teamHomePlayers[i].playerId) ===
@@ -79,7 +79,7 @@ module.exports.addTeamstandingstodb = async function () {
           }
         }
       }
-      for (let x of s.results.live_details.scorecard[1].batting) {
+      for (const x of s.results.live_details.scorecard[1].batting) {
         for (let i = 0; i < match.teamAwayPlayers.length; i++) {
           if (
             parseInt(match.teamAwayPlayers[i].playerId) ===
@@ -95,7 +95,7 @@ module.exports.addTeamstandingstodb = async function () {
           }
         }
       }
-      for (let x of s.results.live_details.scorecard[0].bowling) {
+      for (const x of s.results.live_details.scorecard[0].bowling) {
         for (let i = 0; i < match.teamHomePlayers.length; i++) {
           console.log(match.teamHomePlayers[i].playerId, x);
           if (
@@ -112,7 +112,7 @@ module.exports.addTeamstandingstodb = async function () {
           }
         }
       }
-      for (let x of s.results.live_details.scorecard[1].bowling) {
+      for (const x of s.results.live_details.scorecard[1].bowling) {
         for (let i = 0; i < match.teamHomePlayers.length; i++) {
           console.log(match.teamHomePlayers[i].playerId, x);
           if (

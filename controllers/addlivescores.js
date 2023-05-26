@@ -1,5 +1,5 @@
-const Match = require("../models/match");
 const request = require("request");
+const Match = require("../models/match");
 const MatchLive = require("../models/match_live_details");
 
 // function prizeBreakupRules(prize, numWinners){
@@ -9,7 +9,7 @@ const MatchLive = require("../models/match_live_details");
 //     }
 // }
 
-let date = new Date();
+const date = new Date();
 enddate = date;
 
 async function getplayerImage(name) {
@@ -27,7 +27,7 @@ async function getplayerImage(name) {
     },
   };
   let s = "";
-  request(options, function (error, response, body) {
+  request(options, (error, response, body) => {
     s = JSON.parse(body);
   });
   return s;
@@ -44,13 +44,13 @@ module.exports.addLivescorestodb = async function () {
         useQueryString: true,
       },
     };
-    let promise = new Promise((resolve, reject) => {
+    const promise = new Promise((resolve, reject) => {
       if ((matches[i].date - date) / (60 * 1000) <= 30) {
-        request(options, function (error, response, body) {
+        request(options, (error, response, body) => {
           if (error) {
             reject(error);
           }
-          let s = JSON.parse(body);
+          const s = JSON.parse(body);
 
           resolve(s);
         });
@@ -60,7 +60,7 @@ module.exports.addLivescorestodb = async function () {
     });
     promise
       .then(async (s) => {
-        let match = new MatchLive();
+        const match = new MatchLive();
       })
       .catch((error) => {
         console.log(error);

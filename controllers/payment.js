@@ -1,16 +1,17 @@
+const flagURLs = require("country-flags-svg");
+const otpGenerator = require("otp-generator");
+const Razorpay = require("razorpay");
+const express = require("express");
+const dotenv = require("dotenv");
+const { v4: uuidv4 } = require("uuid");
 const Matches = require("../models/match");
 const LiveMatches = require("../models/match_live_details");
 const Players = require("../models/players");
 const Contest = require("../models/contest");
 const Team = require("../models/team");
-const flagURLs = require("country-flags-svg");
-const otpGenerator = require("otp-generator");
-const Razorpay = require("razorpay");
-var express = require("express");
+
 const router = express.Router();
 const User = require("../models/user");
-const dotenv = require("dotenv");
-const { v4: uuidv4 } = require("uuid");
 
 dotenv.config();
 
@@ -53,7 +54,7 @@ router.post("/capture/:paymentId/:amount", (req, res) => {
           currency: "INR",
         },
       },
-      async function (err, res, body) {
+      async (err, res, body) => {
         if (err) {
           return res.status(500).json({
             message: "Something Went Wrong",
@@ -74,7 +75,7 @@ router.patch("/addamount", async (req, res) => {
   try {
     const amount = parseInt(req.body.amount);
     const user = await User.findOne({ _id: req.body.id });
-    user.wallet = user.wallet + amount;
+    user.wallet += amount;
     await user.save();
   } catch (err) {
     console.log(err);

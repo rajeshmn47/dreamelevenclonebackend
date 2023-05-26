@@ -31,13 +31,27 @@ const matcheSchema = new mongoose.Schema(
       lowercase: true,
     },
 
+    teamHomeId: {
+      type: String,
+      trim: true,
+      required: true,
+      lowercase: true,
+      default: "",
+    },
+
     teamAwayCode: {
       type: String,
       trim: true,
       required: true,
       lowercase: true,
     },
-
+    teamAwayId: {
+      type: String,
+      trim: true,
+      required: true,
+      lowercase: true,
+      default: "",
+    },
     teamHomePlayers: [
       {
         playerId: {
@@ -128,5 +142,5 @@ const matcheSchema = new mongoose.Schema(
   }
 );
 
-const Match = mongoose.model("Matche", matcheSchema);
+const Match = mongoose.model("Matchtwo", matcheSchema);
 module.exports = Match;

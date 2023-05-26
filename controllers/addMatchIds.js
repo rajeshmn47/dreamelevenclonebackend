@@ -1,9 +1,9 @@
-const Match = require("../models/match");
 const request = require("request");
+const Match = require("../models/match");
 const Team = require("../models/team");
 const Contest = require("../models/contest");
 const User = require("../models/user");
-const MatchLiveDetails = require("../models/match_live_details_new");
+const MatchLiveDetails = require("../models/match_live_details_scores_copy");
 
 // function prizeBreakupRules(prize, numWinners){
 //     let prizeMoneyBreakup = [];
@@ -32,7 +32,7 @@ function getplayerImage(name) {
     },
   };
   let s = "";
-  request(options, function (error, response, body) {
+  request(options, (error, response, body) => {
     s = JSON.parse(body);
   });
   return s;
@@ -44,12 +44,13 @@ module.exports.addMatchIds = async function () {
   for (let x = 0; x < users.length; x++) {
     users[x].matchIds = [];
     for (let i = 0; i < matches.length; i++) {
-      let teams = await Team.find({
+      const teams = await Team.find({
         $and: [{ matchId: matches[i].matchId }, { userId: users[x]._id }],
       });
-      let isTheir = users[x].matchIds.includes(matches[i].matchId);
+      const isTheir = users[x].matchIds.includes(matches[i].matchId);
       if (teams.length > 0 && !isTheir) {
         users[x].matchIds.push(matches[i].matchId);
+        console.log(matches[i].matchId, "matchdi");
       }
     }
     await users[x].save();

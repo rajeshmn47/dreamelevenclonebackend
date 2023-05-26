@@ -1,9 +1,9 @@
-const Match = require("../models/match");
 const request = require("request");
+const axios = require("axios");
+const Match = require("../models/match");
 const Contest = require("../models/contest");
 const MatchLive = require("../models/match_live_details_new");
 const Player = require("../models/players");
-const axios = require("axios");
 const User = require("../models/user");
 
 // function prizeBreakupRules(prize, numWinners){
@@ -17,7 +17,7 @@ function compare(a, b) {
   return a.date < b.date;
 }
 
-let io = 1;
+const io = 1;
 async function getplayerImage(name) {
   console.log(name);
   return "https://cdn.sportmonks.com/images/cricket/placeholder.png";
@@ -26,7 +26,7 @@ async function getplayerImage(name) {
 module.exports.addPlayers = async function () {
   const turing = await MatchLive();
   let date = new Date();
-  let endDate = new Date(date.getTime() + 60 * 60 * 1000);
+  const endDate = new Date(date.getTime() + 60 * 60 * 1000);
   date = new Date(date.getTime() - 60 * 60 * 1000 * 10);
   const matches = await Match.find({
     date: {
@@ -36,13 +36,13 @@ module.exports.addPlayers = async function () {
   });
   const user = await User.findById("63c18c9f2d217ea120307e30");
   for (let i = 0; i < matches.length; i++) {
-    let match = await MatchLive.findOne({ matchId: matches[i].matchId });
+    const match = await MatchLive.findOne({ matchId: matches[i].matchId });
     if (match) {
       try {
         for (let i = 0; i < match.teamAwayPlayers.length; i++) {
-          let name = match.teamAwayPlayers[i].playerName.split(" ")[1];
+          const name = match.teamAwayPlayers[i].playerName.split(" ")[1];
           if (i < 11) {
-            let options = {
+            const options = {
               method: "GET",
               url: `https://cricket.sportmonks.com/api/v2.0/players/?filter[lastname]=${name}&api_token=
         ${process.env.TOKEN}`,
@@ -56,7 +56,7 @@ module.exports.addPlayers = async function () {
             if (foundpl) {
               match.teamAwayPlayers[i].image = foundpl.image;
             } else {
-              request(options, async function (error, response, body) {
+              request(options, async (error, response, body) => {
                 s = JSON.parse(body);
                 console.log("awayplayers", s);
                 for (let ik = 0; ik < s?.data?.length; ik++) {
@@ -93,14 +93,14 @@ module.exports.addPlayers = async function () {
         console.log(error);
       }
       for (let i = 0; i < match.teamHomePlayers.length; i++) {
-        let name = match.teamHomePlayers[i].playerName.split(" ")[1];
+        const name = match.teamHomePlayers[i].playerName.split(" ")[1];
         if (i < 11) {
-          let s = "";
+          const s = "";
           try {
             for (let i = 0; i < match.teamHomePlayers.length; i++) {
-              let name = match.teamHomePlayers[i].playerName.split(" ")[1];
+              const name = match.teamHomePlayers[i].playerName.split(" ")[1];
               if (i < 11) {
-                let options = {
+                const options = {
                   method: "GET",
                   url: `https://cricket.sportmonks.com/api/v2.0/players/?filter[lastname]=${name}&api_token=
             ${process.env.TOKEN}`,
@@ -114,7 +114,7 @@ module.exports.addPlayers = async function () {
                 if (foundpl) {
                   match.teamHomePlayers[i].image = foundpl.image;
                 } else {
-                  request(options, async function (error, response, body) {
+                  request(options, async (error, response, body) => {
                     s = JSON.parse(body);
                     console.log("awayplayers", s);
                     for (let ik = 0; ik < s?.data?.length; ik++) {

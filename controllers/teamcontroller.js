@@ -1,17 +1,18 @@
+const flagURLs = require("country-flags-svg");
+const otpGenerator = require("otp-generator");
+const express = require("express");
 const Matches = require("../models/match");
 const LiveMatches = require("../models/match_live_details");
 const Players = require("../models/players");
 const Contest = require("../models/contest");
 const Team = require("../models/team");
-const flagURLs = require("country-flags-svg");
-const otpGenerator = require("otp-generator");
-var express = require("express");
+
 const router = express.Router();
 const everydayboys = require("./addlivescores");
 
 router.post("/saveteam/:id", async (req, res) => {
-  let players = [];
-  var points = 0;
+  const players = [];
+  let points = 0;
   for (p in req.body.players) {
     players.push({
       playerId: req.body.players[p].playerId,
@@ -20,7 +21,7 @@ router.post("/saveteam/:id", async (req, res) => {
       point: req.body.players[p].points,
       image: req.body.players[p].image,
     });
-    points = points + req.body.players[p].points;
+    points += req.body.players[p].points;
   }
   const otp = otpGenerator.generate(8, {
     lowerCaseAlphabets: false,
@@ -34,12 +35,12 @@ router.post("/saveteam/:id", async (req, res) => {
     viceCaptainId: req.body.vicecaptainId,
     userId: req.body.userid,
     teamId: otp,
-    players: players,
-    points: points,
+    players,
+    points: 44,
   });
 
   res.status(200).json({
-    team: team,
+    team,
     message: "team created successfully",
   });
 });
@@ -52,7 +53,7 @@ router.get("/getteam", async (req, res) => {
   });
   res.status(200).json({
     message: "team created successfully",
-    team: team,
+    team,
   });
 });
 
@@ -60,7 +61,7 @@ router.get("/getteam/:id", async (req, res) => {
   const team = await Team.findById(req.params.id);
   res.status(200).json({
     message: "team got successfully",
-    team: team,
+    team,
   });
 });
 

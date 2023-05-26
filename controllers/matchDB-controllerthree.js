@@ -1,8 +1,7 @@
 const request = require("request");
-const Match = require("../models/match");
+const Match = require("../models/matchtwo");
 const Contest = require("../models/contest");
-const User = require("../models/user");
-const getkeys = require("../apikeys");
+const getkeys = require("../crickeys");
 
 // function prizeBreakupRules(prize, numWinners){
 //     let prizeMoneyBreakup = [];
@@ -45,29 +44,47 @@ module.exports.addMatchtoDb = async function () {
   const obj = {
     results: [],
   };
-  let date = new Date();
-  var month = pad2(date.getMonth() + 1); // months (0-11)
-  var day = pad2(date.getDate()); // day (1-31)
-  var year = date.getFullYear();
+  var date = new Date();
+  const month = pad2(date.getMonth() + 1); // months (0-11)
+  const day = pad2(date.getDate()); // day (1-31)
+  const year = date.getFullYear();
   // var year = "2021";
   // var month = "09";
   // var day = 25;
-  let formattedDate = new Date();
-  const numberOfDays = 10;
-  const getim = new Date().getTime(date.getTime() + 24 * 15 * 60 * 60 * 1000);
-
+  var date = new Date();
+  const numberOfDays = 1;
+  let endDate = new Date(date.getTime() + 24 * 60 * 60 * 1000 * 6);
+  console.log(
+    date,
+    endDate,
+    date.getDate(),
+    parseInt(
+      `${parseInt(date.getFullYear())}-${parseInt(
+        date.getMonth() + 1
+      )}-${parseInt(date.getDate())}`
+    ),
+    "date",
+    "enddate"
+  );
+  date = parseInt(
+    `${parseInt(date.getFullYear())}-${parseInt(
+      date.getMonth() + 1
+    )}-${parseInt(date.getDate())}`
+  );
+  endDate = parseInt(
+    `${parseInt(endDate.getFullYear())}-${parseInt(
+      endDate.getMonth() + 1
+    )}-${parseInt(endDate.getDate())}`
+  );
   for (let i = 0; i < numberOfDays; i++) {
-    console.log(`${process.env.API_KEY}`, "envkey");
-    const user = await User.findById("63c18c9f2d217ea120307e30");
-    user.totalhits += 1;
-    await user.save();
+    console.log("envkey");
     const keys = await getkeys.getkeys();
     const options = {
       method: "GET",
-      url: `https://cricket-live-data.p.rapidapi.com/fixtures-by-date/${formattedDate}`,
+      url: "https://cricbuzz-cricket.p.rapidapi.com/matches/v1/upcoming",
       headers: {
-        "x-rapidapi-host": "cricket-live-data.p.rapidapi.com",
-        "x-rapidapi-key": keys,
+        "x-rapidapi-host": "cricbuzz-cricket.p.rapidapi.com",
+        "x-rapidapi-key": "3ddef92f6emsh8301b1a8e1fd478p15bb8bjsnd0bb5446cadc",
         useQueryString: true,
       },
     };
@@ -84,30 +101,39 @@ module.exports.addMatchtoDb = async function () {
     });
     promise
       .then(async (s) => {
-        console.log(s, "s");
-        for (mat of s.results) {
-          obj.results.push(mat);
+        console.log(s.typeMatches, "mad");
+        for (se of s.typeMatches) {
+          for (k of se.seriesMatches) {
+            if (k?.seriesAdWrapper?.matches) {
+              for (f of k?.seriesAdWrapper?.matches) {
+                console.log(f.matchInfo.matchId, "id");
+                obj.results.push(f.matchInfo);
+              }
+            }
+          }
         }
-
         for (let i = 0; i < obj.results.length; i++) {
           const match1 = new Match();
-          const matchId = obj.results[i].id;
+          console.log(obj.results[i], match1, "okkkk");
+          const { matchId } = obj.results[i];
           // console.log(obj.results[i]);
           match1.matchId = matchId;
           obj.results.sort(compare);
-          match1.matchTitle = obj.results[i].match_title;
-          match1.teamHomeName = obj.results[i].home.name;
-          match1.teamAwayName = obj.results[i].away.name;
-          match1.date = obj.results[i].date;
-          if (obj.results[i].home.code == "") {
-            match1.teamHomeCode = obj.results[i].home.name.slice(0, 3);
+          match1.matchTitle = obj.results[i].seriesName;
+          match1.teamHomeName = obj.results[i].team1.teamName;
+          match1.teamAwayName = obj.results[i].team2.teamName;
+          match1.teamHomeId = obj.results[i].team1.teamId;
+          match1.teamAwayId = obj.results[i].team2.teamId;
+          match1.date = obj.results[i].startDate;
+          if (obj.results[i].team1.teamSName == "") {
+            continue;
           } else {
-            match1.teamHomeCode = obj.results[i].home.code;
+            match1.teamHomeCode = obj.results[i].team1.teamSName;
           }
-          if (obj.results[i].away.code == "") {
-            match1.teamAwayCode = obj.results[i].away.name.slice(0, 3);
+          if (obj.results[i].team2.teamSName == "") {
+            continue;
           } else {
-            match1.teamAwayCode = obj.results[i].away.code;
+            match1.teamAwayCode = obj.results[i].team2.teamSName;
           }
           try {
             const match = await Match.findOne({ matchId });
@@ -145,13 +171,14 @@ module.exports.addMatchtoDb = async function () {
                 try {
                   const contest2 = await Contest.create(contest1);
                   if (contest2) {
-                    match1.contestId.push(contest2._id);
+                    match1.contestId.push(contest2.id);
                   }
                 } catch (err) {
                   console.log(`Error : ${err}`);
                 }
               }
               try {
+                console.log(match1, "match1");
                 const match = await Match.create(match1);
                 if (match) {
                   console.log("match is successfully added in db! ");
@@ -170,11 +197,6 @@ module.exports.addMatchtoDb = async function () {
       .catch((err) => {
         console.log(`Error : ${err}`);
       });
-    date = new Date(date.getTime() + 24 * 60 * 60 * 1000);
-    var month = pad2(date.getMonth() + 1); // months (0-11)
-    var day = pad2(date.getDate()); // day (1-31)
-    var year = date.getFullYear();
     // day++;
-    formattedDate = `${year}-${month}-${day}`;
   }
 };

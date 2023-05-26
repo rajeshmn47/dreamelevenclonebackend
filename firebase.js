@@ -1,6 +1,3 @@
-const MatchLiveDetails = require("./models/match_live_details_new");
-const Matches = require("./models/match");
-
 const {
   initializeApp,
   applicationDefault,
@@ -11,6 +8,9 @@ const {
   Timestamp,
   FieldValue,
 } = require("firebase-admin/firestore");
+const MatchLiveDetails = require("./models/match_live_details_new");
+const Matches = require("./models/match");
+
 const serviceAccount = {
   type: "service_account",
   project_id: "dreamelevenclone",
@@ -38,8 +38,8 @@ module.exports.addLivecommentary = async function addcommentry() {
   try {
     console.log("rajesh");
     let date = new Date();
-    let matchess = [];
-    let endDate = new Date(date.getTime() + 10 * 60 * 60 * 1000);
+    const matchess = [];
+    const endDate = new Date(date.getTime() + 10 * 60 * 60 * 1000);
     date = new Date(date.getTime() - 10 * 60 * 60 * 1000);
     const matches = await Matches.find({
       date: {
@@ -49,8 +49,8 @@ module.exports.addLivecommentary = async function addcommentry() {
     });
     console.log(matches, "matches");
     for (let i = 0; i < matches.length; i++) {
-      let matchid = matches[i].matchId;
-      let match = await MatchLiveDetails.findOne({ matchId: matchid });
+      const matchid = matches[i].matchId;
+      const match = await MatchLiveDetails.findOne({ matchId: matchid });
 
       console.log(match?.result, "match");
       if (match && !(match?.result == "Yes")) {
@@ -83,7 +83,7 @@ module.exports.addLivecommentary = async function addcommentry() {
             console.log("No such document!");
           }
           console.log(response.data.commentaryList);
-          let a = response.data.commentaryList[0];
+          const a = response.data.commentaryList[0];
           if (docSnap?.data()?.capital) {
             await setDoc(washingtonRef, {
               capital: [...docSnap.data().capital, a],

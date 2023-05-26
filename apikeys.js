@@ -1,18 +1,16 @@
 const User = require("./models/user");
 
 module.exports.getkeys = async function () {
-  const user = await User.findById("63c18c9f2d217ea120307e30");
-  let totalhits = user.totalhits;
+  let totalhits = 0;
   if (totalhits > 5000) {
     totalhits = 0;
   }
-
-  let date = new Date().getDate();
+  const date = new Date().getDate();
   console.log(totalhits, "totalhits");
-  let keyindex = Math.floor(date / 2);
-  let keyi = Math.floor(totalhits / 250);
+  const keyindex = Math.floor(date / 2);
+  const keyi = Math.floor(totalhits / 250);
   console.log(keyi, "index");
-  let keys = [
+  const keys = [
     "3827482ab0msh2682459121bc4e9p182f86jsn5e5bf239f56d",
     "4c7d3711a8mshb541cbf54879207p15aac7jsn48daf03743bb",
     "3e774772f1mshd335b4ddbbd2512p194714jsnb9cc15174c3b",

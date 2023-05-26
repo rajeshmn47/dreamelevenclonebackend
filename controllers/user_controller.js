@@ -1,27 +1,30 @@
 const Matches = require("../models/match");
 const LiveMatches = require("../models/match_live_details");
 const flagURLs = require("country-flags-svg");
-var express = require("express");
+const express = require("express");
 const jwt = require("jsonwebtoken");
+
 const router = express.Router();
-const everydayboys = require("./addlivescores");
 const messageBird = require("messagebird")("W2tTRdqV8xxNjMYhIXSX3eEY6");
-const User = require("../models/user");
+
 const activatekey = "accountactivatekey123";
-const transaction = require("./transaction_details_controller");
-var nodemailer = require("nodemailer");
+const nodemailer = require("nodemailer");
 const request = require("request");
-var smtpTransport = require("nodemailer-smtp-transport");
+const smtpTransport = require("nodemailer-smtp-transport");
 const otpGenerator = require("otp-generator");
 const fast2sms = require("fast-two-sms");
 const { OAuth2Client } = require("google-auth-library");
-var unirest = require("unirest");
-var req = unirest("GET", "https://www.fast2sms.com/dev/bulkV2");
+const unirest = require("unirest");
+const transaction = require("./transaction_details_controller");
+const User = require("../models/user");
+const everydayboys = require("./addlivescores");
+
+const req = unirest("GET", "https://www.fast2sms.com/dev/bulkV2");
 const server_secret_key =
   "iamrajesh675gjhchshskijdiucacuijnuijniusjiudjcsdijcjsijcisjijsoisju";
-let api_key =
+const api_key =
   "s16rcBDzWjgNhJXPEUV9HA3QMSfvpen2GyL7a4F8ubdwICk5KOHPT32vI5b6cSxs8JpUhirCOjqogGwk";
-var transporter = nodemailer.createTransport(
+const transporter = nodemailer.createTransport(
   smtpTransport({
     service: "gmail",
     host: "smtp.gmail.com",
@@ -42,12 +45,12 @@ const client = new OAuth2Client(
 const clientId =
   "711974125982-gaeieriu9q60ctbps2qpbjitv0374d7l.apps.googleusercontent.com";
 
-router.post("/googlelogin", async function (req, res, next) {
-  var tokenId = req.body.tokenId;
-  var verifyObject = {};
+router.post("/googlelogin", async (req, res, next) => {
+  const { tokenId } = req.body;
+  const verifyObject = {};
   verifyObject.idToken = tokenId;
   verifyObject.audience = clientId;
-  var response = await client.verifyIdToken(verifyObject);
+  const response = await client.verifyIdToken(verifyObject);
   const { email_verified } = response.payload;
   if (email_verified) {
     console.log(response.payload);
@@ -57,7 +60,7 @@ router.post("/googlelogin", async function (req, res, next) {
     if (usert) {
       usert.image = response.payload.picture;
       await usert.save();
-      let userid = usert._id;
+      const userid = usert._id;
       const server_token = jwt.sign({ userid }, activatekey, {
         expiresIn: "5000000m",
       });
@@ -76,7 +79,7 @@ router.post("/googlelogin", async function (req, res, next) {
       user1.password = "password";
       user1.phonenumber = 7259293140;
       user1.wallet = 10000;
-      var options = {
+      const options = {
         method: "POST",
         url: "https://api.razorpay.com/v1/contacts",
         headers: {
@@ -97,10 +100,10 @@ router.post("/googlelogin", async function (req, res, next) {
         }),
       };
       let contact_id = "";
-      let promise = new Promise((resolve, reject) => {
-        request(options, function (error, response) {
+      const promise = new Promise((resolve, reject) => {
+        request(options, (error, response) => {
           if (error) reject(error);
-          let s = JSON.parse(response.body);
+          const s = JSON.parse(response.body);
           contact_id = s.id;
           user1.contact_id = contact_id;
           resolve();
@@ -108,52 +111,49 @@ router.post("/googlelogin", async function (req, res, next) {
       });
       promise
         .then(async () => {
-          User.findOne(
-            { email: response.payload.email },
-            async function (err, user) {
-              if (err) {
-                console.log("Error in finding user in Sign-in ");
-                res.status(400).json({
-                  message: "something went wrong",
-                });
-              }
-              if (!user) {
-                transaction.createTransaction(userId, "", 100, "extra cash");
-                User.create(user1, async function (err, user) {
-                  if (err) {
-                    console.log("rajesh");
-                    console.log(
-                      "Error in creating a user while account activation",
-                      err
-                    );
-                    res.status(400).json({
-                      message: "something went wrong",
-                    });
-                  } else {
-                    var userid = user._id;
-                    console.log("SignUp successfull!");
-                    const token = jwt.sign({ userid }, activatekey, {
-                      expiresIn: "500000m",
-                    });
-                    res.status(200).json({
-                      success: true,
-                      user,
-                      server_token: token,
-                    });
-                  }
-                });
-              } else {
-                console.log("kuttheee");
-                res.status(200).json({
-                  message: "user already exists",
-                  success: false,
-                });
-              }
+          User.findOne({ email: response.payload.email }, async (err, user) => {
+            if (err) {
+              console.log("Error in finding user in Sign-in ");
+              res.status(400).json({
+                message: "something went wrong",
+              });
             }
-          );
+            if (!user) {
+              transaction.createTransaction(userId, "", 100, "extra cash");
+              User.create(user1, async (err, user) => {
+                if (err) {
+                  console.log("rajesh");
+                  console.log(
+                    "Error in creating a user while account activation",
+                    err
+                  );
+                  res.status(400).json({
+                    message: "something went wrong",
+                  });
+                } else {
+                  const userid = user._id;
+                  console.log("SignUp successfull!");
+                  const token = jwt.sign({ userid }, activatekey, {
+                    expiresIn: "500000m",
+                  });
+                  res.status(200).json({
+                    success: true,
+                    user,
+                    server_token: token,
+                  });
+                }
+              });
+            } else {
+              console.log("kuttheee");
+              res.status(200).json({
+                message: "user already exists",
+                success: false,
+              });
+            }
+          });
         })
         .catch((err) => {
-          console.log("Error : " + err);
+          console.log(`Error : ${err}`);
         });
     }
   } else {
@@ -165,10 +165,10 @@ router.post("/googlelogin", async function (req, res, next) {
 });
 
 function checkloggedinuser(req, res, next) {
-  const tokenheader = req.body.headers || req.headers["servertoken"];
+  const tokenheader = req.body.headers || req.headers.servertoken;
 
   if (tokenheader) {
-    jwt.verify(tokenheader, activatekey, function (err, decoded) {
+    jwt.verify(tokenheader, activatekey, (err, decoded) => {
       if (!err) {
         req.body.uidfromtoken = decoded.userid;
       }
@@ -197,22 +197,22 @@ router.post("/register", async (req, res) => {
   user1.phonenumber = req.body.phonenumber;
   user1.wallet = 10000;
   user1.otp = otp;
-  var mailOptions = {
+  const mailOptions = {
     from: "rajeshmn47@gmail.com",
     to: req.body.email,
     subject: "Sending Email using Node.js[nodemailer]",
     text: `enter this otp ${otp}`,
   };
 
-  transporter.sendMail(mailOptions, function (error, info) {
+  transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
       console.log(error);
     } else {
-      console.log("Email sent: " + info.response);
+      console.log(`Email sent: ${info.response}`);
     }
   });
 
-  var options = {
+  const options = {
     method: "POST",
     url: "https://api.razorpay.com/v1/contacts",
     headers: {
@@ -233,10 +233,10 @@ router.post("/register", async (req, res) => {
     }),
   };
   let contact_id = "";
-  let promise = new Promise((resolve, reject) => {
-    request(options, function (error, response) {
+  const promise = new Promise((resolve, reject) => {
+    request(options, (error, response) => {
       if (error) reject(error);
-      let s = JSON.parse(response.body);
+      const s = JSON.parse(response.body);
 
       contact_id = s.id;
 
@@ -246,7 +246,7 @@ router.post("/register", async (req, res) => {
   });
   promise
     .then(async () => {
-      User.findOne({ email: req.body.email }, async function (err, user) {
+      User.findOne({ email: req.body.email }, async (err, user) => {
         if (err) {
           console.log("Error in finding user in Sign-in ");
           res.status(400).json({
@@ -256,7 +256,7 @@ router.post("/register", async (req, res) => {
 
         if (!user) {
           transaction.createTransaction(userId, "", 100, "extra cash");
-          User.create(user1, async function (err, user) {
+          User.create(user1, async (err, user) => {
             if (err) {
               console.log("rajesh");
               console.log(
@@ -267,7 +267,7 @@ router.post("/register", async (req, res) => {
                 message: "something went wrong",
               });
             } else {
-              var userid = user._id;
+              const userid = user._id;
               console.log("SignUp successfull!");
 
               const token = jwt.sign({ userid }, activatekey, {
@@ -291,7 +291,7 @@ router.post("/register", async (req, res) => {
       });
     })
     .catch((err) => {
-      console.log("Error : " + err);
+      console.log(`Error : ${err}`);
     });
 });
 router.post("/otp", async (req, res) => {
@@ -299,22 +299,22 @@ router.post("/otp", async (req, res) => {
   console.log(user.otp, req.body.otp, "otp");
   if (parseInt(user.otp) == parseInt(req.body.otp)) {
     user.verified = true;
-    let userid = user._id;
+    const userid = user._id;
     const token = jwt.sign({ userid }, activatekey, {
       expiresIn: "5000000m",
     });
-    user.save(function (err) {
+    user.save((err) => {
       if (!err) {
         console.log("contact");
         res.status(200).json({
           message: "ure account created successfully u can login",
-          token: token,
+          token,
         });
       } else {
         console.log("Error: could not save contact ");
         res.status(200).json({
           message: "ure account created successfully u can login",
-          token: token,
+          token,
         });
       }
     });
@@ -331,14 +331,14 @@ router.post("/login", async (req, res) => {
     console.log(user, "user");
     if (user.password == req.body.myform.password) {
       console.log(user, "user");
-      var userid = user._id;
+      const userid = user._id;
       const token = jwt.sign({ userid }, activatekey, {
         expiresIn: "50000000m",
       });
       res.status(200).json({
         message: "success",
-        token: token,
-        user: user,
+        token,
+        user,
       });
     } else {
       res.status(400).json({
@@ -365,22 +365,22 @@ router.get("/forgot-password/:email", async (req, res) => {
     console.log(user1, "user1");
     if (user1) {
       user1.otp = otp;
-      var mailOptions = {
+      const mailOptions = {
         from: "rajeshmn47@gmail.com",
         to: req.params.email,
         subject: "Sending Email using Node.js[nodemailer]",
         text: `enter this otp ${otp}`,
       };
 
-      transporter.sendMail(mailOptions, function (error, info) {
+      transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
           console.log(error);
         } else {
-          console.log("Email sent: " + info.response);
+          console.log(`Email sent: ${info.response}`);
         }
       });
       await user1.save();
-      var userid = user1._id;
+      const userid = user1._id;
       const token = jwt.sign({ userid }, activatekey, {
         expiresIn: "500m",
       });
@@ -397,7 +397,7 @@ router.get("/forgot-password/:email", async (req, res) => {
       });
     }
   } catch (err) {
-    console.log("Error : " + err);
+    console.log(`Error : ${err}`);
     res.status(200).json({
       message: "their was some error",
       success: false,
@@ -409,16 +409,16 @@ router.post("/forgot-password-otp", async (req, res) => {
   const user = await User.findOne({ email: req.body.email });
   console.log(user.otp, req.body.otp, "otp");
   if (parseInt(user.otp) == parseInt(req.body.otp)) {
-    let userid = user._id;
+    const userid = user._id;
     const token = jwt.sign({ userid }, activatekey, {
       expiresIn: "500m",
     });
-    user.save(function (err) {
+    user.save((err) => {
       if (!err) {
         console.log("contact");
         res.status(200).json({
           message: "u can change your password",
-          token: token,
+          token,
           success: true,
         });
       } else {
@@ -440,7 +440,7 @@ router.post("/changepassword", async (req, res) => {
   const user = await User.findOne({ email: req.body.email });
   console.log(user.otp, req.body.otp, "otp");
   user.password = req.body.password;
-  user.save(function (err) {
+  user.save((err) => {
     if (!err) {
       console.log("contact");
       res.status(200).json({
@@ -457,7 +457,7 @@ router.post("/changepassword", async (req, res) => {
   });
 });
 
-router.get("/loaduser", checkloggedinuser, async function (req, res) {
+router.get("/loaduser", checkloggedinuser, async (req, res) => {
   const user = await User.findOne({ _id: { $eq: req.body.uidfromtoken } });
   res.status(200).json({
     message: user,

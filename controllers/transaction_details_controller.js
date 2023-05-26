@@ -1,11 +1,12 @@
 const Transaction = require("../models/transaction");
+
 module.exports.createTransaction = async function (
   userId,
   transactionId,
   amount,
   action
 ) {
-  let transaction = new Transaction();
+  const transaction = new Transaction();
   transaction.userId = userId;
   transaction.transactionId = transactionId;
   transaction.amount = amount;
@@ -17,7 +18,7 @@ module.exports.createTransaction = async function (
       return true;
     }
   } catch (err) {
-    console.log("Error : " + err);
+    console.log(`Error : ${err}`);
   }
   return false;
 };
