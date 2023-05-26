@@ -1,6 +1,5 @@
 const request = require("request");
 const axios = require("axios");
-const Match = require("../models/match");
 const Contest = require("../models/contest");
 const Team = require("../models/team");
 const MatchLive = require("../models/match_live_details_scores_copy");

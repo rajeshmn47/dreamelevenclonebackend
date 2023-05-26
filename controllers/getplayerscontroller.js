@@ -1,14 +1,11 @@
 const flagURLs = require("country-flags-svg");
 const express = require("express");
 const Matches = require("../models/matchtwo");
-const MatchesA = require("../models/match");
 const LiveMatches = require("../models/match_live_details_scores_copy");
 const Players = require("../models/players");
 const Contest = require("../models/contest");
 
 const router = express.Router();
-const everydayboys = require("./addlivescores");
-const MatchLiveDetails = require("../models/match_live_details_new");
 
 router.get("/getplayers/:id", async (req, res) => {
   // const matchdetails = await MatchLiveDetails.findOne({ matchId: req.params.id });

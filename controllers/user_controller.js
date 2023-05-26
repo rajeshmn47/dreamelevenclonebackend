@@ -1,5 +1,3 @@
-const Matches = require("../models/match");
-const LiveMatches = require("../models/match_live_details");
 const flagURLs = require("country-flags-svg");
 const express = require("express");
 const jwt = require("jsonwebtoken");
@@ -17,7 +15,6 @@ const { OAuth2Client } = require("google-auth-library");
 const unirest = require("unirest");
 const transaction = require("./transaction_details_controller");
 const User = require("../models/user");
-const everydayboys = require("./addlivescores");
 
 const req = unirest("GET", "https://www.fast2sms.com/dev/bulkV2");
 const server_secret_key =

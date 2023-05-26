@@ -12,9 +12,7 @@ const Players = require("../models/players");
 const Result = require("../models/results");
 const LiveMatches = require("../models/match_live_details_scores_copy");
 const Matches = require("../models/matchtwo");
-
 const router = express.Router();
-const everydayboys = require("./addlivescores");
 const Match = require("../models/matchtwo");
 const Team = require("../models/team");
 const User = require("../models/user");

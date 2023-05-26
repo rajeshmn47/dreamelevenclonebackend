@@ -8,7 +8,6 @@ const Team = require("../models/team");
 const User = require("../models/user");
 
 const router = express.Router();
-const everydayboys = require("./addlivescores");
 
 function findrank(id, arr) {
   const aid = id.toString();

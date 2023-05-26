@@ -1,5 +1,3 @@
-const Matches = require("../models/match");
-const LiveMatches = require("../models/match_live_details");
 const flagURLs = require("country-flags-svg");
 const express = require("express");
 const jwt = require("jsonwebtoken");
@@ -16,17 +14,11 @@ const fast2sms = require("fast-two-sms");
 const unirest = require("unirest");
 const transaction = require("./transaction");
 const User = require("../models/user");
-const everydayboys = require("./addlivescores");
-
 const req = unirest("GET", "https://www.fast2sms.com/dev/bulkV2");
-const matches = require("./matchDB-controller");
-const matchestwo = require("./matchDB-controllerthree");
-const addingteam = require("./addplayersm");
+const matches = require("./matchDB-controllerthree");
+const addingteam = require("./addplayer");
 const addlivenew = require("./addlivescoresnewone");
 const addlivescoresnew = require("./addlivescoresdetailsnew");
-const livedetails = require("./addlivedetailsnew");
-const addplayers = require("./addplayerstwo");
-const livescore = require("./addlivescoresdetails");
 const teamstandings = require("./updateteam");
 const addLiveCommentary = require("./firebase");
 const addIds = require("./addMatchIds");
@@ -49,7 +41,7 @@ const transporter = nodemailer.createTransport(
 
 router.get("/addlivedetails", async (req, res) => {
   try {
-    livedetails.addLivematchtodb();
+    await addlivenew.addLivematchtodb();
     res.status(200).json({
       message: "user already exists",
       success: false,
@@ -65,26 +57,10 @@ router.get("/addlivedetails", async (req, res) => {
 
 router.get("/addlivescore", async (req, res) => {
   try {
-    livescore.addLivematchtodb();
+    await addlivescoresnew.addLivematchtodb();
     res.status(200).json({
-      message: "saved successfully",
-      success: true,
-    });
-  } catch (err) {
-    console.log(`Error : ${err}`);
-    res.status(200).json({
-      message: "could not save",
+      message: "user already exists",
       success: false,
-    });
-  }
-});
-
-router.get("/addplayers", async (req, res) => {
-  try {
-    addplayers.addPlayers();
-    res.status(200).json({
-      message: "saved successfully",
-      success: true,
     });
   } catch (err) {
     console.log(`Error : ${err}`);
@@ -97,7 +73,7 @@ router.get("/addplayers", async (req, res) => {
 
 router.get("/updateteams", async (req, res) => {
   try {
-    teamstandings.addTeamstandingstodb();
+    await teamstandings.addTeamstandingstodb();
     res.status(200).json({
       message: "saved successfully",
       success: true,
@@ -112,7 +88,7 @@ router.get("/updateteams", async (req, res) => {
 });
 router.get("/addtransaction", async (req, res) => {
   try {
-    transaction.startTransaction();
+    await transaction.startTransaction();
     res.status(200).json({
       message: "saved successfully",
       success: true,
@@ -128,23 +104,8 @@ router.get("/addtransaction", async (req, res) => {
 
 router.get("/addmatchtodb", async (req, res) => {
   try {
-    matches.addMatchtoDb();
-    res.status(200).json({
-      message: "user already exists",
-      success: false,
-    });
-  } catch (err) {
-    console.log(`Error : ${err}`);
-    res.status(200).json({
-      message: "could not save",
-      success: false,
-    });
-  }
-});
-
-router.get("/addmatchtodbtwo", async (req, res) => {
-  try {
-    matchestwo.addMatchtoDb();
+    await matches.addMatchtoDb();
+    await addingteam.addPlayers();
     res.status(200).json({
       message: "user already exists",
       success: false,
@@ -160,7 +121,7 @@ router.get("/addmatchtodbtwo", async (req, res) => {
 
 router.get("/addmatchids", async (req, res) => {
   try {
-    addIds.addMatchIds();
+    await addIds.addMatchIds();
     res.status(200).json({
       message: "user already exists",
       success: false,
@@ -193,38 +154,6 @@ router.get("/addlivecommentary", async (req, res) => {
 router.get("/addteams", async (req, res) => {
   try {
     await addingteam.addPlayers();
-    res.status(200).json({
-      message: "user already exists",
-      success: false,
-    });
-  } catch (err) {
-    console.log(`Error : ${err}`);
-    res.status(200).json({
-      message: "could not save",
-      success: false,
-    });
-  }
-});
-
-router.get("/addlivenew", async (req, res) => {
-  try {
-    await addlivenew.addLivematchtodb();
-    res.status(200).json({
-      message: "user already exists",
-      success: false,
-    });
-  } catch (err) {
-    console.log(`Error : ${err}`);
-    res.status(200).json({
-      message: "could not save",
-      success: false,
-    });
-  }
-});
-
-router.get("/newscores", async (req, res) => {
-  try {
-    await addlivescoresnew.addLivematchtodb();
     res.status(200).json({
       message: "user already exists",
       success: false,

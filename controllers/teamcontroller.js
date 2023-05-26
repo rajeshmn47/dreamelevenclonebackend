@@ -1,14 +1,11 @@
 const flagURLs = require("country-flags-svg");
 const otpGenerator = require("otp-generator");
 const express = require("express");
-const Matches = require("../models/match");
-const LiveMatches = require("../models/match_live_details");
 const Players = require("../models/players");
 const Contest = require("../models/contest");
 const Team = require("../models/team");
 
 const router = express.Router();
-const everydayboys = require("./addlivescores");
 
 router.post("/saveteam/:id", async (req, res) => {
   const players = [];

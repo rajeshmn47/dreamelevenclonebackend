@@ -1,5 +1,4 @@
 const request = require("request");
-const Match = require("../models/match");
 const Team = require("../models/team");
 const Contest = require("../models/contest");
 const User = require("../models/user");

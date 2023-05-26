@@ -9,7 +9,7 @@ const {
   Timestamp,
   FieldValue,
 } = require("firebase-admin/firestore");
-const MatchLiveDetails = require("../models/match_live_details_new");
+const MatchLiveDetails = require("../models/match_live_details_scores_copy");
 const Matches = require("../models/matchtwo");
 const User = require("../models/user");
 const getkeys = require("../crickeys");
