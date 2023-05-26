@@ -42,6 +42,9 @@ module.exports.addLivematchtodb = async function () {
     if (!match) {
       console.log("image");
     } else {
+      let user = await User.findById("646c70679da9df38e6273a43");
+      user.totalhits = user.totalhits + 1;
+      await user.save();
       const keys = await getkeys.getkeys();
       const date1 = "2679243";
       const options = {

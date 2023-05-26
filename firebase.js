@@ -8,8 +8,9 @@ const {
   Timestamp,
   FieldValue,
 } = require("firebase-admin/firestore");
-const MatchLiveDetails = require("./models/match_live_details_new");
-const Matches = require("./models/match");
+const MatchLiveDetails = require("./models/match_live_details_scores_copy");
+const Matches = require("./models/matchtwo");
+const getkeys = require("../apikeys");
 
 const serviceAccount = {
   type: "service_account",
@@ -54,26 +55,26 @@ module.exports.addLivecommentary = async function addcommentry() {
 
       console.log(match?.result, "match");
       if (match && !(match?.result == "Yes")) {
-        console.log(matches[i].cmtMatchId, "matchid");
+        console.log(matches[i].matchId, "matchid");
         matchess.push(matches[i]);
       }
     }
     for (let i = 0; i < matchess.length; i++) {
       if (matchess[i].cmtMatchId.length > 3) {
         console.log(matchess[i].cmtMatchId, "id");
+        const keys = await getkeys.getkeys();
         const options = {
           method: "GET",
-          url: `https://cricbuzz-cricket.p.rapidapi.com/mcenter/v1/${matchess[i].cmtMatchId}/comm`,
+          url: `https://cricbuzz-cricket.p.rapidapi.com/mcenter/v1/${matchess[i].matchId}/comm`,
           headers: {
-            "X-RapidAPI-Key":
-              "22e5eb9581msh463d68b77f60aedp15ca87jsn7178d984f2fc",
+            "X-RapidAPI-Key": keys,
             "X-RapidAPI-Host": "cricbuzz-cricket.p.rapidapi.com",
           },
         };
         try {
-          const washingtonRef = doc(db, "cities", matchess[i].cmtMatchId);
+          const washingtonRef = doc(db, "cities", matchess[i].matchId);
           const response = await axios.request(options);
-          const docRef = doc(db, "cities", matchess[i].cmtMatchId);
+          const docRef = doc(db, "cities", matchess[i].matchId);
           const docSnap = await getDoc(docRef);
 
           if (docSnap.exists()) {

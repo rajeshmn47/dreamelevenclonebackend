@@ -2,7 +2,7 @@ const request = require("request");
 const axios = require("axios");
 const Match = require("../models/matchtwo");
 const User = require("../models/user");
-
+const getkeys = require("../crickeys");
 // function prizeBreakupRules(prize, numWinners){
 //     let prizeMoneyBreakup = [];
 //     for(let i = 0; i < numWinners; i++){
@@ -23,6 +23,7 @@ async function getplayerImage(name) {
 module.exports.addPlayers = async function () {
   let date = new Date();
   const endDate = new Date(date.getMonth() - 3);
+  let keys = await getkeys.getkeys();
   date = new Date(date.getTime());
   const matches = await Match.find();
   for (let i = 0; i < 12; i++) {
@@ -32,7 +33,7 @@ module.exports.addPlayers = async function () {
       method: "GET",
       url: `https://cricbuzz-cricket.p.rapidapi.com/teams/v1/${matches[i].teamHomeId}/players`,
       headers: {
-        "X-RapidAPI-Key": "29c032b76emsh6616803b28338c2p19f6c1jsn8c7ad47ac806",
+        "X-RapidAPI-Key": keys,
         "X-RapidAPI-Host": "cricbuzz-cricket.p.rapidapi.com",
       },
     };
@@ -69,12 +70,14 @@ module.exports.addPlayers = async function () {
     } catch (error) {
       console.error(error);
     }
-
+    let user = await User.findById("646c70679da9df38e6273a43");
+    user.totalhits = user.totalhits + 1;
+    await user.save();
     const options_two = {
       method: "GET",
       url: `https://cricbuzz-cricket.p.rapidapi.com/teams/v1/${matches[i].teamAwayId}/players`,
       headers: {
-        "X-RapidAPI-Key": "29c032b76emsh6616803b28338c2p19f6c1jsn8c7ad47ac806",
+        "X-RapidAPI-Key": keys,
         "X-RapidAPI-Host": "cricbuzz-cricket.p.rapidapi.com",
       },
     };

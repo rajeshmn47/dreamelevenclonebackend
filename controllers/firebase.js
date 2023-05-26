@@ -60,12 +60,14 @@ module.exports.addLivecommentary = async function addcommentry() {
       if (m[i].matchId.length > 3) {
         const keys = await getkeys.getkeys();
         console.log(m[i].matchId, "matchid");
+        let user = await User.findById("646c70679da9df38e6273a43");
+        user.totalhits = user.totalhits + 1;
+        await user.save();
         const options = {
           method: "GET",
           url: `https://cricbuzz-cricket.p.rapidapi.com/mcenter/v1/${m[i].matchId}/comm`,
           headers: {
-            "X-RapidAPI-Key":
-              "29c032b76emsh6616803b28338c2p19f6c1jsn8c7ad47ac806",
+            "X-RapidAPI-Key": keys,
             "X-RapidAPI-Host": "cricbuzz-cricket.p.rapidapi.com",
           },
         };

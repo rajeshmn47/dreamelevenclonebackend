@@ -89,13 +89,15 @@ module.exports.addLivematchtodb = async function () {
     } else {
       const keys = await getkeys.getkeys();
       const date1 = matches[i].date;
+      let user = await User.findById("646c70679da9df38e6273a43");
+      user.totalhits = user.totalhits + 1;
+      await user.save();
       const options = {
         method: "GET",
         url: `https://cricbuzz-cricket.p.rapidapi.com/mcenter/v1/${match.matchId}/scard`,
         headers: {
           "x-rapidapi-host": "cricbuzz-cricket.p.rapidapi.com",
-          "X-RapidAPI-Key":
-            "77cac70752msh1ce13ec8cd5c240p1160fbjsn5e68d56cf5a5",
+          "X-RapidAPI-Key": keys,
           useQueryString: true,
         },
       };
