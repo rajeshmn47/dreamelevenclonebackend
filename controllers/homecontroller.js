@@ -160,7 +160,7 @@ router.get("/home/:userid", async (req, res) => {
     let contests = [];
     let teams = [];
     if (matt) {
-      if (matt.result == "No" || !matt.result) {
+      if (matt.result == "In Progress" || !matt.result) {
         if (matt.status) {
           mat.livestatus = matt.status;
         }
