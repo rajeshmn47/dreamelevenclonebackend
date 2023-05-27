@@ -76,7 +76,7 @@ module.exports.addLivecommentary = async function addcommentry() {
         };
         try {
           const response = await axios.request(options);
-          if (response?.data?.commentaryList.length > 0) {
+          if (response?.data?.commentaryList?.length > 0) {
             const a = response?.data?.commentaryList[0];
             const matchdata = response.data.matchHeader;
             const { miniscore } = response.data;
