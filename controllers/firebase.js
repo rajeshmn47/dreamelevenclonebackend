@@ -41,7 +41,7 @@ module.exports.addLivecommentary = async function addcommentry() {
   try {
     console.log("rajesh");
     let date = new Date();
-    const matchess = [];
+    let matchess = [];
     const endDate = new Date(date.getTime());
     date = new Date(date.getTime() - 10 * 60 * 60 * 1000);
     const matches = await Matches.find({
@@ -53,11 +53,12 @@ module.exports.addLivecommentary = async function addcommentry() {
     for (let i = 0; i < matches.length; i++) {
       const matchid = matches[i].matchId;
       const match = await MatchLiveDetails.findOne({ matchId: matchid });
-      if (match && !match.result == "Complete") {
+      if (match && !(match.result == "Complete")) {
         matchess.push(matches[i]);
       }
     }
     const m = matchess;
+    console.log(matchess, "lafdda");
     for (let i = 0; i < matchess.length; i++) {
       if (m[i].matchId.length > 3) {
         const keys = await getkeys.getkeys();
@@ -75,33 +76,34 @@ module.exports.addLivecommentary = async function addcommentry() {
         };
         try {
           const response = await axios.request(options);
-          console.log(response.data.commentaryList[0], "commentary");
-          const a = response.data.commentaryList[0];
-          const matchdata = response.data.matchHeader;
-          const { miniscore } = response.data;
-          const cityRef = db.collection("cities").doc(m[i].matchId);
-          const doc = await cityRef.get();
-          if (!doc.exists) {
-            console.log("No such document!");
-            const citRef = db.collection("cities").doc(m[i].matchId);
-            const res = await citRef.set(
-              {
-                capital: [a],
-                livedata: matchdata,
-                miniscore,
-              },
-              { merge: true }
-            );
-          } else {
-            const citRef = db.collection("cities").doc(m[i].matchId);
-            const res = await citRef.set(
-              {
-                capital: [...doc.data().capital, a],
-                livedata: matchdata,
-                miniscore,
-              },
-              { merge: true }
-            );
+          if (response?.data?.commentaryList.length > 0) {
+            const a = response?.data?.commentaryList[0];
+            const matchdata = response.data.matchHeader;
+            const { miniscore } = response.data;
+            const cityRef = db.collection("cities").doc(m[i].matchId);
+            const doc = await cityRef.get();
+            if (!doc.exists) {
+              console.log("No such document!");
+              const citRef = db.collection("cities").doc(m[i].matchId);
+              const res = await citRef.set(
+                {
+                  capital: [a],
+                  livedata: matchdata,
+                  miniscore,
+                },
+                { merge: true }
+              );
+            } else {
+              const citRef = db.collection("cities").doc(m[i].matchId);
+              const res = await citRef.set(
+                {
+                  capital: [...doc.data().capital, a],
+                  livedata: matchdata,
+                  miniscore,
+                },
+                { merge: true }
+              );
+            }
           }
         } catch (error) {
           console.error(error);

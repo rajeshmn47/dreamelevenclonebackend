@@ -70,9 +70,9 @@ function pointCalculator(
 }
 module.exports.addLivematchtodb = async function () {
   let date = new Date();
-  const endDate = new Date(date.getTime() - 10 * 60 * 60 * 1000 * 1);
+  const endDate = new Date(date.getTime());
   console.log(endDate.getHours(), endDate.getMinutes(), "gettimelive");
-  const b = 16 * 60 * 60 * 1000 * 1;
+  const b = 10 * 60 * 60 * 1000 * 1;
   date = new Date(date.getTime() - b);
   const matches = await Match.find({
     date: {
@@ -146,7 +146,7 @@ module.exports.addLivematchtodb = async function () {
               title_fi = s.scoreCard[0].batTeamDetails.batTeamName;
               overs_fi = s.scoreCard[0].scoreDetails.overs;
               runs_fi = s.scoreCard[0].scoreDetails.runs;
-              wickets_fi = s.scoreCard[0].scoreDetails.overs;
+              wickets_fi = s.scoreCard[0].scoreDetails.wickets;
               fow_fi = s.scoreCard[0].scoreDetails.wickets;
               extrasDetails_fi = s.scoreCard[0].extrasData.total;
             }
