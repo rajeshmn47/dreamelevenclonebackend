@@ -226,7 +226,7 @@ router.get("/completed/:userid", async (req, res) => {
   const matches = await Matches.find();
   for (let i = 0; i < matches.length; i++) {
     if (user.matchIds.includes(matches[i].matchId)) {
-      console.log(matches[i].matchId,'matchid');
+      console.log(matches[i].matchId, "matchid");
       teamAwayFlagUrl = flagURLs.findFlagUrlByCountryName(
         matches[i].teamAwayName
       );

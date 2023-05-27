@@ -42,8 +42,8 @@ module.exports.addLivecommentary = async function addcommentry() {
     console.log("rajesh");
     let date = new Date();
     const matchess = [];
-    const endDate = new Date(date.getTime() + 1 * 60 * 60 * 1000);
-    date = new Date(date.getTime() - 60 * 60 * 60 * 1000);
+    const endDate = new Date(date.getTime());
+    date = new Date(date.getTime() - 10 * 60 * 60 * 1000);
     const matches = await Matches.find({
       date: {
         $gte: new Date(date),
@@ -53,7 +53,9 @@ module.exports.addLivecommentary = async function addcommentry() {
     for (let i = 0; i < matches.length; i++) {
       const matchid = matches[i].matchId;
       const match = await MatchLiveDetails.findOne({ matchId: matchid });
-      matchess.push(matches[i]);
+      if (match && !match.result == "Complete") {
+        matchess.push(matches[i]);
+      }
     }
     const m = matchess;
     for (let i = 0; i < matchess.length; i++) {

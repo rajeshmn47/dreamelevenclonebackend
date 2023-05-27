@@ -125,6 +125,11 @@ const matcheSchema = new mongoose.Schema(
       type: Date,
       required: true,
     },
+    enddate: {
+      type: Date,
+      required: true,
+      default: Date.now(),
+    },
 
     matchTitle: {
       type: String,
