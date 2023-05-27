@@ -70,9 +70,9 @@ function pointCalculator(
 }
 module.exports.addLivematchtodb = async function () {
   let date = new Date();
-  const endDate = new Date(date.getTime());
+  const endDate = new Date(date.getTime()-10 * 60 * 60 * 1000 * 1);
   console.log(endDate.getHours(), endDate.getMinutes(), "gettimelive");
-  const b = 30 * 60 * 60 * 1000 * 1;
+  const b = 16 * 60 * 60 * 1000 * 1;
   date = new Date(date.getTime() - b);
   const matches = await Match.find({
     date: {
@@ -81,12 +81,13 @@ module.exports.addLivematchtodb = async function () {
     },
   });
   for (let i = 0; i < matches.length; i++) {
-    const { matchId } = matches[i];
+    const matchId  = matches[i].matchId;
     const match = await MatchLive.findOne({ matchId });
     const matid = await Match.findOne({ matchId });
     if (!match) {
       console.log("matchnotexists");
     } else {
+      console.log(matchId,'matchId');
       const keys = await getkeys.getkeys();
       const date1 = matches[i].date;
       let user = await User.findById("646c70679da9df38e6273a43");
@@ -94,7 +95,7 @@ module.exports.addLivematchtodb = async function () {
       await user.save();
       const options = {
         method: "GET",
-        url: `https://cricbuzz-cricket.p.rapidapi.com/mcenter/v1/${match.matchId}/scard`,
+        url: `https://cricbuzz-cricket.p.rapidapi.com/mcenter/v1/${matchId}/scard`,
         headers: {
           "x-rapidapi-host": "cricbuzz-cricket.p.rapidapi.com",
           "X-RapidAPI-Key": keys,

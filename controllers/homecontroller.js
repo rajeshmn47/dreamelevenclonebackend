@@ -211,7 +211,6 @@ router.get("/home/:userid", async (req, res) => {
 router.get("/completed/:userid", async (req, res) => {
   const notAllowed = ["", false, null, 0, undefined, NaN];
   const user = await User.findOne({ _id: req.params.userid });
-  console.log(user, "ids", req.params.userid);
   const stime = new Date().getSeconds();
   const completedMatches = {
     results: [],
@@ -227,6 +226,7 @@ router.get("/completed/:userid", async (req, res) => {
   const matches = await Matches.find();
   for (let i = 0; i < matches.length; i++) {
     if (user.matchIds.includes(matches[i].matchId)) {
+      console.log(matches[i].matchId,'matchid');
       teamAwayFlagUrl = flagURLs.findFlagUrlByCountryName(
         matches[i].teamAwayName
       );
@@ -263,13 +263,12 @@ router.get("/completed/:userid", async (req, res) => {
         teamHomeFlagUrl,
         teamAwayFlagUrl,
       };
-
       liveStatus = "Line-ups are not out yet!";
       mat.livestatus = liveStatus;
       const matt = await LiveMatches.findOne({ matchId: matches[i].matchId });
       let contests = [];
       let teams = [];
-      if (matt && matt.inPlay == "Yes") {
+      if (matt && matt.inPlay == "Complete") {
         mat.result = "No";
         if (req.params.userid) {
           contests = await Contest.find({
@@ -288,7 +287,7 @@ router.get("/completed/:userid", async (req, res) => {
           liveMatches.results.push(mat);
         }
       }
-      if (req.params.userid && matt?.result == "Yes") {
+      if (req.params.userid && matt?.result == "Complete") {
         mat.result = "Yes";
         contests = await Contest.find({
           userIds: req.params.userid,
@@ -337,6 +336,7 @@ router.get("/completed/:userid", async (req, res) => {
                 }
               }
             }
+            console.log(matches[i].matchId, "totlal time");
             arr = arr.sort((a, b) => b?.points - a?.points);
             for (let x = 0; x < arr.length; x++) {
               const user = await User.findById(arr[x].userId);
@@ -356,7 +356,6 @@ router.get("/completed/:userid", async (req, res) => {
     }
   }
   const etime = new Date().getSeconds();
-  console.log(etime - stime, "totlal time");
   res.status(200).json({
     completed: completedMatches,
   });

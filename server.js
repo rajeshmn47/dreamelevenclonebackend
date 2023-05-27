@@ -21,7 +21,7 @@ const transaction = require("./controllers/transaction");
 const payments = require("./controllers/payment");
 const teamstandingsA = require("./controllers/updatestandings");
 const updatedata = require("./controllers/updatedata");
-const getkeys = require("./apikeys");
+const getkeys = require("./crickeys");
 // Environment variables
 /* Requiring body-parser package
 to fetch the data that is entered
@@ -69,7 +69,7 @@ console.log(date.getHours(), "hours");
 // transaction.startTransaction();
 async function gettingkeys() {
   const data = await getkeys.getkeys();
-  console.log(data);
+  console.log(data,'keys');
 }
 gettingkeys();
 const PORT = process.env.PORT || 8000;
