@@ -1,6 +1,6 @@
 const request = require("request");
 const axios = require("axios");
-const Match = require("../models/matchtwo");
+const Match = require("../models/match");
 const User = require("../models/user");
 const getkeys = require("../crickeys");
 // function prizeBreakupRules(prize, numWinners){

@@ -2,7 +2,7 @@ const request = require("request");
 const Team = require("../models/team");
 const Contest = require("../models/contest");
 const User = require("../models/user");
-const MatchLiveDetails = require("../models/match_live_details_scores_copy");
+const MatchLiveDetails = require("../models/matchlive");
 const getkeys = require("../crickeys");
 // function prizeBreakupRules(prize, numWinners){
 //     let prizeMoneyBreakup = [];

@@ -1,5 +1,5 @@
 const request = require("request");
-const Match = require("../models/matchtwo");
+const Match = require("../models/match");
 const Contest = require("../models/contest");
 const User = require("../models/user");
 const getkeys = require("../crickeys");
