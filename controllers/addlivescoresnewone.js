@@ -27,8 +27,8 @@ async function getplayerImage(name) {
 module.exports.addLivematchtodb = async function () {
   const turing = await MatchLive();
   let date = new Date();
-  const endDate = new Date(date.getTime()- 10 * 60 * 60 * 1000);
-  date = new Date(date.getTime() - 20 * 60 * 60 * 1000);
+  const endDate = new Date(date.getTime()+0.5 * 60 * 60 * 1000);
+  date = new Date(date.getTime());
   const matches = await Match.find({
     date: {
       $gte: new Date(date),
