@@ -22,11 +22,16 @@ async function getplayerImage(name) {
 
 module.exports.addPlayers = async function () {
   let date = new Date();
-  const endDate = new Date(date.getMonth() - 3);
+  const endDate = new Date(date.getTime() + 72 * 60 * 60 * 1000);
   let keys = await getkeys.getkeys();
   date = new Date(date.getTime());
-  const matches = await Match.find();
-  for (let i = 0; i < 12; i++) {
+  const matches = await Match.find({
+    date: {
+      $gte: new Date(date),
+      $lt: new Date(endDate),
+    },
+  });
+  for (let i = 0; i < matches.length; i++) {
     console.log(matches[i].teamHomeId);
 
     const options = {

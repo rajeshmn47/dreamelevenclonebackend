@@ -28,6 +28,16 @@ router.get("/getplayers/:id", async (req, res) => {
   }
 });
 
+router.get("/getplayersom/:id", async (req, res) => {
+  // const matchdetails = await MatchLiveDetails.findOne({ matchId: req.params.id });
+  const matchdetails = await Matches.findOne({ matchId: req.params.id });
+  res.status(200).json({
+    players: matchdetails,
+    matchdetails,
+    live: false,
+  });
+});
+
 router.get("/getteam/:homename/:awayname", async (req, res) => {
   console.log(req.params, "params");
   const allmatches = await LiveMatches.find();

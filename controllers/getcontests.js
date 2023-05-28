@@ -129,8 +129,9 @@ router.get("/joincontest/:id", async (req, res) => {
       contest,
     });
   } else {
-    res.status(200).json({
-      contest,
+    res.status(400).json({
+      message: "can't join contest due to insufficient balance",
+      success: false,
     });
   }
 });

@@ -91,8 +91,9 @@ const matcheSchema = new mongoose.Schema(
         playerId: {
           type: String,
           trim: true,
-          required: true,
+          required: false,
           lowercase: true,
+          default: 1,
         },
         playerName: {
           type: String,
