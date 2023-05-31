@@ -62,7 +62,6 @@ module.exports.addLivematchtodb = async function () {
             reject(error);
           }
           const s = JSON.parse(body);
-
           resolve(s);
         });
       });

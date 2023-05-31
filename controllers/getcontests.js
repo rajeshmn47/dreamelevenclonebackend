@@ -88,26 +88,24 @@ router.get("/getjoinedcontest/:id", async (req, res) => {
         arr.push(team);
       }
     }
-
+    let teamsarray = [];
     arr = arr.sort((a, b) => b?.points - a?.points);
     for (let x = 0; x < arr.length; x++) {
       console.log(x, "xyz");
       const user = await User.findById(arr[x].userId);
       if (arr[x].userId == req.query.userid) {
-        contestsArray.push({
-          contests: contests[i],
-          team: {
-            ...arr[x]._doc,
-            rank: x + 1,
-            won: contests[i]?.prizeDetails[x + 1]?.prize
-              ? contests[i]?.prizeDetails[x + 1]?.prize
-              : 0,
-            username: user.username,
-            teamnumber: x + 1,
-          },
+        teamsarray.push({
+          ...arr[x]._doc,
+          rank: x + 1,
+          won: contests[i]?.prizeDetails[x + 1]?.prize
+            ? contests[i]?.prizeDetails[x + 1]?.prize
+            : 0,
+          username: user.username,
+          teamnumber: x + 1,
         });
       }
     }
+    contestsArray.push({ contest: contests[i], teams: teamsarray });
   }
   res.status(200).json({
     contests: contestsArray,
