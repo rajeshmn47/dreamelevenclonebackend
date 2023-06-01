@@ -39,7 +39,7 @@ module.exports.addLivematchtodb = async function () {
   for (let i = 0; i < matches.length; i++) {
     const matchId = matches[i].matchId;
     const match = await MatchLive.findOne({ matchId });
-    if (!match) {
+    if (match) {
     } else {
       let user = await User.findById("646c70679da9df38e6273a43");
       user.totalhits = user.totalhits + 1;
