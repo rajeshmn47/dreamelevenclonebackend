@@ -13,7 +13,7 @@ const MatchLiveDetails = require("../models/matchlive");
 const Matches = require("../models/match");
 const User = require("../models/user");
 const getkeys = require("../crickeys");
-const { checkballexists } = require("../utils/checksame");
+const checkballexists = require("../utils/checksame");
 
 const serviceAccount = {
   type: "service_account",
@@ -95,7 +95,7 @@ module.exports.addLivecommentary = async function addcommentry() {
               );
             } else {
               const citRef = db.collection("cities").doc(m[i].matchId);
-              if (!checkballexists(doc.data().capital, a)) {
+              if (!checkballexists.checklastballexists(doc.data().capital, a)) {
                 const res = await citRef.set(
                   {
                     capital: [...doc.data().capital, a],
