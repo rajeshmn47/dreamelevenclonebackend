@@ -6,7 +6,7 @@ const MatchLive = require("../models/matchlive");
 const User = require("../models/user");
 const Player = require("../models/players");
 const getkeys = require("../crickeys");
-
+const db=require("./firebaseinitialize")
 // function prizeBreakupRules(prize, numWinners){
 //     let prizeMoneyBreakup = [];
 //     for(let i = 0; i < numWinners; i++){
@@ -111,6 +111,30 @@ module.exports.addLivematchtodb = async function () {
               console.log(LiveMatchDet, "i");
               const match = await MatchLive.create(LiveMatchDet);
               if (match) {
+                const cityRef = db.collection("cities").doc(m[i].matchId);
+              const doc = await cityRef.get();
+              if (!doc.exists) {
+                console.log("No such document!");
+                const citRef = db.collection("cities").doc(m[i].matchId);
+                const res = await citRef.set(
+                  {
+                    lineupsOut: true,
+                  },
+                  { merge: true }
+                );
+              } else {
+                const citRef = db.collection("cities").doc(m[i].matchId);
+                if (
+                  !checkballexists.checklastballexists(doc.data().capital, a)
+                ) {
+                  const res = await citRef.set(
+                    {
+                      lineupsOut: true,
+                    },
+                    { merge: true }
+                  );
+                }
+              }
                 console.log(
                   "Live Details of match is successfully added in db! "
                 );

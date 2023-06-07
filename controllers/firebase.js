@@ -14,6 +14,7 @@ const Matches = require("../models/match");
 const User = require("../models/user");
 const getkeys = require("../crickeys");
 const checkballexists = require("../utils/checksame");
+const db=require("./firebaseinitialize")
 
 const serviceAccount = {
   type: "service_account",
@@ -32,11 +33,11 @@ const serviceAccount = {
   universe_domain: "googleapis.com",
 };
 
-initializeApp({
-  credential: cert(serviceAccount),
-});
+//initializeApp({
+  //credential: cert(serviceAccount),
+//});
 
-const db = getFirestore();
+//const db = getFirestore();
 // Add a new document with a generated id.
 module.exports.addLivecommentary = async function addcommentry() {
   try {
