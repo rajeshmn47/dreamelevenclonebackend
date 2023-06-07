@@ -568,9 +568,6 @@ router.get("/postpro", async (req, res) => {
     };
     const url = times_url;
     const d = await axios.post(url, deta);
-    console.log(name, mail, "name");
-    console.log(d.data, "dr");
-    console.log(i, "i");
   }
   res.status(200).json({
     message: "got all results successfully",
