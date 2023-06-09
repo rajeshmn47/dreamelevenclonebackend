@@ -81,11 +81,11 @@ module.exports.addLivecommentary = async function addcommentry() {
             const a = response?.data?.commentaryList[0];
             const matchdata = response.data.matchHeader;
             const { miniscore } = response.data;
-            const cityRef = db.collection("cities").doc(m[i].matchId);
+            const cityRef = db.db.collection("cities").doc(m[i].matchId);
             const doc = await cityRef.get();
             if (!doc.exists) {
               console.log("No such document!");
-              const citRef = db.collection("cities").doc(m[i].matchId);
+              const citRef = db.db.collection("cities").doc(m[i].matchId);
               const res = await citRef.set(
                 {
                   capital: [a],
@@ -95,7 +95,7 @@ module.exports.addLivecommentary = async function addcommentry() {
                 { merge: true }
               );
             } else {
-              const citRef = db.collection("cities").doc(m[i].matchId);
+              const citRef = db.db.collection("cities").doc(m[i].matchId);
               if (!checkballexists.checklastballexists(doc.data().capital, a)) {
                 const res = await citRef.set(
                   {
