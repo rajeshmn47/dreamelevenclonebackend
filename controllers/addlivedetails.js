@@ -7,6 +7,7 @@ const User = require("../models/user");
 const Player = require("../models/players");
 const getkeys = require("../crickeys");
 const db = require("./firebaseinitialize");
+const  addMatchIds= require("./addMatchIds");
 // function prizeBreakupRules(prize, numWinners){
 //     let prizeMoneyBreakup = [];
 //     for(let i = 0; i < numWinners; i++){
@@ -111,6 +112,7 @@ module.exports.addLivematchtodb = async function () {
               console.log(LiveMatchDet, "i");
               const match = await MatchLive.create(LiveMatchDet);
               if (match) {
+                await addMatchIds.addMatchIds()
                 const cityRef = db.db.collection("cities").doc(m[i].matchId);
                 const doc = await cityRef.get();
                 if (!doc.exists) {
