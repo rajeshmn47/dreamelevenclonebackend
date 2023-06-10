@@ -14,7 +14,7 @@ const Matches = require("../models/match");
 const User = require("../models/user");
 const getkeys = require("../crickeys");
 const checkballexists = require("../utils/checksame");
-const db=require("./firebaseinitialize")
+const db = require("./firebaseinitialize");
 
 const serviceAccount = {
   type: "service_account",
@@ -34,7 +34,7 @@ const serviceAccount = {
 };
 
 //initializeApp({
-  //credential: cert(serviceAccount),
+//credential: cert(serviceAccount),
 //});
 
 //const db = getFirestore();
