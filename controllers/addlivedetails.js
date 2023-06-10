@@ -124,16 +124,13 @@ module.exports.addLivematchtodb = async function () {
                   );
                 } else {
                   const citRef = db.db.collection("cities").doc(m[i].matchId);
-                  if (
-                    !checkballexists.checklastballexists(doc.data().capital, a)
-                  ) {
+                
                     const res = await citRef.set(
                       {
                         lineupsOut: true,
                       },
                       { merge: true }
                     );
-                  }
                 }
                 console.log(
                   "Live Details of match is successfully added in db! "
