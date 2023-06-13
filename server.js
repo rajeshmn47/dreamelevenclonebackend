@@ -37,11 +37,9 @@ app.use("/", team);
 app.use("/", updatedata);
 app.use("/payment", payments);
 app.use("/auth", auth);
-const uri =
-  "mongodb+srv://rajeshmn47:uni1ver%40se@cluster0.bpxam.mongodb.net/mydreamDatabaseSecondnavya?retryWrites=true&w=majority";
 mongoose.Promise = global.Promise;
 mongoose.connect(
-  uri,
+  process.env.uri,
   { useNewUrlParser: true, useUnifiedTopology: true },
   (error) => {
     if (error) {
