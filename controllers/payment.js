@@ -14,8 +14,8 @@ const User = require("../models/user");
 dotenv.config();
 
 const instance = new Razorpay({
-  key_id: process.env.RAZOR_PAY_KEY_ID,
-  key_secret: process.env.RAZOR_PAY_KEY_SECRET,
+  key_id:'rzp_test_3FLuLisPuowtZP',
+  key_secret:'paGWw3r0v1ty8K3U9YDxOu8f',
 });
 
 router.get("/createpayment/:amount", (req, res) => {
