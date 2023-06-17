@@ -37,13 +37,14 @@ router.post("/saveteam/:id", async (req, res) => {
     points: 44,
   });
   const teams = await Team.find({
-    $and: [{ matchId: req.body.matchId }, { userId:req.body.userid}],
+    $and: [{ matchId: req.body.matchId }, { userId: req.body.userid }],
   });
   const user = await User.findOne({ _id: req.body.userid });
-  console.log(teams.length,teams[0],'team')
-  if (!(user.matchIds.includes(req.body.matchId))) {
-    user.matchIds.push(req.body.matchId)
-    await user.save()
+  user.numberOfTeamsCreated = user.numberOfTeamsCreated + 1;
+  console.log(teams.length, teams[0], "team");
+  if (!user.matchIds.includes(req.body.matchId)) {
+    user.matchIds.push(req.body.matchId);
+    await user.save();
   }
   res.status(200).json({
     team,

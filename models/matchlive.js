@@ -122,7 +122,7 @@ const matchDetailsThirdSchema = new mongoose.Schema(
           trim: true,
           required: false,
           lowercase: true,
-          default:""
+          default: "",
         },
 
         batOrder: {
@@ -228,7 +228,7 @@ const matchDetailsThirdSchema = new mongoose.Schema(
           trim: true,
           required: false,
           lowercase: true,
-          default:""
+          default: "",
         },
 
         batOrder: {
