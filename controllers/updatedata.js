@@ -107,7 +107,7 @@ router.get("/addmatchtodb", async (req, res) => {
     await matches.addMatchtoDb();
     await addingteam.addPlayers();
     res.status(200).json({
-      message: "user already exists",
+      message: "added matches successfully",
       success: false,
     });
   } catch (err) {
@@ -123,8 +123,8 @@ router.get("/addmatchids", async (req, res) => {
   try {
     await addIds.addMatchIds();
     res.status(200).json({
-      message: "user already exists",
-      success: false,
+      message: "matches added successfully",
+      success: true,
     });
   } catch (err) {
     console.log(`Error : ${err}`);
@@ -139,8 +139,8 @@ router.get("/addlivecommentary", async (req, res) => {
   try {
     await addLiveCommentary.addLivecommentary();
     res.status(200).json({
-      message: "user already exists",
-      success: false,
+      message: "added successfully",
+      success: true,
     });
   } catch (err) {
     console.log(`Error : ${err}`);
@@ -155,8 +155,8 @@ router.get("/addteams", async (req, res) => {
   try {
     await addingteam.addPlayers();
     res.status(200).json({
-      message: "user already exists",
-      success: false,
+      message: "saved successfully",
+      success: true,
     });
   } catch (err) {
     console.log(`Error : ${err}`);

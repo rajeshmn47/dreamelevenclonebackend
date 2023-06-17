@@ -69,7 +69,7 @@ async function gettingkeys() {
   const data = await getkeys.getkeys();
   console.log(data, "keys");
 }
-gettingkeys();
+//gettingkeys();
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
   console.warn(`App listening on http://localhost:${PORT}`);

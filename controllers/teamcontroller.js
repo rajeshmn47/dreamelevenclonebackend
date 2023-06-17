@@ -4,6 +4,7 @@ const express = require("express");
 const Players = require("../models/players");
 const Contest = require("../models/contest");
 const Team = require("../models/team");
+const User = require("../models/user");
 
 const router = express.Router();
 
@@ -35,7 +36,15 @@ router.post("/saveteam/:id", async (req, res) => {
     players,
     points: 44,
   });
-
+  const teams = await Team.find({
+    $and: [{ matchId: req.body.matchId }, { userId:req.body.userid}],
+  });
+  const user = await User.findOne({ _id: req.body.userid });
+  console.log(teams.length,teams[0],'team')
+  if (!(user.matchIds.includes(req.body.matchId))) {
+    user.matchIds.push(req.body.matchId)
+    await user.save()
+  }
   res.status(200).json({
     team,
     message: "team created successfully",
