@@ -974,7 +974,6 @@ router.get("/livematches", async (req, res) => {
   });
 });
 
-
 router.get("/todaymatches", async (req, res) => {
   console.log(req.query, "ok");
   const date = new Date();
@@ -983,9 +982,7 @@ router.get("/todaymatches", async (req, res) => {
   date.setDate(date.getDate() + 1);
   const endDate = date.toISOString();
   const matches = await Match.find({
-    date: {   $gte: new Date(startDate),
-      $lt: new Date(endDate),
-    },
+    date: { $gte: new Date(startDate), $lt: new Date(endDate) },
   });
   res.status(200).json({
     message: "teams got successfully",

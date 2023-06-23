@@ -81,9 +81,7 @@ router.get("/gettodayteams", async (req, res) => {
   date.setDate(date.getDate() + 1);
   const endDate = date.toISOString();
   const teams = await Team.find({
-    createdAt: {   $gte: new Date(startDate),
-      $lt: new Date(endDate),
-    },
+    createdAt: { $gte: new Date(startDate), $lt: new Date(endDate) },
   });
   res.status(200).json({
     message: "teams got successfully",
