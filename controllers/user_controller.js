@@ -455,22 +455,22 @@ router.post("/changepassword", async (req, res) => {
 });
 
 router.get("/getuser/:id", async (req, res) => {
-  console.log('getuser')
+  console.log("getuser");
   const user = await User.findOne({ _id: req.params.id });
-    if (user) {
-      console.log("contact",user);
-      res.status(200).json({
-        user: user,
-        success: true,
-      });
-    } else {
-      console.log("Error: could not save contact ");
-      res.status(200).json({
-        message: "could not change password",
-        success: false,
-      });
-    }
-  });
+  if (user) {
+    console.log("contact", user);
+    res.status(200).json({
+      user: user,
+      success: true,
+    });
+  } else {
+    console.log("Error: could not save contact ");
+    res.status(200).json({
+      message: "could not change password",
+      success: false,
+    });
+  }
+});
 
 router.get("/loaduser", checkloggedinuser, async (req, res) => {
   const user = await User.findOne({ _id: { $eq: req.body.uidfromtoken } });

@@ -144,6 +144,10 @@ module.exports.addPlayers = async function () {
     } catch (error) {
       console.error(error);
     }
-    await matches[i].save();
+    try {
+      await matches[i].save();
+    } catch (error) {
+      console.error(error);
+    }
   }
 };

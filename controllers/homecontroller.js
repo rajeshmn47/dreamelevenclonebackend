@@ -18,6 +18,7 @@ const Team = require("../models/team");
 const User = require("../models/user");
 const Contest = require("../models/contest");
 const Player = require("../models/players");
+const getflags = require("../utils/getflags");
 
 router.get("/hme/:userid", async (req, res) => {
   const stime = new Date().getSeconds();
@@ -741,12 +742,10 @@ router.get("/home/:userid", async (req, res) => {
         match.teamAwayName
       );
       if (!teamAwayFlagUrl) {
-        teamAwayFlagUrl =
-          "https://i.pinimg.com/originals/1b/56/5b/1b565bb93bbc6968be498ccb00504e8f.jpg";
+        teamAwayFlagUrl = getflags.getflag(match.teamAwayName);
       }
       if (!teamHomeFlagUrl) {
-        teamHomeFlagUrl =
-          "https://i.pinimg.com/originals/1b/56/5b/1b565bb93bbc6968be498ccb00504e8f.jpg";
+        teamHomeFlagUrl = getflags.getflag(match.teamHomeName);
       }
       const mat = {
         match_title: match.matchTitle,
@@ -805,12 +804,10 @@ router.get("/home/:userid", async (req, res) => {
       matches[i].teamHomeName
     );
     if (!teamAwayFlagUrl) {
-      teamAwayFlagUrl =
-        "https://i.pinimg.com/originals/1b/56/5b/1b565bb93bbc6968be498ccb00504e8f.jpg";
+      teamAwayFlagUrl = getflags.getflag(matches[i].teamAwayName);
     }
     if (!teamHomeFlagUrl) {
-      teamHomeFlagUrl =
-        "https://i.pinimg.com/originals/1b/56/5b/1b565bb93bbc6968be498ccb00504e8f.jpg";
+      teamHomeFlagUrl = getflags.getflag(matches[i].teamHomeName);
     }
     const match = matches[i];
     const mat = {
@@ -911,12 +908,10 @@ router.get("/home", async (req, res) => {
       matches[i].teamHomeName
     );
     if (!teamAwayFlagUrl) {
-      teamAwayFlagUrl =
-        "https://i.pinimg.com/originals/1b/56/5b/1b565bb93bbc6968be498ccb00504e8f.jpg";
+      teamAwayFlagUrl = getflags.getflag(matches[i].teamAwayName);
     }
     if (!teamHomeFlagUrl) {
-      teamHomeFlagUrl =
-        "https://i.pinimg.com/originals/1b/56/5b/1b565bb93bbc6968be498ccb00504e8f.jpg";
+      teamHomeFlagUrl = getflags.getflag(matches[i].teamHomeName);
     }
     const match = matches[i];
     const mat = {
