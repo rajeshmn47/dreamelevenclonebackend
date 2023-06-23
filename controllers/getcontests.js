@@ -23,6 +23,13 @@ router.get("/getcontests/:id", async (req, res) => {
   });
 });
 
+router.get("/getallcontests", async (req, res) => {
+  const contests = await Contest.find();
+  res.status(200).json({
+    contests,
+  });
+});
+
 router.get("/getcontest/:id", async (req, res) => {
   const contest = await Contest.findOne({ _id: req.params.id });
   res.status(200).json({

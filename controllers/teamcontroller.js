@@ -64,6 +64,15 @@ router.get("/getteam", async (req, res) => {
   });
 });
 
+router.get("/getallteams", async (req, res) => {
+  console.log(req.query, "ok");
+  const teams = await Team.find();
+  res.status(200).json({
+    message: "teams got successfully",
+    teams,
+  });
+});
+
 router.get("/getteam/:id", async (req, res) => {
   const team = await Team.findById(req.params.id);
   res.status(200).json({
