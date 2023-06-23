@@ -472,6 +472,38 @@ router.get("/getuser/:id", async (req, res) => {
   }
 });
 
+router.get("/gettodayusers", async (req, res) => {
+  console.log(req.query, "ok");
+  const date = new Date();
+  date.setDate(date.getDate() - 1);
+  const startDate = date.toISOString();
+  date.setDate(date.getDate() + 1);
+  const endDate = date.toISOString();
+  const users = await User.find({
+    createdAt: {   $gte: new Date(startDate),
+      $lt: new Date(endDate),
+    },
+  });
+  res.status(200).json({
+    message: "teams got successfully",
+    users,
+  });
+});
+
+router.get("/getallusers", async (req, res) => {
+  console.log(req.query, "ok");
+  const date = new Date();
+  date.setDate(date.getDate() - 1);
+  const startDate = date.toISOString();
+  date.setDate(date.getDate() + 1);
+  const endDate = date.toISOString();
+  const users = await User.find();
+  res.status(200).json({
+    message: "teams got successfully",
+    users,
+  });
+});
+
 router.get("/loaduser", checkloggedinuser, async (req, res) => {
   const user = await User.findOne({ _id: { $eq: req.body.uidfromtoken } });
   res.status(200).json({
