@@ -110,7 +110,6 @@ router.post("/googlelogin", async (req, res, next) => {
         .then(async () => {
           User.findOne({ email: response.payload.email }, async (err, user) => {
             if (err) {
-              console.log("Error in finding user in Sign-in ");
               res.status(400).json({
                 message: "something went wrong",
               });
@@ -119,17 +118,11 @@ router.post("/googlelogin", async (req, res, next) => {
               transaction.createTransaction(userId, "", 100, "extra cash");
               User.create(user1, async (err, user) => {
                 if (err) {
-                  console.log("rajesh");
-                  console.log(
-                    "Error in creating a user while account activation",
-                    err
-                  );
                   res.status(400).json({
                     message: "something went wrong",
                   });
                 } else {
                   const userid = user._id;
-                  console.log("SignUp successfull!");
                   const token = jwt.sign({ userid }, activatekey, {
                     expiresIn: "500000m",
                   });
@@ -141,7 +134,6 @@ router.post("/googlelogin", async (req, res, next) => {
                 }
               });
             } else {
-              console.log("kuttheee");
               res.status(200).json({
                 message: "user already exists",
                 success: false,
@@ -255,17 +247,11 @@ router.post("/register", async (req, res) => {
           transaction.createTransaction(userId, "", 100, "extra cash");
           User.create(user1, async (err, user) => {
             if (err) {
-              console.log("rajesh");
-              console.log(
-                "Error in creating a user while account activation",
-                err
-              );
               res.status(400).json({
                 message: "something went wrong",
               });
             } else {
               const userid = user._id;
-              console.log("SignUp successfull!");
 
               const token = jwt.sign({ userid }, activatekey, {
                 expiresIn: "5000000m",
@@ -279,7 +265,6 @@ router.post("/register", async (req, res) => {
             }
           });
         } else {
-          console.log("kuttheee");
           res.status(200).json({
             message: "user already exists",
             success: false,
@@ -287,13 +272,11 @@ router.post("/register", async (req, res) => {
         }
       });
     })
-    .catch((err) => {
-      console.log(`Error : ${err}`);
-    });
+    .catch((err) => {});
 });
 router.post("/otp", async (req, res) => {
   const user = await User.findOne({ email: req.body.email });
-  console.log(user.otp, req.body.otp, "otp");
+
   if (parseInt(user.otp) == parseInt(req.body.otp)) {
     user.verified = true;
     const userid = user._id;
@@ -302,13 +285,11 @@ router.post("/otp", async (req, res) => {
     });
     user.save((err) => {
       if (!err) {
-        console.log("contact");
         res.status(200).json({
           message: "ure account created successfully u can login",
           token,
         });
       } else {
-        console.log("Error: could not save contact ");
         res.status(200).json({
           message: "ure account created successfully u can login",
           token,
@@ -325,9 +306,7 @@ router.post("/otp", async (req, res) => {
 router.post("/login", async (req, res) => {
   const user = await User.findOne({ email: req.body.myform.email });
   if (user) {
-    console.log(user, "user");
     if (user.password == req.body.myform.password) {
-      console.log(user, "user");
       const userid = user._id;
       const token = jwt.sign({ userid }, activatekey, {
         expiresIn: "50000000m",
@@ -356,10 +335,10 @@ router.get("/forgot-password/:email", async (req, res) => {
     specialChars: false,
     specialChars: false,
   });
-  console.log(req.params.email, "email");
+
   try {
     const user1 = await User.findOne({ email: req.params.email });
-    console.log(user1, "user1");
+
     if (user1) {
       user1.otp = otp;
       const mailOptions = {
@@ -371,9 +350,7 @@ router.get("/forgot-password/:email", async (req, res) => {
 
       transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
-          console.log(error);
         } else {
-          console.log(`Email sent: ${info.response}`);
         }
       });
       await user1.save();
@@ -387,14 +364,12 @@ router.get("/forgot-password/:email", async (req, res) => {
         success: true,
       });
     } else {
-      console.log("kuttheee");
       res.status(200).json({
         message: "could not send",
         success: false,
       });
     }
   } catch (err) {
-    console.log(`Error : ${err}`);
     res.status(200).json({
       message: "their was some error",
       success: false,
@@ -404,7 +379,6 @@ router.get("/forgot-password/:email", async (req, res) => {
 
 router.post("/forgot-password-otp", async (req, res) => {
   const user = await User.findOne({ email: req.body.email });
-  console.log(user.otp, req.body.otp, "otp");
   if (parseInt(user.otp) == parseInt(req.body.otp)) {
     const userid = user._id;
     const token = jwt.sign({ userid }, activatekey, {
@@ -412,14 +386,12 @@ router.post("/forgot-password-otp", async (req, res) => {
     });
     user.save((err) => {
       if (!err) {
-        console.log("contact");
         res.status(200).json({
           message: "u can change your password",
           token,
           success: true,
         });
       } else {
-        console.log("Error: could not save contact ");
         res.status(200).json({
           message: "found some error",
           success: false,
@@ -435,17 +407,14 @@ router.post("/forgot-password-otp", async (req, res) => {
 
 router.post("/changepassword", async (req, res) => {
   const user = await User.findOne({ email: req.body.email });
-  console.log(user.otp, req.body.otp, "otp");
   user.password = req.body.password;
   user.save((err) => {
     if (!err) {
-      console.log("contact");
       res.status(200).json({
         message: "password changed successfully please login",
         success: true,
       });
     } else {
-      console.log("Error: could not save contact ");
       res.status(200).json({
         message: "could not change password",
         success: false,
@@ -455,16 +424,13 @@ router.post("/changepassword", async (req, res) => {
 });
 
 router.get("/getuser/:id", async (req, res) => {
-  console.log("getuser");
   const user = await User.findOne({ _id: req.params.id });
   if (user) {
-    console.log("contact", user);
     res.status(200).json({
       user: user,
       success: true,
     });
   } else {
-    console.log("Error: could not save contact ");
     res.status(200).json({
       message: "could not change password",
       success: false,
@@ -473,14 +439,12 @@ router.get("/getuser/:id", async (req, res) => {
 });
 
 router.get("/gettodayusers", async (req, res) => {
-  console.log(req.query, "ok");
-  const date = new Date();
-  date.setDate(date.getDate() - 1);
-  const startDate = date.toISOString();
-  date.setDate(date.getDate() + 1);
-  const endDate = date.toISOString();
+  var start = new Date();
+  start.setUTCHours(0, 0, 0, 0);
+  var end = new Date();
+  end.setUTCHours(23, 59, 59, 999);
   const users = await User.find({
-    createdAt: { $gte: new Date(startDate), $lt: new Date(endDate) },
+    createdAt: { $gte: new Date(start), $lt: new Date(end) },
   });
   res.status(200).json({
     message: "teams got successfully",
@@ -489,7 +453,6 @@ router.get("/gettodayusers", async (req, res) => {
 });
 
 router.get("/getallusers", async (req, res) => {
-  console.log(req.query, "ok");
   const date = new Date();
   date.setDate(date.getDate() - 1);
   const startDate = date.toISOString();

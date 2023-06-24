@@ -74,14 +74,12 @@ router.get("/getallteams", async (req, res) => {
 });
 
 router.get("/gettodayteams", async (req, res) => {
-  console.log(req.query, "ok");
-  const date = new Date();
-  date.setDate(date.getDate() - 1);
-  const startDate = date.toISOString();
-  date.setDate(date.getDate() + 1);
-  const endDate = date.toISOString();
+  var start = new Date();
+  start.setUTCHours(0, 0, 0, 0);
+  var end = new Date();
+  end.setUTCHours(23, 59, 59, 999);
   const teams = await Team.find({
-    createdAt: { $gte: new Date(startDate), $lt: new Date(endDate) },
+    createdAt: { $gte: new Date(start), $lt: new Date(end) },
   });
   res.status(200).json({
     message: "teams got successfully",
