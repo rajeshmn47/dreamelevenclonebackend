@@ -772,12 +772,12 @@ router.get("/home/:userid", async (req, res) => {
       mat.livestatus = liveStatus;
       let contests = [];
       const teams = [];
-      if (match_det.result == "Complete") {
+      if (match_det.result == "In Progress") {
         if (match_det.status) {
           mat.livestatus = match_det.status;
         }
         mat.result = "No";
-      } else if (req.params.userid) {
+      } else if (req.params.userid&&match_det.result == "Complete") {
         let teams = allteams.filter(
           (a) => a.matchId == match_det.matchId && a.userId == req.params.userid
         );
@@ -962,7 +962,7 @@ router.get("/livematches", async (req, res) => {
     const matchid = matches[i].matchId;
     const match = await LiveMatches.findOne({ matchId: matchid });
     console.log(match?.result, "match");
-    if (match && !(match?.result == "Yes")) {
+    if (match && !(match?.result == "Complete")) {
       console.log(matches[i].cmtMatchId, "matchid");
       matchess.push(matches[i]);
     }
@@ -997,6 +997,23 @@ router.get("/allmatches", async (req, res) => {
   res.status(200).json({
     message: "teams got successfully",
     matches,
+  });
+});
+router.get("/alllivematches", async (req, res) => {
+  var start = new Date();
+  start.setUTCHours(0, 0, 0, 0);
+  var end = new Date();
+  end.setUTCHours(23, 59, 59, 999);
+  const matches = await LiveMatches.find();
+  let livematches=[]
+  for (let i = 0; i < matches.length; i++) {
+    if (matches[i] && (matches[i]?.result == "In Progress")) {
+      livematches.push(matches[i]);
+    }
+  }
+  res.status(200).json({
+    message: "teams got successfully",
+    livematches,
   });
 });
 
