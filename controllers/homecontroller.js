@@ -775,8 +775,23 @@ router.get("/home/:userid", async (req, res) => {
       if (match_det.result == "In Progress") {
         if (match_det.status) {
           mat.livestatus = match_det.status;
+          mat.lineups = "Lineups Out";
         }
         mat.result = "No";
+        let teams = allteams.filter(
+          (a) => a.matchId == match_det.matchId && a.userId == req.params.userid
+        );
+        let contests = allcontests.filter(
+          (a) =>
+            a.matchId == match_det.matchId &&
+            a.userIds.includes(req.params.userid)
+        );
+
+        if (contests.length > 0 || teams.length > 0) {
+          mat.contests = contests;
+          mat.teams = teams;
+          liveMatches.results.push(mat);
+        }
       } else if (req.params.userid && (match_det.result == "Complete")) {
         let teams = allteams.filter(
           (a) => a.matchId == match_det.matchId && a.userId == req.params.userid
@@ -846,20 +861,6 @@ router.get("/home/:userid", async (req, res) => {
           mat.result = "No";
           mat.lineups = "Lineups Out";
           if (req.params.userid) {
-            let teams = allteams.filter(
-              (a) => a.matchId == matt.matchId && a.userId == req.params.userid
-            );
-            let contests = allcontests.filter(
-              (a) =>
-                a.matchId == matt.matchId &&
-                a.userIds.includes(req.params.userid)
-            );
-
-            if (contests.length > 0 || teams.length > 0) {
-              mat.contests = contests;
-              mat.teams = teams;
-              liveMatches.results.push(mat);
-            }
           }
         }
       } else {
@@ -1005,9 +1006,9 @@ router.get("/alllivematches", async (req, res) => {
   var end = new Date();
   end.setUTCHours(23, 59, 59, 999);
   const matches = await LiveMatches.find();
-  let livematches=[]
+  let livematches = [];
   for (let i = 0; i < matches.length; i++) {
-    if (matches[i] && (matches[i]?.result == "In Progress")) {
+    if (matches[i] && matches[i]?.result == "In Progress") {
       livematches.push(matches[i]);
     }
   }

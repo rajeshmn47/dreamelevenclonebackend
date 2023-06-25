@@ -7,6 +7,7 @@ const { v4: uuidv4 } = require("uuid");
 const Players = require("../models/players");
 const Contest = require("../models/contest");
 const Team = require("../models/team");
+const Transaction = require("../models/transaction");
 
 const router = express.Router();
 const User = require("../models/user");
@@ -68,6 +69,16 @@ router.post("/capture/:paymentId/:amount", (req, res) => {
   }
 });
 
+router.get("/alltransactions", async (req, res) => {
+  try {
+    const transactions = await Transaction.find();
+    return res.status(200).send(transactions);
+  } catch (err) {
+    console.log(err);
+    return res.status(400).send(err);
+  }
+});
+
 router.patch("/addamount", async (req, res) => {
   console.log(req.body);
   try {
@@ -75,11 +86,16 @@ router.patch("/addamount", async (req, res) => {
     const user = await User.findOne({ _id: req.body.id });
     user.wallet += amount;
     await user.save();
+    await Transaction.create({
+      userId: user._id,
+      action: "deposit",
+      amount: amount,
+      transactionId: "id",
+    });
   } catch (err) {
     console.log(err);
     return res.status(400).send(err);
   }
-
   res.status(200).send("OK");
 });
 

@@ -6,6 +6,9 @@ const Team = require("../models/team");
 const MatchLive = require("../models/matchlive");
 const Player = require("../models/players");
 const User = require("../models/user");
+const express = require("express");
+const router = express.Router();
+const Transaction = require("../models/transaction");
 
 // function prizeBreakupRules(prize, numWinners){
 //     let prizeMoneyBreakup = [];
@@ -13,10 +16,6 @@ const User = require("../models/user");
 
 //     }
 // }
-
-function compare(a, b) {
-  return a.date < b.date;
-}
 
 const io = 1;
 async function getplayerImage(name) {
@@ -39,7 +38,8 @@ module.exports.startTransaction = async function () {
   date = new Date(date.getTime() - 24 * 60 * 60 * 1000 * 2);
   const matches = await MatchLive.find();
   for (let i = 0; i < matches.length; i++) {
-    if (matches[i].result == "Yes") {
+    console.log(matches[i].result, "live");
+    if (matches[i].result == "Complete") {
       const contests = await Contest.find({ matchId: matches[i].matchId });
       for (let k = 0; k < contests.length; k++) {
         let teams = [];
@@ -69,3 +69,5 @@ module.exports.startTransaction = async function () {
     }
   }
 };
+
+module.exports = router;

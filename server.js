@@ -35,6 +35,7 @@ app.use("/", contest);
 app.use("/", teamdata);
 app.use("/", team);
 app.use("/", updatedata);
+app.use("/", transaction);
 app.use("/payment", payments);
 app.use("/auth", auth);
 mongoose.Promise = global.Promise;
