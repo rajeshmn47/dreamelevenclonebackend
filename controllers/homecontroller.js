@@ -772,7 +772,7 @@ router.get("/home/:userid", async (req, res) => {
       mat.livestatus = liveStatus;
       let contests = [];
       const teams = [];
-      if (match_det.result == "No") {
+      if (match_det.result == "Complete") {
         if (match_det.status) {
           mat.livestatus = match_det.status;
         }
