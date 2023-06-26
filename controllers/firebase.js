@@ -98,7 +98,7 @@ module.exports.addLivecommentary = async function addcommentry() {
               const citRef = db.db.collection("cities").doc(m[i].matchId);
                 const res = await citRef.set(
                   {
-                    capital: [...doc.data().capital, ...a],
+                    capital: [...a],
                     livedata: matchdata,
                     miniscore,
                   },
