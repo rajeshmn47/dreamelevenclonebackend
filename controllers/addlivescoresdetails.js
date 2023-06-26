@@ -14,37 +14,6 @@ const getkeys = require("../crickeys");
 //     }
 // }
 
-function compare(a, b) {
-  return a.date < b.date;
-}
-
-function compare(a, b) {
-  if (a.name < b.name) {
-    return -1;
-  }
-  if (a.name > b.name) {
-    return 1;
-  }
-  return 0;
-}
-
-const io = 1;
-async function getplayerImage(name) {
-  const k = name.split(" ")[0];
-  const config = {
-    method: "get",
-    url: `https://cricket.sportmonks.com/api/v2.0/players?filter[lastname]=sachin&api_token=
-        fTWhOiGhie6YtMBmpbw10skSjTmSgwHeLg22euC5qLMR1oT1eC6PRc8sEulv`,
-    headers: {},
-  };
-
-  const s = await axios(config).catch((error) => {
-    console.log(error);
-  });
-  const PlayerS = new Player();
-
-  return s.data.data.length > 0 ? s.data.data[0].image_path : "";
-}
 
 function pointCalculator(
   runs,

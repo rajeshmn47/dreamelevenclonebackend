@@ -78,7 +78,7 @@ module.exports.addLivecommentary = async function addcommentry() {
         try {
           const response = await axios.request(options);
           if (response?.data?.commentaryList?.length > 0) {
-            const a = response?.data?.commentaryList[0];
+            const a = response?.data?.commentaryList;
             const matchdata = response.data.matchHeader;
             const { miniscore } = response.data;
             const cityRef = db.db.collection("cities").doc(m[i].matchId);
@@ -88,7 +88,7 @@ module.exports.addLivecommentary = async function addcommentry() {
               const citRef = db.db.collection("cities").doc(m[i].matchId);
               const res = await citRef.set(
                 {
-                  capital: [a],
+                  capital: [...a],
                   livedata: matchdata,
                   miniscore,
                 },
@@ -96,10 +96,9 @@ module.exports.addLivecommentary = async function addcommentry() {
               );
             } else {
               const citRef = db.db.collection("cities").doc(m[i].matchId);
-              if (!checkballexists.checklastballexists(doc.data().capital, a)) {
                 const res = await citRef.set(
                   {
-                    capital: [...doc.data().capital, a],
+                    capital: [...doc.data().capital, ...a],
                     livedata: matchdata,
                     miniscore,
                   },
@@ -107,7 +106,6 @@ module.exports.addLivecommentary = async function addcommentry() {
                 );
               }
             }
-          }
         } catch (error) {
           console.error(error);
         }
