@@ -243,7 +243,7 @@ router.post("/register", async (req, res) => {
           });
         }
 
-        if (!user) {
+        if (!user?.verified) {
           transaction.createTransaction(userId, "", 100, "extra cash");
           User.create(user1, async (err, user) => {
             if (err) {
