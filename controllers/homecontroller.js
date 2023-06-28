@@ -792,7 +792,7 @@ router.get("/home/:userid", async (req, res) => {
           mat.teams = teams;
           liveMatches.results.push(mat);
         }
-      } else if (req.params.userid && (match_det.result == "Complete")) {
+      } else if (req.params.userid && match_det.result == "Complete") {
         let teams = allteams.filter(
           (a) => a.matchId == match_det.matchId && a.userId == req.params.userid
         );

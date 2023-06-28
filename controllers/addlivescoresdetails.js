@@ -14,7 +14,6 @@ const getkeys = require("../crickeys");
 //     }
 // }
 
-
 function pointCalculator(
   runs,
   fours,
@@ -41,7 +40,7 @@ module.exports.addLivematchtodb = async function () {
   let date = new Date();
   const endDate = new Date(date.getTime());
   console.log(endDate.getHours(), endDate.getMinutes(), "gettimelive");
-  const b = 10 * 60 * 60 * 1000 * 1;
+  const b = 40 * 60 * 60 * 1000 * 1;
   date = new Date(date.getTime() - b);
   const matches = await Match.find({
     date: {
@@ -51,10 +50,10 @@ module.exports.addLivematchtodb = async function () {
   });
   for (let i = 0; i < matches.length; i++) {
     const matchId = matches[i].matchId;
-    const match = await MatchLive.findOne({ matchId });
+    const match = await MatchLive.findOne({ matchId: matchId });
     const matid = await Match.findOne({ matchId });
-    if (!match) {
-      console.log("matchnotexists");
+    if (!match || match.result == "Complete") {
+      console.log("matchnotexistsorcomplete",match?.result);
     } else {
       console.log(matchId, "matchId");
       const keys = await getkeys.getkeys();

@@ -96,16 +96,16 @@ module.exports.addLivecommentary = async function addcommentry() {
               );
             } else {
               const citRef = db.db.collection("cities").doc(m[i].matchId);
-                const res = await citRef.set(
-                  {
-                    capital: [...a],
-                    livedata: matchdata,
-                    miniscore,
-                  },
-                  { merge: true }
-                );
-              }
+              const res = await citRef.set(
+                {
+                  capital: [...a],
+                  livedata: matchdata,
+                  miniscore,
+                },
+                { merge: true }
+              );
             }
+          }
         } catch (error) {
           console.error(error);
         }
