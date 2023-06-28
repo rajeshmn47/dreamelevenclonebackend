@@ -14,6 +14,7 @@ const Matches = require("../models/match");
 const User = require("../models/user");
 const getkeys = require("../crickeys");
 const checkballexists = require("../utils/checksame");
+const getcommentary = require("../utils/getcommentary");
 const db = require("./firebaseinitialize");
 
 const serviceAccount = {
@@ -78,7 +79,7 @@ module.exports.addLivecommentary = async function addcommentry() {
         try {
           const response = await axios.request(options);
           if (response?.data?.commentaryList?.length > 0) {
-            const a = response?.data?.commentaryList;
+            const a = response?.data?.commentaryList.reverse();
             const matchdata = response.data.matchHeader;
             const { miniscore } = response.data;
             const cityRef = db.db.collection("cities").doc(m[i].matchId);
@@ -96,9 +97,11 @@ module.exports.addLivecommentary = async function addcommentry() {
               );
             } else {
               const citRef = db.db.collection("cities").doc(m[i].matchId);
+              let xyz=doc.data().capital;
+              let commentary=getcommentary.getcommentary(xyz,a);
               const res = await citRef.set(
                 {
-                  capital: [...a],
+                  capital: [...commentary],
                   livedata: matchdata,
                   miniscore,
                 },

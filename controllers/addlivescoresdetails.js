@@ -51,7 +51,6 @@ module.exports.addLivematchtodb = async function () {
   for (let i = 0; i < matches.length; i++) {
     const matchId = matches[i].matchId;
     const match = await MatchLive.findOne({ matchId: matchId });
-    const matid = await Match.findOne({ matchId });
     if (!match || match.result == "Complete") {
       console.log("matchnotexistsorcomplete",match?.result);
     } else {
