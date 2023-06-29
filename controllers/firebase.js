@@ -97,8 +97,8 @@ module.exports.addLivecommentary = async function addcommentry() {
               );
             } else {
               const citRef = db.db.collection("cities").doc(m[i].matchId);
-              let xyz=doc.data().capital;
-              let commentary=getcommentary.getcommentary(xyz,a);
+              let xyz = doc.data().capital;
+              let commentary = getcommentary.getcommentary(xyz, a);
               const res = await citRef.set(
                 {
                   capital: [...commentary],

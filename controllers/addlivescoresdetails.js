@@ -52,7 +52,7 @@ module.exports.addLivematchtodb = async function () {
     const matchId = matches[i].matchId;
     const match = await MatchLive.findOne({ matchId: matchId });
     if (!match || match.result == "Complete") {
-      console.log("matchnotexistsorcomplete",match?.result);
+      console.log("matchnotexistsorcomplete", match?.result);
     } else {
       console.log(matchId, "matchId");
       const keys = await getkeys.getkeys();
