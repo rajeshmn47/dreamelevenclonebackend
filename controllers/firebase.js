@@ -12,6 +12,7 @@ const {
 const MatchLiveDetails = require("../models/matchlive");
 const Matches = require("../models/match");
 const User = require("../models/user");
+const Team = require("../models/team");
 const getkeys = require("../crickeys");
 const checkballexists = require("../utils/checksame");
 const getcommentary = require("../utils/getcommentary");
@@ -55,9 +56,12 @@ module.exports.addLivecommentary = async function addcommentry() {
     });
     for (let i = 0; i < matches.length; i++) {
       const matchid = matches[i].matchId;
-      const match = await MatchLiveDetails.findOne({ matchId: matchid });
-      if (match && !(match.result == "Complete")) {
-        matchess.push(matches[i]);
+      const teams = await Team.find({ matchId: matchid });
+      if (teams.length > 0) {
+        const match = await MatchLiveDetails.findOne({ matchId: matchid });
+        if (match && !(match.result == "Complete")) {
+          matchess.push(matches[i]);
+        }
       }
     }
     const m = matchess;
