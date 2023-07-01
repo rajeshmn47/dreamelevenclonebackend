@@ -40,7 +40,7 @@ module.exports.addLivematchtodb = async function () {
   let date = new Date();
   const endDate = new Date(date.getTime());
   console.log(endDate.getHours(), endDate.getMinutes(), "gettimelive");
-  const b = 40 * 60 * 60 * 1000 * 1;
+  const b = 10 * 60 * 60 * 1000 * 1;
   date = new Date(date.getTime() - b);
   const matches = await Match.find({
     date: {

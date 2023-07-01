@@ -33,9 +33,16 @@ async function getplayerImage(name) {
 }
 module.exports.addTeamstandingstodb = async function () {
   let date = new Date();
-  const endDate = new Date(date.getTime() + 24 * 60 * 60 * 1000 * 2);
-  date = new Date(date.getTime() - 24 * 60 * 60 * 1000 * 2);
-  const matches = await MatchLive.find();
+  const endDate = new Date(date.getTime());
+  console.log(endDate.getHours(), endDate.getMinutes(), "gettimelive");
+  const b = 10 * 60 * 60 * 1000 * 1;
+  date = new Date(date.getTime() - b);
+  const matches = await MatchLive.find({
+    date: {
+      $gte: new Date(date),
+      $lt: new Date(endDate),
+    },
+  });
   for (let i = 0; i < matches.length; i++) {
     const teams = await Team.find({ matchId: matches[i].matchId });
     for (const x of teams) {

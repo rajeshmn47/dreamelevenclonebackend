@@ -3,10 +3,15 @@ module.exports.getcommentary = function (old, current) {
   let lastball = current[l - 1];
   let d = old.length;
   let oldlastball = old[d - 1];
-  let u = current.filter((c) => c.ballNbr > oldlastball?.ballNbr);
-  let x = old.filter((o) => o.ballNbr < lastball?.ballNbr);
-  console.log(x);
-  x.push(...u);
-  console.log(x, "x");
-  return x;
+  console.log(old, d, l, "l");
+  if (oldlastball?.ballNbr) {
+    let u = current.filter((c) => c.ballNbr > oldlastball?.ballNbr);
+    let x = old.filter((o) => o.ballNbr < lastball?.ballNbr);
+    console.log(x);
+    x.push(...u);
+    console.log(x, "x");
+    return x;
+  } else {
+    return current;
+  }
 };
