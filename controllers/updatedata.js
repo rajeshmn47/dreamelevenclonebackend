@@ -17,6 +17,7 @@ const User = require("../models/user");
 const req = unirest("GET", "https://www.fast2sms.com/dev/bulkV2");
 const matches = require("./matchDB-controller");
 const addingteam = require("./addplayer");
+const addingteame = require("./teamcreatecontroller");
 const addlivenew = require("./addlivedetails");
 const addlivescoresnew = require("./addlivescoresdetails");
 const teamstandings = require("./updateteam");
@@ -154,6 +155,22 @@ router.get("/addlivecommentary", async (req, res) => {
 router.get("/addteams", async (req, res) => {
   try {
     await addingteam.addPlayers();
+    res.status(200).json({
+      message: "saved successfully",
+      success: true,
+    });
+  } catch (err) {
+    console.log(`Error : ${err}`);
+    res.status(200).json({
+      message: "could not save",
+      success: false,
+    });
+  }
+});
+
+router.get("/addteamse", async (req, res) => {
+  try {
+    await addingteame.addteamPlayers();
     res.status(200).json({
       message: "saved successfully",
       success: true,
