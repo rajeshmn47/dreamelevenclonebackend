@@ -20,6 +20,14 @@ const Contest = require("../models/contest");
 const Player = require("../models/players");
 const getflags = require("../utils/getflags");
 
+function isToday(d1, d2) {
+  return (
+    d1.getUTCFullYear() == d2.getUTCFullYear() &&
+    d1.getUTCMonth() == d2.getUTCMonth() &&
+    d1.getUTCDate() == d2.getUTCDate()
+  );
+}
+
 router.get("/hme/:userid", async (req, res) => {
   const stime = new Date().getSeconds();
   const upcomingMatches = {
@@ -790,7 +798,9 @@ router.get("/home/:userid", async (req, res) => {
         if (contests.length > 0 || teams.length > 0) {
           mat.contests = contests;
           mat.teams = teams;
-          liveMatches.results.push(mat);
+          if (isToday(new Date(mat.date), new Date())) {
+            liveMatches.results.push(mat);
+          }
         }
       } else if (req.params.userid && match_det.result == "Complete") {
         let teams = allteams.filter(

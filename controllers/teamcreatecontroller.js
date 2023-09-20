@@ -56,7 +56,7 @@ module.exports.addteamPlayers = async function () {
         const arr = [];
         let position;
         const players = homeplayers[0];
-        console.log(players,'players')
+        console.log(players, "players");
         for (let i = 0; i < players?.length; i++) {
           const check =
             players[i].name == "BATSMEN" ||
@@ -70,7 +70,7 @@ module.exports.addteamPlayers = async function () {
               playerId: players[i].playerId,
               playerName: players[i].playerName,
               image: players[i].image,
-              position:players[i].position,
+              position: players[i].position,
               batOrder: -1,
             };
             arr.push(a);
@@ -115,7 +115,7 @@ module.exports.addteamPlayers = async function () {
               playerId: players[i].playerId,
               playerName: players[i].playerName,
               image: players[i].image,
-              position:players[i].position,
+              position: players[i].position,
               batOrder: -1,
             };
             arr.push(a);

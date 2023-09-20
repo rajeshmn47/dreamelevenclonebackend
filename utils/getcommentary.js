@@ -9,7 +9,7 @@ module.exports.getcommentary = function (old, current) {
     let x = old.filter((o) => o.ballNbr < lastball?.ballNbr);
     console.log(x.length);
     x.push(...u);
-    console.log(x.length,'length')
+    console.log(x.length, "length");
     return x;
   } else {
     return current;

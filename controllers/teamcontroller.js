@@ -52,6 +52,41 @@ router.post("/saveteam/:id", async (req, res) => {
   });
 });
 
+router.put("/updateTeam/:id", async (req, res) => {
+  const players = [];
+  let points = 0;
+  for (p in req.body.players) {
+    players.push({
+      playerId: req.body.players[p].playerId,
+      playerName: req.body.players[p].playerName,
+      position: req.body.players[p].position,
+      point: req.body.players[p].points,
+      image: req.body.players[p].image,
+    });
+    points += req.body.players[p].points;
+  }
+  const otp = otpGenerator.generate(8, {
+    lowerCaseAlphabets: false,
+    upperCaseAlphabets: false,
+    specialChars: false,
+    specialChars: false,
+  });
+  const team = await Team.findByIdAndUpdate(req.params.id, {
+    matchId: req.body.matchId,
+    captainId: req.body.captainId,
+    viceCaptainId: req.body.vicecaptainId,
+    userId: req.body.userid,
+    teamId: otp,
+    players: players,
+    points: 44,
+  });
+  console.log(team, req.body);
+  res.status(200).json({
+    team,
+    message: "team updated successfully",
+  });
+});
+
 router.get("/getteam", async (req, res) => {
   console.log(req.query, "ok");
   const team = await Team.find({

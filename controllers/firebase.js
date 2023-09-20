@@ -57,9 +57,9 @@ module.exports.addLivecommentary = async function addcommentry() {
     for (let i = 0; i < matches.length; i++) {
       const matchid = matches[i].matchId;
       const teams = await Team.find({ matchId: matchid });
-      console.log("beforefound",matchid)
+      console.log("beforefound", matchid);
       if (teams.length > 0) {
-        console.log("found",matchess)
+        console.log("found", matchess);
         const match = await MatchLiveDetails.findOne({ matchId: matchid });
         if (match && !(match.result == "Complete")) {
           matchess.push(matches[i]);
@@ -90,7 +90,7 @@ module.exports.addLivecommentary = async function addcommentry() {
             const { miniscore } = response.data;
             const cityRef = db.db.collection("cities").doc(m[i].matchId);
             const doc = await cityRef.get();
-            console.log("nelson")
+            console.log("nelson");
             if (!doc.exists) {
               console.log("No such document!");
               const citRef = db.db.collection("cities").doc(m[i].matchId);
@@ -103,7 +103,7 @@ module.exports.addLivecommentary = async function addcommentry() {
                 { merge: true }
               );
             } else {
-              console.log("getting match")
+              console.log("getting match");
               const citRef = db.db.collection("cities").doc(m[i].matchId);
               let xyz = doc.data().capital;
               let commentary = getcommentary.getcommentary(xyz, a);
