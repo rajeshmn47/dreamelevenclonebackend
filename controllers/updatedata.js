@@ -1,10 +1,8 @@
 const flagURLs = require("country-flags-svg");
 const express = require("express");
 const jwt = require("jsonwebtoken");
-
 const router = express.Router();
 const messageBird = require("messagebird")("W2tTRdqV8xxNjMYhIXSX3eEY6");
-
 const activatekey = "accountactivatekey123";
 const nodemailer = require("nodemailer");
 const request = require("request");
