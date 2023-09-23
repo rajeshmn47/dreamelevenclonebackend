@@ -92,6 +92,7 @@ module.exports.addLivematchtodb = async function () {
             const toss = s.matchHeader.tossResults.tossWinnerName;
             const result = s.matchHeader.state;
             let title_fi = "";
+            let home_first = false;
             let overs_fi = 0;
             let runs_fi = 0;
             let wickets_fi = 0;
@@ -111,6 +112,9 @@ module.exports.addLivematchtodb = async function () {
               batting1 = s.scoreCard[0].batTeamDetails.batsmenData;
               bowling1 = s.scoreCard[0].bowlTeamDetails.bowlersData;
               title_fi = s.scoreCard[0].batTeamDetails.batTeamName;
+              home_first =
+                matches[i].teamHomeName ==
+                s.scoreCard[0].batTeamDetails.batTeamName;
               overs_fi = s.scoreCard[0].scoreDetails.overs;
               runs_fi = s.scoreCard[0].scoreDetails.runs;
               wickets_fi = s.scoreCard[0].scoreDetails.wickets;
@@ -330,6 +334,7 @@ module.exports.addLivematchtodb = async function () {
                     teamAwayPlayers,
                     date: matches[i].date,
                     titleFI: title_fi,
+                    isHomeFirst: home_first,
                     oversFI: overs_fi,
                     wicketsFI: wickets_fi,
                     runFI: runs_fi,

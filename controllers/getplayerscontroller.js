@@ -11,11 +11,15 @@ router.get("/getplayers/:id", async (req, res) => {
   // const matchdetails = await MatchLiveDetails.findOne({ matchId: req.params.id });
   const livedetails = await LiveMatches.findOne({ matchId: req.params.id });
   const matchdetails = await Matches.findOne({ matchId: req.params.id });
-  console.log(matchdetails)
+  console.log(matchdetails);
   if (livedetails) {
-    let data={}
+    let data = {};
     livedetails.teamHomePlayers = livedetails.teamHomePlayers;
-    data={...livedetails._doc,teamHomeCode:matchdetails.teamHomeCode,teamAwayCode:matchdetails.teamAwayCode}
+    data = {
+      ...livedetails._doc,
+      teamHomeCode: matchdetails.teamHomeCode,
+      teamAwayCode: matchdetails.teamAwayCode,
+    };
     matchdetails.teamAwayPlayers = livedetails.teamAwayPlayers;
     res.status(200).json({
       players: livedetails,
