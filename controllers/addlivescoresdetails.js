@@ -113,8 +113,8 @@ module.exports.addLivematchtodb = async function () {
               bowling1 = s.scoreCard[0].bowlTeamDetails.bowlersData;
               title_fi = s.scoreCard[0].batTeamDetails.batTeamName;
               home_first =
-                matches[i].teamHomeName ==
-                s.scoreCard[0].batTeamDetails.batTeamName;
+                matches[i].teamHomeName.toLowerCase() ==
+                s.scoreCard[0].batTeamDetails.batTeamName.toLowerCase();
               overs_fi = s.scoreCard[0].scoreDetails.overs;
               runs_fi = s.scoreCard[0].scoreDetails.runs;
               wickets_fi = s.scoreCard[0].scoreDetails.wickets;

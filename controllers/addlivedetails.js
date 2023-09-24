@@ -112,7 +112,7 @@ module.exports.addLivematchtodb = async function () {
               console.log(LiveMatchDet, "i");
               const match = await MatchLive.create(LiveMatchDet);
               if (match) {
-                await addMatchIds.addMatchIds();
+                //await addMatchIds.addMatchIds();
                 const cityRef = db.db.collection("cities").doc(m[i].matchId);
                 const doc = await cityRef.get();
                 if (!doc.exists) {
