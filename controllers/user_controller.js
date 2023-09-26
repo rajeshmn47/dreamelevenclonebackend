@@ -15,7 +15,6 @@ const { OAuth2Client } = require("google-auth-library");
 const unirest = require("unirest");
 const transaction = require("./transaction_details_controller");
 const User = require("../models/user");
-
 const req = unirest("GET", "https://www.fast2sms.com/dev/bulkV2");
 const server_secret_key =
   "iamrajesh675gjhchshskijdiucacuijnuijniusjiudjcsdijcjsijcisjijsoisju";
@@ -171,6 +170,7 @@ function checkloggedinuser(req, res, next) {
 }
 
 router.post("/register", async (req, res) => {
+  console.log(req.body,'line 174')
   const otp = otpGenerator.generate(8, {
     lowerCaseAlphabets: false,
     upperCaseAlphabets: false,
@@ -183,7 +183,7 @@ router.post("/register", async (req, res) => {
   user1.username = req.body.username;
   user1.email = req.body.email;
   user1.password = req.body.password;
-  user1.phonenumber = req.body.phonenumber;
+  user1.phonenumber = req.body.phoneNumber;
   user1.wallet = 10000;
   user1.otp = otp;
   const mailOptions = {
@@ -192,14 +192,6 @@ router.post("/register", async (req, res) => {
     subject: "Sending Email using Node.js[nodemailer]",
     text: `enter this otp ${otp}`,
   };
-
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.log(error);
-    } else {
-      console.log(`Email sent: ${info.response}`);
-    }
-  });
 
   const options = {
     method: "POST",
@@ -212,7 +204,7 @@ router.post("/register", async (req, res) => {
     body: JSON.stringify({
       name: req.body.username,
       email: req.body.email,
-      contact: req.body.phonenumber,
+      contact: req.body.phoneNumber,
       type: "employee",
       reference_id: "Domino Contact ID 12345",
       notes: {
@@ -243,10 +235,18 @@ router.post("/register", async (req, res) => {
           });
         }
 
-        if (!user?.verified) {
+        if (!user) {
+          transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+              console.log(error);
+            } else {
+              console.log(`Email sent: ${info.response}`);
+            }
+          });
           transaction.createTransaction(userId, "", 100, "extra cash");
           User.create(user1, async (err, user) => {
             if (err) {
+              console.log(err,'err')
               res.status(400).json({
                 message: "something went wrong",
               });
@@ -264,7 +264,23 @@ router.post("/register", async (req, res) => {
               });
             }
           });
-        } else {
+        } 
+        else if(!user.verified) {
+          transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+              console.log(error);
+            } else {
+              console.log(`Email sent: ${info.response}`);
+            }
+          });
+          res.status(200).json({
+            message:
+            "enter otp recieved on your mail to activate your account",
+            success: true,
+          });
+        }
+        
+        else {
           res.status(200).json({
             message: "user already exists",
             success: false,
@@ -276,7 +292,6 @@ router.post("/register", async (req, res) => {
 });
 router.post("/otp", async (req, res) => {
   const user = await User.findOne({ email: req.body.email });
-
   if (parseInt(user.otp) == parseInt(req.body.otp)) {
     user.verified = true;
     const userid = user._id;
