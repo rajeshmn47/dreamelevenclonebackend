@@ -55,6 +55,8 @@ const usernewSchema = new mongoose.Schema(
     },
     otp: {
       type: Number,
+      required: true,
+      default:0
     },
     numberOfContestWon: {
       type: Number,

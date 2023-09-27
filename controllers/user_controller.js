@@ -266,6 +266,8 @@ router.post("/register", async (req, res) => {
           });
         } 
         else if(!user.verified) {
+          user1.otp = otp;
+          await user1.save();
           transporter.sendMail(mailOptions, (error, info) => {
             if (error) {
               console.log(error);
@@ -305,8 +307,8 @@ router.post("/otp", async (req, res) => {
           token,
         });
       } else {
-        res.status(200).json({
-          message: "ure account created successfully u can login",
+        res.status(400).json({
+          message: "ure account failed to creat successfully",
           token,
         });
       }

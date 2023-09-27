@@ -45,7 +45,6 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/getcontestsofuser/:id", async (req, res) => {
-  console.log(req.query, "bheemana");
   const contests = await Contest.find({
     matchId: req.params.id,
     userIds: req.query.userid,
@@ -82,13 +81,10 @@ router.get("/getjoinedcontest/:id", async (req, res) => {
   });
   const teams = [];
   const contestsArray = [];
-  const teamsarray = [];
-  console.log(contests, "contestslength");
   for (let i = 0; i < contests?.length; i++) {
     let arr = [];
     for (let j = 0; j < contests[i].teamsId.length; j++) {
-      console.log(contests[i].teamsId[j], "teamid");
-      if (!contests[i]?.teamsId[j]) {
+      if (contests[i]?.teamsId[j]) {
         const team = await Team.findById(contests[i].teamsId[j]);
         if (team) {
           if (!team.points) {
@@ -99,9 +95,9 @@ router.get("/getjoinedcontest/:id", async (req, res) => {
       }
     }
     let teamsarray = [];
+    console.log(arr,'arr')
     arr = arr.sort((a, b) => b?.points - a?.points);
     for (let x = 0; x < arr.length; x++) {
-      console.log(x, "xyz");
       const user = await User.findById(arr[x].userId);
       if (arr[x].userId == req.query.userid) {
         teamsarray.push({
@@ -115,6 +111,7 @@ router.get("/getjoinedcontest/:id", async (req, res) => {
         });
       }
     }
+    console.log(teamsarray,'teamsarray')
     contestsArray.push({ contest: contests[i], teams: teamsarray });
   }
   res.status(200).json({
