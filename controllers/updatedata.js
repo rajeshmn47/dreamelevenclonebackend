@@ -40,7 +40,7 @@ const transporter = nodemailer.createTransport(
 
 router.get("/addlivedetails", async (req, res) => {
   try {
-    await addlivenew.addLivematchtodb();
+    //await addlivenew.addLivematchtodb();
     res.status(200).json({
       message: "user already exists",
       success: false,
@@ -56,7 +56,7 @@ router.get("/addlivedetails", async (req, res) => {
 
 router.get("/addlivescore", async (req, res) => {
   try {
-    await addlivescoresnew.addLivematchtodb();
+    //await addlivescoresnew.addLivematchtodb();
     res.status(200).json({
       message: "user already exists",
       success: false,
@@ -72,7 +72,7 @@ router.get("/addlivescore", async (req, res) => {
 
 router.get("/updateteams", async (req, res) => {
   try {
-    await teamstandings.addTeamstandingstodb();
+    //await teamstandings.addTeamstandingstodb();
     res.status(200).json({
       message: "saved successfully",
       success: true,
@@ -87,7 +87,7 @@ router.get("/updateteams", async (req, res) => {
 });
 router.get("/addtransaction", async (req, res) => {
   try {
-    await transaction.startTransaction();
+    //await transaction.startTransaction();
     res.status(200).json({
       message: "saved successfully",
       success: true,
@@ -103,8 +103,8 @@ router.get("/addtransaction", async (req, res) => {
 
 router.get("/addmatchtodb", async (req, res) => {
   try {
-    await matches.addMatchtoDb();
-    await addingteam.addPlayers();
+    //await matches.addMatchtoDb();
+    //await addingteam.addPlayers();
     res.status(200).json({
       message: "added matches successfully",
       success: false,
@@ -120,7 +120,7 @@ router.get("/addmatchtodb", async (req, res) => {
 
 router.get("/addmatchids", async (req, res) => {
   try {
-    await addIds.addMatchIds();
+    //await addIds.addMatchIds();
     res.status(200).json({
       message: "matches added successfully",
       success: true,
@@ -136,7 +136,7 @@ router.get("/addmatchids", async (req, res) => {
 
 router.get("/addlivecommentary", async (req, res) => {
   try {
-    await addLiveCommentary.addLivecommentary();
+    //await addLiveCommentary.addLivecommentary();
     res.status(200).json({
       message: "added successfully",
       success: true,
@@ -152,7 +152,7 @@ router.get("/addlivecommentary", async (req, res) => {
 
 router.get("/addteams", async (req, res) => {
   try {
-    await addingteam.addPlayers();
+    //await addingteam.addPlayers();
     res.status(200).json({
       message: "saved successfully",
       success: true,
@@ -168,7 +168,7 @@ router.get("/addteams", async (req, res) => {
 
 router.get("/addteamse", async (req, res) => {
   try {
-    await addingteame.addteamPlayers();
+    //await addingteame.addteamPlayers();
     res.status(200).json({
       message: "saved successfully",
       success: true,

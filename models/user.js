@@ -56,7 +56,7 @@ const usernewSchema = new mongoose.Schema(
     otp: {
       type: Number,
       required: true,
-      default:0
+      default: 0,
     },
     numberOfContestWon: {
       type: Number,
@@ -71,6 +71,12 @@ const usernewSchema = new mongoose.Schema(
     },
 
     totalAmountWon: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+
+    totalAmountAdded: {
       type: Number,
       required: true,
       default: 0,

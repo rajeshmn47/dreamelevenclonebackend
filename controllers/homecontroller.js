@@ -234,7 +234,10 @@ router.get("/completed/:userid", async (req, res) => {
   const usermatchespromises = user.matchIds.map((id) =>
     LiveMatches.findOne({ matchId: id })
   );
-  const usermatchesdetails = await Promise.all(usermatchespromises);
+  const usermatchesdetails = await LiveMatches.find({
+    matchId: { $in: [...user.matchIds] },
+  });
+  //const usermatchesdetails = await Promise.all(usermatchespromises);
   const allusermatchesdetails = usermatchesdetails.filter((match, index) => {
     if (match?._id) {
       return match;
@@ -387,8 +390,10 @@ router.get("/completed/:userid", async (req, res) => {
     }
   }
   const etime = new Date().getSeconds();
+  let timeTook = etime - stime;
   res.status(200).json({
     completed: completedMatches,
+    timetook: timeTook,
   });
 });
 
@@ -683,7 +688,10 @@ router.get("/home/:userid", async (req, res) => {
   const usermatchespromises = user.matchIds.map((id) =>
     LiveMatches.findOne({ matchId: id })
   );
-  const usermatchesdetails = await Promise.all(usermatchespromises);
+  //const usermatchesdetails = await Promise.all(usermatchespromises);
+  const usermatchesdetails = await LiveMatches.find({
+    matchId: { $in: [...user.matchIds] },
+  });
   const allusermatchesdetails = usermatchesdetails.filter((match, index) => {
     if (match?._id) {
       return match;
@@ -692,7 +700,9 @@ router.get("/home/:userid", async (req, res) => {
   const userpromises = user.matchIds.map((id) =>
     Matches.findOne({ matchId: id })
   );
-  const usermatches = await Promise.all(userpromises);
+  const usermatches = await Matches.find({
+    matchId: { $in: [...user.matchIds] },
+  });
   const allusermatches = usermatches.filter((match, index) => {
     if (match?._id) {
       return match;

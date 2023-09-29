@@ -170,7 +170,7 @@ function checkloggedinuser(req, res, next) {
 }
 
 router.post("/register", async (req, res) => {
-  console.log(req.body,'line 174')
+  console.log(req.body, "line 174");
   const otp = otpGenerator.generate(8, {
     lowerCaseAlphabets: false,
     upperCaseAlphabets: false,
@@ -246,7 +246,7 @@ router.post("/register", async (req, res) => {
           transaction.createTransaction(userId, "", 100, "extra cash");
           User.create(user1, async (err, user) => {
             if (err) {
-              console.log(err,'err')
+              console.log(err, "err");
               res.status(400).json({
                 message: "something went wrong",
               });
@@ -264,8 +264,7 @@ router.post("/register", async (req, res) => {
               });
             }
           });
-        } 
-        else if(!user.verified) {
+        } else if (!user.verified) {
           user1.otp = otp;
           await user1.save();
           transporter.sendMail(mailOptions, (error, info) => {
@@ -276,13 +275,10 @@ router.post("/register", async (req, res) => {
             }
           });
           res.status(200).json({
-            message:
-            "enter otp recieved on your mail to activate your account",
+            message: "enter otp recieved on your mail to activate your account",
             success: true,
           });
-        }
-        
-        else {
+        } else {
           res.status(200).json({
             message: "user already exists",
             success: false,

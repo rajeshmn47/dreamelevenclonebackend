@@ -259,6 +259,11 @@ const matchDetailsThirdSchema = new mongoose.Schema(
       type: String,
     },
 
+    transaction: {
+      type: Boolean,
+      default: false,
+    },
+
     isHomeFirst: {
       type: Boolean,
       required: true,

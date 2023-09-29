@@ -95,7 +95,7 @@ router.get("/getjoinedcontest/:id", async (req, res) => {
       }
     }
     let teamsarray = [];
-    console.log(arr,'arr')
+    console.log(arr, "arr");
     arr = arr.sort((a, b) => b?.points - a?.points);
     for (let x = 0; x < arr.length; x++) {
       const user = await User.findById(arr[x].userId);
@@ -111,7 +111,7 @@ router.get("/getjoinedcontest/:id", async (req, res) => {
         });
       }
     }
-    console.log(teamsarray,'teamsarray')
+    console.log(teamsarray, "teamsarray");
     contestsArray.push({ contest: contests[i], teams: teamsarray });
   }
   res.status(200).json({

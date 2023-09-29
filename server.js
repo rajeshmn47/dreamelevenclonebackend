@@ -15,12 +15,17 @@ const contest = require("./controllers/getcontests");
 const teamdata = require("./controllers/getplayerscontroller");
 const auth = require("./controllers/user_controller");
 const team = require("./controllers/teamcontroller");
-const teamstandings = require("./controllers/updateteam");
-const addIds = require("./controllers/addMatchIds");
-const transaction = require("./controllers/transaction");
 const payments = require("./controllers/payment");
 const teamstandingsA = require("./controllers/updatestandings");
 const updatedata = require("./controllers/updatedata");
+const transaction = require("./controllers/transaction");
+const addLiveCommentary = require("./controllers/firebase");
+const teamstandings = require("./controllers/updateteam");
+const addlivescoresnew = require("./controllers/addlivescoresdetails");
+const addlivenew = require("./controllers/addlivedetails");
+const addingteam = require("./controllers/addplayer");
+const addingteame = require("./controllers/teamcreatecontroller");
+const addIds = require("./controllers/addMatchIds");
 const getkeys = require("./crickeys");
 // Environment variables
 /* Requiring body-parser package
@@ -35,7 +40,7 @@ app.use("/", contest);
 app.use("/", teamdata);
 app.use("/", team);
 app.use("/", updatedata);
-app.use("/", transaction);
+//app.use("/", transaction);
 app.use("/payment", payments);
 app.use("/auth", auth);
 mongoose.Promise = global.Promise;
@@ -50,14 +55,34 @@ mongoose.connect(
 );
 const api_key =
   "s16rcBDzWjgNhJXPEUV9HA3QMSfvpen2GyL7a4F8ubdwICk5KOHPT32vI5b6cSxs8JpUhirCOjqogGwk";
-async function add() {
-  await everydayboy.addLivematchtodb();
-}
-async function addmore() {
-  await eva.addLivematchtodb();
-}
-const date = new Date();
-console.log(date.getHours(), "hours");
+// ...
+
+// Remove the error.log file every twenty-first day of the month.
+cron.schedule("0 * * * *", async function () {
+  await transaction.startTransaction();
+});
+cron.schedule("* * * * *", async function () {
+  await addLiveCommentary.addLivecommentary();
+});
+cron.schedule("*/5 * * * *", async function () {
+  await teamstandings.addTeamstandingstodb();
+});
+cron.schedule("*/5 * * * *", async function () {
+  await addlivescoresnew.addLivematchtodb();
+});
+cron.schedule("*/10 * * * *", async function () {
+  await addlivenew.addLivematchtodb();
+});
+cron.schedule("0 0 * * 1", async function () {
+  await matches.addMatchtoDb();
+  await addingteam.addPlayers();
+});
+cron.schedule("0 */20 * * *", async function () {
+  await addingteame.addteamPlayers();
+});
+cron.schedule("0 */8 * * *", async function () {
+  await addIds.addMatchIds();
+});
 // livedetails.addLivematchtodb();
 // livescore.addLivematchtodb();
 // addIds.addMatchIds();

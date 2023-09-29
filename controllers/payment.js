@@ -85,6 +85,7 @@ router.patch("/addamount", async (req, res) => {
     const amount = parseInt(req.body.amount);
     const user = await User.findOne({ _id: req.body.id });
     user.wallet += amount;
+    user.totalAmountAdded += amount;
     await user.save();
     await Transaction.create({
       userId: user._id,

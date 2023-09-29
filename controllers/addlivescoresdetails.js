@@ -39,8 +39,7 @@ function pointCalculator(
 module.exports.addLivematchtodb = async function () {
   let date = new Date();
   const endDate = new Date(date.getTime());
-  console.log(endDate.getHours(), endDate.getMinutes(), "gettimelive");
-  const b = 10 * 60 * 60 * 1000 * 1;
+  const b = 20 * 60 * 60 * 1000 * 1;
   date = new Date(date.getTime() - b);
   const matches = await Match.find({
     date: {
@@ -52,9 +51,7 @@ module.exports.addLivematchtodb = async function () {
     const matchId = matches[i].matchId;
     const match = await MatchLive.findOne({ matchId: matchId });
     if (!match || match.result == "Complete") {
-      console.log("matchnotexistsorcomplete", match?.result);
     } else {
-      console.log(matchId, "matchId");
       const keys = await getkeys.getkeys();
       const date1 = matches[i].date;
       let user = await User.findById("646c70679da9df38e6273a43");
@@ -76,14 +73,13 @@ module.exports.addLivematchtodb = async function () {
             reject(error);
           }
           const s = JSON.parse(body);
-          console.log("che", s);
           resolve(s);
         });
       });
       promise
         .then(async (s) => {
+          console.log(s, "check");
           if (s.matchHeader != null && s.scoreCard != 0) {
-            console.log("checkpojnt");
             const LiveMatchDet = new MatchLive();
             LiveMatchDet.matchId = matchId;
             LiveMatchDet.date = date1;
@@ -170,7 +166,6 @@ module.exports.addLivematchtodb = async function () {
                 const player = teamHomePlayers[i];
                 const { playerId } = player;
                 if (bowler.bowlerId == playerId) {
-                  console.log(playerId, bowler.bowlerId, "id");
                   teamHomePlayers[i].overs = bowler.overs;
                   teamHomePlayers[i].maidens = bowler.maidens;
                   teamHomePlayers[i].runsConceded = bowler.runs;
@@ -207,7 +202,6 @@ module.exports.addLivematchtodb = async function () {
                 const player = teamAwayPlayers[i];
                 const { playerId } = player;
                 if (bowler.bowlerId == playerId) {
-                  console.log(playerId, bowler.bowlerId, "id");
                   teamAwayPlayers[i].overs = bowler.overs;
                   teamAwayPlayers[i].maidens = bowler.maidens;
                   teamAwayPlayers[i].runsConceded = bowler.runs;
