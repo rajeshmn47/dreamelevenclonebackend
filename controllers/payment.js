@@ -8,7 +8,8 @@ const Players = require("../models/players");
 const Contest = require("../models/contest");
 const Team = require("../models/team");
 const Transaction = require("../models/transaction");
-
+const NewPayment = require("../models/newPayment");
+const Withdraw = require("../models/withdraw");
 const router = express.Router();
 const User = require("../models/user");
 
@@ -98,6 +99,41 @@ router.patch("/addamount", async (req, res) => {
     return res.status(400).send(err);
   }
   res.status(200).send("OK");
+});
+
+router.post("/deposit", async (req, res) => {
+  console.log(req.body, "deposit");
+  try {
+    await NewPayment.create({
+      recieptUrl: req.body.recieptUrl,
+      utr: req.body.utr,
+      amount: req.body.amount,
+    });
+    return res.status(200).json({
+      message: "Successfully Saved",
+    });
+  } catch (err) {
+    return res.status(500).json({
+      message: "Something Went Wrong",
+    });
+  }
+});
+
+router.post("/withdraw", async (req, res) => {
+  console.log(req.body, "withdraw");
+  try {
+    await Withdraw.create({
+      upiId: req.body.upiId,
+      amount: req.body.amount,
+    });
+    return res.status(200).json({
+      message: "Successfully Saved",
+    });
+  } catch (err) {
+    return res.status(500).json({
+      message: "Something Went Wrong",
+    });
+  }
 });
 
 module.exports = router;

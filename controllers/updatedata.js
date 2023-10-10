@@ -56,7 +56,7 @@ router.get("/addlivedetails", async (req, res) => {
 
 router.get("/addlivescore", async (req, res) => {
   try {
-    //await addlivescoresnew.addLivematchtodb();
+    await addlivescoresnew.addLivematchtodb();
     res.status(200).json({
       message: "user already exists",
       success: false,
@@ -136,7 +136,7 @@ router.get("/addmatchids", async (req, res) => {
 
 router.get("/addlivecommentary", async (req, res) => {
   try {
-    //await addLiveCommentary.addLivecommentary();
+    await addLiveCommentary.addLivecommentary();
     res.status(200).json({
       message: "added successfully",
       success: true,

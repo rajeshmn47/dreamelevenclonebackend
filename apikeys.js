@@ -9,8 +9,11 @@ module.exports.getkeys = async function () {
   console.log(totalhits, "totalhits");
   const keyindex = Math.floor(date / 2);
   const keyi = Math.floor(totalhits / 250);
-  console.log(keyi,process.env.crickeys,process.env.apikeys,"index");
+  console.log(keyi, process.env.crickeys, process.env.apikeys, "index");
   console.log(process.env.apikeys.split(","));
-  const keys =process.env.apikeys.replace(/(\r\n|\n|\r)/gm, "").replace(/ /g,"").split(",");
+  const keys = process.env.apikeys
+    .replace(/(\r\n|\n|\r)/gm, "")
+    .replace(/ /g, "")
+    .split(",");
   return keys[keyi];
 };
