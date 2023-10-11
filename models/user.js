@@ -110,8 +110,18 @@ const usernewSchema = new mongoose.Schema(
       type: String,
     },
 
+    upiId: {
+      type: String,
+      default:""
+    },
+
     fundId: {
       type: String,
+    },
+
+    role: {
+      type: String,
+      default: "user"
     },
 
     followers: [

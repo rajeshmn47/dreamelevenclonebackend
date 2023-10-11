@@ -4,6 +4,7 @@ const Razorpay = require("razorpay");
 const express = require("express");
 const dotenv = require("dotenv");
 const { v4: uuidv4 } = require("uuid");
+const mongoose = require("mongoose");
 const Players = require("../models/players");
 const Contest = require("../models/contest");
 const Team = require("../models/team");
@@ -119,15 +120,111 @@ router.post("/deposit", async (req, res) => {
   }
 });
 
+router.get("/depositData", async (req, res) => {
+  console.log(req.body, "deposit");
+  try {
+    let deposits = await NewPayment.find({
+      verified: false
+    });
+    return res.status(200).json({
+      message: "Successfully Fetched",
+      deposits: deposits
+    });
+  } catch (err) {
+    return res.status(500).json({
+      message: "Something Went Wrong",
+    });
+  }
+});
+
+router.get("/approve", async (req, res) => {
+  console.log(req.query, "deposit");
+  try {
+    if (mongoose.Types.ObjectId.isValid(req.query.depositId)) {
+      const deposit = await NewPayment.findById(req.query.depositId);
+      console.log(deposit, 'deposit')
+      deposit.verified = true;
+      await deposit.save();
+    }
+    if (mongoose.Types.ObjectId.isValid(req.query.userId)) {
+      const user = await User.findById(req.query.userId);
+      console.log(user, 'user')
+
+      if (user) {
+        user.wallet = user.wallet + deposit.amount;
+        await user.save();
+        return res.status(200).json({
+          message: "Successfully Saved",
+          deposits: deposit
+        });
+      }
+    }
+    else {
+      return res.status(200).json({
+        message: "User do not exist"
+      });
+    }
+  } catch (err) {
+    console.log(err, 'err')
+    return res.status(500).json({
+      message: "Something Went Wrong",
+    });
+  }
+});
+
 router.post("/withdraw", async (req, res) => {
   console.log(req.body, "withdraw");
   try {
-    await Withdraw.create({
-      upiId: req.body.upiId,
-      amount: req.body.amount,
+    const user = await User.findById(req.body.userId);
+    if (user.wallet > req.body.amount) {
+      await Withdraw.create({
+        upiId: req.body.upiId,
+        amount: req.body.amount,
+        userId:req.body.userId
+      });
+      return res.status(200).json({
+        message: "Successfully Saved",
+      });
+    }
+    else {
+      return res.status(400).json({
+        message: "your balance is less than the amount requested!",
+      });
+    }
+  } catch (err) {
+    return res.status(500).json({
+      message: "Something Went Wrong",
+    });
+  }
+});
+
+router.get("/withdrawData", async (req, res) => {
+  console.log(req.body, "deposit");
+  try {
+    let withdrawals = await Withdraw.find({
+      verified: false
     });
     return res.status(200).json({
-      message: "Successfully Saved",
+      message: "Successfully Fetched",
+      withdrawals: withdrawals
+    });
+  } catch (err) {
+    return res.status(500).json({
+      message: "Something Went Wrong",
+    });
+  }
+});
+
+router.get("/approveWithdraw", async (req, res) => {
+  console.log(req.body, "withdraw");
+  try {
+    const withdraw = await Withdraw.findById(req.query.withdrawId);
+    withdraw.verified = true;
+    const user = await User.findById(req.query.userId);
+    user.wallet = user.wallet - withdraw.amount;
+    await user.save();
+    return res.status(200).json({
+      message: "Approved Successfully",
     });
   } catch (err) {
     return res.status(500).json({

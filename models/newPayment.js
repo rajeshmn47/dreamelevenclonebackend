@@ -13,6 +13,11 @@ const newPaymentSchema = new mongoose.Schema(
       required: true,
     },
 
+    userId: {
+      type: String,
+      default:""
+    },
+
     recieptUrl: {
       type: String,
       required: true,

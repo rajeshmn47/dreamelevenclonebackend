@@ -13,6 +13,12 @@ const withdrawSchema = new mongoose.Schema(
       required: true,
     },
 
+    userId: {
+      type: String,
+      required: true,
+      default:""
+    },
+
     isWithdrawCompleted: {
       type: Boolean,
       trim: true,
