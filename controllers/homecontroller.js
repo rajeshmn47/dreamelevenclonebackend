@@ -11,9 +11,11 @@ const express = require("express");
 const Players = require("../models/players");
 const Result = require("../models/results");
 const LiveMatches = require("../models/matchlive");
+const FLiveMatches = require("../models/fMatchlive");
 const Matches = require("../models/match");
 const router = express.Router();
 const Match = require("../models/match");
+const FMatch = require("../models/fMatch ");
 const Team = require("../models/team");
 const User = require("../models/user");
 const Contest = require("../models/contest");
@@ -28,194 +30,7 @@ function isToday(d1, d2) {
   );
 }
 
-router.get("/hme/:userid", async (req, res) => {
-  const stime = new Date().getSeconds();
-  const upcomingMatches = {
-    results: [],
-  };
-  const completedMatches = {
-    results: [],
-  };
-  const liveMatches = {
-    results: [],
-  };
-  const userMatches = [];
-  const userMatchesDetails = {
-    results: [],
-  };
-  const user = await User.findOne({ _id: req.params.userid });
-  for (let i = 0; i < user.matchIds.length; i++) {
-    const match = await Matches.findOne({ matchId: user.matchIds[i] });
-    const match_det = await LiveMatches.findOne({ matchId: user.matchIds[i] });
-
-    if (match_det) {
-      let teamHomeFlagUrl = flagURLs.findFlagUrlByCountryName(
-        match.teamHomeName
-      );
-      let teamAwayFlagUrl = flagURLs.findFlagUrlByCountryName(
-        match.teamAwayName
-      );
-      if (!teamAwayFlagUrl) {
-        teamAwayFlagUrl =
-          "https://i.pinimg.com/originals/1b/56/5b/1b565bb93bbc6968be498ccb00504e8f.jpg";
-      }
-      if (!teamHomeFlagUrl) {
-        teamHomeFlagUrl =
-          "https://i.pinimg.com/originals/1b/56/5b/1b565bb93bbc6968be498ccb00504e8f.jpg";
-      }
-      const mat = {
-        match_title: match.matchTitle,
-        home: {
-          name: match.teamHomeName,
-          code: match.teamHomeCode.toUpperCase(),
-        },
-        away: {
-          name: match.teamAwayName,
-          code: match.teamAwayCode.toUpperCase(),
-        },
-        date: match.date,
-        id: match.matchId,
-        livestatus: "",
-        result: "",
-        status: "",
-        inPlay: "",
-        teamHomeFlagUrl,
-        teamAwayFlagUrl,
-      };
-      mat.status = match_det.status;
-      mat.inPlay = match_det.inPlay;
-      liveStatus = "Line-ups are out!";
-      mat.livestatus = liveStatus;
-      let contests = [];
-      const teams = [];
-      if (match_det.result == "No") {
-        if (match_det.status) {
-          mat.livestatus = match_det.status;
-        }
-        mat.result = "No";
-      } else if (req.params.userid) {
-        const teams = await Team.find({
-          $and: [{ matchId: match_det.matchId }, { userId: req.params.userid }],
-        });
-        contests = await Contest.find({
-          userIds: req.params.userid,
-          matchId: match_det.matchId,
-        });
-        if (teams.length > 0) {
-          mat.contests = contests;
-          mat.teams = teams;
-          mat.result = "Yes";
-          completedMatches.results.push(mat);
-          userMatchesDetails.results.push(mat);
-        }
-      }
-    }
-  }
-  const date = new Date();
-  date.setDate(date.getDate() - 1);
-  const startDate = date.toISOString();
-  date.setDate(date.getDate() + 10);
-  const endDate = date.toISOString();
-  const matches = await Matches.find({
-    date: {
-      $gte: new Date(startDate),
-      $lt: new Date(endDate),
-    },
-  });
-  for (let i = 0; i < matches.length; i++) {
-    teamAwayFlagUrl = flagURLs.findFlagUrlByCountryName(
-      matches[i].teamAwayName
-    );
-    teamHomeFlagUrl = flagURLs.findFlagUrlByCountryName(
-      matches[i].teamHomeName
-    );
-    if (!teamAwayFlagUrl) {
-      teamAwayFlagUrl =
-        "https://i.pinimg.com/originals/1b/56/5b/1b565bb93bbc6968be498ccb00504e8f.jpg";
-    }
-    if (!teamHomeFlagUrl) {
-      teamHomeFlagUrl =
-        "https://i.pinimg.com/originals/1b/56/5b/1b565bb93bbc6968be498ccb00504e8f.jpg";
-    }
-    const match = matches[i];
-    const mat = {
-      match_title: match.matchTitle,
-      home: {
-        name: match.teamHomeName,
-        code: match.teamHomeCode.toUpperCase(),
-      },
-      away: {
-        name: match.teamAwayName,
-        code: match.teamAwayCode.toUpperCase(),
-      },
-      date: match.date,
-      id: match.matchId,
-      livestatus: "",
-      result: "",
-      status: "",
-      inPlay: "",
-      lineups: "",
-      teamHomeFlagUrl,
-      teamAwayFlagUrl,
-    };
-
-    liveStatus = "Line-ups are not out yet!";
-    mat.livestatus = liveStatus;
-    const matt = await LiveMatches.findOne({ matchId: matches[i].matchId });
-    let contests = [];
-    let teams = [];
-    if (matt) {
-      if (matt.result == "In Progress" || !matt.result) {
-        if (matt.status) {
-          mat.livestatus = matt.status;
-        }
-        if (!(matt.inPlay == "Yes") && matt?.teamHomePlayers?.length > 0) {
-          upcomingMatches.results.push(mat);
-          mat.lineups = "Lineups Out";
-        } else {
-          mat.result = "No";
-          mat.lineups = "Lineups Out";
-          if (req.params.userid) {
-            teams = await Team.find({
-              $and: [
-                { matchId: matches[i].matchId },
-                { userId: req.params.userid },
-              ],
-            });
-            contests = await Contest.find({
-              userIds: req.params.userid,
-              matchId: matches[i].matchId,
-            });
-          }
-          if (contests.length > 0 || teams.length > 0) {
-            mat.contests = contests;
-            mat.teams = teams;
-            liveMatches.results.push(mat);
-          }
-        }
-      } else {
-        mat.result = "Yes";
-      }
-    } else {
-      if (matt?.teamHomePlayers?.length > 0) {
-        mat.lineups = "Lineups Out";
-      }
-      upcomingMatches.results.push(mat);
-    }
-  }
-  const etime = new Date().getSeconds();
-  let time = etime - stime;
-  res.status(200).json({
-    upcoming: upcomingMatches,
-    past: userMatchesDetails,
-    live: liveMatches,
-    new: matches,
-    usermatch: userMatchesDetails,
-    time: time,
-  });
-});
-
-router.get("/completed/:userid", async (req, res) => {
+router.get("/myMatches/:userid", async (req, res) => {
   const notAllowed = ["", false, null, 0, undefined, NaN];
   const user = await User.findOne({ _id: req.params.userid });
   const stime = new Date().getSeconds();
@@ -225,11 +40,7 @@ router.get("/completed/:userid", async (req, res) => {
   const liveMatches = {
     results: [],
   };
-  const date = new Date();
-  date.setDate(date.getDate() - 1);
-  const startDate = date.toISOString();
-  date.setDate(date.getDate() + 6);
-  const endDate = date.toISOString();
+  const findDate = new Date();
   const matches = await Matches.find();
   const usermatchespromises = user.matchIds.map((id) =>
     LiveMatches.findOne({ matchId: id })
@@ -312,10 +123,12 @@ router.get("/completed/:userid", async (req, res) => {
       const matt = allusermatchesdetails.find(
         (m) => m.matchId == matches[i].matchId
       );
+      console.log(matt,'matt')
       let contests = [];
       let teams = [];
-      if (matt && matt.inPlay == "Complete") {
+      if (matt && matt.result == "In Progress") {
         mat.result = "No";
+        console.log(matt,'matt')
         if (req.params.userid) {
           let teams = allteams.filter(
             (a) => a.matchId == matt.matchId && a.userId == req.params.userid
@@ -330,6 +143,7 @@ router.get("/completed/:userid", async (req, res) => {
         }
       }
       if (req.params.userid && matt?.result == "Complete") {
+        console.log(matt,'matt')
         mat.result = "Yes";
         let teams = allteams.filter(
           (a) => a.matchId == matt.matchId && a.userId == req.params.userid
@@ -389,13 +203,93 @@ router.get("/completed/:userid", async (req, res) => {
       }
     }
   }
-  const etime = new Date().getSeconds();
-  let timeTook = etime - stime;
+  const upcomingMatches = {
+    results: [],
+  };
+  const date = new Date();
+  const startDate = date.toISOString();
+  const umatchesdetails = await Matches.find({
+    $and: [
+      { matchId: { $in: [...user.matchIds] } },
+      {
+        date: {
+          $gte: new Date(startDate)
+        }
+      }
+    ]
+  });
+  //const usermatchesdetails = await Promise.all(usermatchespromises);
+  for (let i = 0; i < umatchesdetails.length; i++) {
+    teamAwayFlagUrl = flagURLs.findFlagUrlByCountryName(
+      umatchesdetails[i].teamAwayName
+    );
+    teamHomeFlagUrl = flagURLs.findFlagUrlByCountryName(
+      umatchesdetails[i].teamHomeName
+    );
+    if (!teamAwayFlagUrl) {
+      teamAwayFlagUrl =
+        "https://i.pinimg.com/originals/1b/56/5b/1b565bb93bbc6968be498ccb00504e8f.jpg";
+    }
+    if (!teamHomeFlagUrl) {
+      teamHomeFlagUrl =
+        "https://i.pinimg.com/originals/1b/56/5b/1b565bb93bbc6968be498ccb00504e8f.jpg";
+    }
+    const match = umatchesdetails[i];
+    const mat = {
+      match_title: match.matchTitle,
+      home: {
+        name: match.teamHomeName,
+        code: match.teamHomeCode.toUpperCase(),
+      },
+      away: {
+        name: match.teamAwayName,
+        code: match.teamAwayCode.toUpperCase(),
+      },
+      date: match.date,
+      id: match.matchId,
+      livestatus: "",
+      result: "",
+      status: "",
+      inPlay: "",
+      lineups: "",
+      won: 0,
+      teamHomeFlagUrl,
+      teamAwayFlagUrl,
+    };
+    liveStatus = "Line-ups are not out yet!";
+    mat.livestatus = liveStatus;
+    //const matt = await LiveMatches.findOne({ matchId: matches[i].matchId });
+    const umat = umatchesdetails.find(
+      (m) => m.matchId == match.matchId
+    );
+    let contests = [];
+    let teams = [];
+    if (umat) {
+      mat.result = "No";
+    }
+
+    let teamse = allteams.filter(
+      (a) => a.matchId == umat.matchId && a.userId == req.params.userid
+    );
+    let contestse = allcontests.filter(
+      (a) =>
+        a.matchId == umat.matchId && a.userIds.includes(req.params.userid)
+    );
+    mat.contests = contestse;
+    mat.teams = teamse;
+    if (contestse.length > 0 || teamse.length > 0) {
+      mat.contests = contestse;
+      mat.teams = teamse;
+    }
+    upcomingMatches.results.push(mat);
+  }
   res.status(200).json({
     completed: completedMatches,
-    timetook: timeTook,
+    upcoming: upcomingMatches,
+    live:liveMatches
   });
 });
+
 
 router.get("/getmatch/:id", async (req, res) => {
   const match = await Match.findOne({ matchId: req.params.id });
@@ -968,6 +862,321 @@ router.get("/home", async (req, res) => {
   });
 });
 
+router.get("/football", async (req, res) => {
+  const stime = new Date().getSeconds();
+  const date = new Date();
+  date.setDate(date.getDate() - 1);
+  const startDate = new Date();
+  date.setDate(date.getDate() + 10);
+  const endDate = date.toISOString();
+  //const matches = await FMatch.find({
+  // $and: [ {
+  //   matchType:"football"},
+  //   {
+  //   date: {
+  //     $gte: new Date(startDate),
+  //     $lt: new Date(endDate),
+  //   }}]
+  // });
+  const matches = await FMatch.find();
+  const upcomingMatches = {
+    results: [],
+  };
+  for (let i = 0; i < matches.length; i++) {
+    teamAwayFlagUrl = flagURLs.findFlagUrlByCountryName(
+      matches[i].teamAwayName
+    );
+    teamHomeFlagUrl = flagURLs.findFlagUrlByCountryName(
+      matches[i].teamHomeName
+    );
+    if (!teamAwayFlagUrl) {
+      teamAwayFlagUrl = getflags.getflag(matches[i].teamAwayName);
+    }
+    if (!teamHomeFlagUrl) {
+      teamHomeFlagUrl = getflags.getflag(matches[i].teamHomeName);
+    }
+    const match = matches[i];
+    const mat = {
+      match_title: match.matchTitle,
+      home: {
+        name: match.teamHomeName,
+        code: match.teamHomeCode.toUpperCase(),
+      },
+      away: {
+        name: match.teamAwayName,
+        code: match.teamAwayCode.toUpperCase(),
+      },
+      date: match.date,
+      id: match.matchId,
+      livestatus: "",
+      result: "",
+      status: "",
+      inPlay: "",
+      lineups: "",
+      teamHomeFlagUrl,
+      teamAwayFlagUrl,
+    };
+
+    liveStatus = "Line-ups are not out yet!";
+    mat.livestatus = liveStatus;
+    upcomingMatches.results.push(mat);
+  }
+  const etime = new Date().getSeconds();
+  let time = etime - stime;
+  res.status(200).json({
+    upcoming: upcomingMatches,
+    time: time,
+  });
+});
+
+router.get("/football/:userid", async (req, res) => {
+  const stime = new Date().getSeconds();
+  const date = new Date();
+  date.setDate(date.getDate() - 1);
+  const startDate = date.toISOString();
+  date.setDate(date.getDate() + 10);
+  const endDate = date.toISOString();
+  const matches = await FMatch.find({
+    $and: [{
+      matchType: "football"
+    },
+    {
+      date: {
+        $gte: new Date(startDate),
+        $lt: new Date(endDate),
+      }
+    }]
+  });
+  const promises = matches.map((fruit) =>
+    FLiveMatches.findOne({ matchId: fruit.matchId })
+  );
+  const user = await User.findOne({ _id: req.params.userid });
+  const allmatches = await Promise.all(promises);
+  const matchdetails = allmatches.filter((match, index) => {
+    if (match?._id) {
+      return match;
+    }
+  });
+  const usermatchespromises = user.matchIds.map((id) =>
+    FLiveMatches.findOne({ matchId: id })
+  );
+  //const usermatchesdetails = await Promise.all(usermatchespromises);
+  const usermatchesdetails = await FLiveMatches.find({
+    matchId: { $in: [...user.matchIds] },
+  });
+  const allusermatchesdetails = usermatchesdetails.filter((match, index) => {
+    if (match?._id) {
+      return match;
+    }
+  });
+  const userpromises = user.matchIds.map((id) =>
+    FMatch.findOne({ matchId: id })
+  );
+  const usermatches = await FMatch.find({
+    matchId: { $in: [...user.matchIds] },
+  });
+  const allusermatches = usermatches.filter((match, index) => {
+    if (match?._id) {
+      return match;
+    }
+  });
+  const teampromises = user.matchIds.map((id) =>
+    Team.find({
+      $and: [{ matchId: id }, { userId: req.params.userid }],
+    })
+  );
+
+  const contestpromises = user.matchIds.map((id) =>
+    Contest.find({
+      $and: [{ matchId: id }, { userIds: req.params.userid }],
+    })
+  );
+  const teamse = await Promise.all(teampromises);
+  const contestse = await Promise.all(contestpromises);
+  let allcontests = [];
+  let allteams = [];
+  contestse.forEach((c) => {
+    c.forEach((k) => {
+      allcontests.push(k);
+    });
+  });
+  teamse.forEach((c) => {
+    c.forEach((k) => {
+      allteams.push(k);
+    });
+  });
+  console.log(allcontests, "matchdetails");
+  const upcomingMatches = {
+    results: [],
+  };
+  const completedMatches = {
+    results: [],
+  };
+  const liveMatches = {
+    results: [],
+  };
+  const userMatches = [];
+  const userMatchesDetails = {
+    results: [],
+  };
+  for (let i = 0; i < user.matchIds.length; i++) {
+    const match = allusermatches.find((m) => m.matchId == user.matchIds[i]);
+    const match_det = allusermatchesdetails.find(
+      (m) => m.matchId == user.matchIds[i]
+    );
+    if (match_det) {
+      let teamHomeFlagUrl = flagURLs.findFlagUrlByCountryName(
+        match.teamHomeName
+      );
+      let teamAwayFlagUrl = flagURLs.findFlagUrlByCountryName(
+        match.teamAwayName
+      );
+      if (!teamAwayFlagUrl) {
+        teamAwayFlagUrl = getflags.getflag(match.teamAwayName);
+      }
+      if (!teamHomeFlagUrl) {
+        teamHomeFlagUrl = getflags.getflag(match.teamHomeName);
+      }
+      const mat = {
+        match_title: match.matchTitle,
+        home: {
+          name: match.teamHomeName,
+          code: match.teamHomeCode.toUpperCase(),
+        },
+        away: {
+          name: match.teamAwayName,
+          code: match.teamAwayCode.toUpperCase(),
+        },
+        date: match.date,
+        id: match.matchId,
+        livestatus: "",
+        result: "",
+        status: "",
+        inPlay: "",
+        teamHomeFlagUrl,
+        teamAwayFlagUrl,
+      };
+      mat.status = match_det.status;
+      mat.inPlay = match_det.inPlay;
+      liveStatus = "Line-ups are out!";
+      mat.livestatus = liveStatus;
+      let contests = [];
+      const teams = [];
+      if (match_det.result == "In Progress") {
+        if (match_det.status) {
+          mat.livestatus = match_det.status;
+          mat.lineups = "Lineups Out";
+        }
+        mat.result = "No";
+        let teams = allteams.filter(
+          (a) => a.matchId == match_det.matchId && a.userId == req.params.userid
+        );
+        let contests = allcontests.filter(
+          (a) =>
+            a.matchId == match_det.matchId &&
+            a.userIds.includes(req.params.userid)
+        );
+
+        if (contests.length > 0 || teams.length > 0) {
+          mat.contests = contests;
+          mat.teams = teams;
+          if (isToday(new Date(mat.date), new Date())) {
+            liveMatches.results.push(mat);
+          }
+        }
+      } else if (req.params.userid && match_det.result == "Complete") {
+        let teams = allteams.filter(
+          (a) => a.matchId == match_det.matchId && a.userId == req.params.userid
+        );
+        let contests = allcontests.filter(
+          (a) =>
+            a.matchId == match_det.matchId &&
+            a.userIds.includes(req.params.userid)
+        );
+        if (teams.length > 0) {
+          mat.contests = contests;
+          mat.teams = teams;
+          mat.result = "Yes";
+          completedMatches.results.push(mat);
+          userMatchesDetails.results.push(mat);
+        }
+      }
+    }
+  }
+  for (let i = 0; i < matches.length; i++) {
+    teamAwayFlagUrl = flagURLs.findFlagUrlByCountryName(
+      matches[i].teamAwayName
+    );
+    teamHomeFlagUrl = flagURLs.findFlagUrlByCountryName(
+      matches[i].teamHomeName
+    );
+    if (!teamAwayFlagUrl) {
+      teamAwayFlagUrl = getflags.getflag(matches[i].teamAwayName);
+    }
+    if (!teamHomeFlagUrl) {
+      teamHomeFlagUrl = getflags.getflag(matches[i].teamHomeName);
+    }
+    const match = matches[i];
+    const mat = {
+      match_title: match.matchTitle,
+      home: {
+        name: match.teamHomeName,
+        code: match.teamHomeCode.toUpperCase(),
+      },
+      away: {
+        name: match.teamAwayName,
+        code: match.teamAwayCode.toUpperCase(),
+      },
+      date: match.date,
+      id: match.matchId,
+      livestatus: "",
+      result: "",
+      status: "",
+      inPlay: "",
+      lineups: "",
+      teamHomeFlagUrl,
+      teamAwayFlagUrl,
+    };
+
+    liveStatus = "Line-ups are not out yet!";
+    mat.livestatus = liveStatus;
+    const matt = matchdetails.find((m) => m.matchId == matches[i].matchId);
+    if (matt) {
+      if (matt.result == "In Progress" || !matt.result) {
+        if (matt.status) {
+          mat.livestatus = matt.status;
+        }
+        if (!(matt.inPlay == "Yes") && matt?.teamHomePlayers?.length > 0) {
+          upcomingMatches.results.push(mat);
+          mat.lineups = "Lineups Out";
+        } else {
+          mat.result = "No";
+          mat.lineups = "Lineups Out";
+          if (req.params.userid) {
+          }
+        }
+      } else {
+        mat.result = "Yes";
+      }
+    } else {
+      if (matt?.teamHomePlayers?.length > 0) {
+        mat.lineups = "Lineups Out";
+      }
+      upcomingMatches.results.push(mat);
+    }
+  }
+  const etime = new Date().getSeconds();
+  let time = etime - stime;
+  res.status(200).json({
+    upcoming: upcomingMatches,
+    past: userMatchesDetails,
+    live: liveMatches,
+    new: matches,
+    usermatch: userMatchesDetails,
+    time: time,
+  });
+});
+
 router.get("/livematches", async (req, res) => {
   let date = new Date();
   const matchess = [];
@@ -1020,6 +1229,19 @@ router.get("/allmatches", async (req, res) => {
     matches,
   });
 });
+
+router.get("/allFbMatches", async (req, res) => {
+  var start = new Date();
+  start.setUTCHours(0, 0, 0, 0);
+  var end = new Date();
+  end.setUTCHours(23, 59, 59, 999);
+  const matches = await FMatch.find();
+  res.status(200).json({
+    message: "teams got successfully",
+    matches,
+  });
+});
+
 router.get("/alllivematches", async (req, res) => {
   var start = new Date();
   start.setUTCHours(0, 0, 0, 0);

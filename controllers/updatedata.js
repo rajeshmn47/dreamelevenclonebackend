@@ -14,6 +14,7 @@ const transaction = require("./transaction");
 const User = require("../models/user");
 const req = unirest("GET", "https://www.fast2sms.com/dev/bulkV2");
 const matches = require("./matchDB-controller");
+const fMatches = require("./fMatchDB-controller");
 const addingteam = require("./addplayer");
 const addingteame = require("./teamcreatecontroller");
 const addlivenew = require("./addlivedetails");
@@ -117,6 +118,23 @@ router.get("/addmatchtodb", async (req, res) => {
     });
   }
 });
+router.get("/addFmatchtodb", async (req, res) => {
+  try {
+    await fMatches.addMatchtoDb();
+    //await addingteam.addPlayers();
+    res.status(200).json({
+      message: "added matches successfully",
+      success: false,
+    });
+  } catch (err) {
+    console.log(`Error : ${err}`);
+    res.status(200).json({
+      message: "could not save",
+      success: false,
+    });
+  }
+});
+
 
 router.get("/addmatchids", async (req, res) => {
   try {

@@ -1,5 +1,6 @@
 const flagURLs = require("country-flags-svg");
 const otpGenerator = require("otp-generator");
+const request = require("request");
 const Razorpay = require("razorpay");
 const express = require("express");
 const dotenv = require("dotenv");
@@ -139,12 +140,37 @@ router.get("/depositData", async (req, res) => {
 
 router.get("/approve", async (req, res) => {
   console.log(req.query, "deposit");
+
   try {
     if (mongoose.Types.ObjectId.isValid(req.query.depositId)) {
       const deposit = await NewPayment.findById(req.query.depositId);
       console.log(deposit, 'deposit')
       deposit.verified = true;
       await deposit.save();
+      const options = {
+        method:"POST",
+        url: "https://graph.facebook.com/v17.0/154018731120852/messages",
+        headers: {
+          'Authorization': `Bearer ${process.env.whatsappkey}`,
+          useQueryString: true,
+          'Content-Type': 'application/json'
+        },
+        body:`{ \"messaging_product\": \"whatsapp\", \"to\": \"919380899596\", \"type\": \"template\", \"template\": { \"name\": \"hello_woreeld\", \"language\": { \"code\": \"en_US\" } } }`
+      };
+      // Doubt in this part, is request is synchronous or non synchronous?
+      const promise = new Promise((resolve, reject) => {
+        request(options, (error, response, body) => {
+          if (error) {
+            reject(error);
+          }
+          // console.log(body)
+          const s = JSON.parse(body);
+          resolve(s);
+        });
+      });
+      promise
+        .then(async (s) => {
+        })
     }
     if (mongoose.Types.ObjectId.isValid(req.query.userId)) {
       const user = await User.findById(req.query.userId);

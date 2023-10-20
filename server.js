@@ -1,6 +1,5 @@
 require("dotenv").config();
 var express = require("express");
-
 const app = express();
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -21,6 +20,7 @@ const teamstandingsA = require("./controllers/updatestandings");
 const updatedata = require("./controllers/updatedata");
 const transaction = require("./controllers/transaction");
 const matches = require("./controllers/matchDB-controller");
+const fMatches = require("./controllers/fMatchDB-controller");
 const addLiveCommentary = require("./controllers/firebase");
 const teamstandings = require("./controllers/updateteam");
 const addlivescoresnew = require("./controllers/addlivescoresdetails");
@@ -36,7 +36,7 @@ by the user in the HTML form. */
 // Allowing app to use body parser
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cors({ origin: "*", credentials: false }));
+app.use(cors({ origin: "http://localhost:3000", credentials: false }));
 app.use("/", home);
 app.use("/", contest);
 app.use("/", teamdata);
