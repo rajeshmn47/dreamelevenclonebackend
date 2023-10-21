@@ -36,7 +36,7 @@ by the user in the HTML form. */
 // Allowing app to use body parser
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cors({ origin: "http://localhost:3000", credentials: false }));
+app.use(cors({ origin: "*", credentials: false }));
 app.use("/", home);
 app.use("/", contest);
 app.use("/", teamdata);
