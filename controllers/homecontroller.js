@@ -41,7 +41,7 @@ router.get("/myMatches/:userid", async (req, res) => {
     results: [],
   };
   const findDate = new Date();
-  const matches = await Matches.find();
+  const matches = await Matches.find({ matchId: { $in: [...user.matchIds] }});
   const usermatchespromises = user.matchIds.map((id) =>
     LiveMatches.findOne({ matchId: id })
   );

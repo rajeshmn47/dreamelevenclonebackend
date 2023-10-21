@@ -88,13 +88,13 @@ module.exports.addLivecommentary = async function addcommentry() {
             const a = response?.data?.commentaryList.reverse();
             const matchdata = response.data.matchHeader;
             const { miniscore } = response.data;
-            const cityRef = db.db.collection("cities").doc(m[i].matchId);
-            const doc = await cityRef.get();
+            const commentaryRef = db.db.collection("commentary").doc(m[i].matchId);
+            const doc = await commentaryRef.get();
             console.log("nelson");
             if (!doc.exists) {
               console.log("No such document!");
-              const citRef = db.db.collection("cities").doc(m[i].matchId);
-              const res = await citRef.set(
+              const commentaryRef = db.db.collection("commentary").doc(m[i].matchId);
+              const res = await commentaryRef.set(
                 {
                   capital: [...a],
                   livedata: matchdata,
@@ -104,10 +104,10 @@ module.exports.addLivecommentary = async function addcommentry() {
               );
             } else {
               console.log("getting match");
-              const citRef = db.db.collection("cities").doc(m[i].matchId);
+              const commentaryRef = db.db.collection("commentary").doc(m[i].matchId);
               let xyz = doc.data().capital;
               let commentary = getcommentary.getcommentary(xyz, a);
-              const res = await citRef.set(
+              const res = await commentaryRef.set(
                 {
                   capital: [...commentary],
                   livedata: matchdata,
