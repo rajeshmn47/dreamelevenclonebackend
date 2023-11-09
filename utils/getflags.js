@@ -14,7 +14,7 @@ module.exports.getflag = function (teamname) {
     if (flagurl) {
       return flagurl;
     } else {
-      return "https://i.pinimg.com/originals/1b/56/5b/1b565bb93bbc6968be498ccb00504e8f.jpg";
+      return "https://c8.alamy.com/comp/WKN91Y/illustration-of-a-cricket-sports-player-batsman-batting-front-view-set-inside-shield-WKN91Y.jpg";
     }
   }
 };

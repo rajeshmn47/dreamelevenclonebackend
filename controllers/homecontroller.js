@@ -89,11 +89,11 @@ router.get("/myMatches/:userid", async (req, res) => {
       );
       if (!teamAwayFlagUrl) {
         teamAwayFlagUrl =
-          "https://i.pinimg.com/originals/1b/56/5b/1b565bb93bbc6968be498ccb00504e8f.jpg";
+          "https://c8.alamy.com/comp/WKN91Y/illustration-of-a-cricket-sports-player-batsman-batting-front-view-set-inside-shield-WKN91Y.jpg";
       }
       if (!teamHomeFlagUrl) {
         teamHomeFlagUrl =
-          "https://i.pinimg.com/originals/1b/56/5b/1b565bb93bbc6968be498ccb00504e8f.jpg";
+          "https://c8.alamy.com/comp/WKN91Y/illustration-of-a-cricket-sports-player-batsman-batting-front-view-set-inside-shield-WKN91Y.jpg";
       }
       const match = matches[i];
       const mat = {
@@ -228,11 +228,11 @@ router.get("/myMatches/:userid", async (req, res) => {
     );
     if (!teamAwayFlagUrl) {
       teamAwayFlagUrl =
-        "https://i.pinimg.com/originals/1b/56/5b/1b565bb93bbc6968be498ccb00504e8f.jpg";
+        "https://c8.alamy.com/comp/WKN91Y/illustration-of-a-cricket-sports-player-batsman-batting-front-view-set-inside-shield-WKN91Y.jpg";
     }
     if (!teamHomeFlagUrl) {
       teamHomeFlagUrl =
-        "https://i.pinimg.com/originals/1b/56/5b/1b565bb93bbc6968be498ccb00504e8f.jpg";
+        "https://c8.alamy.com/comp/WKN91Y/illustration-of-a-cricket-sports-player-batsman-batting-front-view-set-inside-shield-WKN91Y.jpg";
     }
     const match = umatchesdetails[i];
     const mat = {
