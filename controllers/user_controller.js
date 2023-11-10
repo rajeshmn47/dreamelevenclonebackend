@@ -28,7 +28,7 @@ const transporter = nodemailer.createTransport(
     secure: false,
     requireTLS: true,
     auth: {
-      user: "rajeshmn47@gmail.com",
+      user: "webrizen@gmail.com",
       pass: process.env.password,
     },
   })
@@ -187,7 +187,7 @@ router.post("/register", async (req, res) => {
   user1.wallet = 10000;
   user1.otp = otp;
   const mailOptions = {
-    from: "rajeshmn47@gmail.com",
+    from: "webrizen@gmail.com",
     to: req.body.email,
     subject: "Sending Email using Node.js[nodemailer]",
     text: `enter this otp ${otp}`,
@@ -355,7 +355,7 @@ router.get("/forgot-password/:email", async (req, res) => {
     if (user1) {
       user1.otp = otp;
       const mailOptions = {
-        from: "rajeshmn47@gmail.com",
+        from: "webrizen@gmail.com",
         to: req.params.email,
         subject: "Sending Email using Node.js[nodemailer]",
         text: `enter this otp ${otp}`,
