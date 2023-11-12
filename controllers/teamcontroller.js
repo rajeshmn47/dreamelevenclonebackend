@@ -9,6 +9,7 @@ const User = require("../models/user");
 const router = express.Router();
 
 router.post("/saveteam/:id", async (req, res) => {
+  console.log(req.body,'team')
   const players = [];
   let points = 0;
   for (p in req.body.players) {
