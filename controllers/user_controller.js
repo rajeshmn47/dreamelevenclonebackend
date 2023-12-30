@@ -265,8 +265,8 @@ router.post("/register", async (req, res) => {
             }
           });
         } else if (!user.verified) {
-          user1.otp = otp;
-          await user1.save();
+          user.otp = otp;
+          await user.save();
           transporter.sendMail(mailOptions, (error, info) => {
             if (error) {
               console.log(error);
@@ -280,7 +280,7 @@ router.post("/register", async (req, res) => {
           });
         } else {
           res.status(200).json({
-            message: "user already exists",
+            message: "user already exists,please log in",
             success: false,
           });
         }
@@ -290,6 +290,7 @@ router.post("/register", async (req, res) => {
 });
 router.post("/otp", async (req, res) => {
   const user = await User.findOne({ email: req.body.email });
+  console.log(user,req.body,'body')
   if (parseInt(user.otp) == parseInt(req.body.otp)) {
     user.verified = true;
     const userid = user._id;
@@ -301,6 +302,7 @@ router.post("/otp", async (req, res) => {
         res.status(200).json({
           message: "ure account created successfully u can login",
           token,
+          user
         });
       } else {
         res.status(400).json({
