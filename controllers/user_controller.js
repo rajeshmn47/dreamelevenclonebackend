@@ -290,7 +290,6 @@ router.post("/register", async (req, res) => {
 });
 router.post("/otp", async (req, res) => {
   const user = await User.findOne({ email: req.body.email });
-  console.log(user,req.body,'body')
   if (parseInt(user.otp) == parseInt(req.body.otp)) {
     user.verified = true;
     const userid = user._id;

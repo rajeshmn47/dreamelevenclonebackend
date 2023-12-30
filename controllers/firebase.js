@@ -43,7 +43,6 @@ const serviceAccount = {
 // Add a new document with a generated id.
 module.exports.addLivecommentary = async function addcommentry() {
   try {
-    console.log("rajesh");
     let date = new Date();
     let matchess = [];
     const endDate = new Date(date.getTime());
@@ -57,9 +56,7 @@ module.exports.addLivecommentary = async function addcommentry() {
     for (let i = 0; i < matches.length; i++) {
       const matchid = matches[i].matchId;
       const teams = await Team.find({ matchId: matchid });
-      console.log("beforefound", matchid);
       if (teams.length > 0) {
-        console.log("found", matchess);
         const match = await MatchLiveDetails.findOne({ matchId: matchid });
         if (match && !(match.result == "Complete")) {
           matchess.push(matches[i]);
@@ -70,7 +67,6 @@ module.exports.addLivecommentary = async function addcommentry() {
     for (let i = 0; i < matchess.length; i++) {
       if (m[i].matchId.length > 3) {
         const keys = await getkeys.getkeys();
-        console.log(m[i].matchId, "matchid");
         let user = await User.findById("646c70679da9df38e6273a43");
         user.totalhits = user.totalhits + 1;
         await user.save();
@@ -90,9 +86,7 @@ module.exports.addLivecommentary = async function addcommentry() {
             const { miniscore } = response.data;
             const commentaryRef = db.db.collection("commentary").doc(m[i].matchId);
             const doc = await commentaryRef.get();
-            console.log("nelson");
             if (!doc.exists) {
-              console.log("No such document!");
               const commentaryRef = db.db.collection("commentary").doc(m[i].matchId);
               const res = await commentaryRef.set(
                 {
@@ -103,7 +97,6 @@ module.exports.addLivecommentary = async function addcommentry() {
                 { merge: true }
               );
             } else {
-              console.log("getting match");
               const commentaryRef = db.db.collection("commentary").doc(m[i].matchId);
               let xyz = doc.data().capital;
               let commentary = getcommentary.getcommentary(xyz, a);
