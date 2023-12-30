@@ -64,19 +64,19 @@ const api_key =
 cron.schedule("0 * * * *", async function () {
   await transaction.startTransaction();
 });
-cron.schedule("* * * * *", async function () {
+cron.schedule("*/50 * * * *", async function () {
   await addLiveCommentary.addLivecommentary();
 });
-cron.schedule("*/5 * * * *", async function () {
+cron.schedule("*/50 * * * *", async function () {
   await teamstandings.addTeamstandingstodb();
 });
-cron.schedule("*/5 * * * *", async function () {
+cron.schedule("*/50 * * * *", async function () {
   await addlivescoresnew.addLivematchtodb();
 });
-cron.schedule("*/10 * * * *", async function () {
+cron.schedule("*/50 * * * *", async function () {
   await addlivenew.addLivematchtodb();
 });
-cron.schedule("0 0 * * 1", async function () {
+ cron.schedule("*/50 * * * *", async function () {
   await matches.addMatchtoDb();
   await addingteam.addPlayers();
 });
