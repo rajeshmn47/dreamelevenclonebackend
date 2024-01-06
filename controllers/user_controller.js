@@ -35,11 +35,11 @@ const transporter = nodemailer.createTransport(
 );
 
 const client = new OAuth2Client(
-  "711974125982-gaeieriu9q60ctbps2qpbjitv0374d7l.apps.googleusercontent.com"
+  "438326678548-td4f7iss3q98btacu17h57mpi8tpn7cq.apps.googleusercontent.com"
 );
 
 const clientId =
-  "711974125982-gaeieriu9q60ctbps2qpbjitv0374d7l.apps.googleusercontent.com";
+  "438326678548-td4f7iss3q98btacu17h57mpi8tpn7cq.apps.googleusercontent.com";
 
 router.post("/googlelogin", async (req, res, next) => {
   const { tokenId } = req.body;
@@ -305,8 +305,7 @@ router.post("/otp", async (req, res) => {
         });
       } else {
         res.status(400).json({
-          message: "ure account failed to creat successfully",
-          token,
+          message: "ure account failed to creat successfully"
         });
       }
     });
