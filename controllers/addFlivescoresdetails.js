@@ -54,7 +54,7 @@ module.exports.addLivematchtodb = async function () {
     } else {
       const keys = await getkeys.getkeys();
       const date1 = matches[i].date;
-      let user = await User.findById("646c70679da9df38e6273a43");
+      let user = await User.findById(process.env.refUserId);
       user.totalhits = user.totalhits + 1;
       await user.save();
       const options = {

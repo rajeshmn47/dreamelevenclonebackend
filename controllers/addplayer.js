@@ -75,7 +75,7 @@ module.exports.addPlayers = async function () {
       } catch (error) {
         console.error(error);
       }
-      let user = await User.findById("646c70679da9df38e6273a43");
+      let user = await User.findById(process.env.refUserId);
       user.totalhits = user.totalhits + 1;
       await user.save();
       const options_two = {

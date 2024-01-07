@@ -80,7 +80,7 @@ module.exports.addMatchtoDb = async function () {
   for (let i = 0; i < numberOfDays; i++) {
     console.log("envkey");
     const keys = await getkeys.getkeys();
-    let user = await User.findById("646c70679da9df38e6273a43");
+    let user = await User.findById(process.env.refUserId);
     user.totalhits = user.totalhits + 1;
     await user.save();
     const options = {
