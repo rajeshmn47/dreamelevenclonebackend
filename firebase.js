@@ -37,7 +37,6 @@ const db = getFirestore();
 // Add a new document with a generated id.
 module.exports.addLivecommentary = async function addcommentry() {
   try {
-    console.log("rajesh");
     let date = new Date();
     const matchess = [];
     const endDate = new Date(date.getTime() + 10 * 60 * 60 * 1000);
@@ -48,20 +47,15 @@ module.exports.addLivecommentary = async function addcommentry() {
         $lt: new Date(endDate),
       },
     });
-    console.log(matches, "matches");
     for (let i = 0; i < matches.length; i++) {
       const matchid = matches[i].matchId;
       const match = await MatchLiveDetails.findOne({ matchId: matchid });
-
-      console.log(match?.result, "match");
       if (match && !(match?.result == "Yes")) {
-        console.log(matches[i].matchId, "matchid");
         matchess.push(matches[i]);
       }
     }
     for (let i = 0; i < matchess.length; i++) {
       if (matchess[i].cmtMatchId.length > 3) {
-        console.log(matchess[i].cmtMatchId, "id");
         const keys = await getkeys.getkeys();
         const options = {
           method: "GET",
@@ -78,12 +72,10 @@ module.exports.addLivecommentary = async function addcommentry() {
           const docSnap = await getDoc(docRef);
 
           if (docSnap.exists()) {
-            console.log("Document data:", docSnap.data());
           } else {
             // docSnap.data() will be undefined in this case
             console.log("No such document!");
           }
-          console.log(response.data.commentaryList);
           const a = response.data.commentaryList[0];
           if (docSnap?.data()?.capital) {
             await setDoc(washingtonRef, {
@@ -106,6 +98,5 @@ module.exports.addLivecommentary = async function addcommentry() {
     name: "bangalore",
     country: "karnataka",
   });
-  console.log("Added document with ID: ", res.id);
   return res;
 };

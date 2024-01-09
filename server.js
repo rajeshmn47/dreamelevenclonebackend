@@ -96,7 +96,6 @@ cron.schedule("0 */8 * * *", async function () {
 // transaction.startTransaction();
 async function gettingkeys() {
   const data = await getkeys.getkeys();
-  console.log(data, "keys");
 }
 //gettingkeys();
 const PORT = process.env.PORT || 8000;

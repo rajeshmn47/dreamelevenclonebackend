@@ -123,7 +123,6 @@ router.get("/myMatches/:userid", async (req, res) => {
       const matt = allusermatchesdetails.find(
         (m) => m.matchId == matches[i].matchId
       );
-      console.log(matt,'matt')
       let contests = [];
       let teams = [];
       if (matt && matt.result == "In Progress") {
@@ -143,7 +142,6 @@ router.get("/myMatches/:userid", async (req, res) => {
         }
       }
       if (req.params.userid && matt?.result == "Complete") {
-        console.log(matt,'matt')
         mat.result = "Yes";
         let teams = allteams.filter(
           (a) => a.matchId == matt.matchId && a.userId == req.params.userid
@@ -519,9 +517,6 @@ router.get("/projest", async (req, res) => {
       },
       data,
     });
-    console.log(i, "i");
-    console.log(d, "name");
-    console.log(d, "dr");
   }
   res.status(200).json({
     message: "got all results successfully",
@@ -1005,7 +1000,6 @@ router.get("/football/:userid", async (req, res) => {
       allteams.push(k);
     });
   });
-  console.log(allcontests, "matchdetails");
   const upcomingMatches = {
     results: [],
   };
