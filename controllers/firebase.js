@@ -90,7 +90,7 @@ module.exports.addLivecommentary = async function addcommentry() {
               const commentaryRef = db.db.collection("commentary").doc(m[i].matchId);
               const res = await commentaryRef.set(
                 {
-                  capital: [...a],
+                  commentary: [...a],
                   livedata: matchdata,
                   miniscore,
                 },
@@ -98,11 +98,11 @@ module.exports.addLivecommentary = async function addcommentry() {
               );
             } else {
               const commentaryRef = db.db.collection("commentary").doc(m[i].matchId);
-              let xyz = doc.data().capital;
+              let xyz = doc.data().commentary;
               let commentary = getcommentary.getcommentary(xyz, a);
               const res = await commentaryRef.set(
                 {
-                  capital: [...commentary],
+                  commentary: [...commentary],
                   livedata: matchdata,
                   miniscore,
                 },
