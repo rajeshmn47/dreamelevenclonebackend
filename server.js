@@ -65,7 +65,7 @@ const api_key =
 cron.schedule("0 * * * *", async function () {
   await transaction.startTransaction();
 });
-cron.schedule("* * * * * *", async function () {
+cron.schedule("* * * * *", async function () {
   await addLiveCommentary.addLivecommentary();
 });
 cron.schedule("*/50 * * * *", async function () {
