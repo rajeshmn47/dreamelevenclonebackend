@@ -53,6 +53,25 @@ module.exports.addLivecommentary = async function addcommentry() {
         $lt: new Date(endDate),
       },
     });
+
+  //  const citiesRef = db.db.collection('commentary');
+  //  const snapshot = await citiesRef.get();
+  //  if (snapshot.empty) {
+  //    console.log('No matching documents.');
+  //    return;
+   // }
+   // snapshot.forEach(async doc => {
+    //  console.log(doc.id, '=>', doc.data());
+    //  const commentaryRef = db.db.collection("commentary").doc(doc.id);
+    //  const res = await commentaryRef.set(
+    //    {
+    //      commentary: [...doc.data().capital],
+    //      livedata: !doc.data().matchdata ? 'not found' : doc.data().matchdata,
+    //      miniscore: !doc.data().miniscore ? 'not found' : doc.data().miniscore
+    //    },
+    //    { merge: true }
+     // );
+    //});
     for (let i = 0; i < matches.length; i++) {
       const matchid = matches[i].matchId;
       const teams = await Team.find({ matchId: matchid });

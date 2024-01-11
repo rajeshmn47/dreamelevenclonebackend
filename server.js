@@ -61,10 +61,11 @@ const api_key =
 // ...
 
 // Remove the error.log file every twenty-first day of the month.
+//addLiveCommentary.addLivecommentary();
 cron.schedule("0 * * * *", async function () {
   await transaction.startTransaction();
 });
-cron.schedule("*/50 * * * *", async function () {
+cron.schedule("* * * * * *", async function () {
   await addLiveCommentary.addLivecommentary();
 });
 cron.schedule("*/50 * * * *", async function () {
