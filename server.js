@@ -54,6 +54,9 @@ mongoose.connect(
     if (error) {
       console.log(`Error!${error}`);
     }
+    else{
+      console.log('connected to database')
+    }
   }
 );
 const api_key =
@@ -68,13 +71,13 @@ cron.schedule("0 * * * *", async function () {
 cron.schedule("* * * * *", async function () {
   await addLiveCommentary.addLivecommentary();
 });
-cron.schedule("*/50 * * * *", async function () {
+cron.schedule("* * * * *", async function () {
   await teamstandings.addTeamstandingstodb();
 });
-cron.schedule("*/50 * * * *", async function () {
+cron.schedule("*/5 * * * *", async function () {
   await addlivescoresnew.addLivematchtodb();
 });
-cron.schedule("*/50 * * * *", async function () {
+cron.schedule("*/10 * * * *", async function () {
   await addlivenew.addLivematchtodb();
 });
  cron.schedule("0 22 * * *", async function () {
