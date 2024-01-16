@@ -90,7 +90,7 @@ cron.schedule("0 */20 * * *", async function () {
 cron.schedule("0 */8 * * *", async function () {
   await addIds.addMatchIds();
 });
-// livedetails.addLivematchtodb();
+ addlivenew.addLivematchtodb();
 // livescore.addLivematchtodb();
 // addIds.addMatchIds();
 // teamstandings.addTeamstandingstodb();

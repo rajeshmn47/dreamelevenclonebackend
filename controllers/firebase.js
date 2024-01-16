@@ -119,6 +119,7 @@ module.exports.addLivecommentary = async function addcommentry() {
               const commentaryRef = db.db.collection("commentary").doc(m[i].matchId);
               let xyz = doc.data().commentary;
               let commentary = getcommentary.getcommentary(xyz, a);
+              console.log(miniscore,matchdata,'testmyl')
               const res = await commentaryRef.set(
                 {
                   commentary: [...commentary],

@@ -5,7 +5,7 @@ const Contest = require("../models/contest");
 const MatchLive = require("../models/matchlive");
 const User = require("../models/user");
 const Player = require("../models/players");
-const getkeys = require("../crickeys");
+const getkeys = require("../apikeys");
 const db = require("./firebaseinitialize");
 const addMatchIds = require("./addMatchIds");
 // function prizeBreakupRules(prize, numWinners){
@@ -41,9 +41,6 @@ module.exports.addLivematchtodb = async function () {
     const match = await MatchLive.findOne({ matchId });
     if (match) {
     } else {
-      let user = await User.findById(process.env.refUserId);
-      user.totalhits = user.totalhits + 1;
-      await user.save();
       const keys = await getkeys.getkeys();
       const date1 = "2679243";
       const options = {

@@ -10,7 +10,7 @@ const {
 } = require("firebase-admin/firestore");
 const MatchLiveDetails = require("./models/match_live_details_scores_copy");
 const Matches = require("./models/matchtwo");
-const getkeys = require("../apikeys");
+const getkeys = require("../crickeys");
 
 const serviceAccount = {
   type: "service_account",

@@ -2,7 +2,6 @@ const request = require("request");
 const axios = require("axios");
 const Match = require("../models/match");
 const User = require("../models/user");
-const getkeys = require("../crickeys");
 // function prizeBreakupRules(prize, numWinners){
 //     let prizeMoneyBreakup = [];
 //     for(let i = 0; i < numWinners; i++){
@@ -82,7 +81,7 @@ module.exports.addPlayers = async function () {
         method: "GET",
         url: `https://cricbuzz-cricket.p.rapidapi.com/teams/v1/${matches[i].teamAwayId}/players`,
         headers: {
-          "X-RapidAPI-Key": keys,
+          "X-RapidAPI-Key": "3827482ab0msh2682459121bc4e9p182f86jsn5e5bf239f56d",
           "X-RapidAPI-Host": "cricbuzz-cricket.p.rapidapi.com",
         },
       };

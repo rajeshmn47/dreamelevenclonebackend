@@ -1,8 +1,6 @@
 const request = require("request");
 const Match = require("../models/match");
 const Contest = require("../models/contest");
-const User = require("../models/user");
-const getkeys = require("../crickeys");
 
 // function prizeBreakupRules(prize, numWinners){
 //     let prizeMoneyBreakup = [];
@@ -15,27 +13,6 @@ function compare(a, b) {
   return a.date < b.date;
 }
 
-function getplayerImage(name) {
-  const options = {
-    method: "GET",
-    url: `https://cricket.sportmonks.com/api/v2.0/players/?filter[lastname]=${name}&api_token=
-        fTWhOiGhie6YtMBmpbw10skSjTmSgwHeLg22euC5qLMR1oT1eC6PRc8sEulv`,
-    headers: {
-      "x-rapidapi-host": "cricket-live-data.p.rapidapi.com",
-      "x-rapidapi-key": "773ece5d2bmsh8af64b6b53baed6p1e86c9jsnd416b0e51110",
-      api_token: "fTWhOiGhie6YtMBmpbw10skSjTmSgwHeLg22euC5qLMR1oT1eC6PRc8sEulv",
-      useQueryString: true,
-    },
-    Authorization: {
-      api_token: "fTWhOiGhie6YtMBmpbw10skSjTmSgwHeLg22euC5qLMR1oT1eC6PRc8sEulv",
-    },
-  };
-  let s = "";
-  request(options, (error, response, body) => {
-    s = JSON.parse(body);
-  });
-  return s;
-}
 
 module.exports.addMatchtoDb = async function () {
   function pad2(n) {
@@ -78,17 +55,12 @@ module.exports.addMatchtoDb = async function () {
     )}-${parseInt(endDate.getDate())}`
   );
   for (let i = 0; i < numberOfDays; i++) {
-    console.log("envkey");
-    const keys = await getkeys.getkeys();
-    let user = await User.findById(process.env.refUserId);
-    user.totalhits = user.totalhits + 1;
-    await user.save();
     const options = {
       method: "GET",
       url: "https://cricbuzz-cricket.p.rapidapi.com/matches/v1/upcoming",
       headers: {
         "x-rapidapi-host": "cricbuzz-cricket.p.rapidapi.com",
-        "x-rapidapi-key": keys,
+        "x-rapidapi-key": "3827482ab0msh2682459121bc4e9p182f86jsn5e5bf239f56d",
         useQueryString: true,
       },
     };

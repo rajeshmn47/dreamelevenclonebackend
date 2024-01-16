@@ -1,16 +1,8 @@
-const User = require("./models/user");
-
 module.exports.getkeys = async function () {
-  let totalhits = 0;
-  if (totalhits > 5000) {
-    totalhits = 0;
-  }
-  const date = new Date().getDate();
-  const keyindex = Math.floor(date / 2);
-  const keyi = Math.floor(totalhits / 250);
-  const keys = process.env.apikeys
-    .replace(/(\r\n|\n|\r)/gm, "")
-    .replace(/ /g, "")
-    .split(",");
+  const keys=process.env.apikeys.replace(/(\r\n|\n|\r)/gm, "").replace(/ /g, "")
+  .split(",");
+  console.log(keys,'apikeys')
+  const keyi = Math.floor(Math.floor(new Date().getHours())/12);
+  console.log(keyi,keys[keyi],"index");
   return keys[keyi];
 };
