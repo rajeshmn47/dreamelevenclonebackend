@@ -2,7 +2,6 @@ const request = require("request");
 const axios = require("axios");
 const Match = require("../models/match");
 const User = require("../models/user");
-const getkeys = require("../crickeys");
 // function prizeBreakupRules(prize, numWinners){
 //     let prizeMoneyBreakup = [];
 //     for(let i = 0; i < numWinners; i++){
@@ -75,14 +74,14 @@ module.exports.addPlayers = async function () {
       } catch (error) {
         console.error(error);
       }
-      let user = await User.findById("646c70679da9df38e6273a43");
+      let user = await User.findById(process.env.refUserId);
       user.totalhits = user.totalhits + 1;
       await user.save();
       const options_two = {
         method: "GET",
         url: `https://cricbuzz-cricket.p.rapidapi.com/teams/v1/${matches[i].teamAwayId}/players`,
         headers: {
-          "X-RapidAPI-Key": keys,
+          "X-RapidAPI-Key": "3827482ab0msh2682459121bc4e9p182f86jsn5e5bf239f56d",
           "X-RapidAPI-Host": "cricbuzz-cricket.p.rapidapi.com",
         },
       };

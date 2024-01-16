@@ -43,7 +43,6 @@ const serviceAccount = {
 // Add a new document with a generated id.
 module.exports.addLivecommentary = async function addcommentry() {
   try {
-    console.log("rajesh");
     let date = new Date();
     let matchess = [];
     const endDate = new Date(date.getTime());
@@ -54,12 +53,29 @@ module.exports.addLivecommentary = async function addcommentry() {
         $lt: new Date(endDate),
       },
     });
+
+  //  const citiesRef = db.db.collection('commentary');
+  //  const snapshot = await citiesRef.get();
+  //  if (snapshot.empty) {
+  //    console.log('No matching documents.');
+  //    return;
+   // }
+   // snapshot.forEach(async doc => {
+    //  console.log(doc.id, '=>', doc.data());
+    //  const commentaryRef = db.db.collection("commentary").doc(doc.id);
+    //  const res = await commentaryRef.set(
+    //    {
+    //      commentary: [...doc.data().capital],
+    //      livedata: !doc.data().matchdata ? 'not found' : doc.data().matchdata,
+    //      miniscore: !doc.data().miniscore ? 'not found' : doc.data().miniscore
+    //    },
+    //    { merge: true }
+     // );
+    //});
     for (let i = 0; i < matches.length; i++) {
       const matchid = matches[i].matchId;
       const teams = await Team.find({ matchId: matchid });
-      console.log("beforefound", matchid);
       if (teams.length > 0) {
-        console.log("found", matchess);
         const match = await MatchLiveDetails.findOne({ matchId: matchid });
         if (match && !(match.result == "Complete")) {
           matchess.push(matches[i]);
@@ -70,8 +86,7 @@ module.exports.addLivecommentary = async function addcommentry() {
     for (let i = 0; i < matchess.length; i++) {
       if (m[i].matchId.length > 3) {
         const keys = await getkeys.getkeys();
-        console.log(m[i].matchId, "matchid");
-        let user = await User.findById("646c70679da9df38e6273a43");
+        let user = await User.findById(process.env.refUserId);
         user.totalhits = user.totalhits + 1;
         await user.save();
         const options = {
@@ -90,26 +105,24 @@ module.exports.addLivecommentary = async function addcommentry() {
             const { miniscore } = response.data;
             const commentaryRef = db.db.collection("commentary").doc(m[i].matchId);
             const doc = await commentaryRef.get();
-            console.log("nelson");
             if (!doc.exists) {
-              console.log("No such document!");
               const commentaryRef = db.db.collection("commentary").doc(m[i].matchId);
               const res = await commentaryRef.set(
                 {
-                  capital: [...a],
+                  commentary: [...a],
                   livedata: matchdata,
                   miniscore,
                 },
                 { merge: true }
               );
             } else {
-              console.log("getting match");
               const commentaryRef = db.db.collection("commentary").doc(m[i].matchId);
-              let xyz = doc.data().capital;
+              let xyz = doc.data().commentary;
               let commentary = getcommentary.getcommentary(xyz, a);
+              console.log(miniscore,matchdata,'testmyl')
               const res = await commentaryRef.set(
                 {
-                  capital: [...commentary],
+                  commentary: [...commentary],
                   livedata: matchdata,
                   miniscore,
                 },

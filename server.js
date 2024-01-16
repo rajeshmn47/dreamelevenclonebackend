@@ -56,6 +56,9 @@ mongoose.connect(
     } else {
       console.log('MongoDB connection established successfully');
     }
+    else{
+      console.log('connected to database')
+    }
   }
 );
 const api_key =
@@ -63,13 +66,14 @@ const api_key =
 // ...
 
 // Remove the error.log file every twenty-first day of the month.
+//addLiveCommentary.addLivecommentary();
 cron.schedule("0 * * * *", async function () {
   await transaction.startTransaction();
 });
 cron.schedule("* * * * *", async function () {
   await addLiveCommentary.addLivecommentary();
 });
-cron.schedule("*/5 * * * *", async function () {
+cron.schedule("* * * * *", async function () {
   await teamstandings.addTeamstandingstodb();
 });
 cron.schedule("*/5 * * * *", async function () {
@@ -78,7 +82,7 @@ cron.schedule("*/5 * * * *", async function () {
 cron.schedule("*/10 * * * *", async function () {
   await addlivenew.addLivematchtodb();
 });
-cron.schedule("0 0 * * 1", async function () {
+ cron.schedule("0 22 * * *", async function () {
   await matches.addMatchtoDb();
   await addingteam.addPlayers();
 });
@@ -88,7 +92,7 @@ cron.schedule("0 */20 * * *", async function () {
 cron.schedule("0 */8 * * *", async function () {
   await addIds.addMatchIds();
 });
-// livedetails.addLivematchtodb();
+ addlivenew.addLivematchtodb();
 // livescore.addLivematchtodb();
 // addIds.addMatchIds();
 // teamstandings.addTeamstandingstodb();
@@ -98,7 +102,6 @@ cron.schedule("0 */8 * * *", async function () {
 // transaction.startTransaction();
 async function gettingkeys() {
   const data = await getkeys.getkeys();
-  console.log(data, "keys");
 }
 //gettingkeys();
 const PORT = process.env.PORT || 8000;

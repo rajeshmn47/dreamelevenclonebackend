@@ -1,9 +1,9 @@
 const User = require("./models/user");
 
 module.exports.getkeys = async function () {
-  let user = await User.findById("646c70679da9df38e6273a43");
+  let user = await User.findById(process.env.refUserId);
   const totalhits = user.totalhits;
-  if (totalhits > 1500) {
+  if (totalhits > 1100) {
     user.totalhits = 0;
     await user.save();
   }
@@ -11,7 +11,7 @@ module.exports.getkeys = async function () {
   console.log(totalhits, "totalhits");
   const keyindex = Math.floor(date / 2);
   const keyi = Math.floor(totalhits / 100);
-  console.log(keyi, process.env.crickeys, process.env.apikeys, "index");
+  console.log(keyi, process.env.crickeys, "index");
   const keys = process.env.crickeys
     .replace(/(\r\n|\n|\r)/gm, "")
     .replace(/ /g, "")
