@@ -204,10 +204,11 @@ router.post("/withdraw", async (req, res) => {
     const user = await User.findById(req.body.userId);
     if (user.wallet > req.body.amount) {
       await Withdraw.create({
-        upiId: req.body.upiId,
         amount: req.body.amount,
-        userId:req.body.userId
+        userId: req.body.userId
       });
+      user.wallet = user.wallet - req.body.amount;
+      await user.save();
       return res.status(200).json({
         message: "Successfully Saved",
       });
@@ -224,12 +225,32 @@ router.post("/withdraw", async (req, res) => {
   }
 });
 
+
 router.get("/withdrawData", async (req, res) => {
   console.log(req.body, "deposit");
   try {
-    let withdrawals = await Withdraw.find({
-      verified: false
-    });
+    let withdrawals = await Withdraw.aggregate(
+      [{ $match: { isWithdrawCompleted: false } },
+      {
+        $lookup: {
+          from: "usernews",//your schema name from mongoDB
+          localField: "userId", //user_id from user(main) model
+          foreignField: "_id",//user_id from user(sub) model
+          as: "user"//result var name
+        }
+      },]
+    )
+    // //const testproperties = await Booking.aggregate(
+    //  [{ $match: { propertyId: new ObjectId(req.params.propertyId) } },
+    //   {
+    //  $lookup: {
+    //     from: "users",//your schema name from mongoDB
+    //     localField: "user", //user_id from user(main) model
+    //      foreignField: "_id",//user_id from user(sub) model
+    //      as: "users",//result var name
+    //  }
+    // },]
+    // )
     return res.status(200).json({
       message: "Successfully Fetched",
       withdrawals: withdrawals
@@ -245,12 +266,38 @@ router.get("/approveWithdraw", async (req, res) => {
   console.log(req.body, "withdraw");
   try {
     const withdraw = await Withdraw.findById(req.query.withdrawId);
-    withdraw.verified = true;
-    const user = await User.findById(req.query.userId);
-    user.wallet = user.wallet - withdraw.amount;
-    await user.save();
+    withdraw.isWithdrawCompleted = true;
+    await withdraw.save();
     return res.status(200).json({
       message: "Approved Successfully",
+    });
+  } catch (err) {
+    return res.status(500).json({
+      message: "Something Went Wrong",
+    });
+  }
+});
+
+router.delete("/withdraw", async (req, res) => {
+  console.log(req.body, "withdraw");
+  try {
+    const withdraw = await Withdraw.remove(req.query.withdrawId);
+    return res.status(200).json({
+      message: "Deleted Successfully",
+    });
+  } catch (err) {
+    return res.status(500).json({
+      message: "Something Went Wrong",
+    });
+  }
+});
+
+router.delete("/deleteAllWithdraw", async (req, res) => {
+  console.log(req.body, "withdraw");
+  try {
+    const withdraw = await Withdraw.deleteMany();
+    return res.status(200).json({
+      message: "Deleted Successfully",
     });
   } catch (err) {
     return res.status(500).json({

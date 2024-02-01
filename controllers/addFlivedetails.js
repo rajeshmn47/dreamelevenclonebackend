@@ -1,13 +1,13 @@
-const request = require("request");
-const axios = require("axios");
-const FMatch = require("../models/fMatch");
-const Contest = require("../models/contest");
-const FMatchLive = require("../models/fMatchlive");
-const User = require("../models/user");
-const Player = require("../models/players");
-const getkeys = require("../crickeys");
-const db = require("./firebaseinitialize");
-const addMatchIds = require("./addMatchIds");
+// eslint-disable-next-line import/no-extraneous-dependencies
+const request = require('request');
+// eslint-disable-next-line import/no-unresolved, import/extensions
+const FMatch = require('../models/fMatch');
+const FMatchLive = require('../models/fMatchlive');
+const User = require('../models/user');
+// eslint-disable-next-line no-unused-vars
+const Player = require('../models/players');
+const getkeys = require('../crickeys');
+const db = require('./firebaseinitialize');
 // function prizeBreakupRules(prize, numWinners){
 //     let prizeMoneyBreakup = [];
 //     for(let i = 0; i < numWinners; i++){
@@ -15,18 +15,13 @@ const addMatchIds = require("./addMatchIds");
 //     }
 // }
 
-function compare(a, b) {
-  return a.date < b.date;
-}
-
-const io = 1;
+// eslint-disable-next-line no-unused-vars
 async function getplayerImage(name) {
   console.log(name);
-  return "https://cdn.sportmonks.com/images/cricket/placeholder.png";
+  return 'https://cdn.sportmonks.com/images/cricket/placeholder.png';
 }
 
 module.exports.addLivematchtodb = async function () {
-  const turing = await FMatchLive();
   let date = new Date();
   const endDate = new Date(date.getTime() + 0.5 * 60 * 60 * 1000);
   date = new Date(date.getTime() - 2 * 60 * 60 * 1000);
@@ -36,10 +31,13 @@ module.exports.addLivematchtodb = async function () {
       $lt: new Date(endDate),
     },
   });
-  console.log(matches, "matches");
+  console.log(matches, 'matches');
+  // eslint-disable-next-line no-plusplus
   for (let i = 0; i < matches.length; i++) {
-    const matchId = matches[i].matchId;
+    const { matchId } = matches[i];
+    // eslint-disable-next-line no-await-in-loop
     const match = await FMatchLive.findOne({ matchId });
+    // eslint-disable-next-line no-empty
     if (match) {
     } else {
       let user = await User.findById(process.env.refUserId);
@@ -125,7 +123,7 @@ module.exports.addLivematchtodb = async function () {
                     { merge: true }
                   );
                 } else {
-                  const citRef = db.db.collection("cities").doc(m[i].matchId);
+                  const citRef = db.db.collection('cities').doc(m[i].matchId);
 
                   const res = await citRef.set(
                     {
@@ -135,7 +133,7 @@ module.exports.addLivematchtodb = async function () {
                   );
                 }
                 console.log(
-                  "Live Details of match is successfully added in db! "
+                  'Live Details of match is successfully added in db! '
                 );
               }
             }
