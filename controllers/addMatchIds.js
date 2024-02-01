@@ -3,7 +3,7 @@ const Team = require("../models/team");
 const Contest = require("../models/contest");
 const User = require("../models/user");
 const MatchLiveDetails = require("../models/matchlive");
-const getkeys = require("../crickeys");
+const getkeys = require("../utils/crickeys");
 // function prizeBreakupRules(prize, numWinners){
 //     let prizeMoneyBreakup = [];
 //     for(let i = 0; i < numWinners; i++){

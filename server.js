@@ -28,7 +28,7 @@ const addlivenew = require("./controllers/addlivedetails");
 const addingteam = require("./controllers/addplayer");
 const addingteame = require("./controllers/teamcreatecontroller");
 const addIds = require("./controllers/addMatchIds");
-const getkeys = require("./crickeys");
+const getkeys = require("./utils/crickeys");
 // Environment variables
 /* Requiring body-parser package
 to fetch the data that is entered

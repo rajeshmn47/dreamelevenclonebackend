@@ -5,7 +5,7 @@ const Contest = require("../models/contest");
 const MatchLive = require("../models/matchlive");
 const User = require("../models/user");
 const Player = require("../models/players");
-const getkeys = require("../apikeys");
+const getkeys = require("../utils/apikeys");
 const db = require("./firebaseinitialize");
 const addMatchIds = require("./addMatchIds");
 // function prizeBreakupRules(prize, numWinners){

@@ -4,7 +4,7 @@ const Contest = require("../models/contest");
 const Team = require("../models/team");
 const MatchLive = require("../models/matchlive");
 const Player = require("../models/players");
-const getkeys = require("../crickeys");
+const getkeys = require("../utils/crickeys");
 
 
 

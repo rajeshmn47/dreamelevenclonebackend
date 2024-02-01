@@ -2,7 +2,7 @@ const request = require("request");
 const axios = require("axios");
 const Match = require("../models/match");
 const User = require("../models/user");
-const getkeys = require("../crickeys");
+const getkeys = require("../utils/crickeys");
 const MatchLiveDetails = require("../models/matchlive");
 // function prizeBreakupRules(prize, numWinners){
 //     let prizeMoneyBreakup = [];

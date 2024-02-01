@@ -6,7 +6,7 @@ const FMatchLive = require('../models/fMatchlive');
 const User = require('../models/user');
 // eslint-disable-next-line no-unused-vars
 const Player = require('../models/players');
-const getkeys = require('../crickeys');
+const getkeys = require('../utils/crickeys');
 const db = require('./firebaseinitialize');
 // function prizeBreakupRules(prize, numWinners){
 //     let prizeMoneyBreakup = [];

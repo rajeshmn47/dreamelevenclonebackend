@@ -1,4 +1,4 @@
-const User = require("./models/user");
+const User = require("../models/user");
 
 module.exports.getkeys = async function () {
   let user = await User.findById(process.env.refUserId);

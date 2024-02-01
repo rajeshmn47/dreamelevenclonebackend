@@ -1,5 +1,5 @@
 const flagURLs = require("country-flags-svg");
-const data = require('../flags.json');
+const data = require('./flags.json');
 
 module.exports.getflag = function (teamname) {
   const flag = data.flags.find(

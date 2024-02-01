@@ -5,7 +5,7 @@ const Contest = require("../models/contest");
 const MatchLive = require("../models/matchlive");
 const Player = require("../models/players");
 const User = require("../models/user");
-const getkeys = require("../crickeys");
+const getkeys = require("../utils/crickeys");
 
 // function prizeBreakupRules(prize, numWinners){
 //     let prizeMoneyBreakup = [];
