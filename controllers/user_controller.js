@@ -286,7 +286,7 @@ router.post("/register", async (req, res) => {
         }
       });
     })
-    .catch((err) => {});
+    .catch((err) => { });
 });
 router.post("/otp", async (req, res) => {
   const user = await User.findOne({ email: req.body.email });
@@ -338,6 +338,160 @@ router.post("/login", async (req, res) => {
     res.status(400).json({
       message: "no user exists",
     });
+  }
+});
+
+router.post('/phoneRegister', async (req, res) => {
+  try {
+    // Extract property details from the request body
+    const {
+      phoneNumber
+    } = req.body;
+
+
+    // Check if the user is authenticated and has a valid token
+
+    // Check if the user has the role of "owner" in the database
+
+    // Create a new user document with the provided userId and images
+    if (phoneNumber) {
+      var digits = "0123456789";
+      let otp_length = 6;
+      let OTP = "";
+      for (let i = 0; i < otp_length; i++) {
+        OTP += digits[Math.floor(Math.random() * 10)];
+      }
+
+      // Save the user to the database
+      const userFound = await User.findOne({ phonenumber: phoneNumber });
+      if (!userFound) {
+        const user = new User({
+          role: 'User',
+          phonenumber: phoneNumber,
+          otp: '000000'
+        });
+        await user.save();
+      }
+      else {
+        userFound.otp = '000000';
+        await userFound.save();
+      }
+      var req = unirest("GET", "https://www.fast2sms.com/dev/bulkV2");
+
+      req.query({
+        "authorization": "iI8bS2F1AnfoKHxpROrdel5VWBuNt6hLE0YsXwTmZJgqzj79yviVaRU1cXut8smbg0GLpKhrSfNxqvZD",
+        "message": `enter this otp for logging in: ${'000000'}`,
+        "language": "english",
+        "route": "q",
+        "numbers": `${phoneNumber}`
+      });
+
+      req.headers({
+        "cache-control": "no-cache"
+      });
+      req.end(function (res) {
+        if (res.error) throw new Error(res.error);
+        console.log(res.body);
+      });
+      return res.status(201).json({ success: 'ok', message: 'OTP sent successfully successfully.' });
+    }
+  } catch (error) {
+    console.error('Error creating booking:', error);
+    return res.status(200).json({ success: 'ok', message: 'Failed to create booking.' });
+  }
+});
+
+
+router.post('/phoneLogin', async (req, res) => {
+  try {
+    // Extract property details from the request body
+    const {
+      phoneNumber
+    } = req.body;
+
+
+    // Check if the user is authenticated and has a valid token
+
+    // Check if the user has the role of "owner" in the database
+
+    // Create a new user document with the provided userId and images
+    if (phoneNumber) {
+      var digits = "0123456789";
+      let otp_length = 6;
+      let OTP = "";
+      for (let i = 0; i < otp_length; i++) {
+        OTP += digits[Math.floor(Math.random() * 10)];
+      }
+
+      // Save the user to the database
+      const userFound = await User.findOne({ phonenumber: phoneNumber });
+      if (!userFound) {
+        const user = new User({
+          role: 'User',
+          phonenumber: phoneNumber,
+          otp: '000000'
+        });
+        await user.save();
+      }
+      else {
+        userFound.otp = '000000';
+        await userFound.save();
+      }
+      var req = unirest("GET", "https://www.fast2sms.com/dev/bulkV2");
+
+      req.query({
+        "authorization": "iI8bS2F1AnfoKHxpROrdel5VWBuNt6hLE0YsXwTmZJgqzj79yviVaRU1cXut8smbg0GLpKhrSfNxqvZD",
+        "message": `enter this otp for logging in: ${'000000'}`,
+        "language": "english",
+        "route": "q",
+        "numbers": `${phoneNumber}`
+      });
+
+      req.headers({
+        "cache-control": "no-cache"
+      });
+      //req.end(function (res) {
+      //  if (res.error) throw new Error(res.error);
+      //  console.log(res.body);
+      //});
+      return res.status(201).json({ success: 'ok', message: 'OTP sent successfully successfully.' });
+    }
+  } catch (error) {
+    console.error('Error creating booking:', error);
+    return res.status(200).json({ success: 'ok', message: 'Failed to create booking.' });
+  }
+});
+
+router.post("/verifyPhoneOtp", async (req, res) => {
+  try {
+    const { otp, phoneNumber } = req.body;
+
+    // Find the user by username
+    const user = await User.findOne({ phonenumber: phoneNumber, otp: otp });
+
+    // Check if the user exists and the password matches
+    if (user) {
+      // Generate a JWT token with an expiration date and include the user's ID in the payload
+      const userid = user._id;
+      const token = jwt.sign({ userid }, activatekey, {
+        expiresIn: "500000m",
+      });
+      // Send a response with the token, user's _id, message, and expiration time
+      return res.status(200).json({
+        success: 'ok',
+        userId: user._id,
+        role: user.role,
+        token: token,
+        message: 'Login successful.',
+        expiresIn: '50000000m',
+      });
+    }
+    else {
+      return res.status(500).json({ message: 'OTP is wrong.' });
+    }
+  } catch (error) {
+    console.error('Error logging in user:', error);
+    return res.status(500).json({ message: 'OTP is wrong.' });
   }
 });
 
@@ -480,6 +634,7 @@ router.get("/getallusers", async (req, res) => {
 
 router.get("/loaduser", checkloggedinuser, async (req, res) => {
   const user = await User.findOne({ _id: { $eq: req.body.uidfromtoken } });
+  console.log(user,'user')
   res.status(200).json({
     message: user,
   });

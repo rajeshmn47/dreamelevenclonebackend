@@ -5,13 +5,22 @@ const usernewSchema = new mongoose.Schema(
   {
     username: {
       type: String,
-      required: true,
+      required: false,
+      unique: true,
+      index: {
+        unique: false,
+        partialFilterExpression: { email: { $type: "string" } }
+      }
     },
 
     email: {
       type: String,
-      required: true,
+      required: false,
       unique: true,
+      index: {
+        unique: false,
+        partialFilterExpression: { email: { $type: "string" } }
+      }
     },
     verified: {
       type: Boolean,
@@ -25,7 +34,7 @@ const usernewSchema = new mongoose.Schema(
 
     password: {
       type: String,
-      required: true,
+      required: false,
     },
 
     totalhits: {
@@ -98,8 +107,12 @@ const usernewSchema = new mongoose.Schema(
 
     contact_id: {
       type: String,
-      required: true,
-      unique: true,
+      required: false,
+      unique: false,
+      index: {
+        unique: false,
+        partialFilterExpression: { email: { $type: "string" } }
+      }
     },
 
     ifsc: {
@@ -112,7 +125,7 @@ const usernewSchema = new mongoose.Schema(
 
     upiId: {
       type: String,
-      default:""
+      default: ""
     },
 
     fundId: {

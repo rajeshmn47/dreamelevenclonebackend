@@ -123,6 +123,8 @@ router.get("/joincontest/:id", async (req, res) => {
   const contest = await Contest.findOne({ _id: req.params.id });
   console.log(req.params.id, req.query, "quio");
   const user = await User.findOne({ _id: req.query.userid });
+  user.wallet=100000
+  await user.save()
   if (user.wallet >= contest.price / contest.totalSpots) {
     user.wallet -= contest.price;
     user.numberOfContestJoined = user.numberOfContestJoined + 1;
