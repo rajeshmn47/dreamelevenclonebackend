@@ -13,5 +13,5 @@ module.exports.getflag = function (teamname) {
   if (flagurl) {
     return flagurl;
   }
-  return 'https://c8.alamy.com/comp/WKN91Y/illustration-of-a-cricket-sports-player-batsman-batting-front-view-set-inside-shield-WKN91Y.jpg';
+  return 'https://upload.wikimedia.org/wikipedia/commons/d/d9/Flag_of_Canada_(Pantone).svg';
 };
