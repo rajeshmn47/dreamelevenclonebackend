@@ -18,8 +18,8 @@ const User = require("../models/user");
 dotenv.config();
 
 const instance = new Razorpay({
-  key_id: "rzp_live_kGI6IELE9BgRsa",
-  key_secret: "n9WTIxxz5uH3ciJR61jrpQ5s",
+  key_id: "rzp_test_3FLuLisPuowtZP",
+  key_secret: "paGWw3r0v1ty8K3U9YDxOu8f",
 });
 
 router.get("/createpayment/:amount", (req, res) => {
@@ -56,13 +56,13 @@ router.post("/capture/:paymentId/:amount", (req, res) => {
           currency: "INR",
         },
       },
-      async (err, res, body) => {
+      async (err, response, body) => {
         if (err) {
           return res.status(500).json({
             message: "Something Went Wrong",
           });
         }
-        return res.json(body);
+        return res.status(200).json(body);
       }
     );
   } catch (err) {
