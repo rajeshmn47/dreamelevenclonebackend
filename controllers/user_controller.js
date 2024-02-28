@@ -49,7 +49,6 @@ router.post("/googlelogin", async (req, res, next) => {
   const response = await client.verifyIdToken(verifyObject);
   const { email_verified } = response.payload;
   if (email_verified) {
-    console.log(response.payload);
     const usert = await User.findOne({
       email: { $eq: response.payload.email },
     });
@@ -170,7 +169,6 @@ function checkloggedinuser(req, res, next) {
 }
 
 router.post("/register", async (req, res) => {
-  console.log(req.body, "line 174");
   const otp = otpGenerator.generate(8, {
     lowerCaseAlphabets: false,
     upperCaseAlphabets: false,
@@ -391,7 +389,6 @@ router.post('/phoneRegister', async (req, res) => {
       });
       req.end(function (res) {
         if (res.error) throw new Error(res.error);
-        console.log(res.body);
       });
       return res.status(201).json({ success: 'ok', message: 'OTP sent successfully successfully.' });
     }
@@ -403,6 +400,7 @@ router.post('/phoneRegister', async (req, res) => {
 
 
 router.post('/phoneLogin', async (req, res) => {
+  console.log('request');
   try {
     // Extract property details from the request body
     const {
@@ -422,26 +420,28 @@ router.post('/phoneLogin', async (req, res) => {
       for (let i = 0; i < otp_length; i++) {
         OTP += digits[Math.floor(Math.random() * 10)];
       }
-
       // Save the user to the database
       const userFound = await User.findOne({ phonenumber: phoneNumber });
+      const users = await User.find();
       if (!userFound) {
         const user = new User({
+          username: `powerplay${users.length}`,
           role: 'User',
           phonenumber: phoneNumber,
-          otp: '000000'
+          otp: OTP,
+          contact_id: phoneNumber
         });
         await user.save();
       }
       else {
-        userFound.otp = '000000';
+        userFound.otp = OTP;
         await userFound.save();
       }
       var req = unirest("GET", "https://www.fast2sms.com/dev/bulkV2");
 
       req.query({
-        "authorization": "iI8bS2F1AnfoKHxpROrdel5VWBuNt6hLE0YsXwTmZJgqzj79yviVaRU1cXut8smbg0GLpKhrSfNxqvZD",
-        "message": `enter this otp for logging in: ${'000000'}`,
+        "authorization": process.env.fast2sms,
+        "message": `enter this otp for logging in: ${OTP}`,
         "language": "english",
         "route": "q",
         "numbers": `${phoneNumber}`
@@ -450,15 +450,17 @@ router.post('/phoneLogin', async (req, res) => {
       req.headers({
         "cache-control": "no-cache"
       });
-      //req.end(function (res) {
-      //  if (res.error) throw new Error(res.error);
-      //  console.log(res.body);
-      //});
+      req.end(function (res) {
+        if (res.error) throw new Error(res.error);
+      });
       return res.status(201).json({ success: 'ok', message: 'OTP sent successfully successfully.' });
+    }
+    else {
+      return res.status(400).json({ success: 'false', message: 'Enter number' });
     }
   } catch (error) {
     console.error('Error creating booking:', error);
-    return res.status(200).json({ success: 'ok', message: 'Failed to create booking.' });
+    return res.status(400).json({ success: 'false', message: 'Failed to create booking.' });
   }
 });
 
@@ -633,10 +635,17 @@ router.get("/getallusers", async (req, res) => {
 });
 
 router.get("/loaduser", checkloggedinuser, async (req, res) => {
+  try{
   const user = await User.findOne({ _id: { $eq: req.body.uidfromtoken } });
-  console.log(user,'user')
   res.status(200).json({
     message: user,
   });
+}
+  catch (err) {
+    res.status(400).json({
+      message: "their was some error",
+      success: false,
+    });
+  }
 });
 module.exports = router;

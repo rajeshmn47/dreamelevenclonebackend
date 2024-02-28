@@ -54,7 +54,7 @@ mongoose.connect(
     if (error) {
       console.log(`Error!${error}`);
     }
-    else{
+    else {
       console.log('connected to database')
     }
   }
@@ -80,20 +80,20 @@ cron.schedule("*/5 * * * *", async function () {
 cron.schedule("*/10 * * * *", async function () {
   await addlivenew.addLivematchtodb();
 });
- cron.schedule("0 22 * * *", async function () {
+cron.schedule("0 22 * * *", async function () {
   await matches.addMatchtoDb();
   await addingteam.addPlayers();
 });
 cron.schedule("0 */20 * * *", async function () {
   await addingteame.addteamPlayers();
 });
-cron.schedule("0 */8 * * *", async function () {
+cron.schedule("0 */2 * * *", async function () {
   await addIds.addMatchIds();
 });
- addlivenew.addLivematchtodb();
-// livescore.addLivematchtodb();
-// addIds.addMatchIds();
-// teamstandings.addTeamstandingstodb();
+addlivenew.addLivematchtodb();
+//addlivescoresnew.addLivematchtodb();
+addIds.addMatchIds();
+//teamstandings.addTeamstandingstodb();
 // matches.addMatchtoDb()
 // teamstandingsA.addTeamstandingstodb()
 // addplayers.addPlayers();

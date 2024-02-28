@@ -9,6 +9,7 @@ const getkeys = require("../utils/crickeys");
 
 
 module.exports.addTeamstandingstodb = async function () {
+  try{
   const date = new Date();
   const endDate = date;
   const matches = await MatchLive.find();
@@ -70,7 +71,6 @@ module.exports.addTeamstandingstodb = async function () {
       }
       for (const x of s.results.live_details.scorecard[0].bowling) {
         for (let i = 0; i < match.teamHomePlayers.length; i++) {
-          console.log(match.teamHomePlayers[i].playerId, x);
           if (
             parseInt(match.teamHomePlayers[i].playerId) ===
             parseInt(x.player_id)
@@ -87,7 +87,6 @@ module.exports.addTeamstandingstodb = async function () {
       }
       for (const x of s.results.live_details.scorecard[1].bowling) {
         for (let i = 0; i < match.teamHomePlayers.length; i++) {
-          console.log(match.teamHomePlayers[i].playerId, x);
           if (
             parseInt(match.teamHomePlayers[i].playerId) ===
             parseInt(x.player_id)
@@ -105,4 +104,8 @@ module.exports.addTeamstandingstodb = async function () {
       const y = await match.save();
     });
   }
+}
+catch(error){
+  console.log(error)
+}
 };

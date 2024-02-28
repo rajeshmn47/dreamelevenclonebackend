@@ -35,7 +35,6 @@ async function getplayerImage(name) {
 }
 module.exports.startTransaction = async function () {
   let date = new Date();
-  console.log(date, "date");
   const endDate = new Date(date.getTime() + 24 * 60 * 60 * 1000 * 2);
   date = new Date(date.getTime() - 24 * 60 * 60 * 1000 * 2);
   const matches = await MatchLive.find();

@@ -4,6 +4,7 @@ const Contest = require("../models/contest");
 const User = require("../models/user");
 const MatchLiveDetails = require("../models/matchlive");
 const getkeys = require("../utils/crickeys");
+const Match = require("../models/match");
 // function prizeBreakupRules(prize, numWinners){
 //     let prizeMoneyBreakup = [];
 //     for(let i = 0; i < numWinners; i++){
@@ -38,7 +39,7 @@ function getplayerImage(name) {
 }
 
 module.exports.addMatchIds = async function () {
-  const matches = await MatchLiveDetails.find();
+  const matches = await Match.find();
   const users = await User.find();
   for (let x = 0; x < users.length; x++) {
     users[x].matchIds = [];

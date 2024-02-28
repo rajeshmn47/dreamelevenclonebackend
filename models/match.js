@@ -148,5 +148,5 @@ const matcheSchema = new mongoose.Schema(
   }
 );
 
-const Match = mongoose.model("Matchtwo", matcheSchema);
+const Match = mongoose.model("Match", matcheSchema);
 module.exports = Match;

@@ -41,7 +41,7 @@ router.get("/myMatches/:userid", async (req, res) => {
     results: [],
   };
   const findDate = new Date();
-  const matches = await Matches.find({ matchId: { $in: [...user.matchIds] }});
+  const matches = await Matches.find({ matchId: { $in: [...user.matchIds] } });
   const usermatchespromises = user.matchIds.map((id) =>
     LiveMatches.findOne({ matchId: id })
   );
@@ -127,7 +127,6 @@ router.get("/myMatches/:userid", async (req, res) => {
       let teams = [];
       if (matt && matt.result == "In Progress") {
         mat.result = "No";
-        console.log(matt,'matt')
         if (req.params.userid) {
           let teams = allteams.filter(
             (a) => a.matchId == matt.matchId && a.userId == req.params.userid
@@ -284,7 +283,7 @@ router.get("/myMatches/:userid", async (req, res) => {
   res.status(200).json({
     completed: completedMatches,
     upcoming: upcomingMatches,
-    live:liveMatches
+    live: liveMatches
   });
 });
 
@@ -310,137 +309,6 @@ router.get("/getmatch/:id", async (req, res) => {
   });
 });
 
-router.get("/results", async (req, res) => {
-  const results = [];
-  result_url = "https://karresults.nic.in/slakresfirst.asp";
-  for (let i = 800000; i < 900000; i++) {
-    let name;
-    let regno;
-    let total;
-    data = { reg: i, ddlsub: "S" };
-    const options = {
-      method: "post",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      url: result_url,
-      body: `frmpuc_tokens=0.7482416&reg=${i}&ddlsub=S`,
-    };
-    let dom;
-    const promise = new Promise((resolve, reject) => {
-      request(options, (error, response, body) => {
-        if (error) {
-          reject(error);
-        }
-        // console.log(body)
-        resolve(body);
-      });
-    });
-
-    promise
-      .then(async (s) => {
-        $ = cheerio.load(`${s}`);
-        const tableh = $("tr");
-        const listItems = $("tr"); // 2
-        listItems.each((idx, el) => {
-          if (idx == 0) {
-            name = $(el)
-              .text()
-              .split("Name")[1]
-              .split("\n")
-              .join("")
-              .split(" ")
-              .join("");
-            console.log(name, "name");
-            console.log(i, "studentno");
-          }
-          if (idx == 1) {
-            regno = $(el)
-              .text()
-              .split("Reg. No.")[1]
-              .split("\n")
-              .join("")
-              .split(" ")
-              .join("");
-          }
-          if (idx == 13) {
-            total = $(el)
-              .text()
-              .split("TOTAL OBTAINED MARKS")[1]
-              .split("\n")
-              .join("")
-              .split(" ")
-              .join("")
-              .split("\t")
-              .join("");
-          }
-
-          if (name && regno && total) {
-            results.push({ name, regno, total });
-            name = -3;
-            regno = -4;
-            total = -8;
-          }
-        });
-        if (i > 899998) {
-          const rest = results.filter((r) => !(r.name == "-3"));
-          function compare(a, b) {
-            if (a.name < b.name) {
-              return -1;
-            }
-            if (a.name > b.name) {
-              return 1;
-            }
-            return 0;
-          }
-          const iss = rest.sort(compare);
-          console.log(iss, "iss");
-          await Result.insertMany(iss);
-          res.status(200).json({
-            users: iss,
-          });
-        }
-      })
-      .catch((err) => {
-        console.log(`Error : ${err}`);
-      });
-  }
-});
-
-router.get("/getallresults/:name", async (req, res) => {
-  const results = await Result.find({ name: { $regex: req.params.name } });
-  if (results) {
-    res.status(200).json({
-      message: "got all results successfully",
-      data: results,
-      length: results.length,
-    });
-  } else {
-    res.status(200).json({
-      message: "got all results successfully",
-      data: [],
-      length: 0,
-    });
-  }
-});
-
-router.get("/getallresults", async (req, res) => {
-  const results = await Result.find();
-  if (results) {
-    res.status(200).json({
-      message: "got all results successfully",
-      data: results,
-      length: results.length,
-    });
-  } else {
-    res.status(200).json({
-      message: "got all results successfully",
-      data: [],
-      length: 0,
-    });
-  }
-});
-
 router.get("/getallusers", async (req, res) => {
   const users = await User.find();
   if (users.length > 0) {
@@ -458,72 +326,6 @@ router.get("/getallusers", async (req, res) => {
   }
 });
 
-router.get("/postpro", async (req, res) => {
-  times_url =
-    "https://exedadmin.timespro.com/SalesForceAPI/insertLeadreact.php";
-  for (let i = 0; i < 500; i++) {
-    const name = randomname().split(" ").join("");
-    const mail = `${name}@gmail.com`;
-    const data = {
-      name,
-      phone: createMobilePhoneNumber("TR").split("+90").join(""),
-      email: mail,
-      legal: true,
-      marketingConsent: true,
-      country_code: "+91",
-      url: "https://timespro.com/web3/about",
-    };
-    const deta = {
-      cityName: "chennai",
-      companyName: "infosys",
-      country_code: "+91",
-      course_id: "P-00307",
-      designationName: "aso",
-      email: mail,
-      exp: "0-2 years",
-      first_name: name,
-      interested_module: "",
-      last_name: "",
-      legal: true,
-      marketingConsent: true,
-      message: "i want some new information",
-      phone_number: createMobilePhoneNumber("TR").split("+90").join(""),
-      sf_course_name:
-        "XLRI_Post_Graduate_Certi?cate_in_Human_Resource_Management_33",
-      state: "Tamil Nadu",
-      url: "https://timespro.com/executive-education/xlri-jamshedpur-post-graduate-certificate-in-human-resource-management",
-    };
-    const url = times_url;
-    const d = await axios.post(url, deta);
-  }
-  res.status(200).json({
-    message: "got all results successfully",
-    data: [],
-    length: 0,
-  });
-});
-
-router.get("/projest", async (req, res) => {
-  times_url =
-    "https://firestore.googleapis.com/google.firestore.v1.Firestore/Write/channel?VER=8&database=projects/projest-290c8/databases/(default)&gsessionid=NQz4c9E5Y4fbVKPnR97tQJ-nQDxsxigwZU7kZ3QkTjs&SID=xQ1L2Luc_fR0sp46TTWZZw&RID=54914&AID=1&zx=5egzy87r60km&t=1";
-  for (let i = 0; i < 500; i++) {
-    const data =
-      "headers=X-Goog-Api-Client%3Agl-js%2F%20fire%2F9.18.0%0D%0AContent-Type%3Atext%2Fplain%0D%0AX-Firebase-GMPID%3A1%3A661303131310%3Aweb%3Aabd56b2d2b2749706f813f%0D%0A&count=1&ofs=0&req0___data__=%7B%22database%22%3A%22projects%2Fprojest-290c8%2Fdatabases%2F(default)%22%2C%22addTarget%22%3A%7B%22query%22%3A%7B%22structuredQuery%22%3A%7B%22from%22%3A%5B%7B%22collectionId%22%3A%22projects%22%7D%5D%2C%22orderBy%22%3A%5B%7B%22field%22%3A%7B%22fieldPath%22%3A%22__name__%22%7D%2C%22direction%22%3A%22ASCENDING%22%7D%5D%7D%2C%22parent%22%3A%22projects%2Fprojest-290c8%2Fdatabases%2F(default)%2Fdocuments%22%7D%2C%22targetId%22%3A2%7D%7D";
-    const url = times_url;
-    const d = await axios(times_url, {
-      method: "post",
-      headers: {
-        "content-type": "application/x-www-form-urlencoded",
-      },
-      data,
-    });
-  }
-  res.status(200).json({
-    message: "got all results successfully",
-    data: [],
-    length: 0,
-  });
-});
 
 router.get("/players", async (req, res) => {
   const players = await Player.find();
@@ -622,7 +424,6 @@ router.get("/home/:userid", async (req, res) => {
       allteams.push(k);
     });
   });
-  console.log(allcontests, "matchdetails");
   const upcomingMatches = {
     results: [],
   };
@@ -1185,13 +986,10 @@ router.get("/livematches", async (req, res) => {
   for (let i = 0; i < matches.length; i++) {
     const matchid = matches[i].matchId;
     const match = await LiveMatches.findOne({ matchId: matchid });
-    console.log(match?.result, "match");
     if (match && !(match?.result == "Complete")) {
-      console.log(matches[i].cmtMatchId, "matchid");
       matchess.push(matches[i]);
     }
   }
-  console.log(matchess, "matchids");
   res.status(200).json({
     message: "got all results successfully",
     matches: matchess,
@@ -1251,6 +1049,100 @@ router.get("/alllivematches", async (req, res) => {
   res.status(200).json({
     message: "teams got successfully",
     livematches,
+  });
+});
+
+router.get("/matchList", async (req, res) => {
+  const stime = new Date().getSeconds();
+  const date = new Date();
+  date.setDate(date.getDate() - 1);
+  const startDate = date.toISOString();
+  date.setDate(date.getDate() + 10);
+  const endDate = date.toISOString();
+  const matches = await Matches.find({
+    date: {
+      $gte: new Date(startDate),
+      $lt: new Date(endDate),
+    },
+  });
+  const promises = matches.map((fruit) =>
+    LiveMatches.findOne({ matchId: fruit.matchId })
+  );
+  const allmatches = await Promise.all(promises);
+  const matchdetails = allmatches.filter((match, index) => {
+    if (match?._id) {
+      return match;
+    }
+  });
+  //const usermatchesdetails = await Promise.all(usermatchespromises);
+  const upcomingMatches = {
+    results: [],
+  };
+  for (let i = 0; i < matches.length; i++) {
+    teamAwayFlagUrl = flagURLs.findFlagUrlByCountryName(
+      matches[i].teamAwayName
+    );
+    teamHomeFlagUrl = flagURLs.findFlagUrlByCountryName(
+      matches[i].teamHomeName
+    );
+    if (!teamAwayFlagUrl) {
+      teamAwayFlagUrl = getflags.getflag(matches[i].teamAwayName);
+    }
+    if (!teamHomeFlagUrl) {
+      teamHomeFlagUrl = getflags.getflag(matches[i].teamHomeName);
+    }
+    const match = matches[i];
+    const mat = {
+      match_title: match.matchTitle,
+      home: {
+        name: match.teamHomeName,
+        code: match.teamHomeCode.toUpperCase(),
+      },
+      away: {
+        name: match.teamAwayName,
+        code: match.teamAwayCode.toUpperCase(),
+      },
+      date: match.date,
+      id: match.matchId,
+      livestatus: "",
+      result: "",
+      status: "",
+      inPlay: "",
+      lineups: "",
+      teamHomeFlagUrl,
+      teamAwayFlagUrl,
+    };
+
+    liveStatus = "Line-ups are not out yet!";
+    mat.livestatus = liveStatus;
+    const matt = matchdetails.find((m) => m.matchId == matches[i].matchId);
+    if (matt) {
+      if (matt.result == "In Progress" || !matt.result) {
+        if (matt.status) {
+          mat.livestatus = matt.status;
+        }
+        if (!(matt.inPlay == "Yes") && matt?.teamHomePlayers?.length > 0) {
+          upcomingMatches.results.push(mat);
+          mat.lineups = "Lineups Out";
+        } else {
+          mat.result = "No";
+          mat.lineups = "Lineups Out";
+        }
+      } else {
+        mat.result = "Yes";
+      }
+    } else {
+      if (matt?.teamHomePlayers?.length > 0) {
+        mat.lineups = "Lineups Out";
+      }
+      upcomingMatches.results.push(mat);
+    }
+  }
+  const etime = new Date().getSeconds();
+  let time = etime - stime;
+  res.status(200).json({
+    upcoming: upcomingMatches,
+    time: time
   });
 });
 

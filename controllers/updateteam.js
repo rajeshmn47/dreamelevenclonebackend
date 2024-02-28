@@ -34,7 +34,6 @@ async function getplayerImage(name) {
 module.exports.addTeamstandingstodb = async function () {
   let date = new Date();
   const endDate = new Date(date.getTime());
-  console.log(endDate.getHours(), endDate.getMinutes(), "gettimelive");
   const b = 10 * 60 * 60 * 1000 * 1;
   date = new Date(date.getTime() - b);
   const matches = await MatchLive.find({
@@ -46,7 +45,6 @@ module.exports.addTeamstandingstodb = async function () {
   for (let i = 0; i < matches.length; i++) {
     const teams = await Team.find({ matchId: matches[i].matchId });
     for (const x of teams) {
-      console.log(x.matchId, "id");
       const team = await Team.findById(x._id);
       team.points = 0;
       for (let j = 0; j < matches[i].teamHomePlayers.length; j++) {

@@ -29,5 +29,5 @@ const results = new mongoose.Schema(
     timestamps: true,
   }
 );
-const Result = mongoose.model("Resultse", results);
+const Result = mongoose.model("Results", results);
 module.exports = Result;

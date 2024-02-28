@@ -6,11 +6,7 @@ const usernewSchema = new mongoose.Schema(
     username: {
       type: String,
       required: false,
-      unique: true,
-      index: {
-        unique: false,
-        partialFilterExpression: { email: { $type: "string" } }
-      }
+      unique: true
     },
 
     email: {
@@ -108,10 +104,10 @@ const usernewSchema = new mongoose.Schema(
     contact_id: {
       type: String,
       required: false,
-      unique: false,
+      unique: true,
       index: {
         unique: false,
-        partialFilterExpression: { email: { $type: "string" } }
+        partialFilterExpression: { contact_id: { $type: "string" } }
       }
     },
 
@@ -156,5 +152,5 @@ const usernewSchema = new mongoose.Schema(
   }
 );
 
-const User = mongoose.model("UserNew", usernewSchema);
+const User = mongoose.model("User", usernewSchema);
 module.exports = User;

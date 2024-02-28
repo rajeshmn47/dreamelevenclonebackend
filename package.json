@@ -6,6 +6,7 @@
     "country-flags-svg": "^1.1.6",
     "cric-live": "^1.0.19",
     "cron": "^2.3.0",
+    "crypto": "^1.0.1",
     "dotenv": "^16.0.3",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^19.0.4",

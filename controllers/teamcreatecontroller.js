@@ -17,7 +17,6 @@ function compare(a, b) {
 
 const io = 1;
 async function getplayerImage(name) {
-  console.log(name);
   return "https://cdn.sportmonks.com/images/cricket/placeholder.png";
 }
 
@@ -56,7 +55,6 @@ module.exports.addteamPlayers = async function () {
         const arr = [];
         let position;
         const players = homeplayers[0];
-        console.log(players, "players");
         for (let i = 0; i < players?.length; i++) {
           const check =
             players[i].name == "BATSMEN" ||
@@ -125,7 +123,6 @@ module.exports.addteamPlayers = async function () {
         let position_a;
         const players_a = players[0];
         for (let i = 0; i < players_a?.length; i++) {
-          console.log("in loop");
           const check =
             players_a[i].name == "BATSMEN" ||
             players_a[i].name == "BOWLER" ||

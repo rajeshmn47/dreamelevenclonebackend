@@ -78,7 +78,6 @@ module.exports.addLivematchtodb = async function () {
       });
       promise
         .then(async (s) => {
-          console.log(s, "check");
           if (s.matchHeader != null && s.scoreCard != 0) {
             const LiveMatchDet = new FMatchLive();
             LiveMatchDet.matchId = matchId;

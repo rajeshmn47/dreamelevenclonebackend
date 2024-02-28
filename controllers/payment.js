@@ -8,6 +8,8 @@ const { v4: uuidv4 } = require("uuid");
 const mongoose = require("mongoose");
 const Players = require("../models/players");
 const Contest = require("../models/contest");
+const crypto = require('crypto');
+const axios = require('axios');
 const Team = require("../models/team");
 const Transaction = require("../models/transaction");
 const NewPayment = require("../models/newPayment");
@@ -148,14 +150,14 @@ router.get("/approve", async (req, res) => {
       deposit.verified = true;
       await deposit.save();
       const options = {
-        method:"POST",
+        method: "POST",
         url: "https://graph.facebook.com/v17.0/154018731120852/messages",
         headers: {
           'Authorization': `Bearer ${process.env.whatsappkey}`,
           useQueryString: true,
           'Content-Type': 'application/json'
         },
-        body:`{ \"messaging_product\": \"whatsapp\", \"to\": \"919380899596\", \"type\": \"template\", \"template\": { \"name\": \"hello_woreeld\", \"language\": { \"code\": \"en_US\" } } }`
+        body: `{ \"messaging_product\": \"whatsapp\", \"to\": \"919380899596\", \"type\": \"template\", \"template\": { \"name\": \"hello_woreeld\", \"language\": { \"code\": \"en_US\" } } }`
       };
       // Doubt in this part, is request is synchronous or non synchronous?
       const promise = new Promise((resolve, reject) => {
@@ -305,5 +307,96 @@ router.delete("/deleteAllWithdraw", async (req, res) => {
     });
   }
 });
+
+const { salt_key, merchant_id } = {salt_key:"ysyusahu7638hjsbjhs",merchant_id:"6e96ea17-536e-4091-bf20-ea835f52ec11"}
+
+router.post("/phonepePayment", async (req, res) => {
+  try {
+    const merchantTransactionId = req.body.transactionId;
+    const data = {
+      merchantId: merchant_id,
+      merchantTransactionId: merchantTransactionId,
+      merchantUserId: req.body.MUID,
+      name: req.body.name,
+      amount: req.body.amount * 100,
+      redirectUrl: `http://localhost:5000/api/status/${merchantTransactionId}`,
+      redirectMode: 'POST',
+      mobileNumber: req.body.number,
+      paymentInstrument: {
+        type: 'PAY_PAGE'
+      }
+    };
+    const payload = JSON.stringify(data);
+    const payloadMain = Buffer.from(payload).toString('base64');
+    const keyIndex = 1;
+    const string = payloadMain + '/pg/v1/pay' + salt_key;
+    const sha256 = crypto.createHash('sha256').update(string).digest('hex');
+    const checksum = sha256 + '###' + keyIndex;
+
+    const prod_URL = "https://api.phonepe.com/apis/hermes/pg/v1/pay"
+    const options = {
+      method: 'POST',
+      url: prod_URL,
+      headers: {
+        accept: 'application/json',
+        'Content-Type': 'application/json',
+        'X-VERIFY': checksum
+      },
+      data: {
+        request: payloadMain
+      }
+    };
+
+    axios.request(options).then(function (response) {
+      console.log(response.data)
+      return res.redirect(response.data.data.instrumentResponse.redirectInfo.url)
+    })
+      .catch(function (error) {
+        console.error(error);
+      });
+
+  } catch (error) {
+    res.status(500).send({
+      message: error.message,
+      success: false
+    })
+  }
+})
+
+router.post("/phonepeStatus", async (req, res) => {
+  const merchantTransactionId = res.req.body.transactionId
+  const merchantId = res.req.body.merchantId
+
+  const keyIndex = 1;
+  const string = `/pg/v1/status/${merchantId}/${merchantTransactionId}` + salt_key;
+  const sha256 = crypto.createHash('sha256').update(string).digest('hex');
+  const checksum = sha256 + "###" + keyIndex;
+
+  const options = {
+    method: 'GET',
+    url: `https://api.phonepe.com/apis/hermes/pg/v1/status/${merchantId}/${merchantTransactionId}`,
+    headers: {
+      accept: 'application/json',
+      'Content-Type': 'application/json',
+      'X-VERIFY': checksum,
+      'X-MERCHANT-ID': `${merchantId}`
+    }
+  };
+
+  // CHECK PAYMENT TATUS
+  axios.request(options).then(async (response) => {
+    if (response.data.success === true) {
+      const url = `http://localhost:3000/success`
+      return res.redirect(url)
+    } else {
+      const url = `http://localhost:3000/failure`
+      return res.redirect(url)
+    }
+  })
+    .catch((error) => {
+      console.error(error);
+    });
+});
+
 
 module.exports = router;

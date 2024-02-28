@@ -14,7 +14,6 @@ const matchDetailsThirdSchema = new mongoose.Schema(
       type: String,
       trim: true,
       required: true,
-      unique: true,
       lowercase: true,
       default: "",
     },
@@ -22,7 +21,6 @@ const matchDetailsThirdSchema = new mongoose.Schema(
       type: String,
       trim: true,
       required: true,
-      unique: true,
       lowercase: true,
       default: "",
     },
@@ -324,7 +322,7 @@ const matchDetailsThirdSchema = new mongoose.Schema(
 );
 
 const MatchLiveDetails = mongoose.model(
-  "MatchLiveDetailsThird",
+  "MatchLiveDetails",
   matchDetailsThirdSchema
 );
 module.exports = MatchLiveDetails;

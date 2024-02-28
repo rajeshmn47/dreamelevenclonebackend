@@ -55,18 +55,6 @@ module.exports.addMatchtoDb = async function () {
   var date = new Date();
   const numberOfDays = 1;
   let endDate = new Date(date.getTime() + 24 * 60 * 60 * 1000 * 6);
-  console.log(
-    date,
-    endDate,
-    date.getDate(),
-    parseInt(
-      `${parseInt(date.getFullYear())}-${parseInt(
-        date.getMonth() + 1
-      )}-${parseInt(date.getDate())}`
-    ),
-    "date",
-    "enddate"
-  );
   date = parseInt(
     `${parseInt(date.getFullYear())}-${parseInt(
       date.getMonth() + 1
@@ -78,7 +66,6 @@ module.exports.addMatchtoDb = async function () {
     )}-${parseInt(endDate.getDate())}`
   );
   for (let i = 0; i < numberOfDays; i++) {
-    console.log("envkey");
     const keys = await getkeys.getkeys();
     const options = {
       method: "GET",
@@ -102,12 +89,10 @@ module.exports.addMatchtoDb = async function () {
     });
     promise
       .then(async (s) => {
-        console.log(s.typeMatches, "mad");
         for (se of s.typeMatches) {
           for (k of se.seriesMatches) {
             if (k?.seriesAdWrapper?.matches) {
               for (f of k?.seriesAdWrapper?.matches) {
-                console.log(f.matchInfo.matchId, "id");
                 obj.results.push(f.matchInfo);
               }
             }
@@ -115,7 +100,6 @@ module.exports.addMatchtoDb = async function () {
         }
         for (let i = 0; i < obj.results.length; i++) {
           const match1 = new Match();
-          console.log(obj.results[i], match1, "okkkk");
           const { matchId } = obj.results[i];
           // console.log(obj.results[i]);
           match1.matchId = matchId;
@@ -177,7 +161,6 @@ module.exports.addMatchtoDb = async function () {
                 }
               }
               try {
-                console.log(match1, "match1");
                 const match = await Match.create(match1);
                 if (match) {
                   console.log("match is successfully added in db! ");
