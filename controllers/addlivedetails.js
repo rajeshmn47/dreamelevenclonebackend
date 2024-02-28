@@ -64,7 +64,7 @@ module.exports.addLivematchtodb = async function () {
       promise
         .then(async (s) => {
           try {
-            if (s.matchInfo.team1 != null && s.matchInfo.team1.length != 0) {
+            if (s.matchInfo?.team1 != null && s.matchInfo?.team1.length != 0) {
               const LiveMatchDet = new MatchLive();
               LiveMatchDet.matchId = matchId;
               LiveMatchDet.date = date1;
