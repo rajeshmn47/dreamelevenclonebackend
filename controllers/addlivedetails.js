@@ -29,7 +29,7 @@ module.exports.addLivematchtodb = async function () {
   const turing = await MatchLive();
   let date = new Date();
   const endDate = new Date(date.getTime() + 0.5 * 60 * 60 * 1000);
-  date = new Date(date.getTime() - 20 * 60 * 60 * 1000);
+  date = new Date(date.getTime() - 2 * 60 * 60 * 1000);
   const matches = await Match.find({
     date: {
       $gte: new Date(date),
@@ -107,7 +107,7 @@ module.exports.addLivematchtodb = async function () {
               const match = await MatchLive.create(LiveMatchDet);
               if (match) {
                 //await addMatchIds.addMatchIds();
-                const cityRef = db.db.collection("cities").doc(m[i].matchId);
+                {/*const cityRef = db.db.collection("cities").doc(m[i].matchId);
                 const doc = await cityRef.get();
                 if (!doc.exists) {
                   console.log("No such document!");
@@ -127,7 +127,8 @@ module.exports.addLivematchtodb = async function () {
                     },
                     { merge: true }
                   );
-                }
+                  */}
+
                 console.log(
                   "Live Details of match is successfully added in db! "
                 );
