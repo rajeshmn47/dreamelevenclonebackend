@@ -30,9 +30,9 @@ function isToday(d1, d2) {
   );
 }
 
-router.get("/myMatches/:userid", async (req, res) => {
+router.get("/myMatches", async (req, res) => {
   const notAllowed = ["", false, null, 0, undefined, NaN];
-  const user = await User.findOne({ _id: req.params.userid });
+  const user = await User.findOne({ _id: req.body.uidfromtoken });
   const stime = new Date().getSeconds();
   const completedMatches = {
     results: [],
@@ -56,13 +56,13 @@ router.get("/myMatches/:userid", async (req, res) => {
   });
   const teampromises = user.matchIds.map((id) =>
     Team.find({
-      $and: [{ matchId: id }, { userId: req.params.userid }],
+      $and: [{ matchId: id }, { userId: req.body.uidfromtoken }],
     })
   );
 
   const contestpromises = user.matchIds.map((id) =>
     Contest.find({
-      $and: [{ matchId: id }, { userIds: req.params.userid }],
+      $and: [{ matchId: id }, { userIds: req.body.uidfromtoken }],
     })
   );
   const teamse = await Promise.all(teampromises);
@@ -127,27 +127,27 @@ router.get("/myMatches/:userid", async (req, res) => {
       let teams = [];
       if (matt && matt.result == "In Progress") {
         mat.result = "No";
-        if (req.params.userid) {
+        if (req.body.uidfromtoken) {
           let teams = allteams.filter(
-            (a) => a.matchId == matt.matchId && a.userId == req.params.userid
+            (a) => a.matchId == matt.matchId && a.userId == req.body.uidfromtoken
           );
           let contests = allcontests.filter(
             (a) =>
-              a.matchId == matt.matchId && a.userIds.includes(req.params.userid)
+              a.matchId == matt.matchId && a.userIds.includes(req.body.uidfromtoken)
           );
           mat.contests = contests;
           mat.teams = teams;
           liveMatches.results.push(mat);
         }
       }
-      if (req.params.userid && matt?.result == "Complete") {
+      if (req.body.uidfromtoken && matt?.result == "Complete") {
         mat.result = "Yes";
         let teams = allteams.filter(
-          (a) => a.matchId == matt.matchId && a.userId == req.params.userid
+          (a) => a.matchId == matt.matchId && a.userId == req.body.uidfromtoken
         );
         let contests = allcontests.filter(
           (a) =>
-            a.matchId == matt.matchId && a.userIds.includes(req.params.userid)
+            a.matchId == matt.matchId && a.userIds.includes(req.body.uidfromtoken)
         );
         mat.contests = contests;
         mat.teams = teams;
@@ -266,11 +266,11 @@ router.get("/myMatches/:userid", async (req, res) => {
     }
 
     let teamse = allteams.filter(
-      (a) => a.matchId == umat.matchId && a.userId == req.params.userid
+      (a) => a.matchId == umat.matchId && a.userId == req.body.uidfromtoken
     );
     let contestse = allcontests.filter(
       (a) =>
-        a.matchId == umat.matchId && a.userIds.includes(req.params.userid)
+        a.matchId == umat.matchId && a.userIds.includes(req.body.uidfromtoken)
     );
     mat.contests = contestse;
     mat.teams = teamse;
@@ -353,7 +353,7 @@ router.get("/players", async (req, res) => {
   });
 });
 
-router.get("/home/:userid", async (req, res) => {
+router.get("/homeMatches", async (req, res) => {
   const stime = new Date().getSeconds();
   const date = new Date();
   date.setDate(date.getDate() - 1);
@@ -369,7 +369,7 @@ router.get("/home/:userid", async (req, res) => {
   const promises = matches.map((fruit) =>
     LiveMatches.findOne({ matchId: fruit.matchId })
   );
-  const user = await User.findOne({ _id: req.params.userid });
+  const user = await User.findOne({ _id: req.body.uidfromtoken });
   const allmatches = await Promise.all(promises);
   const matchdetails = allmatches.filter((match, index) => {
     if (match?._id) {
@@ -401,13 +401,13 @@ router.get("/home/:userid", async (req, res) => {
   });
   const teampromises = user.matchIds.map((id) =>
     Team.find({
-      $and: [{ matchId: id }, { userId: req.params.userid }],
+      $and: [{ matchId: id }, { userId: req.body.uidfromtoken }],
     })
   );
 
   const contestpromises = user.matchIds.map((id) =>
     Contest.find({
-      $and: [{ matchId: id }, { userIds: req.params.userid }],
+      $and: [{ matchId: id }, { userIds: req.body.uidfromtoken }],
     })
   );
   const teamse = await Promise.all(teampromises);
@@ -487,12 +487,12 @@ router.get("/home/:userid", async (req, res) => {
         }
         mat.result = "No";
         let teams = allteams.filter(
-          (a) => a.matchId == match_det.matchId && a.userId == req.params.userid
+          (a) => a.matchId == match_det.matchId && a.userId == req.body.uidfromtoken
         );
         let contests = allcontests.filter(
           (a) =>
             a.matchId == match_det.matchId &&
-            a.userIds.includes(req.params.userid)
+            a.userIds.includes(req.body.uidfromtoken)
         );
 
         if (contests.length > 0 || teams.length > 0) {
@@ -502,14 +502,14 @@ router.get("/home/:userid", async (req, res) => {
             liveMatches.results.push(mat);
           }
         }
-      } else if (req.params.userid && match_det.result == "Complete") {
+      } else if (req.body.uidfromtoken && match_det.result == "Complete") {
         let teams = allteams.filter(
-          (a) => a.matchId == match_det.matchId && a.userId == req.params.userid
+          (a) => a.matchId == match_det.matchId && a.userId == req.body.uidfromtoken
         );
         let contests = allcontests.filter(
           (a) =>
             a.matchId == match_det.matchId &&
-            a.userIds.includes(req.params.userid)
+            a.userIds.includes(req.body.uidfromtoken)
         );
         if (teams.length > 0) {
           mat.contests = contests;
@@ -570,7 +570,7 @@ router.get("/home/:userid", async (req, res) => {
         } else {
           mat.result = "No";
           mat.lineups = "Lineups Out";
-          if (req.params.userid) {
+          if (req.body.uidfromtoken) {
           }
         }
       } else {
@@ -746,7 +746,7 @@ router.get("/football/:userid", async (req, res) => {
   const promises = matches.map((fruit) =>
     FLiveMatches.findOne({ matchId: fruit.matchId })
   );
-  const user = await User.findOne({ _id: req.params.userid });
+  const user = await User.findOne({ _id: req.body.uidfromtoken });
   const allmatches = await Promise.all(promises);
   const matchdetails = allmatches.filter((match, index) => {
     if (match?._id) {
@@ -778,13 +778,13 @@ router.get("/football/:userid", async (req, res) => {
   });
   const teampromises = user.matchIds.map((id) =>
     Team.find({
-      $and: [{ matchId: id }, { userId: req.params.userid }],
+      $and: [{ matchId: id }, { userId: req.body.uidfromtoken }],
     })
   );
 
   const contestpromises = user.matchIds.map((id) =>
     Contest.find({
-      $and: [{ matchId: id }, { userIds: req.params.userid }],
+      $and: [{ matchId: id }, { userIds: req.body.uidfromtoken }],
     })
   );
   const teamse = await Promise.all(teampromises);
@@ -864,12 +864,12 @@ router.get("/football/:userid", async (req, res) => {
         }
         mat.result = "No";
         let teams = allteams.filter(
-          (a) => a.matchId == match_det.matchId && a.userId == req.params.userid
+          (a) => a.matchId == match_det.matchId && a.userId == req.body.uidfromtoken
         );
         let contests = allcontests.filter(
           (a) =>
             a.matchId == match_det.matchId &&
-            a.userIds.includes(req.params.userid)
+            a.userIds.includes(req.body.uidfromtoken)
         );
 
         if (contests.length > 0 || teams.length > 0) {
@@ -879,14 +879,14 @@ router.get("/football/:userid", async (req, res) => {
             liveMatches.results.push(mat);
           }
         }
-      } else if (req.params.userid && match_det.result == "Complete") {
+      } else if (req.body.uidfromtoken && match_det.result == "Complete") {
         let teams = allteams.filter(
-          (a) => a.matchId == match_det.matchId && a.userId == req.params.userid
+          (a) => a.matchId == match_det.matchId && a.userId == req.body.uidfromtoken
         );
         let contests = allcontests.filter(
           (a) =>
             a.matchId == match_det.matchId &&
-            a.userIds.includes(req.params.userid)
+            a.userIds.includes(req.body.uidfromtoken)
         );
         if (teams.length > 0) {
           mat.contests = contests;
@@ -947,7 +947,7 @@ router.get("/football/:userid", async (req, res) => {
         } else {
           mat.result = "No";
           mat.lineups = "Lineups Out";
-          if (req.params.userid) {
+          if (req.body.uidfromtoken) {
           }
         }
       } else {

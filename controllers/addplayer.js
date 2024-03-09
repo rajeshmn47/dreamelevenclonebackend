@@ -2,6 +2,7 @@ const request = require("request");
 const axios = require("axios");
 const Match = require("../models/match");
 const User = require("../models/user");
+const getkeys = require("../utils/crickeys");
 // function prizeBreakupRules(prize, numWinners){
 //     let prizeMoneyBreakup = [];
 //     for(let i = 0; i < numWinners; i++){
@@ -68,9 +69,6 @@ module.exports.addPlayers = async function () {
       } catch (error) {
         console.error(error);
       }
-      let user = await User.findById(process.env.refUserId);
-      user.totalhits = user.totalhits + 1;
-      await user.save();
       const options_two = {
         method: "GET",
         url: `https://cricbuzz-cricket.p.rapidapi.com/teams/v1/${matches[i].teamAwayId}/players`,

@@ -23,7 +23,6 @@ async function getplayerImage(name) {
 module.exports.addteamPlayers = async function () {
   let date = new Date();
   const endDate = new Date(date.getTime() + 202 * 60 * 60 * 1000);
-  let keys = await getkeys.getkeys();
   date = new Date(date.getTime());
   const matches = await Match.find({
     date: {

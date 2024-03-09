@@ -86,9 +86,6 @@ module.exports.addLivecommentary = async function addcommentry() {
     for (let i = 0; i < matchess.length; i++) {
       if (m[i].matchId.length > 3) {
         const keys = await getkeys.getkeys();
-        let user = await User.findById(process.env.refUserId);
-        user.totalhits = user.totalhits + 1;
-        await user.save();
         const options = {
           method: "GET",
           url: `https://cricbuzz-cricket.p.rapidapi.com/mcenter/v1/${m[i].matchId}/comm`,
@@ -119,7 +116,6 @@ module.exports.addLivecommentary = async function addcommentry() {
               const commentaryRef = db.db.collection("commentary").doc(m[i].matchId);
               let xyz = doc.data().commentary;
               let commentary = getcommentary.getcommentary(xyz, a);
-              console.log(miniscore,matchdata,'testmyl')
               const res = await commentaryRef.set(
                 {
                   commentary: [...commentary],

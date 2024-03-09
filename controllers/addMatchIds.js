@@ -42,6 +42,7 @@ module.exports.addMatchIds = async function () {
   const matches = await Match.find();
   const users = await User.find();
   for (let x = 0; x < users.length; x++) {
+    if(users[x]?._id){
     users[x].matchIds = [];
     for (let i = 0; i < matches.length; i++) {
       const teams = await Team.find({
@@ -54,5 +55,6 @@ module.exports.addMatchIds = async function () {
       }
     }
     await users[x].save();
+  }
   }
 };

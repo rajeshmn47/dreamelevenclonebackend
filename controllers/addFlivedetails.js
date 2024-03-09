@@ -38,9 +38,6 @@ module.exports.addLivematchtodb = async function () {
     // eslint-disable-next-line no-empty
     if (match) {
     } else {
-      let user = await User.findById(process.env.refUserId);
-      user.totalhits = user.totalhits + 1;
-      await user.save();
       const keys = await getkeys.getkeys();
       const date1 = "2679243";
       const options = {

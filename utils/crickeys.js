@@ -7,8 +7,8 @@ module.exports.getkeys = async function () {
     user.totalhits = 0;
     await user.save();
   }
-  const date = new Date().getDate();
-  const keyindex = Math.floor(date / 2);
+  user.totalhits = user.totalhits + 1;
+  await user.save();
   const keyi = Math.floor(totalhits / 100);
   const keys = process.env.crickeys
     .replace(/(\r\n|\n|\r)/gm, "")

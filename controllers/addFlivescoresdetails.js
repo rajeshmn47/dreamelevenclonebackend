@@ -54,9 +54,6 @@ module.exports.addLivematchtodb = async function () {
     } else {
       const keys = await getkeys.getkeys();
       const date1 = matches[i].date;
-      let user = await User.findById(process.env.refUserId);
-      user.totalhits = user.totalhits + 1;
-      await user.save();
       const options = {
         method: "GET",
         url: `https://footapi7.p.rapidapi.com/api/match/${matchId}/lineups`,

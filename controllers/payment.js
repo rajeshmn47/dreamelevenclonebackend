@@ -141,8 +141,6 @@ router.get("/depositData", async (req, res) => {
 });
 
 router.get("/approve", async (req, res) => {
-  console.log(req.query, "deposit");
-
   try {
     if (mongoose.Types.ObjectId.isValid(req.query.depositId)) {
       const deposit = await NewPayment.findById(req.query.depositId);
@@ -203,11 +201,11 @@ router.get("/approve", async (req, res) => {
 router.post("/withdraw", async (req, res) => {
   console.log(req.body, "withdraw");
   try {
-    const user = await User.findById(req.body.userId);
-    if (user.wallet > req.body.amount) {
+    const user = await User.findById(req.body.uidfromtoken);
+    if (parseInt(user.wallet) > parseInt(req.body.amount)) {
       await Withdraw.create({
         amount: req.body.amount,
-        userId: req.body.userId
+        userId: req.body.uidfromtoken
       });
       user.wallet = user.wallet - req.body.amount;
       await user.save();
@@ -308,7 +306,7 @@ router.delete("/deleteAllWithdraw", async (req, res) => {
   }
 });
 
-const { salt_key, merchant_id } = {salt_key:"ysyusahu7638hjsbjhs",merchant_id:"6e96ea17-536e-4091-bf20-ea835f52ec11"}
+const { salt_key, merchant_id } = { salt_key: "ysyusahu7638hjsbjhs", merchant_id: "6e96ea17-536e-4091-bf20-ea835f52ec11" }
 
 router.post("/phonepePayment", async (req, res) => {
   try {

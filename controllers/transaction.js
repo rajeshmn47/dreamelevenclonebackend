@@ -17,22 +17,6 @@ const Transaction = require("../models/transaction");
 
 //     }
 // }
-
-const io = 1;
-async function getplayerImage(name) {
-  const k = name.split(" ")[0];
-  const config = {
-    method: "get",
-    url: `https://cricket.sportmonks.com/api/v2.0/players?filter[lastname]=sachin&api_token=
-        fTWhOiGhie6YtMBmpbw10skSjTmSgwHeLg22euC5qLMR1oT1eC6PRc8sEulv`,
-    headers: {},
-  };
-
-  const s = await axios(config).catch((error) => {});
-  const PlayerS = new Player();
-
-  return s.data.data.length > 0 ? s.data.data[0].image_path : "";
-}
 module.exports.startTransaction = async function () {
   let date = new Date();
   const endDate = new Date(date.getTime() + 24 * 60 * 60 * 1000 * 2);
@@ -73,7 +57,7 @@ module.exports.startTransaction = async function () {
               //matches[i].transaction = true;
               //await matches.save();
               const matchUpdate = await MatchLive.updateOne(
-                { matchId: matches[i]?.matchid },
+                { matchId: matches[i]?.matchId },
                 {
                   $set: {
                     transaction: true,

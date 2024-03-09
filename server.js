@@ -11,7 +11,7 @@ const smtpTransport = require("nodemailer-smtp-transport");
 const bodyParser = require("body-parser");
 const home = require("./controllers/homecontroller");
 const video = require("./controllers/videocontroller");
-const contest = require("./controllers/getcontests");
+const contest = require("./controllers/contestsController");
 const teamdata = require("./controllers/getplayerscontroller");
 const auth = require("./controllers/user_controller");
 const team = require("./controllers/teamcontroller");
@@ -29,6 +29,7 @@ const addingteam = require("./controllers/addplayer");
 const addingteame = require("./controllers/teamcreatecontroller");
 const addIds = require("./controllers/addMatchIds");
 const getkeys = require("./utils/crickeys");
+const { checkloggedinuser } = require("./utils/checkUser.js");
 // Environment variables
 /* Requiring body-parser package
 to fetch the data that is entered
@@ -37,15 +38,15 @@ by the user in the HTML form. */
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors({ origin: "*", credentials: false }));
-app.use("/", home);
-app.use("/", contest);
-app.use("/", teamdata);
-app.use("/", team);
-app.use("/", updatedata);
-app.use("/", video);
-//app.use("/", transaction);
-app.use("/payment", payments);
 app.use("/auth", auth);
+app.use("/payment", checkloggedinuser, payments);
+app.use("/", checkloggedinuser, home);
+app.use("/", checkloggedinuser, contest);
+app.use("/", checkloggedinuser, teamdata);
+app.use("/", checkloggedinuser, team);
+app.use("/", checkloggedinuser, updatedata);
+app.use("/", checkloggedinuser, video);
+//app.use("/", transaction);
 mongoose.Promise = global.Promise;
 mongoose.connect(
   process.env.uri,
@@ -71,10 +72,10 @@ cron.schedule("0 * * * *", async function () {
 cron.schedule("* * * * *", async function () {
   await addLiveCommentary.addLivecommentary();
 });
-cron.schedule("* * * * *", async function () {
+cron.schedule("*/2 * * * *", async function () {
   await teamstandings.addTeamstandingstodb();
 });
-cron.schedule("*/5 * * * *", async function () {
+cron.schedule("*/3 * * * *", async function () {
   await addlivescoresnew.addLivematchtodb();
 });
 cron.schedule("*/5 * * * *", async function () {
@@ -85,24 +86,21 @@ cron.schedule("0 22 * * *", async function () {
   await addingteam.addPlayers();
 });
 cron.schedule("0 */20 * * *", async function () {
-  await addingteame.addteamPlayers();
+   await addingteame.addteamPlayers();
 });
 cron.schedule("0 */2 * * *", async function () {
-  await addIds.addMatchIds();
+   await addIds.addMatchIds();
 });
-//addlivenew.addLivematchtodb();
-//addlivescoresnew.addLivematchtodb();
-//addIds.addMatchIds();
-//teamstandings.addTeamstandingstodb();
+// addlivenew.addLivematchtodb();
+// addlivescoresnew.addLivematchtodb();
+// addIds.addMatchIds();
+// teamstandings.addTeamstandingstodb();
+// addingteame.addteamPlayers();
 // matches.addMatchtoDb()
 // teamstandingsA.addTeamstandingstodb()
-// addplayers.addPlayers();
+// addingteam.addPlayers();
 // transaction.startTransaction();
-async function gettingkeys() {
-  const data = await getkeys.getkeys();
-}
-//gettingkeys();
 const PORT = process.env.PORT || 8000;
-app.listen(PORT, () => {
+app.listen(8000, () => {
   console.warn(`App listening on http://localhost:${PORT}`);
 });

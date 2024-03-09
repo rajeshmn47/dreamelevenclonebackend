@@ -1,16 +1,12 @@
 const flagURLs = require("country-flags-svg");
 const express = require("express");
 const jwt = require("jsonwebtoken");
-
 const router = express.Router();
-const messageBird = require("messagebird")("W2tTRdqV8xxNjMYhIXSX3eEY6");
-
 const activatekey = "accountactivatekey123";
 const nodemailer = require("nodemailer");
 const request = require("request");
 const smtpTransport = require("nodemailer-smtp-transport");
 const otpGenerator = require("otp-generator");
-const fast2sms = require("fast-two-sms");
 const { OAuth2Client } = require("google-auth-library");
 const unirest = require("unirest");
 const transaction = require("./transaction_details_controller");
@@ -314,31 +310,6 @@ router.post("/otp", async (req, res) => {
   }
 });
 
-router.post("/login", async (req, res) => {
-  const user = await User.findOne({ email: req.body.myform.email });
-  if (user) {
-    if (user.password == req.body.myform.password) {
-      const userid = user._id;
-      const token = jwt.sign({ userid }, activatekey, {
-        expiresIn: "50000000m",
-      });
-      res.status(200).json({
-        message: "success",
-        token,
-        user,
-      });
-    } else {
-      res.status(400).json({
-        message: "password is wrong",
-      });
-    }
-  } else {
-    res.status(400).json({
-      message: "no user exists",
-    });
-  }
-});
-
 router.post('/phoneRegister', async (req, res) => {
   try {
     // Extract property details from the request body
@@ -489,7 +460,7 @@ router.post("/verifyPhoneOtp", async (req, res) => {
       });
     }
     else {
-      return res.status(500).json({ message: 'OTP is wrong.' });
+      return res.status(400).json({ message: 'OTP is wrong.' });
     }
   } catch (error) {
     console.error('Error logging in user:', error);
@@ -592,6 +563,45 @@ router.post("/changepassword", async (req, res) => {
   });
 });
 
+router.post("/updateUpi", checkloggedinuser, async (req, res) => {
+  console.log(req.body, 'updated upi')
+  const user = await User.findOne({ _id: req.body.uidfromtoken });
+  user.upiId = req.body.upiId;
+  user.save((err) => {
+    if (!err) {
+      res.status(200).json({
+        message: "user upi updated successfully",
+        success: true,
+      });
+    } else {
+      res.status(200).json({
+        message: "could not update upi",
+        success: false,
+      });
+    }
+  });
+});
+
+router.post("/updateBank", checkloggedinuser, async (req, res) => {
+  console.log(req.body, 'updated upi')
+  const user = await User.findOne({ _id: req.body.uidfromtoken });
+  user.accountNumber = req.body.accountNumber;
+  user.ifsc = req.body.IFSCcode
+  user.save((err) => {
+    if (!err) {
+      res.status(200).json({
+        message: "user upi updated successfully",
+        success: true,
+      });
+    } else {
+      res.status(200).json({
+        message: "could not update upi",
+        success: false,
+      });
+    }
+  });
+});
+
 router.get("/getuser/:id", async (req, res) => {
   const user = await User.findOne({ _id: req.params.id });
   if (user) {
@@ -629,18 +639,44 @@ router.get("/getallusers", async (req, res) => {
   const endDate = date.toISOString();
   const users = await User.find();
   res.status(200).json({
-    message: "teams got successfully",
+    message: "users got successfully",
     users,
   });
 });
 
+router.post("/logine", async (req, res) => {
+  console.log('user',req.body)
+  const user = await User.findOne({ email: req.body.myform.email });
+  if (user) {
+    if (user.password == req.body.myform.password) {
+      const userid = user._id;
+      const token = jwt.sign({ userid }, activatekey, {
+        expiresIn: "50000000m",
+      });
+      res.status(200).json({
+        message: "success",
+        token,
+        user,
+      });
+    } else {
+      res.status(400).json({
+        message: "password is wrong",
+      });
+    }
+  } else {
+    res.status(400).json({
+      message: "no user exists",
+    });
+  }
+});
+
 router.get("/loaduser", checkloggedinuser, async (req, res) => {
-  try{
-  const user = await User.findOne({ _id: { $eq: req.body.uidfromtoken } });
-  res.status(200).json({
-    message: user,
-  });
-}
+  try {
+    const user = await User.findOne({ _id: { $eq: req.body.uidfromtoken } });
+    res.status(200).json({
+      message: user,
+    });
+  }
   catch (err) {
     res.status(400).json({
       message: "their was some error",

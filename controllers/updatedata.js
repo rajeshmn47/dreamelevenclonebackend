@@ -1,43 +1,8 @@
-const flagURLs = require("country-flags-svg");
 const express = require("express");
-const jwt = require("jsonwebtoken");
 const router = express.Router();
-const messageBird = require("messagebird")("W2tTRdqV8xxNjMYhIXSX3eEY6");
-const activatekey = "accountactivatekey123";
-const nodemailer = require("nodemailer");
-const request = require("request");
-const smtpTransport = require("nodemailer-smtp-transport");
-const otpGenerator = require("otp-generator");
-const fast2sms = require("fast-two-sms");
-const unirest = require("unirest");
-const transaction = require("./transaction");
-const User = require("../models/user");
-const req = unirest("GET", "https://www.fast2sms.com/dev/bulkV2");
-const matches = require("./matchDB-controller");
 const fMatches = require("./fMatchDB-controller");
-const addingteam = require("./addplayer");
-const addingteame = require("./teamcreatecontroller");
-const addlivenew = require("./addlivedetails");
 const addlivescoresnew = require("./addlivescoresdetails");
-const teamstandings = require("./updateteam");
 const addLiveCommentary = require("./firebase");
-const addIds = require("./addMatchIds");
-
-const api_key =
-  "s16rcBDzWjgNhJXPEUV9HA3QMSfvpen2GyL7a4F8ubdwICk5KOHPT32vI5b6cSxs8JpUhirCOjqogGwk";
-const transporter = nodemailer.createTransport(
-  smtpTransport({
-    service: "gmail",
-    host: "smtp.gmail.com",
-    port: 587,
-    secure: false,
-    requireTLS: true,
-    auth: {
-      user: "rajeshmn47@gmail.com",
-      pass: "nednygtvvsfgzvex",
-    },
-  })
-);
 
 router.get("/addlivedetails", async (req, res) => {
   try {

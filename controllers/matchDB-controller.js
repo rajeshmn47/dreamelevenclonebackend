@@ -100,7 +100,7 @@ module.exports.addMatchtoDb = async function () {
           try {
             const match = await Match.findOne({ matchId });
             if (!match) {
-              const prize = [10000, 5000, 4000, 500];
+              const prize = [10000, 5000, 4000, 500, 0, 0];
               // let prizeBreakup = [
               //     5, 4, 3, 1
               // ];

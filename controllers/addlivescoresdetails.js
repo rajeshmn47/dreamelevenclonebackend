@@ -54,9 +54,6 @@ module.exports.addLivematchtodb = async function () {
     } else {
       const keys = await getkeys.getkeys();
       const date1 = matches[i].date;
-      let user = await User.findById(process.env.refUserId);
-      user.totalhits = user.totalhits + 1;
-      await user.save();
       const options = {
         method: "GET",
         url: `https://cricbuzz-cricket.p.rapidapi.com/mcenter/v1/${matchId}/scard`,
@@ -78,6 +75,7 @@ module.exports.addLivematchtodb = async function () {
       });
       promise
         .then(async (s) => {
+          console.log(s)
           if (s.matchHeader != null && s.scoreCard != 0) {
             const LiveMatchDet = new MatchLive();
             LiveMatchDet.matchId = matchId;

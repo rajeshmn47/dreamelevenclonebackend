@@ -26,7 +26,7 @@ async function getplayerImage(name) {
     headers: {},
   };
 
-  const s = await axios(config).catch((error) => {});
+  const s = await axios(config).catch((error) => { });
   const PlayerS = new Player();
 
   return s.data.data.length > 0 ? s.data.data[0].image_path : "";
@@ -34,7 +34,7 @@ async function getplayerImage(name) {
 module.exports.addTeamstandingstodb = async function () {
   let date = new Date();
   const endDate = new Date(date.getTime());
-  const b = 10 * 60 * 60 * 1000 * 1;
+  const b = 1000 * 60 * 60 * 1000 * 1;
   date = new Date(date.getTime() - b);
   const matches = await MatchLive.find({
     date: {
@@ -53,8 +53,18 @@ module.exports.addTeamstandingstodb = async function () {
             parseInt(matches[i].teamHomePlayers[j].playerId) ==
             parseInt(team.players[z].playerId)
           ) {
-            team.players[z].point = matches[i].teamHomePlayers[j].points;
-            team.points += matches[i].teamHomePlayers[j].points;
+            if (parseInt(team.players[z].playerId) == parseInt(team.captainId)) {
+              team.players[z].point = parseInt(matches[i].teamHomePlayers[j].points) * 2;
+              team.points += parseInt(matches[i].teamHomePlayers[j].points) * 2;
+            }
+            else if (parseInt(team.players[z].playerId) == parseInt(team.viceCaptainId)) {
+              team.players[z].point = parseInt(matches[i].teamHomePlayers[j].points) * 1.5;
+              team.points += parseInt(matches[i].teamHomePlayers[j].points) * 1.5;
+            }
+            else {
+              team.players[z].point = matches[i].teamHomePlayers[j].points;
+              team.points += matches[i].teamHomePlayers[j].points;
+            }
           }
         }
       }
@@ -64,8 +74,18 @@ module.exports.addTeamstandingstodb = async function () {
             parseInt(matches[i].teamAwayPlayers[k].playerId) ==
             parseInt(team.players[y].playerId)
           ) {
-            team.players[y].point = matches[i].teamAwayPlayers[k].points;
-            team.points += matches[i].teamAwayPlayers[k].points;
+            if (parseInt(team.players[y].playerId) == parseInt(team.viceCaptainId)) {
+              team.players[y].point = parseInt(matches[i].teamAwayPlayers[k].points) * 1.5;
+              team.points += parseInt(matches[i].teamAwayPlayers[k].points) * 1.5;
+            }
+            else if (parseInt(team.players[y].playerId) == parseInt(team.captainId)) {
+              team.players[y].point = parseInt(matches[i].teamAwayPlayers[k].points) * 2;
+              team.points += parseInt(matches[i].teamAwayPlayers[k].points) * 2;
+            }
+            else {
+              team.players[y].point = matches[i].teamAwayPlayers[k].points;
+              team.points += matches[i].teamAwayPlayers[k].points;
+            }
           }
         }
       }
