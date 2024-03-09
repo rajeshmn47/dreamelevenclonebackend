@@ -580,7 +580,10 @@ router.get("/homeMatches", async (req, res) => {
       if (matt?.teamHomePlayers?.length > 0) {
         mat.lineups = "Lineups Out";
       }
-      upcomingMatches.results.push(mat);
+      const date = new Date();
+      if (match.date < date) {
+        upcomingMatches.results.push(mat);
+      }
     }
   }
   const etime = new Date().getSeconds();
