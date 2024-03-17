@@ -26,18 +26,13 @@ router.post("/saveteam/:id", async (req, res) => {
       });
       points += req.body.players[p].points;
     }
-    const otp = otpGenerator.generate(8, {
-      lowerCaseAlphabets: false,
-      upperCaseAlphabets: false,
-      specialChars: false,
-      specialChars: false,
-    });
+    const userteams = await Team.find({ $and: [{ matchId: req.body.matchId }, { userId: req.body.uidfromtoken }] });
     const team = await Team.create({
       matchId: req.body.matchId,
       captainId: req.body.captainId,
       viceCaptainId: req.body.vicecaptainId,
       userId: req.body.uidfromtoken,
-      teamId: otp,
+      teamId: userteams?.length + 1,
       players,
       points: 44,
     });
@@ -79,20 +74,13 @@ router.put("/updateTeam/:id", async (req, res) => {
       });
       points += req.body.players[p].points;
     }
-    const otp = otpGenerator.generate(8, {
-      lowerCaseAlphabets: false,
-      upperCaseAlphabets: false,
-      specialChars: false,
-      specialChars: false,
-    });
     const team = await Team.findByIdAndUpdate(req.params.id, {
       matchId: req.body.matchId,
       captainId: req.body.captainId,
       viceCaptainId: req.body.vicecaptainId,
       userId: req.body.uidfromtoken,
-      teamId: otp,
       players: players,
-      points: 44,
+      points: 44
     });
     res.status(200).json({
       team,

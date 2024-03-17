@@ -39,7 +39,7 @@ function pointCalculator(
 module.exports.addLivematchtodb = async function () {
   let date = new Date();
   const endDate = new Date(date.getTime());
-  const b = 20 * 60 * 60 * 1000 * 1;
+  const b = 100 * 60 * 60 * 1000 * 1;
   date = new Date(date.getTime() - b);
   const matches = await Match.find({
     date: {

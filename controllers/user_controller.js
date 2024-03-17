@@ -602,6 +602,25 @@ router.post("/updateBank", checkloggedinuser, async (req, res) => {
   });
 });
 
+router.post("/updateUser", checkloggedinuser, async (req, res) => {
+  console.log(req.body, 'updated upi')
+  const user = await User.findOne({ _id: req.body.uidfromtoken });
+  user.username = req.body.username;
+  user.save((err) => {
+    if (!err) {
+      res.status(200).json({
+        message: "user updated successfully",
+        success: true,
+      });
+    } else {
+      res.status(200).json({
+        message: "could not update user",
+        success: false,
+      });
+    }
+  });
+});
+
 router.get("/getuser/:id", async (req, res) => {
   const user = await User.findOne({ _id: req.params.id });
   if (user) {

@@ -4,11 +4,9 @@ const crypto = require("crypto");
 const teamSchema = new mongoose.Schema(
   {
     teamId: {
-      type: String,
+      type: Number,
       trim: true,
-      required: true,
-      unique: true,
-      lowercase: true,
+      required: true
     },
 
     players: [

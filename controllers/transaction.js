@@ -21,7 +21,12 @@ module.exports.startTransaction = async function () {
   let date = new Date();
   const endDate = new Date(date.getTime() + 24 * 60 * 60 * 1000 * 2);
   date = new Date(date.getTime() - 24 * 60 * 60 * 1000 * 2);
-  const matches = await MatchLive.find();
+  const matches = await MatchLive.find({
+    date: {
+      $gte: new Date(date),
+      $lt: new Date(endDate),
+    },
+  });
   for (let i = 0; i < matches.length; i++) {
     if (matches[i].result == "Complete" && !matches[i].transaction) {
       const contests = await Contest.find({ matchId: matches[i].matchId });

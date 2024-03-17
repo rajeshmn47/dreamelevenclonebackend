@@ -86,14 +86,14 @@ cron.schedule("0 22 * * *", async function () {
   await addingteam.addPlayers();
 });
 cron.schedule("0 */20 * * *", async function () {
-   await addingteame.addteamPlayers();
+  await addingteame.addteamPlayers();
 });
-cron.schedule("0 */2 * * *", async function () {
-   await addIds.addMatchIds();
+cron.schedule("0 */1 * * *", async function () {
+  await addIds.addMatchIds();
 });
 // addlivenew.addLivematchtodb();
 // addlivescoresnew.addLivematchtodb();
-// addIds.addMatchIds();
+addIds.addMatchIds();
 // teamstandings.addTeamstandingstodb();
 // addingteame.addteamPlayers();
 // matches.addMatchtoDb()

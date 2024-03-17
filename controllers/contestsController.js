@@ -107,8 +107,8 @@ router.get("/getjoinedcontest/:id", async (req, res) => {
           teamsarray.push({
             ...arr[x]._doc,
             rank: x + 1,
-            won: contests[i]?.prizeDetails[x + 1]?.prize
-              ? contests[i]?.prizeDetails[x + 1]?.prize
+            won: contests[i]?.prizeDetails[x]?.prize
+              ? contests[i]?.prizeDetails[x]?.prize
               : 0,
             username: user.username,
             teamnumber: x + 1,
@@ -156,6 +156,30 @@ router.get("/joincontest/:id", async (req, res) => {
         success: false,
       });
     }
+  }
+  else {
+    res.status(400).json({
+      message: "can't join contest, time's up",
+      success: false,
+    });
+  }
+});
+
+router.get("/reJoinCn/:id", async (req, res) => {
+  const contest = await Contest.findOne({ _id: req.params.id });
+  console.log(contest, "rejoin");
+  const user = await User.findOne({ _id: req.body.uidfromtoken });
+  const match = await Match.findOne({ matchId: contest.matchId });
+  const date = new Date();
+  if (date < match.date&&contest) {
+      contest.teamsId=contest.teamsId.filter((t)=>!(t==req.query.oldTeamId));
+      contest.teamsId.push(req.query.newTeamId);
+      await contest.save();
+      await user.save();
+      res.status(200).json({
+        success:true,
+        contest:contest
+      });
   }
   else {
     res.status(400).json({
