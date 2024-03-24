@@ -287,11 +287,116 @@ router.get("/myMatches", async (req, res) => {
   });
 });
 
+router.get("/recentMatches", async (req, res) => {
+  const notAllowed = ["", false, null, 0, undefined, NaN];
+  const allMatches = {
+    results: [],
+  };
+  let date = new Date();
+  const endDate = new Date(date.getTime() + 48 * 60 * 60 * 1000);
+  const starteDate = new Date(date.getTime() - 48 * 60 * 60 * 1000);
+  const matches = await Match.find({
+    date: {
+      $gte: new Date(starteDate),
+      $lt: new Date(endDate),
+    },
+  });
+  const allLiveMatches = await LiveMatches.find({
+    date: {
+      $gte: new Date(starteDate),
+      $lt: new Date(endDate),
+    },
+  });
+  for (let i = 0; i < matches.length; i++) {
+    if (matches[i].matchId) {
+      teamAwayFlagUrl = flagURLs.findFlagUrlByCountryName(
+        matches[i].teamAwayName
+      );
+      teamHomeFlagUrl = flagURLs.findFlagUrlByCountryName(
+        matches[i].teamHomeName
+      );
+      if (!teamAwayFlagUrl) {
+        teamAwayFlagUrl = getflags.getflag(matches[i].teamAwayName);
+      }
+      if (!teamHomeFlagUrl) {
+        teamHomeFlagUrl = getflags.getflag(matches[i].teamHomeName);
+      }
+      const match = matches[i];
+      const mat = {
+        match_title: match.matchTitle,
+        home: {
+          name: match.teamHomeName,
+          code: match.teamHomeCode.toUpperCase(),
+        },
+        away: {
+          name: match.teamAwayName,
+          code: match.teamAwayCode.toUpperCase(),
+        },
+        date: match.date,
+        id: match.matchId,
+        livestatus: "",
+        result: "",
+        status: "",
+        inPlay: "",
+        lineups: "",
+        won: 0,
+        teamHomeFlagUrl,
+        teamAwayFlagUrl,
+      };
+      liveStatus = "Line-ups are not out yet!";
+      mat.livestatus = liveStatus;
+      //const matt = await LiveMatches.findOne({ matchId: matches[i].matchId });
+      const matt = allLiveMatches.find(
+        (m) => m.matchId == matches[i].matchId
+      );
+      let contests = [];
+      let teams = [];
+      if (matt && matt.result == "In Progress") {
+        mat.result = "live";
+        allMatches.results.push(mat);
+      }
+      else if (matt?.result == "Complete") {
+        mat.result = "completed";
+        mat.contests = contests;
+        mat.teams = teams;
+        allMatches.results.push(mat);
+      }
+      else if (date > new Date(mat.date)) {
+        mat.result = "delayed";
+        allMatches.results.push(mat)
+      }
+      else {
+        mat.result = "upcoming";
+        allMatches.results.push(mat)
+      }
+    }
+  }
+  //const usermatchesdetails = await Promise.all(usermatchespromises);
+  res.status(200).json({
+    success: true,
+    all: allMatches
+  });
+});
+
 
 router.get("/getmatch/:id", async (req, res) => {
   const match = await Match.findOne({ matchId: req.params.id });
+  const livematch = await LiveMatches.findOne({ matchId: req.params.id });
+  teamAwayFlagUrl = flagURLs.findFlagUrlByCountryName(
+    match?.teamAwayName
+  );
+  teamHomeFlagUrl = flagURLs.findFlagUrlByCountryName(
+    match?.teamHomeName
+  );
+  if (!teamAwayFlagUrl) {
+    teamAwayFlagUrl = getflags.getflag(match.teamAwayName);
+  }
+  if (!teamHomeFlagUrl) {
+    teamHomeFlagUrl = getflags.getflag(match.teamHomeName);
+  }
   res.status(200).json({
-    match,
+    match: { ...match._doc, teamHomeFlagUrl: teamHomeFlagUrl, teamAwayFlagUrl: teamAwayFlagUrl },
+    livematch: livematch
   });
 });
 

@@ -11,6 +11,7 @@ const { OAuth2Client } = require("google-auth-library");
 const unirest = require("unirest");
 const transaction = require("./transaction_details_controller");
 const User = require("../models/user");
+const MatchLiveDetails = require("../models/matchlive");
 const req = unirest("GET", "https://www.fast2sms.com/dev/bulkV2");
 const server_secret_key =
   "iamrajesh675gjhchshskijdiucacuijnuijniusjiudjcsdijcjsijcisjijsoisju";
@@ -657,9 +658,11 @@ router.get("/getallusers", async (req, res) => {
   date.setDate(date.getDate() + 1);
   const endDate = date.toISOString();
   const users = await User.find();
+  const matches = await MatchLiveDetails.find();
   res.status(200).json({
     message: "users got successfully",
-    users,
+    users:users,
+    matches:matches
   });
 });
 
