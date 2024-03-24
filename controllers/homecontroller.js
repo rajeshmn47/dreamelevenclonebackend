@@ -88,12 +88,10 @@ router.get("/myMatches", async (req, res) => {
         matches[i].teamHomeName
       );
       if (!teamAwayFlagUrl) {
-        teamAwayFlagUrl =
-          "https://c8.alamy.com/comp/WKN91Y/illustration-of-a-cricket-sports-player-batsman-batting-front-view-set-inside-shield-WKN91Y.jpg";
+        teamAwayFlagUrl = getflags.getflag(matches[i].teamAwayName);
       }
       if (!teamHomeFlagUrl) {
-        teamHomeFlagUrl =
-          "https://c8.alamy.com/comp/WKN91Y/illustration-of-a-cricket-sports-player-batsman-batting-front-view-set-inside-shield-WKN91Y.jpg";
+        teamHomeFlagUrl = getflags.getflag(matches[i].teamHomeName);
       }
       const match = matches[i];
       const mat = {
