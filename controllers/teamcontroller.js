@@ -136,4 +136,12 @@ router.get("/getteam/:id", async (req, res) => {
   });
 });
 
+router.get("/getTeamsofMatch/:id", async (req, res) => {
+  const teams = await Team.find({ matchId: req.params.id });
+  res.status(200).json({
+    message: "teams got successfully",
+    teams: teams
+  });
+});
+
 module.exports = router;
