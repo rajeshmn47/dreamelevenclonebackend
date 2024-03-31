@@ -13,14 +13,12 @@ const playerSchema = new mongoose.Schema(
     firstname: {
       type: String,
       trim: true,
-      required: true,
       lowercase: true,
     },
 
     lastname: {
       type: String,
       trim: true,
-      required: true,
       lowercase: true,
     },
 
@@ -34,7 +32,6 @@ const playerSchema = new mongoose.Schema(
     dateofbirth: {
       type: String,
       trim: true,
-      required: true,
       lowercase: true,
       default: "",
     },
@@ -42,13 +39,29 @@ const playerSchema = new mongoose.Schema(
     id: {
       type: Number,
       required: true,
+      unique: true
     },
 
     country_id: {
       type: Number,
-      required: true,
       default: "",
     },
+
+    teamId: {
+      type: String,
+      default: "",
+    },
+
+    position: {
+      type: String,
+      default: "",
+    },
+
+    teamIds: [
+      {
+        type: String,
+      }
+    ]
   },
   {
     timestamps: true,
