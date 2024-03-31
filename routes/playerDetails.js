@@ -3,13 +3,75 @@ const Player = require("../models/players");
 var express = require("express");
 const Withdraw = require("../models/withdraw");
 const Match = require("../models/match");
+const { getflag } = require("../utils/getflags");
 const router = express.Router();
+const flagURLs = require("country-flags-svg");
 
 router.get("/allplayers", async (req, res) => {
-    const players = await Player.find()
+    const players = await Player.find();
     res.status(200).json({
         message: "players got successfully",
         player: players
+    });
+});
+
+router.get("/updatePlayers", async (req, res) => {
+    const players = await Player.find()
+    for (let i = 0; i < players?.length; i++) {
+        try {
+            for (let j = 0; j < players[i]?.teamIds.length; j++) {
+                let home = await Match.findOne({ teamHomeId: players[i].teamIds[j] })
+                let away = await Match.findOne({ teamAwayId: players[i].teamIds[j] })
+                if (home) {
+                    players[i].flagUrls.push(home.teamHomeFlagUrl)
+                }
+                else if (away) {
+                    players[i].flagUrls.push(away?.teamAwayFlagUrl)
+                }
+            }
+            await players[i].save()
+        }
+        catch (e) {
+            console.log(e)
+        }
+    }
+    res.status(200).json({
+        message: "players got successfully",
+        player: players
+    });
+});
+
+router.get("/updateFlags", async (req, res) => {
+    const matches = await Match.find();
+    for (let i = 0; i < matches?.length; i++) {
+        try {
+            let teamAwayFlagUrl = flagURLs.findFlagUrlByCountryName(
+                matches[i].teamAwayName
+            );
+            let teamHomeFlagUrl = flagURLs.findFlagUrlByCountryName(
+                matches[i].teamHomeName
+            );
+            if (!teamHomeFlagUrl) {
+                matches[i].teamHomeFlagUrl = getflag(matches[i]?.teamHomeName);
+            }
+            else {
+                matches[i].teamHomeFlagUrl = teamHomeFlagUrl;
+            }
+            if (!teamAwayFlagUrl) {
+                matches[i].teamAwayFlagUrl = getflag(matches[i]?.teamAwayName);
+            }
+            else {
+                matches[i].teamAwayFlagUrl = teamAwayFlagUrl;
+            }
+            await matches[i].save();
+        }
+        catch (e) {
+            console.log(e)
+        }
+    }
+    res.status(200).json({
+        message: "matches flags updated successfully",
+        player: matches
     });
 });
 

@@ -47,6 +47,10 @@ const playerSchema = new mongoose.Schema(
       default: "",
     },
 
+    flagUrls: [
+      { type: String }
+    ],
+
     teamId: {
       type: String,
       default: "",

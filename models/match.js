@@ -52,6 +52,20 @@ const matcheSchema = new mongoose.Schema(
       lowercase: true,
       default: "",
     },
+    teamHomeFlagUrl: {
+      type: String,
+      trim: true,
+      required: true,
+      lowercase: true,
+      default: "",
+    },
+    teamAwayFlagUrl: {
+      type: String,
+      trim: true,
+      required: true,
+      lowercase: true,
+      default: "",
+    },
     teamHomePlayers: [
       {
         playerId: {
