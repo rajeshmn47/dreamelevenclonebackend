@@ -30,6 +30,7 @@ const addingteame = require("./controllers/teamcreatecontroller");
 const addIds = require("./controllers/addMatchIds");
 const getkeys = require("./utils/crickeys");
 const { checkloggedinuser } = require("./utils/checkUser.js");
+const player = require("./routes/playerDetails");
 // Environment variables
 /* Requiring body-parser package
 to fetch the data that is entered
@@ -39,6 +40,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors({ origin: "*", credentials: false }));
 app.use("/auth", auth);
+app.use("/", player);
 app.use("/payment", checkloggedinuser, payments);
 app.use("/", checkloggedinuser, home);
 app.use("/", checkloggedinuser, contest);
@@ -91,9 +93,9 @@ cron.schedule("0 */20 * * *", async function () {
 cron.schedule("0 */1 * * *", async function () {
   await addIds.addMatchIds();
 });
-// addlivenew.addLivematchtodb();
-// addlivescoresnew.addLivematchtodb();
-addIds.addMatchIds();
+//addlivenew.addLivematchtodb();
+//addlivescoresnew.addLivematchtodb();
+//addIds.addMatchIds();
 // teamstandings.addTeamstandingstodb();
 // addingteame.addteamPlayers();
 // matches.addMatchtoDb()
