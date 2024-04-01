@@ -659,11 +659,9 @@ router.get("/getallusers", async (req, res) => {
   date.setDate(date.getDate() + 1);
   const endDate = date.toISOString();
   const users = await User.find();
-  const matches = await MatchLiveDetails.find();
   res.status(200).json({
     message: "users got successfully",
-    users: users,
-    matches: matches
+    users: users
   });
 });
 
