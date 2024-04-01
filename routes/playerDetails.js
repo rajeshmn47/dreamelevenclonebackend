@@ -16,17 +16,22 @@ router.get("/allplayers", async (req, res) => {
 });
 
 router.get("/updatePlayers", async (req, res) => {
-    const players = await Player.find()
+    const p = await Player.updateMany({}, { flagUrls: [] })
+    const players = await Player.find();
     for (let i = 0; i < players?.length; i++) {
         try {
             for (let j = 0; j < players[i]?.teamIds.length; j++) {
                 let home = await Match.findOne({ teamHomeId: players[i].teamIds[j] })
                 let away = await Match.findOne({ teamAwayId: players[i].teamIds[j] })
                 if (home) {
-                    players[i].flagUrls.push(home.teamHomeFlagUrl)
+                    if (!players[i]?.flagUrls.includes(home.teamHomeFlagUrl)) {
+                        players[i].flagUrls.push(home.teamHomeFlagUrl)
+                    }
                 }
                 else if (away) {
-                    players[i].flagUrls.push(away?.teamAwayFlagUrl)
+                    if (!players[i]?.flagUrls.includes(away.teamAwayFlagUrl)) {
+                        players[i].flagUrls.push(away?.teamAwayFlagUrl)
+                    }
                 }
             }
             await players[i].save()
@@ -42,6 +47,7 @@ router.get("/updatePlayers", async (req, res) => {
 });
 
 router.get("/updateFlags", async (req, res) => {
+    const m = await Match.updateMany({}, { teamAwayFlagUrl: "", teamHomeFlagUrl });
     const matches = await Match.find();
     for (let i = 0; i < matches?.length; i++) {
         try {
