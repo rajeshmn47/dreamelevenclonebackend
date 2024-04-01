@@ -71,6 +71,7 @@ router.post("/googlelogin", async (req, res, next) => {
       user1.image = response.payload.picture;
       user1.password = "password";
       user1.phonenumber = 7259293140;
+      user1.verified = true;
       user1.wallet = 10000;
       const options = {
         method: "POST",
