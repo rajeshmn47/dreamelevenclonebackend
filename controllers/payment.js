@@ -233,7 +233,7 @@ router.get("/withdrawData", async (req, res) => {
       [{ $match: { isWithdrawCompleted: false } },
       {
         $lookup: {
-          from: "usernews",//your schema name from mongoDB
+          from: "users",//your schema name from mongoDB
           localField: "userId", //user_id from user(main) model
           foreignField: "_id",//user_id from user(sub) model
           as: "user"//result var name
