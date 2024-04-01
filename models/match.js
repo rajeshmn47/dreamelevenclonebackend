@@ -31,6 +31,25 @@ const matcheSchema = new mongoose.Schema(
       lowercase: true,
     },
 
+    format: {
+      type: String,
+      enum: [
+        'test',
+        'odi',
+        't20',
+        't10'
+      ]
+    },
+
+    type: {
+      type: String,
+      enum: [
+        'i',
+        'd',
+        'l'
+      ]
+    },
+
     teamHomeId: {
       type: String,
       trim: true,

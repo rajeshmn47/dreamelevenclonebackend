@@ -31,6 +31,7 @@ const addIds = require("./controllers/addMatchIds");
 const getkeys = require("./utils/crickeys");
 const { checkloggedinuser } = require("./utils/checkUser.js");
 const player = require("./routes/playerDetails");
+const series = require("./routes/series");
 // Environment variables
 /* Requiring body-parser package
 to fetch the data that is entered
@@ -41,6 +42,7 @@ app.use(express.json());
 app.use(cors({ origin: "*", credentials: false }));
 app.use("/auth", auth);
 app.use("/", player);
+app.use("/", series);
 app.use("/payment", checkloggedinuser, payments);
 app.use("/", checkloggedinuser, home);
 app.use("/", checkloggedinuser, contest);

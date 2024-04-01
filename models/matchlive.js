@@ -10,6 +10,25 @@ const matchDetailsThirdSchema = new mongoose.Schema(
       unique: true,
       lowercase: true,
     },
+    format: {
+      type: String,
+      enum: [
+        'test',
+        'odi',
+        't20',
+        't10'
+      ],
+      default: 't20'
+    },
+    type: {
+      type: String,
+      enum: [
+        'i',
+        'd',
+        'l'
+      ],
+      default: 'i'
+    },
     teamHomeId: {
       type: String,
       trim: true,
