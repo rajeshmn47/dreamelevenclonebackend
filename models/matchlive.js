@@ -27,14 +27,12 @@ const matchDetailsThirdSchema = new mongoose.Schema(
     teamAwayFlagUrl: {
       type: String,
       trim: true,
-      required: true,
       lowercase: true,
       default: "",
     },
     teamAwayId: {
       type: String,
       trim: true,
-      required: true,
       lowercase: true,
       default: "",
     },
