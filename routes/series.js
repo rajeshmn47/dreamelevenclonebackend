@@ -98,8 +98,8 @@ router.get("/seriesDetails/:name", async (req, res) => {
     let topscorer;
     let allplayers = [];
     series.forEach((s) => {
-        s.matchlive[0].teamAwayPlayers.forEach((p) => allplayers.push(p))
-        s.matchlive[0].teamHomePlayers.forEach((p) => allplayers.push(p))
+        s.matchlive[0].teamAwayPlayers.forEach((p) => allplayers.push({ ...p, teamName: s.teamAwayName }))
+        s.matchlive[0].teamHomePlayers.forEach((p) => allplayers.push({ ...p, teamName: s.teamHomeName }))
     }
     );
     sortingplayers = []
@@ -117,7 +117,8 @@ router.get("/seriesDetails/:name", async (req, res) => {
             0) / player?.length;
         let x = {
             playerId: player[0].playerId, image: player[0]?.image, playerName: player[0].playerName, totalScore: runs,
-            totalWickets: wickets, totalSixes: sixes, totalFours: fours, strikeRate: strikeRate
+            totalWickets: wickets, totalSixes: sixes, totalFours: fours, strikeRate: strikeRate,
+            teamName: player[0].teamName
         }
         if (!sortingplayers.find((s) => s.playerId == x.playerId)) {
             sortingplayers.push(x)
