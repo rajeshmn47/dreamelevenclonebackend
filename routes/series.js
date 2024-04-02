@@ -115,12 +115,15 @@ router.get("/seriesDetails/:name", async (req, res) => {
             0);
         let fours = player.reduce((accumulator, currentValue) => accumulator + currentValue.fours,
             0);
-        let strikeRate = player.reduce((accumulator, currentValue) => accumulator + currentValue.strikeRate,
-            0) / player?.length;
+        let totalMatches = player.filter((p) => p.balls > 0 || p.overs > 0).length
+        let strikeRate = (player.reduce((accumulator, currentValue) => accumulator + currentValue.strikeRate,
+            0) / totalMatches).toFixed(2);
+        let average = (runs / totalMatches).toFixed(2);
         let x = {
+            player: { playerId: player[0].playerId, image: player[0]?.image, playerName: player[0].playerName },
             playerId: player[0].playerId, image: player[0]?.image, playerName: player[0].playerName, totalScore: runs,
             totalWickets: wickets, totalSixes: sixes, totalFours: fours, strikeRate: strikeRate,
-            teamName: player[0].teamName
+            teamName: player[0].teamName, matches: totalMatches, average: average
         }
         if (!sortingplayers.find((s) => s.playerId == x.playerId)) {
             sortingplayers.push(x)
