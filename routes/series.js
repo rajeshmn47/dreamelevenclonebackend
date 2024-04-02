@@ -98,8 +98,10 @@ router.get("/seriesDetails/:name", async (req, res) => {
     let topscorer;
     let allplayers = [];
     series.forEach((s) => {
-        s.matchlive[0].teamAwayPlayers.forEach((p) => allplayers.push({ ...p, teamName: s.teamAwayName }))
-        s.matchlive[0].teamHomePlayers.forEach((p) => allplayers.push({ ...p, teamName: s.teamHomeName }))
+        if (s.matchlive[0]?.teamAwayPlayers.length > 0 && s.matchlive[0]?.teamHomePlayers.length > 0) {
+            s.matchlive[0].teamAwayPlayers?.forEach((p) => allplayers.push({ ...p, teamName: s.teamAwayName }))
+            s.matchlive[0].teamHomePlayers?.forEach((p) => allplayers.push({ ...p, teamName: s.teamHomeName }))
+        }
     }
     );
     sortingplayers = []
