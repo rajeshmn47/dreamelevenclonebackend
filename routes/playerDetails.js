@@ -6,6 +6,8 @@ const Match = require("../models/match");
 const { getflag } = require("../utils/getflags");
 const router = express.Router();
 const flagURLs = require("country-flags-svg");
+const { removeBackgroundFromImageUrl } = require("remove.bg");
+var fs = require('fs');
 
 router.get("/allplayers", async (req, res) => {
     const players = await Player.find();
@@ -118,28 +120,51 @@ router.get("/playerDetails/:id", async (req, res) => {
     }
 });
 
-router.get("/updatedatabase", async (req, res) => {
-    try {
-        const allmatches = await MatchLive.find();
-        console.log(allmatches?.length, 'lengthe')
-        for (let i = 0; i < allmatches?.length; i++) {
-            for (let k = 0; k < allmatches[i]?.teamAwayPlayers?.length; + k++) {
-                await Player.create({
-                    name: allmatches[i].teamAwayPlayers[k].playerName,
-                    id: allmatches[i].teamAwayPlayers[k].playerId,
-                    image: allmatches[i].teamAwayPlayers[k].image,
-                    teamId: allmatches[i].teamAwayId
-                })
-            }
-            for (let k = 0; k < allmatches[i]?.teamHomePlayers?.length; + k++) {
-                await Player.create({
-                    name: allmatches[i].teamHomePlayers[k].playerName,
-                    id: allmatches[i].teamHomePlayers[k].playerId,
-                    image: allmatches[i].teamHomePlayers[k].image,
-                    teamId: allmatches[i].teamHomeId
-                })
-            }
+router.get("/updatedatabase", (req, res) => {
+    Player.find({ teamIds: { $in: ['255'] } }).then(players => {
+        for (let i = 0; i < players.length; i++) {
+            console.log(players[i], 'player');
+            const x = 'https://www.cricbuzz.com/a/img/v1/152x152/i1/';
+            const a = `c${players[i]?.image}/`;
+            const b = `${players[i]?.name.split(' ').join('-').toLowerCase()}.jpg`;
+            const url = x + a + b;
+            const outputFile = `./images/nobackground/${players[i]?.id}.png`;
+            removeBackgroundFromImageUrl({
+                url,
+                apiKey: "mWJbEEdTEQHq3XCN5AwftuYx",
+                size: "regular",
+                type: "person",
+                outputFile
+            }).then((result) => {
+                console.log(`File saved to ${outputFile}`);
+                const base64img = result.base64img;
+            }).catch((errors) => {
+                console.log(JSON.stringify(errors));
+            });
         }
+        function getData(player) {
+            console.log(player, 'player');
+            const x = 'https://www.cricbuzz.com/a/img/v1/152x152/i1/';
+            const a = `c${player?.image}/`;
+            const b = `${player?.name.split(' ').join('-').toLowerCase()}.jpg`;
+            const url = x + a + b;
+            const outputFile = `./images/nobackground/${player?.id}.png`;
+            removeBackgroundFromImageUrl({
+                url,
+                apiKey: "LWvsxxt2uJBg3pQFxjUaNUfk",
+                size: "regular",
+                type: "person",
+                outputFile
+            }).then((result) => {
+                console.log(`File saved to ${outputFile}`);
+                const base64img = result.base64img;
+            }).catch((errors) => {
+                console.log(JSON.stringify(errors));
+            });
+        }
+    }
+    )
+    try {
         res.status(200).json({
             message: "players added successfully",
         });
@@ -151,5 +176,7 @@ router.get("/updatedatabase", async (req, res) => {
         });
     }
 });
+
+
 
 module.exports = router;

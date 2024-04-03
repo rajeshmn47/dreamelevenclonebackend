@@ -4403,6 +4403,14 @@ registry-url@^5.0.0:
   dependencies:
     rc "^1.2.8"
 
+remove.bg@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.npmjs.org/remove.bg/-/remove.bg-1.3.0.tgz"
+  integrity sha512-vWCAOkmOLfn2U+uFlaEL4qFtP/Uxmcw+MW2Ds4zpsdHmcyXdy7XPx4Hp+K7Bl/ZdJVedLIDs88RQL7fvYb0J/Q==
+  dependencies:
+    request "^2.88.0"
+    unirest "~0.6.0"
+
 request-promise-core@1.1.4:
   version "1.1.4"
   resolved "https://registry.npmjs.org/request-promise-core/-/request-promise-core-1.1.4.tgz"
@@ -5128,7 +5136,7 @@ unique-string@^2.0.0:
   dependencies:
     crypto-random-string "^2.0.0"
 
-unirest@^0.6.0:
+unirest@^0.6.0, unirest@~0.6.0:
   version "0.6.0"
   resolved "https://registry.npmjs.org/unirest/-/unirest-0.6.0.tgz"
   integrity sha512-BdYdcYJHXACqZ53k8Zz7QlNK/1W/HjCZlmg1OaaN/oTSp4FTWh0upXGSJsG88PljDBpSrNc2R649drasUA9NEg==

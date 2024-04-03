@@ -4,6 +4,7 @@ const app = express();
 const mongoose = require("mongoose");
 const cors = require("cors");
 var express = require("express");
+const path = require('path');
 const cricLive = require("cric-live");
 const cron = require("node-cron");
 const nodemailer = require("nodemailer");
@@ -40,6 +41,7 @@ by the user in the HTML form. */
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors({ origin: "*", credentials: false }));
+app.use('/images', express.static(path.join('images'))); 
 app.use("/auth", auth);
 app.use("/", player);
 app.use("/", series);
