@@ -17,6 +17,29 @@ router.get("/allplayers", async (req, res) => {
     });
 });
 
+router.get("/players-nobackground", async (req, res) => {
+    // Get the current working directory
+    const cwd = process.cwd();
+
+    // Read the contents of the current working directory
+    const files = fs.readdirSync('./images/nobackground');
+
+    // Loop through the files and print their names
+    let existingImgs = []
+    files.forEach(file => {
+        console.log(file.split('.png')[0]);
+        let id = file.split('.png')[0];
+        if(!(id=="img-removed-from-file")){
+        existingImgs.push(id)
+        }
+    });
+    const players = await Player.find({ id: { $nin: existingImgs } });
+    res.status(200).json({
+        message: "players got successfully",
+        player: players
+    });
+});
+
 router.get("/updatePlayers", async (req, res) => {
     const p = await Player.updateMany({}, { flagUrls: [] })
     const players = await Player.find();
@@ -121,7 +144,18 @@ router.get("/playerDetails/:id", async (req, res) => {
 });
 
 router.get("/updatedatabase", (req, res) => {
-    Player.find({ teamIds: { $in: ['255'] } }).then(players => {
+    const files = fs.readdirSync('./images/nobackground');
+
+    // Loop through the files and print their names
+    let existingImgs = []
+    files.forEach(file => {
+        console.log(file.split('.png')[0]);
+        let id = file.split('.png')[0];
+        if(!(id=="img-removed-from-file")){
+        existingImgs.push(id)
+        }
+    });
+    Player.find({ id: { $nin: existingImgs } }).then(players => {
         for (let i = 0; i < players.length; i++) {
             console.log(players[i], 'player');
             const x = 'https://www.cricbuzz.com/a/img/v1/152x152/i1/';
