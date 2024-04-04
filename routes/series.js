@@ -116,9 +116,10 @@ router.get("/seriesDetails/:name", async (req, res) => {
         let fours = player.reduce((accumulator, currentValue) => accumulator + currentValue.fours,
             0);
         let totalMatches = player.filter((p) => p.balls > 0 || p.overs > 0).length
-        let strikeRate = (player.reduce((accumulator, currentValue) => accumulator + currentValue.strikeRate,
-            0) / totalMatches).toFixed(2);
-        let average = (runs / totalMatches).toFixed(2);
+        let str = ((runs/(player.reduce((accumulator, currentValue) => accumulator + currentValue.balls,
+            0)))*100).toFixed(2);
+        let strikeRate = isNaN(str)?0:str;
+        let average = isNaN((runs / totalMatches).toFixed(2))?0:((runs / totalMatches).toFixed(2));
         let x = {
             player: { playerId: player[0].playerId, image: player[0]?.image, playerName: player[0].playerName },
             playerId: player[0].playerId, image: player[0]?.image, playerName: player[0].playerName, totalScore: runs,

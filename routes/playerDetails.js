@@ -29,14 +29,50 @@ router.get("/players-nobackground", async (req, res) => {
     files.forEach(file => {
         console.log(file.split('.png')[0]);
         let id = file.split('.png')[0];
-        if(!(id=="img-removed-from-file")){
-        existingImgs.push(id)
+        if (!(id == "img-removed-from-file")) {
+            existingImgs.push(id)
         }
     });
     const players = await Player.find({ id: { $nin: existingImgs } });
     res.status(200).json({
         message: "players got successfully",
         player: players
+    });
+});
+
+router.get("/update-blankimage", async (req, res) => {
+    // Get the current working directory
+    const cwd = process.cwd();
+
+    // Read the contents of the current working directory
+    const files = fs.readdirSync('./images/existingimages');
+
+    // Loop through the files and print their names
+    let existingImgs = []
+    files.forEach(async file => {
+        console.log(file.split('.png')[0]);
+        let id = file.split('.png')[0];
+        if ((!(id == "img-removed-from-file"))) {
+            existingImgs.push(id);
+        }
+    });
+    const players = await Player.find({ id: { $nin: existingImgs } });
+    let nonexistingImgs = []
+    for (let i = 0; i < players.length; i++) {
+        const imageData = fs.readFileSync('images/blankimages/blank.png');
+        fs.writeFile(`images/nobackground/${players[i].id}.png`, imageData, (err) => {
+            if (err) {
+                console.error(err);
+            } else {
+                console.log('Image written successfully!');
+            }
+        });
+        nonexistingImgs.push(players[i]?.id)
+    }
+    res.status(200).json({
+        message: "players got successfully",
+        player: players,
+        nonexistingImgs: nonexistingImgs
     });
 });
 
@@ -151,8 +187,8 @@ router.get("/updatedatabase", (req, res) => {
     files.forEach(file => {
         console.log(file.split('.png')[0]);
         let id = file.split('.png')[0];
-        if(!(id=="img-removed-from-file")){
-        existingImgs.push(id)
+        if (!(id == "img-removed-from-file")) {
+            existingImgs.push(id)
         }
     });
     Player.find({ id: { $nin: existingImgs } }).then(players => {
