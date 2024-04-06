@@ -30,13 +30,15 @@ module.exports.addPlayers = async function () {
       $lt: new Date(endDate),
     },
   });
-  for (let i = 0; i < matches.length; i++) {
+  console.log(matches?.length, 'found matches')
+  for (let i = 0; i < 1; i++) {
     if (!matches[i]?.teamAwayPlayers?.length > 0) {
+      console.log(matches[i]?.teamAwayPlayers.length, 'found matches')
       const options = {
         method: "GET",
         url: `https://cricbuzz-cricket.p.rapidapi.com/teams/v1/${matches[i].teamHomeId}/players`,
         headers: {
-          "X-RapidAPI-Key": keys,
+          "X-RapidAPI-Key": "17394dbe40mshd53666ab6bed910p118357jsn7d63181f2556",
           "X-RapidAPI-Host": "cricbuzz-cricket.p.rapidapi.com",
         },
       };
@@ -73,7 +75,7 @@ module.exports.addPlayers = async function () {
         method: "GET",
         url: `https://cricbuzz-cricket.p.rapidapi.com/teams/v1/${matches[i].teamAwayId}/players`,
         headers: {
-          "X-RapidAPI-Key": "3827482ab0msh2682459121bc4e9p182f86jsn5e5bf239f56d",
+          "X-RapidAPI-Key": "17394dbe40mshd53666ab6bed910p118357jsn7d63181f2556",
           "X-RapidAPI-Host": "cricbuzz-cricket.p.rapidapi.com",
         },
       };
@@ -129,7 +131,9 @@ module.exports.addPlayers = async function () {
         console.error(error);
       }
       try {
-        await matches[i].save();
+        console.log(matches[i],'matchteamer')
+        let m = await matches[i].save();
+        console.log(m,'matchteam')
       } catch (error) {
         console.error(error);
       }

@@ -105,8 +105,9 @@ const matcheSchema = new mongoose.Schema(
         position: {
           type: String,
           trim: true,
-          required: true,
+          required: false,
           lowercase: true,
+          default: ""
         },
         batOrder: {
           type: Number,
@@ -140,8 +141,9 @@ const matcheSchema = new mongoose.Schema(
         position: {
           type: String,
           trim: true,
-          required: true,
+          required: false,
           lowercase: true,
+          default: ""
         },
         batOrder: {
           type: Number,

@@ -6,11 +6,79 @@ const Match = require("../models/match");
 const { getflag } = require("../utils/getflags");
 const router = express.Router();
 const flagURLs = require("country-flags-svg");
+const { RemoveBgResult, RemoveBgError, removeBackgroundFromImageFile } = require("remove.bg");
 const { removeBackgroundFromImageUrl } = require("remove.bg");
 var fs = require('fs');
+const { uploadImage } = require("../controllers/firebaseinitialize");
+const { default: axios } = require("axios");
+const pngjs = require('pngjs');
 
 router.get("/allplayers", async (req, res) => {
+    const directoryPath = './images/backgroundremovalneeded';
+
+    // Get the list of files in the directory.
+    const files = fs.readdirSync(directoryPath);
+
+    // Count the number of files.
+    const numberOfFiles = files.length;
     const players = await Player.find();
+    res.status(200).json({
+        message: "players got successfully",
+        player: players,
+        numberOfFiles: numberOfFiles
+    });
+});
+
+router.get("/check-faulty", async (req, res) => {
+    const faultyImages = [];
+    // Get all the images in the directory
+
+    // Loop through the images and check if they are faulty
+    const filterFaultyPngImages = (images) => {
+        return images.filter((image) => {
+            // Try to read the PNG image
+            console.log(image, 'img')
+            try {
+                new pngjs.PNG({ filterType: 4 }).decode(image);
+            } catch (error) {
+                // If the image cannot be read, it is faulty
+                return false;
+            }
+
+            // The image is not faulty
+            return true;
+        });
+    };
+
+    // Get all of the PNG images in the current directory
+    const images = fs.readdirSync('./images/newwithbackground');
+
+    // Filter out the faulty PNG images
+    const filteredImages = filterFaultyPngImages(images);
+
+    // Print the filtered images to the console
+    console.log(filteredImages);
+
+    // Remove the faulty images from the directory
+    res.status(200).json({
+        message: "players got successfully"
+    });
+});
+
+router.get("/update-images", async (req, res) => {
+    const players = await Player.find();
+    const matches = await Match.find();
+    for (let i = 0; i < players.length; i++) {
+        for (let j = 0; j < matches?.length; j++) {
+            let player = matches[j].teamHomePlayers?.find((team) => team.playerId == players[i]?.id)
+            if (player) {
+                console.log(player?.image, 'playeriidd');
+                await Player.updateOne({ id: parseInt(player?.playerId) }, { image: player?.image })
+                break;
+            }
+        }
+        //await Player.updateOne({ id: players[i]?.id }, { image: player?.id })
+    }
     res.status(200).json({
         message: "players got successfully",
         player: players
@@ -23,7 +91,7 @@ router.get("/players-nobackground", async (req, res) => {
 
     // Read the contents of the current working directory
     const files = fs.readdirSync('./images/nobackground');
-
+    const morefiles = fs.readdirSync('./images/blank');
     // Loop through the files and print their names
     let existingImgs = []
     files.forEach(file => {
@@ -33,7 +101,25 @@ router.get("/players-nobackground", async (req, res) => {
             existingImgs.push(id)
         }
     });
+    morefiles.forEach(file => {
+        console.log(file.split('.png')[0]);
+        let id = file.split('.png')[0];
+        if (!(id == "img-removed-from-file")) {
+            existingImgs.push(id)
+        }
+    });
+
     const players = await Player.find({ id: { $nin: existingImgs } });
+    for (let i = 0; i < players.length; i++) {
+        const imageData = fs.readFileSync('images/blanke.png');
+        fs.writeFile(`images/left/${players[i].id}.png`, imageData, (err) => {
+            if (err) {
+                console.error(err);
+            } else {
+                console.log('Image written successfully!');
+            }
+        });
+    }
     res.status(200).json({
         message: "players got successfully",
         player: players
@@ -59,7 +145,7 @@ router.get("/update-blankimage", async (req, res) => {
     const players = await Player.find({ id: { $nin: existingImgs } });
     let nonexistingImgs = []
     for (let i = 0; i < players.length; i++) {
-        const imageData = fs.readFileSync('images/blankimages/blank.png');
+        const imageData = fs.readFileSync('images/left/blank.png');
         fs.writeFile(`images/nobackground/${players[i].id}.png`, imageData, (err) => {
             if (err) {
                 console.error(err);
@@ -73,6 +159,27 @@ router.get("/update-blankimage", async (req, res) => {
         message: "players got successfully",
         player: players,
         nonexistingImgs: nonexistingImgs
+    });
+});
+
+router.get("/upload-to-firebase", async (req, res) => {
+    // Get the current working directory
+    const cwd = process.cwd();
+    // Read the contents of the current working directory
+    const files = fs.readdirSync('./images/backgroundremoved');
+
+    // Loop through the files and print their names
+    let existingImgs = []
+    files.forEach(async file => {
+        console.log(file.split('.png')[0]);
+        let id = file.split('.png')[0];
+        if ((!(id == "img-removed-from-file"))) {
+            const a = await uploadImage(id)
+            console.log(a, 'url')
+        }
+    });
+    res.status(200).json({
+        message: "uploaded images successfully",
     });
 });
 
@@ -180,8 +287,8 @@ router.get("/playerDetails/:id", async (req, res) => {
 });
 
 router.get("/updatedatabase", (req, res) => {
-    const files = fs.readdirSync('./images/nobackground');
-
+    const files = fs.readdirSync('./images/backgroundremovalneeded');
+    const newfiles = fs.readdirSync('./images/backgroundremoved');
     // Loop through the files and print their names
     let existingImgs = []
     files.forEach(file => {
@@ -191,19 +298,31 @@ router.get("/updatedatabase", (req, res) => {
             existingImgs.push(id)
         }
     });
-    Player.find({ id: { $nin: existingImgs } }).then(players => {
+    newfiles.forEach(file => {
+        console.log(file.split('.png')[0]);
+        let id = file.split('.png')[0];
+        if (!(id == "img-removed-from-file")) {
+            const index = existingImgs.indexOf(id);
+            if (index > -1) { // only splice array when item is found
+                existingImgs.splice(index, 1); // 2nd parameter means remove one item only
+            }
+        }
+    });
+    console.log(files?.length, 'total new files');
+    Player.find({ id: { $in: existingImgs } }).then(players => {
         for (let i = 0; i < players.length; i++) {
-            console.log(players[i], 'player');
             const x = 'https://www.cricbuzz.com/a/img/v1/152x152/i1/';
             const a = `c${players[i]?.image}/`;
             const b = `${players[i]?.name.split(' ').join('-').toLowerCase()}.jpg`;
             const url = x + a + b;
-            const outputFile = `./images/nobackground/${players[i]?.id}.png`;
-            removeBackgroundFromImageUrl({
-                url,
-                apiKey: "mWJbEEdTEQHq3XCN5AwftuYx",
+            const outputFile = `./images/backgroundremoved/${players[i]?.id}.png`;
+            const localFile = `./images/backgroundremovalneeded/${players[i]?.id}.png`;
+            removeBackgroundFromImageFile({
+                path: localFile,
+                apiKey: "PWMNVVjRR4MaRG5ayfoHmBRf",
                 size: "regular",
-                type: "person",
+                type: "auto",
+                scale: "50%",
                 outputFile
             }).then((result) => {
                 console.log(`File saved to ${outputFile}`);
@@ -247,6 +366,48 @@ router.get("/updatedatabase", (req, res) => {
     }
 });
 
+router.get("/withbackground-new", (req, res) => {
+    const files = fs.readdirSync('./images/existingimages');
+
+    // Loop through the files and print their names
+    let existingImgs = []
+    files.forEach(file => {
+        console.log(file.split('.png')[0]);
+        let id = file.split('.png')[0];
+        if (!(id == "img-removed-from-file")) {
+            existingImgs.push(id)
+        }
+    });
+    Player.find({ id: { $nin: existingImgs } }).then(players => {
+        for (let i = 0; i < players.length; i++) {
+            console.log(players[i], 'player');
+            const x = 'https://www.cricbuzz.com/a/img/v1/152x152/i1/';
+            const a = `c${players[i]?.image}/`;
+            const b = `${players[i]?.name.split(' ').join('-').toLowerCase()}.jpg`;
+            const url = x + a + b;
+            const outputFile = `./images/newwithbackground/${players[i]?.id}.png`;
+            axios.get(url, { responseType: 'arraybuffer' }).then((response) => {
+                let buffer = Buffer.from(response.data, 'base64')
+                fs.writeFile(`images/newwithbackground/${players[i]?.id}.png`, buffer, (err) => {
+                    if (err) throw err;
+                    console.log('Image downloaded successfully!');
+                });
+            })
+        }
+    }
+    )
+    try {
+        res.status(200).json({
+            message: "players added successfully",
+        });
+    }
+    catch (e) {
+        console.log(e);
+        res.status(400).json({
+            message: e,
+        });
+    }
+});
 
 
 module.exports = router;
