@@ -11,7 +11,6 @@ const { removeBackgroundFromImageUrl } = require("remove.bg");
 var fs = require('fs');
 const { uploadImage } = require("../controllers/firebaseinitialize");
 const { default: axios } = require("axios");
-const pngjs = require('pngjs');
 
 router.get("/allplayers", async (req, res) => {
     const directoryPath = './images/backgroundremovalneeded';
@@ -26,42 +25,6 @@ router.get("/allplayers", async (req, res) => {
         message: "players got successfully",
         player: players,
         numberOfFiles: numberOfFiles
-    });
-});
-
-router.get("/check-faulty", async (req, res) => {
-    const faultyImages = [];
-    // Get all the images in the directory
-
-    // Loop through the images and check if they are faulty
-    const filterFaultyPngImages = (images) => {
-        return images.filter((image) => {
-            // Try to read the PNG image
-            console.log(image, 'img')
-            try {
-                new pngjs.PNG({ filterType: 4 }).decode(image);
-            } catch (error) {
-                // If the image cannot be read, it is faulty
-                return false;
-            }
-
-            // The image is not faulty
-            return true;
-        });
-    };
-
-    // Get all of the PNG images in the current directory
-    const images = fs.readdirSync('./images/newwithbackground');
-
-    // Filter out the faulty PNG images
-    const filteredImages = filterFaultyPngImages(images);
-
-    // Print the filtered images to the console
-    console.log(filteredImages);
-
-    // Remove the faulty images from the directory
-    res.status(200).json({
-        message: "players got successfully"
     });
 });
 
