@@ -9,6 +9,8 @@ const {
   Timestamp,
   FieldValue,
 } = require("firebase-admin/firestore");
+const nodemailer = require("nodemailer");
+const smtpTransport = require("nodemailer-smtp-transport");
 const MatchLiveDetails = require("../models/matchlive");
 const Matches = require("../models/match");
 const User = require("../models/user");
@@ -35,6 +37,27 @@ const serviceAccount = {
   universe_domain: "googleapis.com",
 };
 
+const transporter = nodemailer.createTransport(
+  smtpTransport({
+    service: "gmail",
+    host: "smtp.gmail.com",
+    port: 587,
+    secure: false,
+    requireTLS: true,
+    auth: {
+      user: "rajeshmn47@gmail.com",
+      pass: process.env.password,
+    },
+  })
+);
+
+const mailOptions = {
+  from: "rajeshmn47@gmail.com",
+  to: "rajeshmn47@gmail.com",
+  subject: "Sending Email using Node.js[nodemailer]",
+  text: `riyan parag is batting`,
+};
+
 //initializeApp({
 //credential: cert(serviceAccount),
 //});
@@ -54,13 +77,13 @@ module.exports.addLivecommentary = async function addcommentry() {
       },
     });
 
-  //  const citiesRef = db.db.collection('commentary');
-  //  const snapshot = await citiesRef.get();
-  //  if (snapshot.empty) {
-  //    console.log('No matching documents.');
-  //    return;
-   // }
-   // snapshot.forEach(async doc => {
+    //  const citiesRef = db.db.collection('commentary');
+    //  const snapshot = await citiesRef.get();
+    //  if (snapshot.empty) {
+    //    console.log('No matching documents.');
+    //    return;
+    // }
+    // snapshot.forEach(async doc => {
     //  console.log(doc.id, '=>', doc.data());
     //  const commentaryRef = db.db.collection("commentary").doc(doc.id);
     //  const res = await commentaryRef.set(
@@ -70,7 +93,7 @@ module.exports.addLivecommentary = async function addcommentry() {
     //      miniscore: !doc.data().miniscore ? 'not found' : doc.data().miniscore
     //    },
     //    { merge: true }
-     // );
+    // );
     //});
     for (let i = 0; i < matches.length; i++) {
       const matchid = matches[i].matchId;
@@ -116,6 +139,16 @@ module.exports.addLivecommentary = async function addcommentry() {
               const commentaryRef = db.db.collection("commentary").doc(m[i].matchId);
               let xyz = doc.data().commentary;
               let commentary = getcommentary.getcommentary(xyz, a);
+              console.log(miniscore?.batsmanStriker?.batId, 'miniscore')
+              if (miniscore?.batsmanStriker?.batId == 12305) {
+                transporter.sendMail(mailOptions, (error, info) => {
+                  if (error) {
+                    console.log(error);
+                  } else {
+                    console.log(`Email sent: ${info.response}`);
+                  }
+                });
+              }
               const res = await commentaryRef.set(
                 {
                   commentary: [...commentary],
