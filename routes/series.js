@@ -7,6 +7,7 @@ const { getflag } = require("../utils/getflags");
 const router = express.Router();
 const flagURLs = require("country-flags-svg");
 const MatchLiveDetails = require("../models/matchlive");
+const { setEngine } = require("crypto");
 
 router.get("/allplayers", async (req, res) => {
     const players = await Player.find();
@@ -116,10 +117,10 @@ router.get("/seriesDetails/:name", async (req, res) => {
         let fours = player.reduce((accumulator, currentValue) => accumulator + currentValue.fours,
             0);
         let totalMatches = player.filter((p) => p.balls > 0 || p.overs > 0).length
-        let str = ((runs/(player.reduce((accumulator, currentValue) => accumulator + currentValue.balls,
-            0)))*100).toFixed(2);
-        let strikeRate = isNaN(str)?0:str;
-        let average = isNaN((runs / totalMatches).toFixed(2))?0:((runs / totalMatches).toFixed(2));
+        let str = ((runs / (player.reduce((accumulator, currentValue) => accumulator + currentValue.balls,
+            0))) * 100).toFixed(2);
+        let strikeRate = isNaN(str) ? 0 : str;
+        let average = isNaN((runs / totalMatches).toFixed(2)) ? 0 : ((runs / totalMatches).toFixed(2));
         let x = {
             player: { playerId: player[0].playerId, image: player[0]?.image, playerName: player[0].playerName },
             playerId: player[0].playerId, image: player[0]?.image, playerName: player[0].playerName, totalScore: runs,
@@ -135,6 +136,104 @@ router.get("/seriesDetails/:name", async (req, res) => {
             message: "series details got successfully",
             series: series,
             sortedplayers: sortingplayers
+        });
+    }
+    catch (e) {
+        res.status(200).json({
+            message: "series failed"
+        });
+    }
+});
+
+router.get("/pointsTable/:seriesName", async (req, res) => {
+    //const series = await Match.find({ matchTitle: req.params.name });
+    let matches = await Match.aggregate(
+        [{ $match: { matchTitle: req.params.seriesName, date: { $lt: new Date() }, } },
+        {
+            $lookup: {
+                from: "matchlivedetails",//your schema name from mongoDB
+                localField: "matchId", //user_id from user(main) model
+                foreignField: "matchId",//user_id from user(sub) model
+                as: "matchlive"//result var name
+            }
+        },]
+    ).sort({ date: -1 });
+    console.log(matches.length, 'allmatches')
+    let allteams = [];
+    let allmatches = []
+    const m = Array.from(new Set([...matches?.map((s) => ({ id: s?.teamHomeId, teamName: s.teamHomeName, matchdetails: s.matchlive[0] })), ...matches?.map((s) => ({ id: s?.teamAwayId, teamName: s.teamAwayName, matchdetails: s.matchlive[0] }))]));
+    const uniquet = m.filter((f, x) => (m.indexOf(m.find((a) => a.id == f.id)) == x));
+    uniquet.forEach((p) => {
+        let homePlayed = matches.filter((pl) => (pl.matchlive[0].teamHomeId == p.id) && pl.matchlive[0].result == "Complete");
+        let awayPlayed = matches.filter((pl) => (pl.matchlive[0].teamAwayId == p.id) && pl.matchlive[0].result == "Complete");
+        console.log(awayPlayed?.length + homePlayed?.length, 'homeplayed');
+        let fiwon = matches.filter((ma) => ma.matchlive[0].runSI < ma.matchlive[0].runFI);
+        let siwon = matches.filter((ma) => ma.matchlive[0].runSI > ma.matchlive[0].runFI);
+        let won = 0;
+        let lost = 0;
+        let points = 0;
+        let s = ''
+        matches.forEach((mat) => {
+            if (mat.matchlive[0].result == "Complete") {
+                if (mat.matchlive[0].isHomeFirst) {
+                    if (p.id == mat.matchlive[0].teamHomeId) {
+                        if (mat.matchlive[0].runFI > mat.matchlive[0].runSI) {
+                            won = won + 1
+                            points = points + 2
+                            s = s + 'w'
+                        }
+                        else {
+                            lost = lost + 1
+                            s = s + 'l'
+                        }
+                    }
+                    else if (p.id == mat.matchlive[0].teamAwayId) {
+                        if (mat.matchlive[0].runFI < mat.matchlive[0].runSI) {
+                            won = won + 1
+                            points = points + 2
+                            s = s + 'w'
+                        }
+                        else {
+                            lost = lost + 1
+                            s = s + 'l'
+                        }
+                    }
+                }
+                else {
+                    if (p.id == mat.matchlive[0].teamHomeId) {
+                        if (mat.matchlive[0].runSI > mat.matchlive[0].runFI) {
+                            won = won + 1
+                            points = points + 2
+                            s = s + 'w'
+                        }
+                        else {
+                            lost = lost + 1
+                            s = s + 'l'
+                        }
+                    }
+                    if (p.id == mat.matchlive[0].teamAwayId) {
+                        if (mat.matchlive[0].runSI < mat.matchlive[0].runFI) {
+                            won = won + 1
+                            points = points + 2
+                            s = s + 'w'
+                        }
+                        else {
+                            lost = lost + 1
+                            s = s + 'l'
+                        }
+                    }
+                }
+            }
+        })
+        let played = homePlayed?.length + awayPlayed?.length;
+        let singleteam = { teamName: p.teamName, id: p.id, won: won, lost: lost, played: played, points: points, form: s }
+        allteams.push(singleteam)
+    });
+    //console.log(uniqueteams, 'uniqueteams');
+    try {
+        res.status(200).json({
+            message: "series details got successfully",
+            allteams: allteams
         });
     }
     catch (e) {
