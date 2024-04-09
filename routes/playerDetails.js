@@ -216,7 +216,6 @@ router.get("/playerDetails/:id", async (req, res) => {
     const player = await Player.findOne({ id: parseInt(req.params.id) });
     let a = [{ teamAwayId: player?.teamId?.toString() }, { teamHomeId: player?.teamId?.toString() }]
     if (player) {
-        console.log(player, 'player');
         let matches = [];
         for (let i = 0; i < player.teamIds.length; i++) {
             let w = await MatchLive.aggregate(
@@ -238,6 +237,77 @@ router.get("/playerDetails/:id", async (req, res) => {
             message: "player got successfully",
             player: player,
             matches: matches.sort((a, b) => b.date - a.date),
+            length: matches?.length
+        });
+    }
+    else {
+        res.status(200).json({
+            message: "player got successfully",
+            player: player
+        });
+    }
+});
+
+router.get("/playerSeriesDetails/:playerId/:seriesId", async (req, res) => {
+    const player = await Player.findOne({ id: parseInt(req.params.playerId) });
+    let a = [{ teamAwayId: player?.teamId?.toString() }, { teamHomeId: player?.teamId?.toString() }]
+    if (player) {
+        console.log(player, 'player');
+        let matches = [];
+        let playerInnings = [];
+        for (let i = 0; i < player.teamIds.length; i++) {
+            let w = await Match.aggregate(
+                [{
+                    $match: {
+                        $or: [{ teamHomeId: player?.teamIds[i] }, { teamAwayId: player?.teamIds[i] }], matchTitle: req.params.seriesId,
+                        date: {
+                            $lt: new Date(),
+                        },
+                    }
+                },
+                {
+                    $lookup: {
+                        from: "matchlivedetails",//your schema name from mongoDB
+                        localField: "matchId", //user_id from user(main) model
+                        foreignField: "matchId",//user_id from user(sub) model
+                        as: "matchdetails"//result var name
+                    }
+                },]
+            ).sort({ date: -1 })
+            if (w.length > 0) {
+                matches.push(...w)
+            }
+            console.log(w[0], 'wlength')
+            w.forEach((wo) => {
+                if (wo.matchdetails[0]?.teamAwayPlayers.length > 0) {
+                    let a = wo.matchdetails[0]?.teamAwayPlayers.find((p) => p.playerId == player.id)
+                    let b = wo.matchdetails[0]?.teamHomePlayers.find((p) => p.playerId == player.id)
+                    if (a) {
+                        playerInnings.push({ ...a, teamHomeName: wo.teamHomeName, oppTeam: wo.teamHomeName, teamAwayName: wo.teamAwayName, date: wo.date, matchId: wo.matchId })
+                    }
+                    if (b) {
+                        playerInnings.push({ ...b, teamHomeName: wo.teamHomeName, oppTeam: wo.teamAwayName, teamAwayName: wo.teamAwayName, date: wo.date, matchId: wo.matchId })
+                    }
+                }
+            })
+        }
+        let innings = playerInnings?.length;
+        let wickets = playerInnings.reduce((accumulator, currentValue) => accumulator + currentValue.wickets,
+            0);
+        let runs = playerInnings.reduce((accumulator, currentValue) => accumulator + currentValue.runs,
+            0);
+        let strikeRate = Math.floor((playerInnings.reduce((accumulator, currentValue) => accumulator + currentValue.runs,
+            0) / (playerInnings.reduce((accumulator, currentValue) => accumulator + currentValue.balls,
+                0))) * 100);
+        let economy = playerInnings.reduce((accumulator, currentValue) => accumulator + currentValue.economy,
+            0) / innings;
+        let average = playerInnings.reduce((accumulator, currentValue) => accumulator + currentValue.runs,
+            0) / innings;
+        let maininfo = { innings: innings, average: average, wickets: wickets, economy: economy, runs: runs, strikeRate: strikeRate }
+        res.status(200).json({
+            message: "player got successfully",
+            player: playerInnings,
+            maininfo: maininfo,
             length: matches?.length
         });
     }
@@ -366,6 +436,71 @@ router.get("/withbackground-new", (req, res) => {
     }
     catch (e) {
         console.log(e);
+        res.status(400).json({
+            message: e,
+        });
+    }
+});
+
+router.get("/updatedatabases", async (req, res) => {
+    const allmatches = await MatchLive.find();
+    console.log(allmatches?.length, 'allmatches')
+    try {
+        for (let i = 0; i < allmatches?.length; i++) {
+            for (let k = 0; k < allmatches[i]?.teamAwayPlayers?.length; + k++) {
+                let player = await Player.findOne({ id: allmatches[i].teamAwayPlayers[k].playerId });
+                console.log(player, 'player');
+                if (!player) {
+                    await Player.create({
+                        name: allmatches[i].teamAwayPlayers[k].playerName,
+                        id: allmatches[i].teamAwayPlayers[k].playerId,
+                        image: allmatches[i].teamAwayPlayers[k].image,
+                        teamId: allmatches[i].teamAwayId
+                    })
+                    console.log('player added successfully');
+                }
+                else if (!player.teamIds.includes(allmatches[i].teamAwayId)) {
+                    await Player.updateOne(
+                        { id: allmatches[i].teamAwayPlayers[k].playerId },
+                        {
+                            $set: {
+                                teamIds: [...player.teamIds, allmatches[i].teamAwayId],
+                            },
+                        }
+                    );
+                }
+            }
+            for (let k = 0; k < allmatches[i]?.teamHomePlayers?.length; + k++) {
+                let player = await Player.findOne({ id: allmatches[i].teamHomePlayers[k].playerId });
+                console.log(player, 'homeplayer');
+                if (!player) {
+                    await Player.create({
+                        name: allmatches[i].teamHomePlayers[k].playerName,
+                        id: allmatches[i].teamHomePlayers[k].playerId,
+                        image: allmatches[i].teamHomePlayers[k].image,
+                        teamId: allmatches[i].teamHomeId
+                    })
+                    console.log('player added successfully');
+                }
+                else if (!player.teamIds.includes(allmatches[i].teamHomeId)) {
+                    await Player.updateOne(
+                        { id: allmatches[i].teamHomePlayers[k].playerId },
+                        {
+                            $set: {
+                                teamIds: [...player.teamIds, allmatches[i].teamHomeId],
+                            },
+                        }
+                    );
+                }
+            }
+        }
+        res.status(200).json({
+            message: "players added successfully",
+            matches: allmatches
+        });
+    }
+    catch (e) {
+        //console.log(e);
         res.status(400).json({
             message: e,
         });

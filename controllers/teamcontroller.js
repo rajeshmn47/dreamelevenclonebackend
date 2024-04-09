@@ -109,7 +109,7 @@ router.get("/getteam", async (req, res) => {
 router.get("/getallteams", async (req, res) => {
   const teams = await Team.aggregate(
     [
-      { "$project": { "userId": { "$toObjectId": "$userId" }}},
+      { "$project": { "userId": { "$toObjectId": "$userId" } } },
       {
         $lookup: {
           from: "users",//your schema name from mongoDB

@@ -33,6 +33,7 @@ const getkeys = require("./utils/crickeys");
 const { checkloggedinuser } = require("./utils/checkUser.js");
 const player = require("./routes/playerDetails");
 const series = require("./routes/series");
+var fs = require('fs');
 // Environment variables
 /* Requiring body-parser package
 to fetch the data that is entered
@@ -41,7 +42,7 @@ by the user in the HTML form. */
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors({ origin: "*", credentials: false }));
-app.use('/images', express.static(path.join('images'))); 
+app.use('/images', express.static(path.join('images')));
 app.use("/auth", auth);
 app.use("/", player);
 app.use("/", series);
@@ -97,15 +98,16 @@ cron.schedule("0 */20 * * *", async function () {
 cron.schedule("0 */1 * * *", async function () {
   await addIds.addMatchIds();
 });
-//addlivenew.addLivematchtodb();
-//addlivescoresnew.addLivematchtodb();
-//addIds.addMatchIds();
+// addlivenew.addLivematchtodb();
+// addlivescoresnew.addLivematchtodb();
+// addIds.addMatchIds();
 // teamstandings.addTeamstandingstodb();
 // addingteame.addteamPlayers();
 // matches.addMatchtoDb()
 // teamstandingsA.addTeamstandingstodb()
 // addingteam.addPlayers();
 // transaction.startTransaction();
+// addLiveCommentary.addLivecommentary();
 const PORT = process.env.PORT || 8000;
 app.listen(8000, () => {
   console.warn(`App listening on http://localhost:${PORT}`);

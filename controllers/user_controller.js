@@ -13,6 +13,7 @@ const transaction = require("./transaction_details_controller");
 const User = require("../models/user");
 const MatchLive = require("../models/matchlive");
 const Player = require("../models/players");
+const Match = require("../models/match");
 const req = unirest("GET", "https://www.fast2sms.com/dev/bulkV2");
 const server_secret_key =
   "iamrajesh675gjhchshskijdiucacuijnuijniusjiudjcsdijcjsijcisjijsoisju";
@@ -706,68 +707,5 @@ router.get("/loaduser", checkloggedinuser, async (req, res) => {
     });
   }
 });
-router.get("/updatedatabases", async (req, res) => {
-  const allmatches = await MatchLive.find();
-  console.log(allmatches?.length, 'allmatches')
-  try {
-    for (let i = 0; i < allmatches?.length; i++) {
-      for (let k = 0; k < allmatches[i]?.teamAwayPlayers?.length; + k++) {
-        let player = await Player.findOne({ id: allmatches[i].teamAwayPlayers[k].playerId });
-        console.log(player, 'player');
-        if (!player) {
-          await Player.create({
-            name: allmatches[i].teamAwayPlayers[k].playerName,
-            id: allmatches[i].teamAwayPlayers[k].playerId,
-            image: allmatches[i].teamAwayPlayers[k].image,
-            teamId: allmatches[i].teamAwayId
-          })
-          console.log('player added successfully');
-        }
-        else if (!player.teamIds.includes(allmatches[i].teamAwayId)) {
-          await Player.updateOne(
-            { id: allmatches[i].teamAwayPlayers[k].playerId },
-            {
-              $set: {
-                teamIds: [...player.teamIds, allmatches[i].teamAwayId],
-              },
-            }
-          );
-        }
-      }
-      for (let k = 0; k < allmatches[i]?.teamHomePlayers?.length; + k++) {
-        let player = await Player.findOne({ id: allmatches[i].teamHomePlayers[k].playerId });
-        console.log(player, 'homeplayer');
-        if (!player) {
-          await Player.create({
-            name: allmatches[i].teamHomePlayers[k].playerName,
-            id: allmatches[i].teamHomePlayers[k].playerId,
-            image: allmatches[i].teamHomePlayers[k].image,
-            teamId: allmatches[i].teamHomeId
-          })
-          console.log('player added successfully');
-        }
-        else if (!player.teamIds.includes(allmatches[i].teamHomeId)) {
-          await Player.updateOne(
-            { id: allmatches[i].teamHomePlayers[k].playerId },
-            {
-              $set: {
-                teamIds: [...player.teamIds, allmatches[i].teamHomeId],
-              },
-            }
-          );
-        }
-      }
-    }
-    res.status(200).json({
-      message: "players added successfully",
-      matches: allmatches
-    });
-  }
-  catch (e) {
-    //console.log(e);
-    res.status(400).json({
-      message: e,
-    });
-  }
-});
+
 module.exports = router;
