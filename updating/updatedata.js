@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const fMatches = require("./fMatchDB-controller");
+const fMatches = require("../controllers/fMatchDB-controller");
 const addlivescoresnew = require("./addlivescoresdetails");
 const addLiveCommentary = require("./firebase");
 

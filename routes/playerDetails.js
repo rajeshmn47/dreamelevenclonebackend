@@ -9,8 +9,9 @@ const flagURLs = require("country-flags-svg");
 const { RemoveBgResult, RemoveBgError, removeBackgroundFromImageFile } = require("remove.bg");
 const { removeBackgroundFromImageUrl } = require("remove.bg");
 var fs = require('fs');
-const { uploadImage } = require("../controllers/firebaseinitialize");
+const { uploadImage } = require("../updating/firebaseinitialize");
 const { default: axios } = require("axios");
+const DetailScores = require("../models/detailscores");
 
 router.get("/allplayers", async (req, res) => {
     const directoryPath = './images/backgroundremovalneeded';
@@ -494,6 +495,22 @@ router.get("/updatedatabases", async (req, res) => {
                 }
             }
         }
+        res.status(200).json({
+            message: "players added successfully",
+            matches: allmatches
+        });
+    }
+    catch (e) {
+        //console.log(e);
+        res.status(400).json({
+            message: e,
+        });
+    }
+});
+
+router.get("/updateball-details", async (req, res) => {
+    const allmatches = await DetailScores.find();
+    try{
         res.status(200).json({
             message: "players added successfully",
             matches: allmatches

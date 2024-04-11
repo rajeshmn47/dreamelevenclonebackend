@@ -35,7 +35,6 @@ async function uploadImage(id) {
     // Local path to the image file you want to 
     if (id) {
       const localFilePath = `images/backgroundremoved/${id}.png`;
-
       // Destination path in Firebase Storage
       const destinationPath = `images/${id}.png`;
 

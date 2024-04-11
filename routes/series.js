@@ -8,6 +8,7 @@ const router = express.Router();
 const flagURLs = require("country-flags-svg");
 const MatchLiveDetails = require("../models/matchlive");
 const { setEngine } = require("crypto");
+const DetailScores = require("../models/detailscores");
 
 router.get("/allplayers", async (req, res) => {
     const players = await Player.find();
@@ -271,6 +272,41 @@ router.get("/updatedatabase", async (req, res) => {
     }
     catch (e) {
         console.log(e);
+        res.status(400).json({
+            message: e,
+        });
+    }
+});
+
+router.get("/match-details", async (req, res) => {
+    const allmatches = await DetailScores.find();
+    console.log(allmatches?.length, 'allmatches')
+    try {
+        let overs = await DetailScores.find();
+        res.status(200).json({
+            message: "players added successfully",
+            overs: overs
+        });
+    }
+    catch (e) {
+        //console.log(e);
+        res.status(400).json({
+            message: e,
+        });
+    }
+});
+
+router.get("/match-details/:matchId", async (req, res) => {
+    const match = await DetailScores.findOne({ matchId: req.params.matchId });
+    console.log(match,req.params.matchId, 'allmatches')
+    try {
+        res.status(200).json({
+            message: "players added successfully",
+            match: match
+        });
+    }
+    catch (e) {
+        //console.log(e);
         res.status(400).json({
             message: e,
         });
