@@ -17,23 +17,24 @@ const teamdata = require("./controllers/getplayerscontroller");
 const auth = require("./controllers/user_controller");
 const team = require("./controllers/teamcontroller");
 const payments = require("./controllers/payment");
-const teamstandingsA = require("./controllers/updatestandings");
-const updatedata = require("./controllers/updatedata");
+const teamstandingsA = require("./updating/updatestandings.js");
+const updatedata = require("./updating/updatedata.js");
 const transaction = require("./controllers/transaction");
-const matches = require("./controllers/matchDB-controller");
+const matches = require("./updating/matchDB-controller.js");
 const fMatches = require("./controllers/fMatchDB-controller");
-const addLiveCommentary = require("./controllers/firebase");
-const teamstandings = require("./controllers/updateteam");
-const addlivescoresnew = require("./controllers/addlivescoresdetails");
-const addlivenew = require("./controllers/addlivedetails");
-const addingteam = require("./controllers/addplayer");
+const addLiveCommentary = require("./updating/firebase.js");
+const teamstandings = require("./updating/updateteam.js");
+const addlivescoresnew = require("./updating/addlivescoresdetails.js");
+const addlivenew = require("./updating/addlivedetails.js");
+const addingteam = require("./updating/addplayer.js");
 const addingteame = require("./controllers/teamcreatecontroller");
-const addIds = require("./controllers/addMatchIds");
+const addIds = require("./updating/addMatchIds.js");
 const getkeys = require("./utils/crickeys");
 const { checkloggedinuser } = require("./utils/checkUser.js");
 const player = require("./routes/playerDetails");
 const series = require("./routes/series");
 var fs = require('fs');
+const { updateBalls } = require("./updating/updateBalls.js");
 // Environment variables
 /* Requiring body-parser package
 to fetch the data that is entered
@@ -98,6 +99,7 @@ cron.schedule("0 */20 * * *", async function () {
 cron.schedule("0 */1 * * *", async function () {
   await addIds.addMatchIds();
 });
+updateBalls()
 // addlivenew.addLivematchtodb();
 // addlivescoresnew.addLivematchtodb();
 // addIds.addMatchIds();
