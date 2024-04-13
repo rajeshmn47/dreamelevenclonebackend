@@ -10,6 +10,14 @@ const detailScores = new mongoose.Schema(
       unique: true,
       lowercase: true,
     },
+    firstTeam: {
+      type: String,
+      trim: true
+    },
+    secondTeam: {
+      type: String,
+      trim: true
+    },
     firstInningsBalls: [
       {
         ballNbr: {

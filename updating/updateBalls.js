@@ -27,7 +27,12 @@ module.exports.updateBalls = async function () {
         let matchess = [];
         const endDate = new Date(date.getTime());
         date = new Date(date.getTime() - 100 * 60 * 60 * 1000);
-        const matches = await Matches.find();
+        const matches = await Matches.find({
+            date: {
+                $gte: new Date(date),
+                $lt: new Date(endDate),
+            },
+        });
 
         //  const citiesRef = db.db.collection('commentary');
         //  const snapshot = await citiesRef.get();
@@ -52,7 +57,7 @@ module.exports.updateBalls = async function () {
             const teams = await Team.find({ matchId: matchid });
             if (teams.length > 0) {
                 const match = await MatchLiveDetails.findOne({ matchId: matchid });
-                if (match && (match.result == "Complete")) {
+                if (match && !(match.result == "Complete")) {
                     matchess.push(matches[i]);
                 }
             }
@@ -68,19 +73,20 @@ module.exports.updateBalls = async function () {
                         let xyz = doc.data().commentary;
                         let fBalls = [];
                         let sBalls = [];
+                        console.log(matchess[i].matchId, 'data')
+                        let firstTeam = matchess[i].isHomeFirst ? matchess[i].teamHomeName : matchess[i].teamAwayName;
+                        let secondTeam = !matchess[i].isHomeFirst ? matchess[i].teamHomeName : matchess[i].teamAwayName;;
                         for (let a = 0; a < xyz.length; a++) {
                             let over = xyz[a]?.overSeparator;
                             if (over && over.inningsId == 1) {
                                 let overArray = over?.o_summary.split(' ');
                                 for (let b = 0; b < 6; b++) {
-                                    console.log((xyz[a].ballNbr - (5 - b)),'fball number')
                                     fBalls.push({ ballNbr: parseInt((xyz[a].ballNbr - (5 - b))), runs: isNaN(overArray[b]) ? 0 : parseInt(overArray[b]), event: overArray[b] })
                                 }
                             }
                             else if (over && over.inningsId == 2) {
                                 let overArray = over?.o_summary.split(' ');
                                 for (let b = 0; b < 6; b++) {
-                                    console.log((xyz[a].ballNbr - (5 - b)),'sball number')
                                     sBalls.push({ ballNbr: parseInt((xyz[a].ballNbr - (5 - b))), runs: isNaN(overArray[b]) ? 0 : parseInt(overArray[b]), event: overArray[b] })
                                 }
                             }
@@ -105,11 +111,18 @@ module.exports.updateBalls = async function () {
                             })
                         }
                         else {
+                            const firBalls = fBalls.filter((f) => !(detail.firstInningsBalls.find((b) => b.ballNbr == f.ballNbr)));
+                            const firInnBalls = [...detail.firstInningsBalls.filter((b, index) => detail.firstInningsBalls.find((l) => detail.firstInningsBalls.indexOf(l) == index))]
+                            const secBalls = sBalls.filter((x) => !(detail.secondInningsBalls.find((b) => b.ballNbr == x.ballNbr)));
+                            const secInnBalls = [...detail.secondInningsBalls.filter((b, index) => detail.secondInningsBalls.find((l) => detail.secondInningsBalls.indexOf(l) == index))]
+                            console.log(sBalls, fBalls, 'secdata')
                             await DetailScores.updateOne({
                                 matchId: m[i].matchId
                             }, {
-                                firstInningsBalls: fBalls,
-                                secondInningsBalls: sBalls
+                                firstTeam: firstTeam,
+                                secondTeam: secondTeam,
+                                firstInningsBalls: [...firBalls, ...firInnBalls],
+                                secondInningsBalls: [...secBalls, ...secInnBalls,]
                             })
                         }
                     }

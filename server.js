@@ -80,6 +80,9 @@ cron.schedule("0 * * * *", async function () {
 cron.schedule("* * * * *", async function () {
   await addLiveCommentary.addLivecommentary();
 });
+cron.schedule("* * * * *", async function () {
+  await updateBalls();
+});
 cron.schedule("*/2 * * * *", async function () {
   await teamstandings.addTeamstandingstodb();
 });
@@ -99,7 +102,7 @@ cron.schedule("0 */20 * * *", async function () {
 cron.schedule("0 */1 * * *", async function () {
   await addIds.addMatchIds();
 });
-updateBalls()
+// updateBalls();
 // addlivenew.addLivematchtodb();
 // addlivescoresnew.addLivematchtodb();
 // addIds.addMatchIds();
@@ -110,6 +113,7 @@ updateBalls()
 // addingteam.addPlayers();
 // transaction.startTransaction();
 // addLiveCommentary.addLivecommentary();
+// updateBalls()
 const PORT = process.env.PORT || 8000;
 app.listen(8000, () => {
   console.warn(`App listening on http://localhost:${PORT}`);
