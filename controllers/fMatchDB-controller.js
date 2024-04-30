@@ -55,7 +55,6 @@ module.exports.addMatchtoDb = async function () {
   // var day = 25;
   var date = new Date();
   for (let i = 0; i < 1; i++) {
-    console.log('football')
     const options = {
       method: "GET",
       url: `https://footapi7.p.rapidapi.com/api/matches/${parseInt(date.getDate())}/${parseInt(date.getMonth()+1)}/${parseInt(date.getFullYear())}`,
