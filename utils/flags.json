@@ -175,6 +175,30 @@
     {
       "teamname": "nepal",
       "flag": "https://v2.convertapi.com/d/nyhf0m21mto0kyavpykre2kf3szih81o/Flag_of_Nepal.png"
+    },
+    {
+      "teamname": "canada",
+      "flag": "https://v2.convertapi.com/d/2m27chyuvgq1fy30vffwl8gfjtjged1a/Flag_of_Canada_(Pantone).png"
+    },
+    {
+      "teamname": "china",
+      "flag": "https://v2.convertapi.com/d/v72nl3nve2zhht93ihfmasemdmkvw4ri/Flag_of_the_People's_Republic_of_China.png"
+    },
+    {
+      "teamname": "bangladesh",
+      "flag": "https://v2.convertapi.com/d/l37ev64v78ile91zuldbmbhzw54u0hd3/Flag_of_Bangladesh.png"
+    },
+    {
+      "teamname": "sri lanka",
+      "flag": "https://v2.convertapi.com/d/79ocuv9j7jirznauknk96t7qg7uns634/Flag_of_Sri_Lanka.png"
+    },
+    {
+      "teamname": "new zealand",
+      "flag": "https://v2.convertapi.com/d/rh7seqnywwrk8xl3svw2itng8kj1x3j3/Flag_of_New_Zealand.png"
+    },
+    {
+      "teamname": "south africa",
+      "flag": "https://v2.convertapi.com/d/48uyhz8nx8ubi0h5eelw7srbmpgabebt/Flag_of_South_Africa.png"
     }
   ]
 }
