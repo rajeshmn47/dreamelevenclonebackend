@@ -151,6 +151,30 @@
     {
       "teamname": "england",
       "flag": "https://w7.pngwing.com/pngs/153/922/png-transparent-flag-of-england-2018-world-cup-england-cricket-team-england-flag-world-symbol.png"
+    },
+    {
+      "teamname": "pakistan",
+      "flag": "https://v2.convertapi.com/d/862qqqacvzwsfs8xoz0txri0e92vdxdu/Flag_of_Pakistan.png"
+    },
+    {
+      "teamname": "india",
+      "flag": "https://v2.convertapi.com/d/vcspweec8hwrfzexcyap93lxnj8uj4rv/Flag_of_India.png"
+    },
+    {
+      "teamname": "france",
+      "flag": "https://v2.convertapi.com/d/l5iiu66xu5il8zw2drdmagimvjm8xbbj/Flag_of_France.png"
+    },
+    {
+      "teamname": "germany",
+      "flag": "https://v2.convertapi.com/d/qb73l3zmga2bkesxqgamvwkyskn5x2vp/Flag_of_Germany.png"
+    },
+    {
+      "teamname": "australia",
+      "flag": "https://v2.convertapi.com/d/nbet7zwxt7m457dw2dly9dav1ntlp1rn/Flag_of_Australia_(converted).png"
+    },
+    {
+      "teamname": "nepal",
+      "flag": "https://v2.convertapi.com/d/nyhf0m21mto0kyavpykre2kf3szih81o/Flag_of_Nepal.png"
     }
   ]
 }
