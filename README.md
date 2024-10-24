@@ -41,17 +41,29 @@ This project is a backend for clone of DREAM 11 It has various features like
 please set up the .env file like this
 
 uri="mongodb://localhost:27017/test"
+
 PORT=8000
+
 RAZOR_PAY_KEY_ID=""
+
 RAZOR_PAY_KEY_SECRET=""
+
 crickeys=""
+
 apikeys=""
+
 password=google app password
+
 refUserId="random users _id"
+
 private_key_id="refer from firebase admin sdk"
+
 private_key="refer from firebase admin sdk"
+
 client_email="refer from firebase admin sdk"
+
 client_id="refer from firebase admin sdk"
+
 client_x509_cert_url="refer from firebase admin sdk"
 
 In the project directory, you can run:
