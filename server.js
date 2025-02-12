@@ -5,41 +5,34 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 var express = require("express");
 const path = require('path');
-const cricLive = require("cric-live");
 const cron = require("node-cron");
-const nodemailer = require("nodemailer");
-const smtpTransport = require("nodemailer-smtp-transport");
 const bodyParser = require("body-parser");
 const home = require("./controllers/homecontroller");
-const video = require("./controllers/videocontroller");
+const video = require("./controllers/video/videocontroller.js");
 const contest = require("./controllers/contestsController");
-const teamdata = require("./controllers/getplayerscontroller");
+const teamdata = require("./controllers/playerscontroller.js");
 const auth = require("./controllers/user_controller");
 const team = require("./controllers/teamcontroller");
-const payments = require("./controllers/payment");
-const teamstandingsA = require("./updating/updatestandings.js");
+const payments = require("./controllers/paymentcontroller.js");
 const updatedata = require("./updating/updatedata.js");
-const transaction = require("./controllers/transaction");
-const matches = require("./updating/matchDB-controller.js");
-const fMatches = require("./controllers/fMatchDB-controller");
-const addLiveCommentary = require("./updating/firebase.js");
-const teamstandings = require("./updating/updateteam.js");
-const addlivescoresnew = require("./updating/addlivescoresdetails.js");
-const addlivenew = require("./updating/addlivedetails.js");
-const addingteam = require("./updating/addplayer.js");
-const addingteame = require("./controllers/teamcreatecontroller");
-const addIds = require("./updating/addMatchIds.js");
-const getkeys = require("./utils/crickeys");
-const { checkloggedinuser } = require("./utils/checkUser.js");
+const fMatches = require("./controllers/football/fMatchDB-controller.js");
 const player = require("./routes/playerDetails");
 const series = require("./routes/series");
-var fs = require('fs');
+const { startTransaction } = require("./updating/transaction.js");
+const { addMatchtoDb } = require("./updating/matchDB-controller.js");
+const { addLivescoresDetails } = require("./updating/addlivescoresdetails.js");
+const { addLiveDetails } = require("./updating/addlivedetails.js");
+const { addLivecommentary } = require("./updating/addCommentary.js");
+const { addTeamstandingstodb } = require("./updating/updateteam.js");
+const { addTeamstandingstodbAPI } = require("./updating/updatestandings.js");
+const { addPlayersAPI } = require("./updating/addplayer.js");
+const { addteamPlayers } = require("./updating/teamcreatecontroller.js");
+const { addMatchIds } = require("./updating/addMatchIds.js");
+const { getkeys } = require("./utils/crickeys");
+const { checkloggedinuser } = require("./utils/checkUser.js");
 const { updateBalls } = require("./updating/updateBalls.js");
-// Environment variables
-/* Requiring body-parser package
-to fetch the data that is entered
-by the user in the HTML form. */
-// Allowing app to use body parser
+const { addInPlayStatus } = require("./updating/addInPlayStatus.js");
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors({ origin: "*", credentials: false }));
@@ -75,46 +68,51 @@ const api_key =
 // Remove the error.log file every twenty-first day of the month.
 //addLiveCommentary.addLivecommentary();
 cron.schedule("0 * * * *", async function () {
-  await transaction.startTransaction();
+  await startTransaction();
 });
 cron.schedule("* * * * *", async function () {
-  await addLiveCommentary.addLivecommentary();
+ await addLivecommentary();
 });
 cron.schedule("* * * * *", async function () {
-  await updateBalls();
+ await updateBalls();
 });
 cron.schedule("*/2 * * * *", async function () {
-  await teamstandings.addTeamstandingstodb();
-});
-cron.schedule("*/3 * * * *", async function () {
-  await addlivescoresnew.addLivematchtodb();
+ await addTeamstandingstodb();
 });
 cron.schedule("*/5 * * * *", async function () {
-  await addlivenew.addLivematchtodb();
+  await addLiveDetails()
+});
+cron.schedule("* * * * *", async function () {
+   await addLivescoresDetails()
 });
 cron.schedule("0 22 * * *", async function () {
-  await matches.addMatchtoDb();
-  await addingteam.addPlayers();
+ await addMatchtoDb();
+  await addteamPlayers();
 });
 cron.schedule("0 */20 * * *", async function () {
-  await addingteame.addteamPlayers();
+  await addTeamstandingstodb()
 });
 cron.schedule("0 */1 * * *", async function () {
-  await addIds.addMatchIds();
+  await addMatchIds();
+});
+cron.schedule("30 9-17/2 * * *", async () => {
+  console.log("Running match resume check...");
+  await addInPlayStatus();
 });
 // updateBalls();
-// addlivenew.addLivematchtodb();
-// addlivescoresnew.addLivematchtodb();
-// addIds.addMatchIds();
-// teamstandings.addTeamstandingstodb();
-// addingteame.addteamPlayers();
-// matches.addMatchtoDb()
-// teamstandingsA.addTeamstandingstodb()
-// addingteam.addPlayers();
-// transaction.startTransaction();
-// addLiveCommentary.addLivecommentary();
-// updateBalls()
+// addMatchtoDb();
+// addLiveDetails();
+ addLivescoresDetails();
+// addMatchIds();
+// addTeamstandingstodb();
+// addteamPlayers();
+// addTeamstandingstodbAPI()
+// addPlayersAPI();
+// startTransaction();
+ addLivecommentary();
+// updateBalls();
+ addInPlayStatus()
 const PORT = process.env.PORT || 8000;
-app.listen(8000, () => {
+app.listen(PORT, () => {
   console.warn(`App listening on http://localhost:${PORT}`);
 });

@@ -1,6 +1,7 @@
 const request = require("request");
 const Match = require("../models/match");
 const Contest = require("../models/contest");
+const MatchLiveDetails = require("../models/matchlive");
 
 // function prizeBreakupRules(prize, numWinners){
 //     let prizeMoneyBreakup = [];
@@ -18,7 +19,7 @@ module.exports.addMatchtoDb = async function () {
   function pad2(n) {
     return (n < 10 ? "0" : "") + n;
   }
-
+  console.log('add match')
   const obj = {
     results: [],
   };
@@ -45,7 +46,7 @@ module.exports.addMatchtoDb = async function () {
   for (let i = 0; i < numberOfDays; i++) {
     const options = {
       method: "GET",
-      url: "https://cricbuzz-cricket.p.rapidapi.com/matches/v1/upcoming",
+      url: "https://cricbuzz-cricket.p.rapidapi.com/matches/v1/recent",
       headers: {
         "x-rapidapi-host": "cricbuzz-cricket.p.rapidapi.com",
         "x-rapidapi-key": "3827482ab0msh2682459121bc4e9p182f86jsn5e5bf239f56d",
@@ -65,7 +66,7 @@ module.exports.addMatchtoDb = async function () {
     });
     promise
       .then(async (s) => {
-        //console.log(s.typeMatches, "mad");
+        // console.log(s.typeMatches, "mad");
         for (se of s.typeMatches) {
           for (k of se.seriesMatches) {
             if (k?.seriesAdWrapper?.matches) {
@@ -78,15 +79,17 @@ module.exports.addMatchtoDb = async function () {
         for (let i = 0; i < obj.results.length; i++) {
           const match1 = new Match();
           const { matchId } = obj.results[i];
-          // console.log(obj.results[i]);
+          console.log(obj.results[i].matchFormat, 'results');
           match1.matchId = matchId;
           obj.results.sort(compare);
           match1.matchTitle = obj.results[i].seriesName;
+          match1.format = obj.results[i].matchFormat.toLowerCase();
           match1.teamHomeName = obj.results[i].team1.teamName;
           match1.teamAwayName = obj.results[i].team2.teamName;
           match1.teamHomeId = obj.results[i].team1.teamId;
           match1.teamAwayId = obj.results[i].team2.teamId;
           match1.date = obj.results[i].startDate;
+          match1.enddate = obj.results[i].endDate;
           if (obj.results[i].team1.teamSName == "") {
             continue;
           } else {
@@ -100,12 +103,12 @@ module.exports.addMatchtoDb = async function () {
           try {
             const match = await Match.findOne({ matchId });
             if (!match) {
-              const prize = [10000, 5000, 4000, 500, 0, 0];
+              const prize = [10000, 5000, 4000, 500];
               // let prizeBreakup = [
               //     5, 4, 3, 1
               // ];
-              const totalspots = [50, 40, 30, 10, 0, 0];
-              for (let j = 0; j < 6; j++) {
+              const totalspots = [50, 40, 30, 10];
+              for (let j = 0; j < 4; j++) {
                 const contest1 = new Contest();
                 contest1.price = prize[j];
                 contest1.totalSpots = totalspots[j];
@@ -147,7 +150,7 @@ module.exports.addMatchtoDb = async function () {
               } catch (err) {
                 console.log(`Error : ${err}`);
               }
-            } else if (match.teamHomeCode == "tbc") {
+            } else if (match.teamHomeCode.toLowerCase() == "tbc") {
               match.teamHomeCode = obj.results[i].team1.teamSName
               match.teamAwayCode = obj.results[i].team2.teamSName;
               await match.save();

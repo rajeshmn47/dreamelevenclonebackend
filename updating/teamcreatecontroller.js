@@ -1,8 +1,4 @@
-const request = require("request");
-const axios = require("axios");
 const Match = require("../models/match");
-const User = require("../models/user");
-const getkeys = require("../utils/crickeys");
 const MatchLiveDetails = require("../models/matchlive");
 // function prizeBreakupRules(prize, numWinners){
 //     let prizeMoneyBreakup = [];
@@ -11,14 +7,6 @@ const MatchLiveDetails = require("../models/matchlive");
 //     }
 // }
 
-function compare(a, b) {
-  return a.date < b.date;
-}
-
-const io = 1;
-async function getplayerImage(name) {
-  return "https://cdn.sportmonks.com/images/cricket/placeholder.png";
-}
 
 module.exports.addteamPlayers = async function () {
   let date = new Date();
@@ -145,7 +133,8 @@ module.exports.addteamPlayers = async function () {
         console.error(error);
       }
       try {
-        await matches[i].save();
+        const a = await matches[i].save();
+        console.log(a, 'a')
       } catch (error) {
         console.error(error);
       }

@@ -1,15 +1,9 @@
-const request = require("request");
-const axios = require("axios");
 const mongoose = require("mongoose");
-const Match = require("../models/match");
 const Contest = require("../models/contest");
 const Team = require("../models/team");
 const MatchLive = require("../models/matchlive");
-const Player = require("../models/players");
 const User = require("../models/user");
 const express = require("express");
-const router = express.Router();
-const Transaction = require("../models/transaction");
 
 // function prizeBreakupRules(prize, numWinners){
 //     let prizeMoneyBreakup = [];

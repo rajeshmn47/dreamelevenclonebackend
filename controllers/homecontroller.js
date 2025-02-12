@@ -1,15 +1,4 @@
-const cheerio = require("cheerio");
-const axios = require("axios");
-const request = require("request");
-const pretty = require("pretty");
-const randomname = require("random-indian-name");
-const createMobilePhoneNumber = require("random-mobile-numbers");
-const randomEmail = require("random-email");
-const fs = require("fs");
-const flagURLs = require("country-flags-svg");
 const express = require("express");
-const Players = require("../models/players");
-const Result = require("../models/results");
 const LiveMatches = require("../models/matchlive");
 const FLiveMatches = require("../models/fMatchlive");
 const Matches = require("../models/match");
@@ -21,6 +10,7 @@ const User = require("../models/user");
 const Contest = require("../models/contest");
 const Player = require("../models/players");
 const getflags = require("../utils/getflags");
+const flagURLs = require("country-flags-svg");
 
 function isToday(d1, d2) {
   return (
@@ -635,6 +625,12 @@ router.get("/homeMatches", async (req, res) => {
     if (!teamHomeFlagUrl) {
       teamHomeFlagUrl = getflags.getflag(matches[i].teamHomeName);
     }
+    if (!teamAwayFlagUrl) {
+      teamAwayFlagUrl = "https://via.placeholder.com/150?text=Team+Logo+Unavailable"
+    }
+    if (!teamHomeFlagUrl) {
+      teamHomeFlagUrl = "https://via.placeholder.com/150?text=Team+Logo+Unavailable"
+    }
     const match = matches[i];
     const mat = {
       match_title: match.matchTitle,
@@ -684,6 +680,7 @@ router.get("/homeMatches", async (req, res) => {
       upcomingMatches.results.push(mat);
     }
   }
+  console.log('testingfornewdatabse')
   const etime = new Date().getSeconds();
   let time = etime - stime;
   res.status(200).json({
@@ -1116,9 +1113,22 @@ router.get("/allmatches", async (req, res) => {
   start.setUTCHours(0, 0, 0, 0);
   var end = new Date();
   end.setUTCHours(23, 59, 59, 999);
-  const matches = await Match.find();
+  //const matches = await Match.find();
+  console.log('matches')
+  const matches = await Match.aggregate(
+    [
+      {
+        $lookup: {
+          from: "matchlivedetails",//your schema name from mongoDB
+          localField: "matchId", //user_id from user(main) model
+          foreignField: "matchId",//user_id from user(sub) model
+          as: "matchlive"//result var name
+        }
+      },]
+  ).sort({ date: -1 });
+  console.log('oldmatches')
   res.status(200).json({
-    message: "teams got successfully",
+    message: "matches got successfully",
     matches,
   });
 });

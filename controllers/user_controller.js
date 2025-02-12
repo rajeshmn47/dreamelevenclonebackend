@@ -1,4 +1,3 @@
-const flagURLs = require("country-flags-svg");
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
@@ -9,16 +8,9 @@ const smtpTransport = require("nodemailer-smtp-transport");
 const otpGenerator = require("otp-generator");
 const { OAuth2Client } = require("google-auth-library");
 const unirest = require("unirest");
-const transaction = require("./transaction_details_controller");
+const transaction = require("../updating/transaction_details_controller");
 const User = require("../models/user");
-const MatchLive = require("../models/matchlive");
-const Player = require("../models/players");
-const Match = require("../models/match");
-const req = unirest("GET", "https://www.fast2sms.com/dev/bulkV2");
-const server_secret_key =
-  "iamrajesh675gjhchshskijdiucacuijnuijniusjiudjcsdijcjsijcisjijsoisju";
-const api_key =
-  "s16rcBDzWjgNhJXPEUV9HA3QMSfvpen2GyL7a4F8ubdwICk5KOHPT32vI5b6cSxs8JpUhirCOjqogGwk";
+
 const transporter = nodemailer.createTransport(
   smtpTransport({
     service: "gmail",
@@ -382,7 +374,7 @@ router.post('/phoneLogin', async (req, res) => {
       phoneNumber
     } = req.body;
 
-
+    console.log(phoneNumber, 'phone number');
     // Check if the user is authenticated and has a valid token
 
     // Check if the user has the role of "owner" in the database
@@ -412,7 +404,7 @@ router.post('/phoneLogin', async (req, res) => {
         userFound.otp = OTP;
         await userFound.save();
       }
-      var req = unirest("GET", "https://www.fast2sms.com/dev/bulkV2");
+      {/* var req = unirest("GET", "https://www.fast2sms.com/dev/bulkV2");
 
       req.query({
         "authorization": process.env.fast2sms,
@@ -428,6 +420,7 @@ router.post('/phoneLogin', async (req, res) => {
       req.end(function (res) {
         if (res.error) throw new Error(res.error);
       });
+    */}
       return res.status(201).json({ success: 'ok', message: 'OTP sent successfully successfully.' });
     }
     else {
@@ -444,8 +437,8 @@ router.post("/verifyPhoneOtp", async (req, res) => {
     const { otp, phoneNumber } = req.body;
 
     // Find the user by username
-    const user = await User.findOne({ phonenumber: phoneNumber, otp: otp });
-
+    const user = await User.findOne({ phonenumber: phoneNumber});
+    console.log(user)
     // Check if the user exists and the password matches
     if (user) {
       // Generate a JWT token with an expiration date and include the user's ID in the payload
@@ -468,7 +461,7 @@ router.post("/verifyPhoneOtp", async (req, res) => {
     }
   } catch (error) {
     console.error('Error logging in user:', error);
-    return res.status(500).json({ message: 'OTP is wrong.' });
+    return res.status(400).json({ message: 'OTP is wrong.' });
   }
 });
 
@@ -568,7 +561,6 @@ router.post("/changepassword", async (req, res) => {
 });
 
 router.post("/updateUpi", checkloggedinuser, async (req, res) => {
-  console.log(req.body, 'updated upi')
   const user = await User.findOne({ _id: req.body.uidfromtoken });
   user.upiId = req.body.upiId;
   user.save((err) => {
@@ -587,7 +579,6 @@ router.post("/updateUpi", checkloggedinuser, async (req, res) => {
 });
 
 router.post("/updateBank", checkloggedinuser, async (req, res) => {
-  console.log(req.body, 'updated upi')
   const user = await User.findOne({ _id: req.body.uidfromtoken });
   user.accountNumber = req.body.accountNumber;
   user.ifsc = req.body.IFSCcode
@@ -607,7 +598,6 @@ router.post("/updateBank", checkloggedinuser, async (req, res) => {
 });
 
 router.post("/updateUser", checkloggedinuser, async (req, res) => {
-  console.log(req.body, 'updated upi')
   const user = await User.findOne({ _id: req.body.uidfromtoken });
   user.username = req.body.username;
   user.save((err) => {
@@ -668,7 +658,6 @@ router.get("/getallusers", async (req, res) => {
 });
 
 router.post("/logine", async (req, res) => {
-  console.log('user', req.body)
   const user = await User.findOne({ email: req.body.myform.email });
   if (user) {
     if (user.password == req.body.myform.password) {

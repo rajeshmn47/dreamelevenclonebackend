@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const fMatches = require("../controllers/fMatchDB-controller");
+const fMatches = require("../controllers/football/fMatchDB-controller");
 const addlivescoresnew = require("./addlivescoresdetails");
-const addLiveCommentary = require("./firebase");
+const addLiveCommentary = require("./addCommentary");
 
 router.get("/addlivedetails", async (req, res) => {
   try {

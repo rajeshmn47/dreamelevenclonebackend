@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const crypto = require("crypto");
 
-const matchDetailsThirdSchema = new mongoose.Schema(
+const matchDetailsSchema = new mongoose.Schema(
   {
     matchId: {
       type: String,
@@ -50,6 +50,10 @@ const matchDetailsThirdSchema = new mongoose.Schema(
       type: String,
       trim: true,
       default: "",
+    },
+    isInPlay: {
+      type: Boolean,
+      default: false
     },
     teamHomePlayers: [
       {
@@ -350,6 +354,6 @@ const matchDetailsThirdSchema = new mongoose.Schema(
 
 const MatchLiveDetails = mongoose.model(
   "MatchLiveDetails",
-  matchDetailsThirdSchema
+  matchDetailsSchema
 );
 module.exports = MatchLiveDetails;

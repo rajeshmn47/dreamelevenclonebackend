@@ -1,9 +1,7 @@
-const flagURLs = require("country-flags-svg");
 const express = require("express");
 const Matches = require("../models/match");
 const LiveMatches = require("../models/matchlive");
 const Players = require("../models/players");
-const Contest = require("../models/contest");
 
 const router = express.Router();
 

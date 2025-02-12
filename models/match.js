@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const crypto = require("crypto");
 
-const matcheSchema = new mongoose.Schema(
+const matchSchema = new mongoose.Schema(
   {
     matchId: {
       type: String,
@@ -179,5 +179,5 @@ const matcheSchema = new mongoose.Schema(
   }
 );
 
-const Match = mongoose.model("Match", matcheSchema);
+const Match = mongoose.model("Match", matchSchema);
 module.exports = Match;

@@ -1,9 +1,5 @@
-const request = require("request");
 const Team = require("../models/team");
-const Contest = require("../models/contest");
 const User = require("../models/user");
-const MatchLiveDetails = require("../models/matchlive");
-const getkeys = require("../utils/crickeys");
 const Match = require("../models/match");
 // function prizeBreakupRules(prize, numWinners){
 //     let prizeMoneyBreakup = [];
@@ -11,32 +7,6 @@ const Match = require("../models/match");
 
 //     }
 // }
-
-function compare(a, b) {
-  return a.date < b.date;
-}
-
-function getplayerImage(name) {
-  const options = {
-    method: "GET",
-    url: `https://cricket.sportmonks.com/api/v2.0/players/?filter[lastname]=${name}&api_token=
-        fTWhOiGhie6YtMBmpbw10skSjTmSgwHeLg22euC5qLMR1oT1eC6PRc8sEulv`,
-    headers: {
-      "x-rapidapi-host": "cricket-live-data.p.rapidapi.com",
-      "x-rapidapi-key": "773ece5d2bmsh8af64b6b53baed6p1e86c9jsnd416b0e51110",
-      api_token: "fTWhOiGhie6YtMBmpbw10skSjTmSgwHeLg22euC5qLMR1oT1eC6PRc8sEulv",
-      useQueryString: true,
-    },
-    Authorization: {
-      api_token: "fTWhOiGhie6YtMBmpbw10skSjTmSgwHeLg22euC5qLMR1oT1eC6PRc8sEulv",
-    },
-  };
-  let s = "";
-  request(options, (error, response, body) => {
-    s = JSON.parse(body);
-  });
-  return s;
-}
 
 module.exports.addMatchIds = async function () {
   const matches = await Match.find();

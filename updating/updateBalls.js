@@ -1,24 +1,8 @@
-const axios = require("axios");
-const {
-    initializeApp,
-    applicationDefault,
-    cert,
-} = require("firebase-admin/app");
-const {
-    getFirestore,
-    Timestamp,
-    FieldValue,
-} = require("firebase-admin/firestore");
-const nodemailer = require("nodemailer");
-const smtpTransport = require("nodemailer-smtp-transport");
 const MatchLiveDetails = require("../models/matchlive");
 const Matches = require("../models/match");
-const User = require("../models/user");
 const Team = require("../models/team");
 const getkeys = require("../utils/crickeys");
-const checkballexists = require("../utils/checksame");
-const getcommentary = require("../utils/getcommentary");
-const db = require("./firebaseinitialize");
+const db = require("../utils/firebaseinitialize");
 const DetailScores = require("../models/detailscores");
 
 module.exports.updateBalls = async function () {

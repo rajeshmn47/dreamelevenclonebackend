@@ -1,7 +1,6 @@
 const MatchLive = require("../models/matchlive");
 const Player = require("../models/players");
 var express = require("express");
-const Withdraw = require("../models/withdraw");
 const Match = require("../models/match");
 const { getflag } = require("../utils/getflags");
 const router = express.Router();
@@ -9,7 +8,7 @@ const flagURLs = require("country-flags-svg");
 const { RemoveBgResult, RemoveBgError, removeBackgroundFromImageFile } = require("remove.bg");
 const { removeBackgroundFromImageUrl } = require("remove.bg");
 var fs = require('fs');
-const { uploadImage } = require("../updating/firebaseinitialize");
+const { uploadImage } = require("../utils/firebaseinitialize");
 const { default: axios } = require("axios");
 const DetailScores = require("../models/detailscores");
 
@@ -443,8 +442,16 @@ router.get("/withbackground-new", (req, res) => {
     }
 });
 
-router.get("/updatedatabases", async (req, res) => {
-    const allmatches = await MatchLive.find();
+router.get("/updatedatabases", async (req, res) => {  
+    let date = new Date();
+    const endDate = new Date(date.getTime() -800 * 60 * 60 * 1000);
+    date = new Date(date.getTime() - 1200 * 60 * 60 * 1000);
+    const allmatches = await MatchLive.find({
+        date: {
+          $gte: new Date(date),
+          $lt: new Date(endDate),
+        },
+      });
     console.log(allmatches?.length, 'allmatches')
     try {
         for (let i = 0; i < allmatches?.length; i++) {

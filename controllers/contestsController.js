@@ -1,8 +1,5 @@
-const flagURLs = require("country-flags-svg");
 const express = require("express");
 const Matches = require("../models/match");
-const LiveMatches = require("../models/matchlive");
-const Players = require("../models/players");
 const Contest = require("../models/contest");
 const Team = require("../models/team");
 const User = require("../models/user");
@@ -13,7 +10,6 @@ const router = express.Router();
 function findrank(id, arr) {
   const aid = id.toString();
   const y = arr.find((a, index) => index == id);
-  console.log(y, "why");
   return y.rank;
 }
 
@@ -99,7 +95,6 @@ router.get("/getjoinedcontest/:id", async (req, res) => {
         }
       }
       let teamsarray = [];
-      console.log(arr, "arr");
       arr = arr.sort((a, b) => b?.points - a?.points);
       for (let x = 0; x < arr.length; x++) {
         const user = await User.findById(arr[x].userId);

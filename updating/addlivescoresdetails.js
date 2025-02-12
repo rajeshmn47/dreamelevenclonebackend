@@ -1,18 +1,8 @@
 const request = require("request");
-const axios = require("axios");
 const Match = require("../models/match");
-const Contest = require("../models/contest");
 const MatchLive = require("../models/matchlive");
-const Player = require("../models/players");
-const User = require("../models/user");
-const getkeys = require("../utils/crickeys");
+const { getkeys } = require("../utils/crickeys");
 
-// function prizeBreakupRules(prize, numWinners){
-//     let prizeMoneyBreakup = [];
-//     for(let i = 0; i < numWinners; i++){
-
-//     }
-// }
 
 function pointCalculator(
   runs,
@@ -36,7 +26,7 @@ function pointCalculator(
   }
   return totalPoints + 4;
 }
-module.exports.addLivematchtodb = async function () {
+module.exports.addLivescoresDetails = async function () {
   let date = new Date();
   const endDate = new Date(date.getTime());
   const b = 100 * 60 * 60 * 1000 * 1;
@@ -52,11 +42,12 @@ module.exports.addLivematchtodb = async function () {
     const match = await MatchLive.findOne({ matchId: matchId });
     if (!match || match.result == "Complete") {
     } else {
-      const keys = await getkeys.getkeys();
+      const keys = await getkeys();
+      console.log(matchId, 'jeys')
       const date1 = matches[i].date;
       const options = {
         method: "GET",
-        url: `https://cricbuzz-cricket.p.rapidapi.com/mcenter/v1/${matchId}/scard`,
+        url: `https://cricbuzz-cricket.p.rapidapi.com/mcenter/v1/${matchId}/hscard`,
         headers: {
           "x-rapidapi-host": "cricbuzz-cricket.p.rapidapi.com",
           "X-RapidAPI-Key": keys,
@@ -67,8 +58,10 @@ module.exports.addLivematchtodb = async function () {
       const promise = new Promise((resolve, reject) => {
         request(options, (error, response, body) => {
           if (error) {
+            console.log(error, 'error')
             reject(error);
           }
+          console.log(body, 'body')
           const s = JSON.parse(body);
           resolve(s);
         });
@@ -84,6 +77,7 @@ module.exports.addLivematchtodb = async function () {
             const { status } = s.matchHeader;
             const toss = s.matchHeader.tossResults.tossWinnerName;
             const result = s.matchHeader.state;
+            let isInPlay = result.toLowerCase() === "stumps" ? false : result.toLowerCase() === "abandon" ? false : true
             let title_fi = "";
             let home_first = false;
             let overs_fi = 0;
@@ -321,6 +315,7 @@ module.exports.addLivematchtodb = async function () {
                     status,
                     toss,
                     result,
+                    isInPlay: isInPlay,
                     teamHomePlayers,
                     teamAwayPlayers,
                     date: matches[i].date,

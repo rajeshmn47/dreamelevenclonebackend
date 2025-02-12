@@ -1,16 +1,11 @@
-const flagURLs = require("country-flags-svg");
-const otpGenerator = require("otp-generator");
 const request = require("request");
 const Razorpay = require("razorpay");
 const express = require("express");
 const dotenv = require("dotenv");
 const { v4: uuidv4 } = require("uuid");
 const mongoose = require("mongoose");
-const Players = require("../models/players");
-const Contest = require("../models/contest");
 const crypto = require('crypto');
 const axios = require('axios');
-const Team = require("../models/team");
 const Transaction = require("../models/transaction");
 const NewPayment = require("../models/newPayment");
 const Withdraw = require("../models/withdraw");

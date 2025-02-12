@@ -1,13 +1,7 @@
 const request = require("request");
-const axios = require("axios");
 const Match = require("../models/match");
-const Contest = require("../models/contest");
 const MatchLive = require("../models/matchlive");
-const User = require("../models/user");
-const Player = require("../models/players");
-const getkeys = require("../utils/apikeys");
-const db = require("./firebaseinitialize");
-const addMatchIds = require("./addMatchIds");
+const getkeys = require("../utils/crickeys");
 // function prizeBreakupRules(prize, numWinners){
 //     let prizeMoneyBreakup = [];
 //     for(let i = 0; i < numWinners; i++){
@@ -15,35 +9,27 @@ const addMatchIds = require("./addMatchIds");
 //     }
 // }
 
-function compare(a, b) {
-  return a.date < b.date;
-}
-
-const io = 1;
-async function getplayerImage(name) {
-  console.log(name);
-  return "https://cdn.sportmonks.com/images/cricket/placeholder.png";
-}
-
-module.exports.addLivematchtodb = async function () {
+module.exports.addLiveDetails = async function () {
   try {
     const turing = await MatchLive();
     let date = new Date();
     const endDate = new Date(date.getTime() + 0.5 * 60 * 60 * 1000);
-    date = new Date(date.getTime() - 10 * 60 * 60 * 1000);
+    date = new Date(date.getTime() - 2 * 60 * 60 * 1000);
     const matches = await Match.find({
       date: {
         $gte: new Date(date),
         $lt: new Date(endDate),
       },
     });
+    console.log(matches.length, 'matches length')
     for (let i = 0; i < matches.length; i++) {
       const matchId = matches[i].matchId;
       const match = await MatchLive.findOne({ matchId: matchId });
       if (match) {
+        //console.log('exists');
       } else {
         const keys = await getkeys.getkeys();
-        console.log(keys, 'keys')
+        console.log('not exists')
         const date1 = "2679243";
         const options = {
           method: "GET",
@@ -66,6 +52,7 @@ module.exports.addLivematchtodb = async function () {
         promise
           .then(async (s) => {
             try {
+              console.log(s, 's')
               if (s.matchInfo?.team1 != null && s.matchInfo?.team1.length != 0) {
                 const LiveMatchDet = new MatchLive();
                 LiveMatchDet.matchId = matchId;
@@ -104,6 +91,7 @@ module.exports.addLivematchtodb = async function () {
                 LiveMatchDet.teamAwayPlayers = y;
                 LiveMatchDet.teamHomeId = s.matchInfo.team1.id;
                 LiveMatchDet.teamAwayId = s.matchInfo.team2.id;
+                LiveMatchDet.isInPlay = true;
                 const m = await MatchLive.findOne({ matchId });
                 const match = await MatchLive.create(LiveMatchDet);
                 if (match) {

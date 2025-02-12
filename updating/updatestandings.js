@@ -1,21 +1,17 @@
 const request = require("request");
-const axios = require("axios");
-const Contest = require("../models/contest");
-const Team = require("../models/team");
 const MatchLive = require("../models/matchlive");
-const Player = require("../models/players");
-const getkeys = require("../utils/crickeys");
+const {getkeys} = require("../utils/crickeys");
 
 
 
-module.exports.addTeamstandingstodb = async function () {
+module.exports.addTeamstandingstodbAPI = async function () {
   try{
   const date = new Date();
   const endDate = date;
   const matches = await MatchLive.find();
   for (let i = 0; i < matches.length; i++) {
     const { matchId } = matches[i];
-    const keys = await getkeys.getkeys();
+    const keys = await getkeys();
     const options = {
       method: "GET",
       url: `https://cricket-live-data.p.rapidapi.com/match/${matchId}`,
@@ -37,7 +33,8 @@ module.exports.addTeamstandingstodb = async function () {
     });
     promise.then(async (s) => {
       const match = await MatchLive.findOne({ matchId });
-      for (const x of s?.results?.live_details?.scorecard[0]?.batting) {
+      const batting = s?.results?.live_details?.scorecard?.[0]?.batting || [];
+      for (const x of batting) {
         for (let i = 0; i < match.teamHomePlayers.length; i++) {
           if (
             parseInt(match.teamHomePlayers[i].playerId) ===
@@ -53,7 +50,8 @@ module.exports.addTeamstandingstodb = async function () {
           }
         }
       }
-      for (const x of s.results.live_details.scorecard[1].batting) {
+      const batting2 = s?.results?.live_details?.scorecard?.[1]?.batting || [];
+      for (const x of batting2) {
         for (let i = 0; i < match.teamAwayPlayers.length; i++) {
           if (
             parseInt(match.teamAwayPlayers[i].playerId) ===

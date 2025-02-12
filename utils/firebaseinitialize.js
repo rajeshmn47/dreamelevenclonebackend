@@ -1,14 +1,5 @@
-const {
-  initializeApp,
-  applicationDefault,
-  cert,
-} = require("firebase-admin/app");
-const {
-  getFirestore,
-  Timestamp,
-  FieldValue,
-} = require("firebase-admin/firestore");
-const { getStorage, ref, getDownloadURL } = require('firebase-admin/storage');
+const {cert} = require("firebase-admin/app");
+const {getFirestore} = require("firebase-admin/firestore");
 const admin = require('firebase-admin');
 
 const serviceAccount = {

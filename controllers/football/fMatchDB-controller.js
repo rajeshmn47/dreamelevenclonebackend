@@ -1,9 +1,9 @@
 const request = require("request");
-const Match = require("../models/match");
-const Contest = require("../models/contest");
-const User = require("../models/user");
-const getkeys = require("../utils/crickeys");
-const FMatch = require("../models/fMatch ");
+const Match = require("../../models/match");
+const Contest = require("../../models/contest");
+const User = require("../../models/user");
+const getkeys = require("../../utils/crickeys");
+const FMatch = require("../../models/fMatch ");
 
 // function prizeBreakupRules(prize, numWinners){
 //     let prizeMoneyBreakup = [];

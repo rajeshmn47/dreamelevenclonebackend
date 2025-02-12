@@ -1,25 +1,9 @@
-const request = require("request");
 const axios = require("axios");
 const Match = require("../models/match");
-const User = require("../models/user");
 const getkeys = require("../utils/crickeys");
-// function prizeBreakupRules(prize, numWinners){
-//     let prizeMoneyBreakup = [];
-//     for(let i = 0; i < numWinners; i++){
 
-//     }
-// }
 
-function compare(a, b) {
-  return a.date < b.date;
-}
-
-const io = 1;
-async function getplayerImage(name) {
-  return "https://cdn.sportmonks.com/images/cricket/placeholder.png";
-}
-
-module.exports.addPlayers = async function () {
+module.exports.addPlayersAPI = async function () {
   let date = new Date();
   const endDate = new Date(date.getTime() + 202 * 60 * 60 * 1000);
   let keys = await getkeys.getkeys();
@@ -31,8 +15,10 @@ module.exports.addPlayers = async function () {
     },
   });
   console.log(matches?.length, 'found matches')
-  for (let i = 0; i < 1; i++) {
-    if (!matches[i]?.teamAwayPlayers?.length > 0) {
+  for (let i = 0; i < matches.length; i++) {
+    const arr_a=[];
+    const arr=[];
+    if (!matches[i]?.teamAwayPlayers?.length > 0&&matches[i]?.teamHomeId) {
       console.log(matches[i]?.teamAwayPlayers.length, 'found matches')
       const options = {
         method: "GET",
@@ -45,7 +31,6 @@ module.exports.addPlayers = async function () {
 
       try {
         const response = await axios.request(options);
-        const arr = [];
         let position;
         const players = response.data.player;
         for (let i = 0; i < players?.length; i++) {
@@ -82,7 +67,6 @@ module.exports.addPlayers = async function () {
 
       try {
         const response = await axios.request(options_two);
-        const arr = [];
         let position;
         const players = response.data.player;
         for (let i = 0; i < players?.length; i++) {
@@ -104,7 +88,6 @@ module.exports.addPlayers = async function () {
             arr.push(a);
           }
         }
-        const arr_a = [];
         let position_a;
         const players_a = response.data.player;
         for (let i = 0; i < players_a?.length; i++) {
@@ -131,8 +114,8 @@ module.exports.addPlayers = async function () {
         console.error(error);
       }
       try {
-        console.log(matches[i],'matchteamer')
-        let m = await matches[i].save();
+        console.log(arr,arr_a,'matchteamer')
+        let m = await Match.updateOne({matchId:matches[i].matchId},{teamAwayPlayers:arr_a,teamHomePlayers:arr});
         console.log(m,'matchteam')
       } catch (error) {
         console.error(error);

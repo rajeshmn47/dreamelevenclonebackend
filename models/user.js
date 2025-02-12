@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const crypto = require("crypto");
 
-const usernewSchema = new mongoose.Schema(
+const userSchema = new mongoose.Schema(
   {
     username: {
       type: String,
@@ -153,5 +153,5 @@ const usernewSchema = new mongoose.Schema(
   }
 );
 
-const User = mongoose.model("User", usernewSchema);
+const User = mongoose.model("User", userSchema);
 module.exports = User;
