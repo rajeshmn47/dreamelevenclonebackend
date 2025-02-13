@@ -71,13 +71,13 @@ cron.schedule("0 * * * *", async function () {
   await startTransaction();
 });
 cron.schedule("* * * * *", async function () {
- await addLivecommentary();
+  await addLivecommentary();
 });
 cron.schedule("* * * * *", async function () {
- await updateBalls();
+  await updateBalls();
 });
 cron.schedule("*/2 * * * *", async function () {
- await addTeamstandingstodb();
+  await addTeamstandingstodb();
 });
 cron.schedule("*/5 * * * *", async function () {
   await addLiveDetails()
@@ -102,16 +102,16 @@ cron.schedule("30 9-17/2 * * *", async () => {
 // updateBalls();
 // addMatchtoDb();
 // addLiveDetails();
- addLivescoresDetails();
+// addLivescoresDetails();
 // addMatchIds();
 // addTeamstandingstodb();
 // addteamPlayers();
 // addTeamstandingstodbAPI()
 // addPlayersAPI();
 // startTransaction();
- addLivecommentary();
+// addLivecommentary();
 // updateBalls();
- addInPlayStatus()
+// addInPlayStatus()
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
   console.warn(`App listening on http://localhost:${PORT}`);
