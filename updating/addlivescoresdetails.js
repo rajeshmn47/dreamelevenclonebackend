@@ -37,10 +37,11 @@ module.exports.addLivescoresDetails = async function () {
       $lt: new Date(endDate),
     },
   });
+  
   for (let i = 0; i < matches.length; i++) {
     const matchId = matches[i].matchId;
     const match = await MatchLive.findOne({ matchId: matchId });
-    if (!match || match.result == "Complete") {
+    if (!match || match.result == "Complete" || !match.isInPlay) {
     } else {
       const keys = await getkeys();
       console.log(matchId, 'jeys')
