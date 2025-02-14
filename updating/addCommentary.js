@@ -38,7 +38,7 @@ const mailOptions = {
 module.exports.addLivecommentary = async function addcommentry() {
   try {
     let date = new Date();
-    let matchess = [];
+    let allMatches = [];
     const endDate = new Date(date.getTime());
     date = new Date(date.getTime() - 12 * 60 * 60 * 1000);
     const matches = await Matches.find({
@@ -69,16 +69,16 @@ module.exports.addLivecommentary = async function addcommentry() {
     for (let i = 0; i < matches.length; i++) {
       const matchid = matches[i].matchId;
       //const teams = await Team.find({ matchId: matchid });
-     const  teams=['1']
+      const teams = ['1']
       if (teams.length > 0) {
         const match = await MatchLiveDetails.findOne({ matchId: matchid });
-        if (match && !(match.result == "Complete") && !(match.result == "Stumps")) {
-          matchess.push(matches[i]);
+        if (match && !(match.result == "Complete") && !(match.result == "Stumps") && (match?.isInPlay)) {
+          allMatches.push(matches[i]);
         }
       }
     }
-    const m = matchess;
-    for (let i = 0; i < matchess.length; i++) {
+    const m = allMatches;
+    for (let i = 0; i < allMatches.length; i++) {
       if (m[i].matchId.length > 3) {
         const keys = await getkeys.getkeys();
         const options = {

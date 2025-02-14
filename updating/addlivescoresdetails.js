@@ -2,6 +2,7 @@ const request = require("request");
 const Match = require("../models/match");
 const MatchLive = require("../models/matchlive");
 const { getkeys } = require("../utils/crickeys");
+const { isInPlay } = require("../utils/isInPlay");
 
 
 function pointCalculator(
@@ -78,7 +79,7 @@ module.exports.addLivescoresDetails = async function () {
             const { status } = s.matchHeader;
             const toss = s.matchHeader.tossResults.tossWinnerName;
             const result = s.matchHeader.state;
-            let isInPlay = result.toLowerCase() === "stumps" ? false : result.toLowerCase() === "abandon" ? false : true
+            let isinplay = isInPlay(result, matches[i].date);
             let title_fi = "";
             let home_first = false;
             let overs_fi = 0;
@@ -316,7 +317,7 @@ module.exports.addLivescoresDetails = async function () {
                     status,
                     toss,
                     result,
-                    isInPlay: isInPlay,
+                    isInPlay: isinplay,
                     teamHomePlayers,
                     teamAwayPlayers,
                     date: matches[i].date,
@@ -338,6 +339,21 @@ module.exports.addLivescoresDetails = async function () {
               );
             } catch (err) {
               console.log(`Error : ${err}`);
+            }
+          }
+          else {
+            if (s?.matchHeader) {
+              const { status } = s?.matchHeader;
+              const toss = s.matchHeader.tossResults.tossWinnerName;
+              const result = s.matchHeader.state;
+              let isinplay = isInPlay(result, matches[i].date);
+              const matchUpdate = await MatchLive.updateOne(
+                { matchId },
+                {
+                  $set: {
+                    isInPlay: isinplay
+                  }
+                })
             }
           }
         })

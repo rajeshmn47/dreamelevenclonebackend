@@ -1,40 +1,55 @@
 const request = require("request");
-const Match = require("../models/match");
 const MatchLive = require("../models/matchlive");
 const getkeys = require("../utils/crickeys");
-// function prizeBreakupRules(prize, numWinners){
-//     let prizeMoneyBreakup = [];
-//     for(let i = 0; i < numWinners; i++){
-
-//     }
-// }
 
 module.exports.addInPlayStatus = async function () {
     try {
         const keys = await getkeys.getkeys();
+        const now = new Date();
 
-        // Fetch matches that are ongoing but not marked as isInPlay
-        const fiveDaysAgo = new Date();
-        fiveDaysAgo.setDate(fiveDaysAgo.getDate() - 5);
-
+        // Fetch matches that are ongoing but not marked as "Complete"
         const matches = await MatchLive.find({
-            isInPlay: false, // We need to check these
-            result: { $ne: "Complete" }, // Exclude completed matches
-            date: { $gte: fiveDaysAgo }
+            isInPlay: false,
+            result: { $ne: "Complete" }
         });
-        //console.log(matches, 'matches')
+
         for (let match of matches) {
             const matchId = match.matchId;
-            const format = match?.format?.toUpperCase(); // "ODI", "T20", "Test"
-            const lastUpdated = new Date(match.updatedAt); // Last time we updated this match
-            const now = new Date();
+            const format = match?.format?.toUpperCase();
+            const lastUpdated = new Date(match.updatedAt);
+            const matchDate = new Date(match.date);
+            const elapsedTime = now - lastUpdated;
 
+            let nextCheckTime = 10 * 60 * 1000; // Default: 10 minutes
+
+            // 🔹 **Check if API request should be delayed**
+            if (match.stumpsTime) {
+                const stumpsNextCheck = new Date(matchDate);
+                stumpsNextCheck.setDate(stumpsNextCheck.getDate() + 1); // Next day check
+
+                if (now < stumpsNextCheck) {
+                    console.log(`Skipping Match ${matchId}, Stumps time not reached.`);
+                    continue;
+                }
+            }
+
+            if (match.inningsBreakTime) {
+                let inningsBreakDuration = format === "ODI" ? 30 * 60 * 1000 : 15 * 60 * 1000; // 30 min (ODI) or 15 min (T20)
+                const inningsBreakNextCheck = new Date(match.inningsBreakTime.getTime() + inningsBreakDuration);
+
+                if (now < inningsBreakNextCheck) {
+                    console.log(`Skipping Match ${matchId}, innings break ongoing.`);
+                    continue;
+                }
+            }
+
+            // 🔹 API Request
             const options = {
                 method: "GET",
                 url: `https://cricbuzz-cricket.p.rapidapi.com/mcenter/v1/${matchId}`,
                 headers: {
                     "x-rapidapi-host": "cricbuzz-cricket.p.rapidapi.com",
-                    "X-RapidAPI-Key": keys,
+                    "X-RapidAPI-Key": '17394dbe40mshd53666ab6bed910p118357jsn7d63181f2556',
                     useQueryString: true,
                 },
             };
@@ -44,8 +59,7 @@ module.exports.addInPlayStatus = async function () {
                     if (error) {
                         reject(error);
                     }
-                    const matchData = JSON.parse(body);
-                    resolve(matchData);
+                    resolve(JSON.parse(body));
                 });
             });
 
@@ -53,33 +67,21 @@ module.exports.addInPlayStatus = async function () {
                 .then(async (matchData) => {
                     if (!matchData || !matchData.matchInfo) return;
 
-                    const matchState = matchData.matchInfo.state.toLowerCase(); // e.g., "stumps", "innings break", "in play"
+                    const matchState = matchData.matchInfo.state.toLowerCase();
 
-                    // 🔹 Handling Stumps 🔹
                     if (matchState.includes("stumps")) {
-                        const matchDate = new Date(match.date);
-                        const nextDay = new Date(matchDate);
-                        nextDay.setDate(nextDay.getDate() + 1); // Move to next day
-
-                        console.log(`Match ${matchId} is in Stumps, setting next check for ${nextDay}`);
-                        await MatchLive.updateOne({ matchId }, { isInPlay: false, nextCheck: nextDay });
+                        console.log(`Match ${matchId} is in Stumps, setting next check for next day.`);
+                        await MatchLive.updateOne({ matchId }, { isInPlay: false, stumpsTime: now });
                         return;
                     }
 
-                    // 🔹 Handling Innings Break 🔹
                     if (matchState.includes("innings break")) {
-                        let breakDuration = 0;
-                        if (format === "ODI") breakDuration = 30 * 60 * 1000; // 30 minutes
-                        if (format === "T20") breakDuration = 10 * 60 * 1000; // 1 minute
-
-                        const elapsedTime = now - lastUpdated;
-                        if (elapsedTime < breakDuration) {
-                            console.log(`Match ${matchId} is still in break, waiting...`);
-                            return;
-                        }
+                        const breakDuration = format === "ODI" ? 30 * 60 * 1000 : 15 * 60 * 1000;
+                        await MatchLive.updateOne({ matchId }, { inningsBreakTime: now });
+                        console.log(`Match ${matchId} in innings break, checking after ${breakDuration / 60000} min.`);
+                        return;
                     }
 
-                    // 🔹 Handling Match Resume 🔹
                     if (matchState.includes("in progress")) {
                         await MatchLive.updateOne({ matchId }, { isInPlay: true });
                         console.log(`Match ${matchId} resumed, updated isInPlay to true.`);
@@ -91,3 +93,4 @@ module.exports.addInPlayStatus = async function () {
         console.log("Error in addInPlayStatus:", error);
     }
 };
+

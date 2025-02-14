@@ -19,7 +19,7 @@ const fMatches = require("./controllers/football/fMatchDB-controller.js");
 const player = require("./routes/playerDetails");
 const series = require("./routes/series");
 const { startTransaction } = require("./updating/transaction.js");
-const { addMatchtoDb } = require("./updating/matchDB-controller.js");
+const { addMatchtoDb } = require("./updating/addMatch.js");
 const { addLivescoresDetails } = require("./updating/addlivescoresdetails.js");
 const { addLiveDetails } = require("./updating/addlivedetails.js");
 const { addLivecommentary } = require("./updating/addCommentary.js");
@@ -71,7 +71,7 @@ cron.schedule("0 * * * *", async function () {
   await startTransaction();
 });
 cron.schedule("* * * * *", async function () {
-  await addLivecommentary();
+  //await addLivecommentary();
 });
 cron.schedule("* * * * *", async function () {
   await updateBalls();
@@ -83,10 +83,10 @@ cron.schedule("*/5 * * * *", async function () {
   await addLiveDetails()
 });
 cron.schedule("* * * * *", async function () {
-   await addLivescoresDetails()
+  await addLivescoresDetails()
 });
 cron.schedule("0 22 * * *", async function () {
- await addMatchtoDb();
+  await addMatchtoDb();
   await addteamPlayers();
 });
 cron.schedule("0 */20 * * *", async function () {
@@ -111,7 +111,7 @@ cron.schedule("30 9-17/2 * * *", async () => {
 // startTransaction();
 // addLivecommentary();
 // updateBalls();
-// addInPlayStatus()
+ addInPlayStatus()
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
   console.warn(`App listening on http://localhost:${PORT}`);

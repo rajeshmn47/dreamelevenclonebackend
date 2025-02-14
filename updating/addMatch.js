@@ -49,7 +49,7 @@ module.exports.addMatchtoDb = async function () {
       url: "https://cricbuzz-cricket.p.rapidapi.com/matches/v1/recent",
       headers: {
         "x-rapidapi-host": "cricbuzz-cricket.p.rapidapi.com",
-        "x-rapidapi-key": "3827482ab0msh2682459121bc4e9p182f86jsn5e5bf239f56d",
+        "x-rapidapi-key": "17394dbe40mshd53666ab6bed910p118357jsn7d63181f2556",
         useQueryString: true,
       },
     };
