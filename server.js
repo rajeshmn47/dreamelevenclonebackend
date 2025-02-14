@@ -71,7 +71,7 @@ cron.schedule("0 * * * *", async function () {
   await startTransaction();
 });
 cron.schedule("* * * * *", async function () {
-  //await addLivecommentary();
+  await addLivecommentary();
 });
 cron.schedule("* * * * *", async function () {
   await updateBalls();
@@ -95,7 +95,7 @@ cron.schedule("0 */20 * * *", async function () {
 cron.schedule("0 */1 * * *", async function () {
   await addMatchIds();
 });
-cron.schedule("30 9-17/2 * * *", async () => {
+cron.schedule("*/15 9-23 * * *", async () => {
   console.log("Running match resume check...");
   await addInPlayStatus();
 });
