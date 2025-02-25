@@ -43,10 +43,10 @@ module.exports.addMatchtoDb = async function () {
       endDate.getMonth() + 1
     )}-${parseInt(endDate.getDate())}`
   );
-  for (let i = 0; i < numberOfDays; i++) {
+  for (let i = 0; i < 1; i++) {
     const options = {
       method: "GET",
-      url: "https://cricbuzz-cricket.p.rapidapi.com/matches/v1/recent",
+      url: "https://cricbuzz-cricket.p.rapidapi.com/matches/v1/upcoming",
       headers: {
         "x-rapidapi-host": "cricbuzz-cricket.p.rapidapi.com",
         "x-rapidapi-key": "17394dbe40mshd53666ab6bed910p118357jsn7d63181f2556",
@@ -66,7 +66,7 @@ module.exports.addMatchtoDb = async function () {
     });
     promise
       .then(async (s) => {
-        // console.log(s.typeMatches, "mad");
+        //console.log(s.typeMatches, "mad");
         for (se of s.typeMatches) {
           for (k of se.seriesMatches) {
             if (k?.seriesAdWrapper?.matches) {
@@ -79,7 +79,7 @@ module.exports.addMatchtoDb = async function () {
         for (let i = 0; i < obj.results.length; i++) {
           const match1 = new Match();
           const { matchId } = obj.results[i];
-          console.log(obj.results[i].matchFormat, 'results');
+          console.log(matchId, 'results');
           match1.matchId = matchId;
           obj.results.sort(compare);
           match1.matchTitle = obj.results[i].seriesName;

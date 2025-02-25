@@ -30,7 +30,7 @@ module.exports.addLiveDetails = async function () {
       } else {
         const keys = await getkeys.getkeys();
         console.log('not exists')
-        const date1 = "2679243";
+        const date1 = matches[i].date
         const options = {
           method: "GET",
           url: `https://cricbuzz-cricket.p.rapidapi.com/mcenter/v1/${matchId}`,
