@@ -65,40 +65,46 @@ const api_key =
   "s16rcBDzWjgNhJXPEUV9HA3QMSfvpen2GyL7a4F8ubdwICk5KOHPT32vI5b6cSxs8JpUhirCOjqogGwk";
 // ...
 
-// Remove the error.log file every twenty-first day of the month.
-//addLiveCommentary.addLivecommentary();
-cron.schedule("0 * * * *", async function () {
-  await startTransaction();
-});
-cron.schedule("*/2 * * * *", async function () {
-  await addLivecommentary();
-});
-cron.schedule("* * * * *", async function () {
-  await updateBalls();
-});
-cron.schedule("*/2 * * * *", async function () {
-  await addTeamstandingstodb();
-});
-cron.schedule("*/5 * * * *", async function () {
-  await addLiveDetails()
-});
-cron.schedule("*/2 * * * *", async function () {
-  await addLivescoresDetails()
-});
-cron.schedule("0 22 * * *", async function () {
-  await addMatchtoDb();
-  await addteamPlayers();
-});
-cron.schedule("0 */20 * * *", async function () {
-  await addTeamstandingstodb()
-});
-cron.schedule("0 */1 * * *", async function () {
-  await addMatchIds();
-});
-cron.schedule("*/15 9-23 * * *", async () => {
-  console.log("Running match resume check...");
-  await addInPlayStatus();
-});
+
+function cronjobs() {
+  // Remove the error.log file every twenty-first day of the month.
+  //addLiveCommentary.addLivecommentary();
+  cron.schedule("0 * * * *", async function () {
+    //await startTransaction();
+  });
+  cron.schedule("* * * * *", async function () {
+    //await addLivecommentary();
+  });
+  cron.schedule("* * * * *", async function () {
+    //await updateBalls();
+  });
+  cron.schedule("*/2 * * * *", async function () {
+    //await addTeamstandingstodb();
+  });
+  cron.schedule("*/5 * * * *", async function () {
+    //await addLiveDetails()
+  });
+  cron.schedule("* * * * *", async function () {
+    //await addLivescoresDetails()
+  });
+  cron.schedule("0 22 * * *", async function () {
+    //await addMatchtoDb();
+    //await addteamPlayers();
+  });
+  cron.schedule("0 */20 * * *", async function () {
+    //await addTeamstandingstodb()
+  });
+  cron.schedule("0 */1 * * *", async function () {
+    //await addMatchIds();
+  });
+  cron.schedule("*/15 9-23 * * *", async () => {
+    console.log("Running match resume check...");
+    //await addInPlayStatus();
+  });
+}
+
+// cronjobs()
+
 // updateBalls();
 // addMatchtoDb();
 // addLiveDetails();
@@ -111,7 +117,7 @@ cron.schedule("*/15 9-23 * * *", async () => {
 // startTransaction();
 // addLivecommentary();
 // updateBalls();
- addInPlayStatus()
+// addInPlayStatus()
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
   console.warn(`App listening on http://localhost:${PORT}`);
