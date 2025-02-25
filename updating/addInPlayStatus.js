@@ -16,7 +16,7 @@ module.exports.addInPlayStatus = async function () {
             date: {
                 $gte: new Date(date),
                 $lt: new Date(endDate),
-              },
+            },
         });
 
         console.log(matches?.length, 'matchesss')
@@ -31,7 +31,7 @@ module.exports.addInPlayStatus = async function () {
             let nextCheckTime = 10 * 60 * 1000; // Default: 10 minutes
 
             // 🔹 **Check if API request should be delayed**
-            console.log(match?.result,'match result')
+            console.log(match?.result, 'match result')
             if (match.result?.toLowerCase() == 'stumps') {
                 const stumpsNextCheck = new Date(matchDate);
                 stumpsNextCheck.setDate(stumpsNextCheck.getDate() + 1); // Next day check
@@ -55,8 +55,17 @@ module.exports.addInPlayStatus = async function () {
                     continue;
                 }
             }
+            if (match.result?.toLowerCase() == 'delay') {
+                let inningsBreakDuration = 60 * 60 * 1000; // 30 min (ODI) or 15 min (T20)
+                const inningsBreakNextCheck = new Date(match.updatedAt + inningsBreakDuration);
+
+                if (now < inningsBreakNextCheck) {
+                    console.log(`Skipping Match ${matchId}, innings break ongoing.`);
+                    continue;
+                }
+            }
             const keys = await getkeys.getkeys();
-            // 🔹 API Request
+            console.log(matchId, 'matchId')
             const options = {
                 method: "GET",
                 url: `https://cricbuzz-cricket.p.rapidapi.com/mcenter/v1/${matchId}`,
@@ -78,10 +87,11 @@ module.exports.addInPlayStatus = async function () {
 
             promise
                 .then(async (matchData) => {
+                    console.log(matchData,'matchdata')
                     if (!matchData || !matchData.matchInfo) return;
 
                     const matchState = matchData.matchInfo.state.toLowerCase();
-
+                    console.log(matchState, matchId, 'matchstate')
                     if (matchState.includes("stumps")) {
                         console.log(`Match ${matchId} is in Stumps, setting next check for next day.`);
                         //await MatchLive.updateOne({ matchId }, { isInPlay: false, stumpsTime: now });
@@ -96,6 +106,11 @@ module.exports.addInPlayStatus = async function () {
                     }
 
                     if (matchState.includes("in progress")) {
+                        await MatchLive.updateOne({ matchId }, { isInPlay: true });
+                        console.log(`Match ${matchId} resumed, updated isInPlay to true.`);
+                    }
+
+                    if (matchState.includes("complete")) {
                         await MatchLive.updateOne({ matchId }, { isInPlay: true });
                         console.log(`Match ${matchId} resumed, updated isInPlay to true.`);
                     }

@@ -42,7 +42,8 @@ module.exports.addLivescoresDetails = async function () {
   for (let i = 0; i < matches.length; i++) {
     const matchId = matches[i].matchId;
     const match = await MatchLive.findOne({ matchId: matchId });
-    if (!match || match.result == "Complete" || !match.isInPlay) {
+    if (!match || match?.result == "Complete" || !match?.isInPlay) {
+
     } else {
       const keys = await getkeys();
       console.log(matchId, 'jeys')
@@ -224,7 +225,7 @@ module.exports.addLivescoresDetails = async function () {
               extrasDetails_fi =
                 s.results.live_details.scorecard[0].extras_detail;
             }
-
+ 
             if (s.results.live_details.scorecard.length > 1) {
               title_si = s.results.live_details.scorecard[1].title;
               overs_si = s.results.live_details.scorecard[1].overs;
@@ -238,7 +239,7 @@ module.exports.addLivescoresDetails = async function () {
             }
             let teamHomePlayers = match.teamHomePlayers;
             let teamAwayPlayers = match.teamAwayPlayers;
-
+ 
             let batting = batting1.concat(batting2);
             let bowling = bowling1.concat(bowling2);
             for (let i = 0; i < teamHomePlayers.length; i++) {
