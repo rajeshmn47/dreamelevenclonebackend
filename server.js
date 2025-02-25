@@ -98,7 +98,6 @@ function cronjobs() {
     //await addMatchIds();
   });
   cron.schedule("*/15 9-23 * * *", async () => {
-    console.log("Running match resume check...");
     //await addInPlayStatus();
   });
 }
