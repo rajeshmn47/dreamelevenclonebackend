@@ -300,7 +300,7 @@ router.post("/otp", async (req, res) => {
       }
     });
   } else {
-    res.status(200).json({
+    res.status(400).json({
       message: "ure account failed to create successfully",
     });
   }
