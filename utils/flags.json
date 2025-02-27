@@ -153,8 +153,28 @@
       "flag": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Flag_of_the_People%27s_Republic_of_China.svg/200px-Flag_of_the_People%27s_Republic_of_China.svg.png"
     },
     {
+      "teamname": "up warriorz",
+      "flag": "https://cricketvectors.akamaized.net/Teams/QM.png?impolicy=default_web"
+    },
+    {
+      "teamname": "gujarat giants",
+      "flag": "https://cricketvectors.akamaized.net/Teams/QJ.png?impolicy=default_web"
+    },
+    {
+      "teamname": "central stags",
+      "flag": "https://cricketvectors.akamaized.net/Teams/56.png?impolicy=default_web"
+    },
+    {
+      "teamname": "central districts",
+      "flag": "https://cricketvectors.akamaized.net/Teams/56.png?impolicy=default_web"
+    },
+    {
+      "teamname": "canterbury",
+      "flag": "https://cricketvectors.akamaized.net/Teams/55.png?impolicy=default_web"
+    },
+    {
       "teamname": "new zealand",
-      "flag": "https://v2.convertapi.com/d/toey80slvzhlzc370lo8s1low6nqbi4f/Flag_of_New_Zealand.png"
+      "flag": "https://assets-icc.sportz.io/static-assets/buildv3-stg/images/teams/5.png?v=7"
     },
     {
       "teamname": "romania",
@@ -162,7 +182,7 @@
     },
     {
       "teamname": "pakistan",
-      "flag": "https://v2.convertapi.com/d/n7tqrxtm4icsy3hxi8evm3fjpupct0ry/Flag_of_Pakistan.png"
+      "flag": "https://assets-icc.sportz.io/static-assets/buildv3-stg/images/teams/6.png?v=7"
     },
     {
       "teamname": "uganda",
@@ -174,7 +194,7 @@
     },
     {
       "teamname": "india",
-      "flag": "https://v2.convertapi.com/d/g41mlsc13m2umdfqcgtz3nlg7yxjpss6/Flag_of_India.png"
+      "flag": "https://assets-icc.sportz.io/static-assets/buildv3-stg/images/teams/4.png?v=7"
     },
     {
       "teamname": "canada",
@@ -186,15 +206,11 @@
     },
     {
       "teamname": "bangladesh",
-      "flag": "https://v2.convertapi.com/d/wjo1rokvx7n0w9y53zalawpr5qeepiet/Flag_of_Bangladesh.png"
-    },
-    {
-      "teamname": "australia",
-      "flag": "https://v2.convertapi.com/d/rpjknlfqbzw8kg1501kjumzsmstub766/Flag_of_Australia_(converted).png"
+      "flag": ""
     },
     {
       "teamname": "south africa",
-      "flag": ""
+      "flag": "https://assets-icc.sportz.io/static-assets/buildv3-stg/images/teams/7.png?v=7"
     },
     {
       "teamname": "united states",
@@ -203,10 +219,6 @@
     {
       "teamname": "germany",
       "flag": "https://v2.convertapi.com/d/ew15fn3l9a9lh73f350c36uahkcwmmvp/Flag_of_Germany.png"
-    },
-    {
-      "teamname": "sri lanka",
-      "flag": "https://v2.convertapi.com/d/i4zmpi5bt6e8fgw2u8enz8svqlsugfrm/Flag_of_Sri_Lanka.png"
     },
     {
       "teamname": "netherlands",
@@ -221,6 +233,18 @@
       "flag": "data:image/png;base64,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"
     },
     {
+      "teamname": "auckland",
+      "flag": "https://cricketvectors.akamaized.net/Teams/53.png?impolicy=default_web"
+    },
+    {
+      "teamname": "canterbury",
+      "flag": "https://cricketvectors.akamaized.net/Teams/55.png?impolicy=default_web"
+    },
+    {
+      "teamname": "otago",
+      "flag": "https://cricketvectors.akamaized.net/Teams/52.png?impolicy=default_web"
+    },
+    {
       "teamname": "papua new guinea",
       "flag": "https://v2.convertapi.com/d/q43qtyeo7bs41cgxar6s5et5dodcla9k/Flag_of_Papua_New_Guinea.png"
     },
@@ -230,7 +254,11 @@
     },
     {
       "teamname": "austria",
-      "flag": "https://v2.convertapi.com/d/fch04gbq8hc9f109uyslanc4t8ds0x93/Flag_of_Austria.png"
+      "flag": "https://cricketvectors.akamaized.net/Teams/Z0.png?impolicy=default_web"
+    },
+    {
+      "teamname": "australia",
+      "flag": "https://cricketvectors.akamaized.net/Teams/Q.png?impolicy=default_web"
     },
     {
       "teamname": "hungary",
@@ -271,6 +299,122 @@
     {
       "teamname": "scotland",
       "flag": "data:image/png;base64,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"
+    },
+    {
+      "teamname": "sri lanka",
+      "flag": "https://assets-icc.sportz.io/static-assets/buildv3-stg/images/teams/8.png?v=7"
+    },
+    {
+      "teamname": "victoria",
+      "flag": "https://cricketvectors.akamaized.net/Teams/3J.png?impolicy=default_web"
+    },
+    {
+      "teamname": "western australia",
+      "flag": "https://cricketvectors.akamaized.net/Teams/3K.png?impolicy=default_web"
+    },
+    {
+      "teamname": "south australia",
+      "flag": "https://cricketvectors.akamaized.net/Teams/3M.png?impolicy=default_web"
+    },
+    {
+      "teamname": "tasmania",
+      "flag": "https://cricketvectors.akamaized.net/Teams/FV.png?impolicy=default_web"
+    },
+    {
+      "teamname": "new south wales",
+      "flag": "https://cricketvectors.akamaized.net/Teams/3L.png?impolicy=default_web"
+    },
+    {
+      "teamname": "",
+      "flag": "https://img.cricketworld.com/assets/uploads//2022/12/FC-KNTS@2x.png?team"
+    },
+    {
+      "teamname": "north west dragons",
+      "flag": "https://img.cricketworld.com/assets/uploads//2022/12/FC-KNTS@2x.png?team"
+    },
+    {
+      "teamname": "titans",
+      "flag": "https://static.cricbuzz.com/a/img/v1/25x18/i1/c172182/flag-img.jpg"
+    },
+    {
+      "teamname": "lions",
+      "flag": "https://static.cricbuzz.com/a/img/v1/25x18/i1/c172224/flag-img.jpg"
+    },
+    {
+      "teamname": "dolphins",
+      "flag": "https://static.cricbuzz.com/a/img/v1/25x18/i1/c172183/flag-img.jpg"
+    },
+    {
+      "teamname": "north west",
+      "flag": "https://static.cricbuzz.com/a/img/v1/25x18/i1/c248439/flag-img.jpg"
+    },
+    {
+      "teamname": "wester province",
+      "flag": "https://static.cricbuzz.com/a/img/v1/25x18/i1/c248460/flag-img.jpg"
+    },
+    {
+      "teamname": "knights",
+      "flag": "https://static.cricbuzz.com/a/img/v1/25x18/i1/c172331/flag-img.jpg"
+    },
+    {
+      "teamname": "rocks",
+      "flag": "https://cricketvectors.akamaized.net/Teams/JG.png?impolicy=default_web"
+    },
+    {
+      "teamname": "warriors",
+      "flag": "https://static.cricbuzz.com/a/img/v1/24x18/i1/c172222/warriors.jpg"
+    },
+    {
+      "teamname": "lions",
+      "flag": "https://static.cricbuzz.com/a/img/v1/25x18/i1/c172224/flag-img.jpg"
+    },
+    {
+      "teamname": "northern cape",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/327700/327710.png"
+    },
+    {
+      "teamname": "eastern storm",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/327700/327716.png"
+    },
+    {
+      "teamname": "mpumalanga rhinos",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/327700/327725.png"
+    },
+    {
+      "teamname": "border",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/327700/327707.png"
+    },
+    {
+      "teamname": "south western districts",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/327600/327698.png"
+    },
+    {
+      "teamname": "limpopo",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/327500/327591.jpg"
+    },
+    {
+      "teamname": "kwazulu-natal inland",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/378300/378385.png"
+    },
+    {
+      "teamname": "south africa emerging players",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/313100/313125.logo.png"
+    },
+    {
+      "teamname": "boland",
+      "flag": "https://static.cricbuzz.com/a/img/v1/24x18/i1/c349610/boland.jpg"
+    },
+    {
+      "teamname": "queensland",
+      "flag": "https://static.cricbuzz.com/a/img/v1/25x18/i1/c172233/flag-img.jpg"
+    },
+    {
+      "teamname": "",
+      "flag": ""
+    },
+    {
+      "teamname": "",
+      "flag": ""
     }
   ]
 }

@@ -40,7 +40,7 @@ module.exports.addLivecommentary = async function addcommentry() {
     let date = new Date();
     let allMatches = [];
     const endDate = new Date(date.getTime());
-    date = new Date(date.getTime() - 12 * 60 * 60 * 1000);
+    date = new Date(date.getTime() - 100 * 60 * 60 * 1000);
     const matches = await Matches.find({
       date: {
         $gte: new Date(date),
@@ -72,7 +72,7 @@ module.exports.addLivecommentary = async function addcommentry() {
       const teams = ['1']
       if (teams.length > 0) {
         const match = await MatchLiveDetails.findOne({ matchId: matchid });
-        if (match && !(match.result == "Complete") && !(match.result == "Stumps") && (match?.isInPlay)) {
+        if (match && !(match.result == "Complete") && (match?.isInPlay)) {
           allMatches.push(matches[i]);
         }
       }

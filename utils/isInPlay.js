@@ -10,6 +10,6 @@ module.exports.isInPlay = function isInPlay(r, date) {
             return true;
         }
     }
-    let isinplay = result === "stumps" ? false : result === "abandon" ? false : result == 'innings break' ? false : result == 'delay' ? false : true
+    let isinplay = result === "stumps" ? false : result === "abandon" ? false : result == 'innings break' ? false : result == 'delay' ? false : result == 'lunch' ? false : true
     return isinplay;
 }

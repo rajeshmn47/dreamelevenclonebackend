@@ -22,10 +22,12 @@ module.exports.addInPlayStatus = async function () {
         console.log(matches?.length, 'matchesss')
 
         for (let match of matches) {
+            console.log(match.result, 'result')
             const matchId = match.matchId;
             const format = match?.format?.toUpperCase();
             const lastUpdated = new Date(match.updatedAt);
             const matchDate = new Date(match.date);
+            const updatedAt = new Date(match.updatedAt);
             const elapsedTime = now - lastUpdated;
 
             let nextCheckTime = 10 * 60 * 1000; // Default: 10 minutes
@@ -48,7 +50,7 @@ module.exports.addInPlayStatus = async function () {
 
             if (match.result?.toLowerCase() == 'innings break') {
                 let inningsBreakDuration = format === "ODI" ? 30 * 60 * 1000 : 15 * 60 * 1000; // 30 min (ODI) or 15 min (T20)
-                const inningsBreakNextCheck = new Date(match.updatedAt + inningsBreakDuration);
+                const inningsBreakNextCheck = new Date(updatedAt.getTime() + inningsBreakDuration);
 
                 if (now < inningsBreakNextCheck) {
                     console.log(`Skipping Match ${matchId}, innings break ongoing.`);
@@ -57,9 +59,19 @@ module.exports.addInPlayStatus = async function () {
             }
             if (match.result?.toLowerCase() == 'delay') {
                 let inningsBreakDuration = 60 * 60 * 1000; // 30 min (ODI) or 15 min (T20)
-                const inningsBreakNextCheck = new Date(match.updatedAt + inningsBreakDuration);
+                const inningsBreakNextCheck = new Date(updatedAt.getTime() + inningsBreakDuration);
 
                 if (now < inningsBreakNextCheck) {
+                    console.log(`Skipping Match ${matchId}, innings break ongoing.`);
+                    continue;
+                }
+            }
+            if (match.result?.toLowerCase() == 'lunch') {
+                let inningsBreakDuration = 30 * 60 * 1000; // 30 min (ODI) or 15 min (T20)
+                const inningsBreakNextCheck = new Date(updatedAt.getTime() + inningsBreakDuration);
+                console.log(now, inningsBreakNextCheck, 'now')
+                if (now < inningsBreakNextCheck) {
+                    console.log(match.result, 'check if pass')
                     console.log(`Skipping Match ${matchId}, innings break ongoing.`);
                     continue;
                 }
@@ -87,11 +99,11 @@ module.exports.addInPlayStatus = async function () {
 
             promise
                 .then(async (matchData) => {
-                    console.log(matchData,'matchdata')
+                    //console.log(matchData, 'matchdata')
                     if (!matchData || !matchData.matchInfo) return;
 
                     const matchState = matchData.matchInfo.state.toLowerCase();
-                    console.log(matchState, matchId, 'matchstate')
+                    //console.log(matchState, matchId, 'matchstate')
                     if (matchState.includes("stumps")) {
                         console.log(`Match ${matchId} is in Stumps, setting next check for next day.`);
                         //await MatchLive.updateOne({ matchId }, { isInPlay: false, stumpsTime: now });
@@ -104,8 +116,8 @@ module.exports.addInPlayStatus = async function () {
                         console.log(`Match ${matchId} in innings break, checking after ${breakDuration / 60000} min.`);
                         return;
                     }
-
-                    if (matchState.includes("in progress")) {
+                    console.log(matchState, 'matchstate')
+                    if (matchState?.includes("in progress") || matchState?.includes("inprogress")) {
                         await MatchLive.updateOne({ matchId }, { isInPlay: true });
                         console.log(`Match ${matchId} resumed, updated isInPlay to true.`);
                     }
