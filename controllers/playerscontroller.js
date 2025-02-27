@@ -68,17 +68,29 @@ router.get("/getteam/:homeid/:awayid", async (req, res) => {
   let y = [];
 
   if (homematch[0]?.date > awaymatch1[0]?.date) {
-    ho = homematch[0].teamHomePlayers;
+    if (homematch[0]?.teamHomePlayers.length > 0) {
+      ho = homematch[0]?.teamHomePlayers;
+    }
   } else {
-    aw = awaymatch1[0].teamAwayPlayers
+    if (awaymatch1[0]?.teamAwayPlayers.length > 0) {
+      aw = awaymatch1[0]?.teamAwayPlayers
+    }
   }
 
-  if (awaymatch[0].date > homematch1[0].date) {
-    x = awaymatch[0].teamAwayPlayers;
+  if (awaymatch[0]?.date > homematch1[0]?.date) {
+    if (awaymatch[0]?.teamAwayPlayers.length > 0) {
+      x = awaymatch[0]?.teamAwayPlayers;
+    }
   } else {
-    y = homematch1[0].teamHomePlayers;
+    if (homematch1[0]?.teamHomePlayers.length > 0) {
+      y = homematch1[0]?.teamHomePlayers;
+    }
   }
-  let lmplayers=ho.slice(0,11).concat(aw.slice(0,11)).concat(x.slice(0,11)).concat(y.slice(0,11))
+  let lmplayers = []
+  let lmplayersdata = ho?.slice(0, 11).concat(aw?.slice(0, 11)).concat(x?.slice(0, 11)).concat(y?.slice(0, 11))
+  if (lmplayersdata?.length > 0) {
+    lmplayers = lmplayersdata
+  }
   res.status(200).json({
     lmplayers: lmplayers,
     h: ho,
