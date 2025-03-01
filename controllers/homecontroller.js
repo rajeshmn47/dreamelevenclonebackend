@@ -1108,7 +1108,7 @@ router.get("/todaymatches", async (req, res) => {
   });
 });
 
-router.get("/allmatches", async (req, res) => {
+router.get("/allmatchese", async (req, res) => {
   var start = new Date();
   start.setUTCHours(0, 0, 0, 0);
   var end = new Date();
@@ -1131,6 +1131,48 @@ router.get("/allmatches", async (req, res) => {
     message: "matches got successfully",
     matches,
   });
+});
+
+router.get("/allmatches", async (req, res) => {
+  try {
+    var start = new Date();
+    start.setMonth(start.getMonth() - 1); // Set the start date to one month ago
+    start.setUTCHours(0, 0, 0, 0);
+    var end = new Date();
+    end.setUTCHours(23, 59, 59, 999);
+
+    console.log('Fetching matches');
+    const matches = await Match.aggregate([
+      {
+        $match: {
+          date: { $gte: start }
+        }
+      },
+      {
+        $lookup: {
+          from: "matchlivedetails", // your schema name from MongoDB
+          localField: "matchId", // user_id from user(main) model
+          foreignField: "matchId", // user_id from user(sub) model
+          as: "matchlive" // result var name
+        }
+      },
+      {
+        $sort: { date: -1 }
+      }
+    ]);
+
+    console.log(matches,'Matches fetched successfully');
+    res.status(200).json({
+      message: "Matches fetched successfully",
+      matches,
+    });
+  } catch (error) {
+    console.error('Error fetching matches:', error);
+    res.status(500).json({
+      message: "Error fetching matches",
+      error: error.message,
+    });
+  }
 });
 
 router.get("/allFbMatches", async (req, res) => {

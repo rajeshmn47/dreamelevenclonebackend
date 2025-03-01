@@ -2,18 +2,11 @@ const request = require("request");
 const Match = require("../models/match");
 const Contest = require("../models/contest");
 const MatchLiveDetails = require("../models/matchlive");
-
-// function prizeBreakupRules(prize, numWinners){
-//     let prizeMoneyBreakup = [];
-//     for(let i = 0; i < numWinners; i++){
-
-//     }
-// }
+const ContestType = require("../models/contestType");
 
 function compare(a, b) {
   return a.date < b.date;
 }
-
 
 module.exports.addMatchtoDb = async function () {
   function pad2(n) {
@@ -27,9 +20,6 @@ module.exports.addMatchtoDb = async function () {
   const month = pad2(date.getMonth() + 1); // months (0-11)
   const day = pad2(date.getDate()); // day (1-31)
   const year = date.getFullYear();
-  // var year = "2021";
-  // var month = "09";
-  // var day = 25;
   var date = new Date();
   const numberOfDays = 1;
   let endDate = new Date(date.getTime() + 24 * 60 * 60 * 1000 * 6);
@@ -53,20 +43,17 @@ module.exports.addMatchtoDb = async function () {
         useQueryString: true,
       },
     };
-    // Doubt in this part, is request is synchronous or non synchronous?
     const promise = new Promise((resolve, reject) => {
       request(options, (error, response, body) => {
         if (error) {
           reject(error);
         }
-        // console.log(body)
         const s = JSON.parse(body);
         resolve(s);
       });
     });
     promise
       .then(async (s) => {
-        //console.log(s.typeMatches, "mad");
         for (se of s.typeMatches) {
           for (k of se.seriesMatches) {
             if (k?.seriesAdWrapper?.matches) {
@@ -103,36 +90,23 @@ module.exports.addMatchtoDb = async function () {
           try {
             const match = await Match.findOne({ matchId });
             if (!match) {
-              const prize = [10000, 5000, 4000, 500];
-              // let prizeBreakup = [
-              //     5, 4, 3, 1
-              // ];
-              const totalspots = [50, 40, 30, 10];
-              for (let j = 0; j < 4; j++) {
-                const contest1 = new Contest();
-                contest1.price = prize[j];
-                contest1.totalSpots = totalspots[j];
-                contest1.spotsLeft = totalspots[j];
-                contest1.matchId = matchId;
-                const prizeDetails = [
-                  {
-                    prize: prize[j] * 0.35,
-                  },
-                  {
-                    prize: prize[j] * 0.25,
-                  },
-                  {
-                    prize: prize[j] * 0.15,
-                  },
-                  {
-                    prize: prize[j] * 0.1,
-                  },
-                  {
-                    prize: prize[j] * 0.05,
-                  },
-                ];
-                contest1.prizeDetails = prizeDetails;
-                contest1.numWinners = 5;
+              const contestTypes = await ContestType.find({});
+              for (let k = 0; k < contestTypes.length; k++) {
+                const prizeDetails = contestTypes[k].prizes.map(prize => ({
+                  prize: prize.amount,
+                  prizeHolder: ""
+                }));
+
+                const contest1 = new Contest({
+                  price: contestTypes[k].prize,
+                  totalSpots: contestTypes[k].totalSpots,
+                  spotsLeft: contestTypes[k].totalSpots,
+                  matchId: matchId,
+                  prizeDetails: prizeDetails,
+                  numWinners: contestTypes[k].numWinners,
+                  entryFee: contestTypes[k].entryFee,
+                });
+
                 try {
                   const contest2 = await Contest.create(contest1);
                   if (contest2) {
@@ -151,12 +125,9 @@ module.exports.addMatchtoDb = async function () {
                 console.log(`Error : ${err}`);
               }
             } else if (match.teamHomeCode.toLowerCase() == "tbc") {
-              match.teamHomeCode = obj.results[i].team1.teamSName
+              match.teamHomeCode = obj.results[i].team1.teamSName;
               match.teamAwayCode = obj.results[i].team2.teamSName;
               await match.save();
-            }
-            else {
-              //console.log("Match already exist in database! ");
             }
           } catch (err) {
             console.log(`Error : ${err}`);
@@ -166,6 +137,5 @@ module.exports.addMatchtoDb = async function () {
       .catch((err) => {
         console.log(`Error : ${err}`);
       });
-    // day++;
   }
 };

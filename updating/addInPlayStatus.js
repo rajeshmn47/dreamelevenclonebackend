@@ -37,7 +37,7 @@ module.exports.addInPlayStatus = async function () {
             if (match.result?.toLowerCase() == 'stumps') {
                 const stumpsNextCheck = new Date(matchDate);
                 stumpsNextCheck.setDate(stumpsNextCheck.getDate() + 1); // Next day check
-
+                console.log(now, stumpsNextCheck, 'testing stumps')
                 if (now < stumpsNextCheck) {
                     console.log(`Skipping Match ${matchId}, Stumps time not reached.`);
                     continue;
@@ -67,7 +67,7 @@ module.exports.addInPlayStatus = async function () {
                 }
             }
             if (match.result?.toLowerCase() == 'lunch') {
-                let inningsBreakDuration = 30 * 60 * 1000; // 30 min (ODI) or 15 min (T20)
+                let inningsBreakDuration = 40 * 60 * 1000; // 30 min (ODI) or 15 min (T20)
                 const inningsBreakNextCheck = new Date(updatedAt.getTime() + inningsBreakDuration);
                 console.log(now, inningsBreakNextCheck, 'now')
                 if (now < inningsBreakNextCheck) {
@@ -103,7 +103,7 @@ module.exports.addInPlayStatus = async function () {
                     if (!matchData || !matchData.matchInfo) return;
 
                     const matchState = matchData.matchInfo.state.toLowerCase();
-                    //console.log(matchState, matchId, 'matchstate')
+                    console.log(matchState, matchId, 'matchstate')
                     if (matchState.includes("stumps")) {
                         console.log(`Match ${matchId} is in Stumps, setting next check for next day.`);
                         //await MatchLive.updateOne({ matchId }, { isInPlay: false, stumpsTime: now });

@@ -14,6 +14,7 @@ const teamdata = require("./controllers/playerscontroller.js");
 const auth = require("./controllers/user_controller");
 const team = require("./controllers/teamcontroller");
 const payments = require("./controllers/paymentcontroller.js");
+const matches = require("./controllers/matchcontroller.js");
 const updatedata = require("./updating/updatedata.js");
 const fMatches = require("./controllers/football/fMatchDB-controller.js");
 const player = require("./routes/playerDetails");
@@ -32,6 +33,8 @@ const { getkeys } = require("./utils/crickeys");
 const { checkloggedinuser } = require("./utils/checkUser.js");
 const { updateBalls } = require("./updating/updateBalls.js");
 const { addInPlayStatus } = require("./updating/addInPlayStatus.js");
+const { createDefaultContestTypes } = require("./updating/createContestTypes.js");
+const { cronjobs } = require("./updating/cronJobs.js");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
@@ -47,6 +50,7 @@ app.use("/", checkloggedinuser, teamdata);
 app.use("/", checkloggedinuser, team);
 app.use("/", checkloggedinuser, updatedata);
 app.use("/", checkloggedinuser, video);
+app.use("/api/match", checkloggedinuser, matches);
 //app.use("/", transaction);
 mongoose.Promise = global.Promise;
 mongoose.connect(
@@ -65,45 +69,8 @@ const api_key =
   "s16rcBDzWjgNhJXPEUV9HA3QMSfvpen2GyL7a4F8ubdwICk5KOHPT32vI5b6cSxs8JpUhirCOjqogGwk";
 // ...
 
-
-function cronjobs() {
-  // Remove the error.log file every twenty-first day of the month.
-  //addLiveCommentary.addLivecommentary();
-  cron.schedule("0 * * * *", async function () {
-    //await startTransaction();
-  });
-  cron.schedule("* * * * *", async function () {
-    //await addLivecommentary();
-  });
-  cron.schedule("* * * * *", async function () {
-    //await updateBalls();
-  });
-  cron.schedule("*/2 * * * *", async function () {
-    //await addTeamstandingstodb();
-  });
-  cron.schedule("*/5 * * * *", async function () {
-    //await addLiveDetails()
-  });
-  cron.schedule("* * * * *", async function () {
-    //await addLivescoresDetails()
-  });
-  cron.schedule("0 22 * * *", async function () {
-    //await addMatchtoDb();
-    //await addteamPlayers();
-  });
-  cron.schedule("0 */20 * * *", async function () {
-    //await addTeamstandingstodb()
-  });
-  cron.schedule("0 */1 * * *", async function () {
-    //await addMatchIds();
-  });
-  cron.schedule("*/15 9-23 * * *", async () => {
-    //await addInPlayStatus();
-  });
-}
-
-// cronjobs()
-
+ cronjobs()
+// createDefaultContestTypes()
 // updateBalls();
 // addMatchtoDb();
 // addLiveDetails();
@@ -111,12 +78,12 @@ function cronjobs() {
 // addMatchIds();
 // addTeamstandingstodb();
 // addteamPlayers();
-// addTeamstandingstodbAPI()
+// addTeamstandingstodbAPI();
 // addPlayersAPI();
 // startTransaction();
 // addLivecommentary();
 // updateBalls();
-// addInPlayStatus()
+ addInPlayStatus()
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
   console.warn(`App listening on http://localhost:${PORT}`);

@@ -4,6 +4,7 @@ const Contest = require("../models/contest");
 const Team = require("../models/team");
 const User = require("../models/user");
 const Match = require("../models/match");
+const ContestType = require("../models/contestType");
 
 const router = express.Router();
 
@@ -183,5 +184,56 @@ router.get("/reJoinCn/:id", async (req, res) => {
     });
   }
 });
+
+
+// Route to create a new contest type
+router.post("/createContestType", async (req, res) => {
+  try {
+    console.log(req.body,'req body')
+    const contestType = new ContestType(req.body);
+    await contestType.save();
+    res.status(201).json(contestType);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+// Route to get all contest types
+router.get("/contestTypes", async (req, res) => {
+  try {
+    const contestTypes = await ContestType.find();
+    res.status(200).json(contestTypes);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Route to update a contest type
+router.put("/contestTypes/:id", async (req, res) => {
+  try {
+    const contestType = await ContestType.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+    if (!contestType) {
+      return res.status(404).json({ error: "Contest type not found" });
+    }
+    res.status(200).json(contestType);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+// Route to delete a contest type
+router.delete("/contestTypes/:id", async (req, res) => {
+  try {
+    const contestType = await ContestType.findByIdAndDelete(req.params.id);
+    if (!contestType) {
+      return res.status(404).json({ error: "Contest type not found" });
+    }
+    res.status(200).json(contestType);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+module.exports = router;
 
 module.exports = router;
