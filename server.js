@@ -83,7 +83,7 @@ const api_key =
 // startTransaction();
 // addLivecommentary();
 // updateBalls();
- addInPlayStatus()
+// addInPlayStatus()
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
   console.warn(`App listening on http://localhost:${PORT}`);
