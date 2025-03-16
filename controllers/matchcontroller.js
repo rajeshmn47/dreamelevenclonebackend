@@ -14,8 +14,8 @@ router.put("/update_match/:matchId", async (req, res) => {
     const matchId = req.params.matchId;
     const match = await Match.findOne({ matchId: req.params.matchId });
     if (match) {
-        const { date, endDate, isInPlay } = req.body;
-        await Match.updateOne({ matchId }, { date: date, endDate: endDate, isInPlay: isInPlay });
+        const { date, endDate, isInPlay, teamHomeName, teamAwayName } = req.body;
+        await Match.updateOne({ matchId }, { date: date, endDate: endDate, isInPlay: isInPlay, teamHomeName: teamHomeName, teamAwayName: teamAwayName });
         res.status(200).json({
             'team': 'team',
             message: "match edited successfully",
@@ -91,7 +91,7 @@ router.get("/update_live_scores/:matchId", async (req, res) => {
             });
 
             // Use a closure to capture the current value of i
-            (function(i) {
+            (function (i) {
                 promise
                     .then(async (s) => {
                         if (s.matchHeader != null && s.scoreCard != 0) {
