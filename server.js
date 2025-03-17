@@ -71,7 +71,7 @@ const api_key =
   "s16rcBDzWjgNhJXPEUV9HA3QMSfvpen2GyL7a4F8ubdwICk5KOHPT32vI5b6cSxs8JpUhirCOjqogGwk";
 // ...
 
-// cronjobs()
+ cronjobs()
 // createDefaultContestTypes()
 // updateBalls();
 // addMatchtoDb();
