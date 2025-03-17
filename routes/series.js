@@ -165,14 +165,14 @@ router.get("/pointsTable/:seriesName", async (req, res) => {
         let homePlayed = matches.filter((pl) => (pl?.matchlive?.[0]?.teamHomeId == p.id) && pl?.matchlive?.[0]?.result == "Complete");
         let awayPlayed = matches.filter((pl) => (pl?.matchlive?.[0]?.teamAwayId == p.id) && pl?.matchlive?.[0]?.result == "Complete");
         console.log(awayPlayed?.length + homePlayed?.length, 'homeplayed');
-        let fiwon = matches.filter((ma) => ma.matchlive[0].runSI < ma.matchlive[0].runFI);
-        let siwon = matches.filter((ma) => ma.matchlive[0].runSI > ma.matchlive[0].runFI);
+        let fiwon = matches.filter((ma) => ma.matchlive?.[0]?.runSI < ma?.matchlive?.[0]?.runFI);
+        let siwon = matches.filter((ma) => ma.matchlive?.[0]?.runSI > ma?.matchlive?.[0]?.runFI);
         let won = 0;
         let lost = 0;
         let points = 0;
         let s = ''
         matches.forEach((mat) => {
-            if (mat.matchlive[0].result == "Complete") {
+            if (mat.matchlive?.[0]?.result == "Complete") {
                 if (mat.matchlive[0].isHomeFirst) {
                     if (p.id == mat.matchlive[0].teamHomeId) {
                         if (mat.matchlive[0].runFI > mat.matchlive[0].runSI) {
