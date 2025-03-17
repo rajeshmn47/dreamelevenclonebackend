@@ -1,12 +1,15 @@
 const axios = require("axios");
 const Match = require("../models/match");
-const getkeys = require("../utils/crickeys");
+const { getkeys } = require("../utils/crickeys");
+
+function delay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 
 module.exports.addPlayersAPI = async function () {
   let date = new Date();
   const endDate = new Date(date.getTime() + 202 * 60 * 60 * 1000);
-  let keys = await getkeys.getkeys();
   date = new Date(date.getTime());
   const matches = await Match.find({
     date: {
@@ -16,20 +19,23 @@ module.exports.addPlayersAPI = async function () {
   });
   console.log(matches?.length, 'found matches')
   for (let i = 0; i < matches.length; i++) {
-    const arr_a=[];
-    const arr=[];
-    if (!matches[i]?.teamAwayPlayers?.length > 0&&matches[i]?.teamHomeId) {
-      console.log(matches[i]?.teamAwayPlayers.length, 'found matches')
+    const arr_a = [];
+    const arr = [];
+    let keys = await getkeys();
+    console.log(keys, 'keys')
+    if (!matches[i]?.teamAwayPlayers?.length > 0 && matches[i]?.teamHomeId) {
+      console.log(matches[i]?.teamHomeId, 'founde matches')
       const options = {
         method: "GET",
         url: `https://cricbuzz-cricket.p.rapidapi.com/teams/v1/${matches[i].teamHomeId}/players`,
         headers: {
-          "X-RapidAPI-Key": "17394dbe40mshd53666ab6bed910p118357jsn7d63181f2556",
+          "X-RapidAPI-Key": keys,
           "X-RapidAPI-Host": "cricbuzz-cricket.p.rapidapi.com",
         },
       };
 
       try {
+        await delay(1000);
         const response = await axios.request(options);
         let position;
         const players = response.data.player;
@@ -54,20 +60,24 @@ module.exports.addPlayersAPI = async function () {
         }
         matches[i].teamHomePlayers = arr;
       } catch (error) {
-        console.error(error);
+       // console.error(error);
       }
+      keys = await getkeys();
       const options_two = {
         method: "GET",
         url: `https://cricbuzz-cricket.p.rapidapi.com/teams/v1/${matches[i].teamAwayId}/players`,
         headers: {
-          "X-RapidAPI-Key": "17394dbe40mshd53666ab6bed910p118357jsn7d63181f2556",
+          "X-RapidAPI-Key": keys,
           "X-RapidAPI-Host": "cricbuzz-cricket.p.rapidapi.com",
         },
       };
 
       try {
+        await delay(1000)
+        //keys = await getkeys.getkeys();
         const response = await axios.request(options_two);
         let position;
+        cosole.log(response.data, 'response')
         const players = response.data.player;
         for (let i = 0; i < players?.length; i++) {
           const check =
@@ -111,14 +121,14 @@ module.exports.addPlayersAPI = async function () {
         }
         matches[i].teamAwayPlayers = arr_a;
       } catch (error) {
-        console.error(error);
+        //console.error(error);
       }
       try {
-        console.log(arr,arr_a,'matchteamer')
-        let m = await Match.updateOne({matchId:matches[i].matchId},{teamAwayPlayers:arr_a,teamHomePlayers:arr});
-        console.log(m,'matchteam')
+        console.log(arr, arr_a, 'matchteamer')
+        let m = await Match.updateOne({ matchId: matches[i].matchId }, { teamAwayPlayers: arr_a, teamHomePlayers: arr });
+        //console.log(m,'matchteam')
       } catch (error) {
-        console.error(error);
+        //console.error(error);
       }
     }
   }

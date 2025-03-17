@@ -4,7 +4,7 @@ module.exports.getkeys = async function () {
   let user = await User.findById(process.env.refUserId);
   const totalhits = user.totalhits;
   console.log(totalhits,'totalhits')
-  if (totalhits > 2000) {
+  if (totalhits > 1900) {
     user.totalhits = 0;
     await user.save();
   }

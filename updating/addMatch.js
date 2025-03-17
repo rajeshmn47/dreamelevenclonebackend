@@ -124,10 +124,13 @@ module.exports.addMatchtoDb = async function () {
               } catch (err) {
                 console.log(`Error : ${err}`);
               }
-            } else if (match.teamHomeCode.toLowerCase() == "tbc") {
+            } else if (match.teamHomeCode.toLowerCase() == "tbc" || match.teamAwayCode.toLowerCase() == "tbc") {
               match.teamHomeCode = obj.results[i].team1.teamSName;
               match.teamAwayCode = obj.results[i].team2.teamSName;
+              match.teamHomeName = obj.results[i].team1.teamName;
+              match.teamAwayName = obj.results[i].team2.teamName;
               await match.save();
+              console.log("match is successfully updated in db! ");
             }
           } catch (err) {
             console.log(`Error : ${err}`);

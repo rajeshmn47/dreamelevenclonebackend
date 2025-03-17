@@ -15,6 +15,7 @@ const auth = require("./controllers/user_controller");
 const team = require("./controllers/teamcontroller");
 const payments = require("./controllers/paymentcontroller.js");
 const matches = require("./controllers/matchcontroller.js");
+const cryptoPaymentController = require("./routes/cryptoPaymentRoutes.js");
 const updatedata = require("./updating/updatedata.js");
 const fMatches = require("./controllers/football/fMatchDB-controller.js");
 const player = require("./routes/playerDetails");
@@ -44,6 +45,7 @@ app.use("/auth", auth);
 app.use("/", player);
 app.use("/", series);
 app.use("/payment", checkloggedinuser, payments);
+app.use("/crypto", checkloggedinuser, cryptoPaymentController);
 app.use("/", checkloggedinuser, home);
 app.use("/", checkloggedinuser, contest);
 app.use("/", checkloggedinuser, teamdata);
@@ -69,7 +71,7 @@ const api_key =
   "s16rcBDzWjgNhJXPEUV9HA3QMSfvpen2GyL7a4F8ubdwICk5KOHPT32vI5b6cSxs8JpUhirCOjqogGwk";
 // ...
 
- cronjobs()
+// cronjobs()
 // createDefaultContestTypes()
 // updateBalls();
 // addMatchtoDb();
@@ -83,7 +85,7 @@ const api_key =
 // startTransaction();
 // addLivecommentary();
 // updateBalls();
-// addInPlayStatus()
+// addInPlayStatus();
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
   console.warn(`App listening on http://localhost:${PORT}`);

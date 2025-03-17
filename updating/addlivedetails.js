@@ -2,12 +2,22 @@ const request = require("request");
 const Match = require("../models/match");
 const MatchLive = require("../models/matchlive");
 const getkeys = require("../utils/crickeys");
-// function prizeBreakupRules(prize, numWinners){
-//     let prizeMoneyBreakup = [];
-//     for(let i = 0; i < numWinners; i++){
 
-//     }
-// }
+function delay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function makeRequest(options) {
+  return new Promise((resolve, reject) => {
+    request(options, (error, response, body) => {
+      if (error) {
+        reject(error);
+      }
+      const s = JSON.parse(body);
+      resolve(s);
+    });
+  });
+}
 
 module.exports.addLiveDetails = async function () {
   try {
@@ -40,94 +50,71 @@ module.exports.addLiveDetails = async function () {
             useQueryString: true,
           },
         };
-        const promise = new Promise((resolve, reject) => {
-          request(options, (error, response, body) => {
-            if (error) {
-              reject(error);
-            }
-            const s = JSON.parse(body);
-            resolve(s);
-          });
-        });
-        promise
-          .then(async (s) => {
-            try {
-              console.log(s, 's')
-              if (s.matchInfo?.team1 != null && s.matchInfo?.team1.length != 0) {
-                const LiveMatchDet = new MatchLive();
-                LiveMatchDet.matchId = matchId;
-                LiveMatchDet.date = date1;
-                const r = [];
-                for (const x of s.matchInfo.team1.playerDetails) {
-                  if (x.role == "Unknown") {
-                    x.position = "Batsman";
-                  }
-                  const a = {
-                    playerId: x.id,
-                    playerName: x.name,
-                    image: x.faceImageId,
-                    points: 4,
-                    position: x.role,
-                    batOrder: -1,
-                  };
-                  r.push(a);
-                }
-                const y = [];
-                for (const x of s.matchInfo.team2.playerDetails) {
-                  if (x.role == "Unknown") {
-                    x.position = "Batsman";
-                  }
-                  const playerDet = {
-                    playerId: x.id,
-                    playerName: x.name,
-                    points: 4,
-                    image: x.faceImageId,
-                    position: x.role,
-                    batOrder: -1,
-                  };
-                  y.push(playerDet);
-                }
-                LiveMatchDet.teamHomePlayers = r;
-                LiveMatchDet.teamAwayPlayers = y;
-                LiveMatchDet.teamHomeId = s.matchInfo.team1.id;
-                LiveMatchDet.teamAwayId = s.matchInfo.team2.id;
-                LiveMatchDet.isInPlay = true;
-                const m = await MatchLive.findOne({ matchId });
-                const match = await MatchLive.create(LiveMatchDet);
-                if (match) {
-                  //await addMatchIds.addMatchIds();
-                  {/*const cityRef = db.db.collection("cities").doc(m[i].matchId);
-                const doc = await cityRef.get();
-                if (!doc.exists) {
-                  console.log("No such document!");
-                  const citRef = db.db.collection("cities").doc(m[i].matchId);
-                  const res = await citRef.set(
-                    {
-                      lineupsOut: true,
-                    },
-                    { merge: true }
-                  );
-                } else {
-                  const citRef = db.db.collection("cities").doc(m[i].matchId);
 
-                  const res = await citRef.set(
-                    {
-                      lineupsOut: true,
-                    },
-                    { merge: true }
-                  );
-                  */}
-
-                  console.log(
-                    "Live Details of match is successfully added in db! "
-                  );
+        let success = false;
+        while (!success) {
+          try {
+            await delay(300); // Add a delay of 1 second between requests
+            const s = await makeRequest(options);
+            success = true;
+            console.log(s, 's')
+            if (s.matchInfo?.team1 != null && s.matchInfo?.team1.length != 0) {
+              const LiveMatchDet = new MatchLive();
+              LiveMatchDet.matchId = matchId;
+              LiveMatchDet.date = date1;
+              const r = [];
+              for (const x of s.matchInfo.team1.playerDetails) {
+                if (x.role == "Unknown") {
+                  x.position = "Batsman";
                 }
+                const a = {
+                  playerId: x.id,
+                  playerName: x.name,
+                  image: x.faceImageId,
+                  points: 4,
+                  position: x.role,
+                  batOrder: -1,
+                };
+                r.push(a);
               }
-            } catch (err) {
-              console.log(err);
+              const y = [];
+              for (const x of s.matchInfo.team2.playerDetails) {
+                if (x.role == "Unknown") {
+                  x.position = "Batsman";
+                }
+                const playerDet = {
+                  playerId: x.id,
+                  playerName: x.name,
+                  points: 4,
+                  image: x.faceImageId,
+                  position: x.role,
+                  batOrder: -1,
+                };
+                y.push(playerDet);
+              }
+              LiveMatchDet.teamHomePlayers = r;
+              LiveMatchDet.teamAwayPlayers = y;
+              LiveMatchDet.teamHomeId = s.matchInfo.team1.id;
+              LiveMatchDet.teamAwayId = s.matchInfo.team2.id;
+              LiveMatchDet.isInPlay = true;
+              const m = await MatchLive.findOne({ matchId });
+              const match = await MatchLive.create(LiveMatchDet);
+              if (match) {
+                console.log(
+                  "Live Details of match is successfully added in db! "
+                );
+              }
             }
-          })
-          .catch((error) => console.log(error));
+          } catch (error) {
+            if (error.message.includes('rate limit')) {
+              console.log('Rate limit exceeded, retrying...');
+              await delay(1000); // Wait for 1 second before retrying
+            } else {
+              console.log(error);
+              success = true; // Exit the loop on other errors
+            }
+          }
+        }
       }
     }
   }
