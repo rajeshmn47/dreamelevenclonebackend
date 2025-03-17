@@ -162,8 +162,8 @@ router.get("/pointsTable/:seriesName", async (req, res) => {
     const m = Array.from(new Set([...matches?.map((s) => ({ id: s?.teamHomeId, teamName: s.teamHomeName, matchdetails: s.matchlive[0] })), ...matches?.map((s) => ({ id: s?.teamAwayId, teamName: s.teamAwayName, matchdetails: s.matchlive[0] }))]));
     const uniquet = m.filter((f, x) => (m.indexOf(m.find((a) => a.id == f.id)) == x));
     uniquet.forEach((p) => {
-        let homePlayed = matches.filter((pl) => (pl.matchlive[0].teamHomeId == p.id) && pl.matchlive[0].result == "Complete");
-        let awayPlayed = matches.filter((pl) => (pl.matchlive[0].teamAwayId == p.id) && pl.matchlive[0].result == "Complete");
+        let homePlayed = matches.filter((pl) => (pl?.matchlive?.[0]?.teamHomeId == p.id) && pl?.matchlive?.[0]?.result == "Complete");
+        let awayPlayed = matches.filter((pl) => (pl?.matchlive?.[0]?.teamAwayId == p.id) && pl?.matchlive?.[0]?.result == "Complete");
         console.log(awayPlayed?.length + homePlayed?.length, 'homeplayed');
         let fiwon = matches.filter((ma) => ma.matchlive[0].runSI < ma.matchlive[0].runFI);
         let siwon = matches.filter((ma) => ma.matchlive[0].runSI > ma.matchlive[0].runFI);
