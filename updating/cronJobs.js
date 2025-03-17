@@ -14,35 +14,35 @@ const { addInPlayStatus } = require("./addInPlayStatus.js");
 
 function cronjobs() {
   cron.schedule("0 * * * *", async function () {
-    //await startTransaction();
+    await startTransaction();
   });
   cron.schedule("* * * * *", async function () {
-    //await addLivecommentary();
+    await addLivecommentary();
   });
   cron.schedule("* * * * *", async function () {
-    //await updateBalls();
+    await updateBalls();
   });
   cron.schedule("*/2 * * * *", async function () {
-    //await addTeamstandingstodb();
+    await addTeamstandingstodb();
   });
   cron.schedule("*/5 * * * *", async function () {
-    //await addLiveDetails()
+    await addLiveDetails()
   });
   cron.schedule("* * * * *", async function () {
-    //await addLivescoresDetails()
+    await addLivescoresDetails()
   });
-  cron.schedule("0 22 * * *", async function () {
-    //await addMatchtoDb();
-    //await addteamPlayers();
+  cron.schedule("0 */6 * * *", async function () {
+    await addMatchtoDb();
+    await addteamPlayers();
   });
   cron.schedule("0 */20 * * *", async function () {
-    //await addTeamstandingstodb()
+    await addTeamstandingstodb()
   });
   cron.schedule("0 */1 * * *", async function () {
-    //await addMatchIds();
+    await addMatchIds();
   });
   cron.schedule("*/15 7-23 * * *", async () => {
-    //await addInPlayStatus();
+    await addInPlayStatus();
   });
 }
 
