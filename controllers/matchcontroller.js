@@ -307,7 +307,7 @@ router.get("/update_to_live/:matchId", async (req, res) => {
         const turing = await MatchLive();
         let date = new Date();
         const endDate = new Date(date.getTime() + 0.5 * 60 * 60 * 1000);
-        date = new Date(date.getTime() - 2 * 60 * 60 * 1000);
+        date = new Date(date.getTime() - 48 * 60 * 60 * 1000);
         const matches = await Match.find({
             matchId: req.params.matchId
         });
@@ -321,7 +321,7 @@ router.get("/update_to_live/:matchId", async (req, res) => {
                     message: "live details of the match exists!",
                 });
             } else {
-                const keys = await getkeys.getkeys();
+                const keys = await getkeys();
                 console.log('not exists')
                 const date1 = matches[i].date
                 const options = {
