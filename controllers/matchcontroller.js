@@ -15,13 +15,32 @@ router.put("/update_match/:matchId", async (req, res) => {
     const match = await Match.findOne({ matchId: req.params.matchId });
     if (match) {
         const { date, endDate, isInPlay, teamHomeName, teamAwayName } = req.body;
-        await Match.updateOne({ matchId }, { date: date, endDate: endDate, isInPlay: isInPlay, teamHomeName: teamHomeName, teamAwayName: teamAwayName });
+        await Match.updateOne({ matchId }, { date: date, endDate: endDate, teamHomeName: teamHomeName, teamAwayName: teamAwayName });
+        await MatchLive.updateOne({ matchId }, { isInPlay: isInPlay });
         res.status(200).json({
             'team': 'team',
             message: "match edited successfully",
         });
     }
     else {
+        res.status(400).json({
+            messae: "failure",
+            message: "cannot find team",
+        });
+    }
+});
+
+router.delete("/deletematch/:matchId", async (req, res) => {
+    try {
+        const matchId = req.params.matchId;
+        const match = await Match.deleteOne({ matchId: req.params.matchId });
+        await MatchLive.deleteOne({ matchId });
+        res.status(200).json({
+            'team': 'team',
+            message: "match edited successfully",
+        });
+    }
+    catch {
         res.status(400).json({
             messae: "failure",
             message: "cannot find team",
@@ -61,7 +80,7 @@ router.get("/update_live_scores/:matchId", async (req, res) => {
         console.log(matches[i].date, 'datee')
         const matchId = req.params.matchId;
         const match = await MatchLive.findOne({ matchId: matchId });
-        if (!match || match?.result == "Complete" || !match?.isInPlay) {
+        if (!match || match?.result == "Complete") {
             res.status(200).json({
                 message: "match is complete or in break,no need to update",
             });
@@ -279,13 +298,14 @@ router.get("/update_live_scores/:matchId", async (req, res) => {
                                 const { status } = s?.matchHeader;
                                 const toss = s.matchHeader.tossResults.tossWinnerName;
                                 const result = s.matchHeader.state;
-                                console.log(matches[i], 'result')
+                                console.log(s.matchHeader.state, 'result')
                                 let isinplay = isInPlay(result, matches[i].date);
                                 const matchUpdate = await MatchLive.updateOne(
                                     { matchId },
                                     {
                                         $set: {
-                                            isInPlay: isinplay
+                                            isInPlay: isinplay,
+                                            result: result
                                         }
                                     })
                             }
