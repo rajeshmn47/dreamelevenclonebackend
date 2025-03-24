@@ -308,6 +308,9 @@ router.get("/update_live_scores/:matchId", async (req, res) => {
                                             result: result
                                         }
                                     })
+                                    res.status(200).json({
+                                        message: "updated live scores of the match successfully!",
+                                    });
                             }
                         }
                     })
