@@ -19,8 +19,8 @@ const transporter = nodemailer.createTransport(
     secure: false,
     requireTLS: true,
     auth: {
-      user: "rajeshmn47@gmail.com",
-      pass: process.env.password,
+      user: process.env.smtp_email,
+      pass: process.env.smtp_password,
     },
   })
 );
@@ -161,6 +161,105 @@ function checkloggedinuser(req, res, next) {
 }
 
 router.post("/register", async (req, res) => {
+  const otp = otpGenerator.generate(8, {
+    lowerCaseAlphabets: false,
+    upperCaseAlphabets: false,
+    specialChars: false,
+    specialChars: false,
+  });
+  const user1 = new User();
+  const userId = req.body.email.split("@")[0];
+  user1.userId = userId;
+  user1.username = req.body.username;
+  user1.email = req.body.email;
+  user1.password = req.body.password;
+  user1.phonenumber = req.body.phoneNumber;
+  user1.wallet = 10000;
+  user1.otp = otp;
+
+  const options = {
+    method: "POST",
+    url: "https://api.razorpay.com/v1/contacts",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization:
+        "Basic cnpwX3Rlc3RfT0N0MTBGeGpuWFROV0s6RlpyNW9YQjFCWnFtbDBhUlRhd0IwSUh1",
+    },
+    body: JSON.stringify({
+      name: req.body.username,
+      email: req.body.email,
+      contact: req.body.phoneNumber,
+      type: "employee",
+      reference_id: "Domino Contact ID 12345",
+      notes: {
+        random_key_1: "Make it so.",
+        random_key_2: "Tea. Earl Grey. Hot.",
+      },
+    }),
+  };
+  let contact_id = "";
+  const promise = new Promise((resolve, reject) => {
+    request(options, (error, response) => {
+      if (error) reject(error);
+      const s = JSON.parse(response.body);
+
+      contact_id = s.id;
+
+      user1.contact_id = contact_id;
+      resolve();
+    });
+  });
+  promise
+    .then(async () => {
+      User.findOne({ email: req.body.email }, async (err, user) => {
+        if (err) {
+          console.log(err,"Error in finding user in Sign-in ");
+          res.status(400).json({
+            message: "something went wrong",
+          });
+        }
+
+        if (!user) {
+          transaction.createTransaction(userId, "", 100, "extra cash");
+          User.create(user1, async (err, user) => {
+            if (err) {
+              console.log(err, "err");
+              res.status(400).json({
+                message: "The username or phone number is already registered. Please try a different one.",
+              });
+            }
+            else {
+              const userid = user._id;
+
+              const token = jwt.sign({ userid }, activatekey, {
+                expiresIn: "5000000m",
+              });
+
+              res.status(200).json({
+                message: "you are registered successfully.please log in!",
+                success: true,
+              });
+            }
+          });
+        } else if (!user.verified) {
+          user.otp = otp;
+          await user.save();
+          res.status(200).json({
+            message: "registered successfully! please login",
+            success: true,
+          });
+        } else {
+          res.status(200).json({
+            message: "user already exists,please log in",
+            success: false,
+          });
+        }
+      });
+    })
+    .catch((err) => { });
+});
+
+router.post("/registerold", async (req, res) => {
   const otp = otpGenerator.generate(8, {
     lowerCaseAlphabets: false,
     upperCaseAlphabets: false,
@@ -344,7 +443,7 @@ router.post('/phoneRegister', async (req, res) => {
       var req = unirest("GET", "https://www.fast2sms.com/dev/bulkV2");
 
       req.query({
-        "authorization": "iI8bS2F1AnfoKHxpROrdel5VWBuNt6hLE0YsXwTmZJgqzj79yviVaRU1cXut8smbg0GLpKhrSfNxqvZD",
+        "authorization": process.env.fast2sms,
         "message": `enter this otp for logging in: ${'000000'}`,
         "language": "english",
         "route": "q",
@@ -404,10 +503,10 @@ router.post('/phoneLogin', async (req, res) => {
         userFound.otp = OTP;
         await userFound.save();
       }
-      {/* var req = unirest("GET", "https://www.fast2sms.com/dev/bulkV2");
+      var req = unirest("GET", "https://www.fast2sms.com/dev/bulkV2");
 
       req.query({
-        "authorization": process.env.fast2sms,
+        "authorization": "vRTEtCjHofnOPzG73ZwQ8K9seUhLAWiIamD4XrMS0Fd5pqJgy2EkFRn0vlAoPzxMUXwGOjCt6DyaHeuN",
         "message": `enter this otp for logging in: ${OTP}`,
         "language": "english",
         "route": "q",
@@ -418,9 +517,11 @@ router.post('/phoneLogin', async (req, res) => {
         "cache-control": "no-cache"
       });
       req.end(function (res) {
-        if (res.error) throw new Error(res.error);
+        if (res.error) {
+          console.log(res.error, 'error')
+          throw new Error(res.error);
+        }
       });
-    */}
       return res.status(201).json({ success: 'ok', message: 'OTP sent successfully successfully.' });
     }
     else {
@@ -435,9 +536,9 @@ router.post('/phoneLogin', async (req, res) => {
 router.post("/verifyPhoneOtp", async (req, res) => {
   try {
     const { otp, phoneNumber } = req.body;
-
+    console.log(req.body, 'verify otp')
     // Find the user by username
-    const user = await User.findOne({ phonenumber: phoneNumber});
+    const user = await User.findOne({ phonenumber: phoneNumber.split('+91')[1] });
     console.log(user)
     // Check if the user exists and the password matches
     if (user) {
