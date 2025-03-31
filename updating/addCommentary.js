@@ -10,20 +10,18 @@ const db = require("../utils/firebaseinitialize");
 
 const transporter = nodemailer.createTransport(
   smtpTransport({
-    service: "gmail",
-    host: "smtp.gmail.com",
-    port: 587,
-    secure: false,
-    requireTLS: true,
+    host: process.env.smtp_host,
+    port: process.env.smtp_port,
+    secure: true,
     auth: {
-      user: "rajeshmn47@gmail.com",
-      pass: process.env.password,
+      user: process.env.smtp_user,
+      pass: process.env.smtp_password,
     },
   })
 );
 
 const mailOptions = {
-  from: "rajeshmn47@gmail.com",
+  from: process.env.smtp_user,
   to: "rajeshmn47@gmail.com",
   subject: "Sending Email using Node.js[nodemailer]",
   text: `riyan parag is batting`,

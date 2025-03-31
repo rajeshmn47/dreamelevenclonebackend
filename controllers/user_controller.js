@@ -13,11 +13,9 @@ const User = require("../models/user");
 
 const transporter = nodemailer.createTransport(
   smtpTransport({
-    service: "gmail",
-    host: "smtp.gmail.com",
-    port: 587,
-    secure: false,
-    requireTLS: true,
+    host: process.env.smtp_host,
+    port: process.env.smtp_port,
+    secure: true,
     auth: {
       user: process.env.smtp_email,
       pass: process.env.smtp_password,
@@ -213,7 +211,7 @@ router.post("/register", async (req, res) => {
     .then(async () => {
       User.findOne({ email: req.body.email }, async (err, user) => {
         if (err) {
-          console.log(err,"Error in finding user in Sign-in ");
+          console.log(err, "Error in finding user in Sign-in ");
           res.status(400).json({
             message: "something went wrong",
           });
@@ -583,7 +581,14 @@ router.get("/forgot-password/:email", async (req, res) => {
         from: "rajeshmn47@gmail.com",
         to: req.params.email,
         subject: "Sending Email using Node.js[nodemailer]",
-        text: `enter this otp ${otp}`,
+        text: `We received a request to reset your password for your account. Please use the following OTP to reset your password:
+
+      OTP: ${otp}
+
+        If you did not request a password reset, please ignore this email or contact support if you have concerns.
+
+      Thank you,
+      The Fantasycricket4u Team`,
       };
 
       transporter.sendMail(mailOptions, (error, info) => {
