@@ -578,17 +578,19 @@ router.get("/forgot-password/:email", async (req, res) => {
     if (user1) {
       user1.otp = otp;
       const mailOptions = {
-        from: "rajeshmn47@gmail.com",
+        from: process.env.smtp_email,
         to: req.params.email,
         subject: "Sending Email using Node.js[nodemailer]",
-        text: `We received a request to reset your password for your account. Please use the following OTP to reset your password:
+        text: `Dear User,
 
-      OTP: ${otp}
+We received a request to reset your password for your account. Please use the following OTP to reset your password:
 
-        If you did not request a password reset, please ignore this email or contact support if you have concerns.
+OTP: ${otp}
 
-      Thank you,
-      The Fantasycricket4u Team`,
+If you did not request a password reset, please ignore this email or contact support if you have concerns.
+
+Thank you,
+The Fantasycricket4u Team`,
       };
 
       transporter.sendMail(mailOptions, (error, info) => {
