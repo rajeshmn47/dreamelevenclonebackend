@@ -6,46 +6,37 @@ const userSchema = new mongoose.Schema(
     username: {
       type: String,
       required: false,
-      unique: true
+      unique: true,
     },
-
     email: {
       type: String,
       required: false,
       unique: true,
-      index: {
-        unique: false,
-        partialFilterExpression: { email: { $type: "string" } }
-      }
+      sparse: true  
     },
     verified: {
       type: Boolean,
       default: false,
     },
-
     phonenumber: {
       type: String,
       required: true,
-      unique:true
+      unique: true,
     },
-
     password: {
       type: String,
       required: false,
     },
-
     totalhits: {
       type: Number,
       required: true,
       default: 0,
     },
-
     totalhitscom: {
       type: Number,
       required: true,
       default: 0,
     },
-
     matchIds: [
       {
         type: String,
@@ -53,7 +44,6 @@ const userSchema = new mongoose.Schema(
         lowercase: true,
       },
     ],
-
     numberOfContestJoined: {
       type: Number,
       required: true,
@@ -69,31 +59,31 @@ const userSchema = new mongoose.Schema(
       required: true,
       default: 0,
     },
-
     numberOfTeamsCreated: {
       type: Number,
       required: true,
       default: 0,
     },
-
     totalAmountWon: {
       type: Number,
       required: true,
       default: 0,
     },
-
     totalAmountAdded: {
       type: Number,
       required: true,
       default: 0,
     },
-
     wallet: {
       type: Number,
       required: true,
       default: 0,
     },
-
+    cryptoWallet: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
     image: {
       type: String,
       trim: true,
@@ -101,52 +91,52 @@ const userSchema = new mongoose.Schema(
       lowercase: true,
       default: "https://cdn.sportmonks.com/images/cricket/placeholder.png",
     },
-
     contact_id: {
       type: String,
       required: false,
       unique: true,
       index: {
         unique: false,
-        partialFilterExpression: { contact_id: { $type: "string" } }
-      }
+        partialFilterExpression: { contact_id: { $type: "string" } },
+      },
     },
-
     ifsc: {
       type: String,
     },
-
     accountNumber: {
       type: String,
     },
-
     upiId: {
       type: String,
-      default: ""
+      default: "",
     },
-
     fundId: {
       type: String,
     },
-
     role: {
       type: String,
-      default: "user"
+      default: "user",
     },
-
+    fcmtoken: {
+      type: String,
+    },
     followers: [
       {
         type: String,
         trim: true,
       },
     ],
-
     following: [
       {
         type: String,
         trim: true,
       },
     ],
+    usageTier: {
+      type: String,
+      enum: ["slow", "medium", "fast", "extremely fast"],
+      default: "medium",
+    },
   },
   {
     timestamps: true,

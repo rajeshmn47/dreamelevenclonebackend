@@ -1,5 +1,6 @@
 const {cert} = require("firebase-admin/app");
 const {getFirestore} = require("firebase-admin/firestore");
+const { getMessaging } = require("firebase-admin/messaging")
 const admin = require('firebase-admin');
 
 const serviceAccount = {
@@ -51,3 +52,4 @@ async function uploadImage(id) {
 // uploadImage();
 module.exports.uploadImage = uploadImage;
 module.exports.db = getFirestore();
+module.exports.messaging = getMessaging();

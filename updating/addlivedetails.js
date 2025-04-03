@@ -2,6 +2,7 @@ const request = require("request");
 const Match = require("../models/match");
 const MatchLive = require("../models/matchlive");
 const getkeys = require("../utils/crickeys");
+const { messaging } = require("../utils/firebaseinitialize");
 
 function delay(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -19,12 +20,33 @@ async function makeRequest(options) {
   });
 }
 
+const sendNotification = async (title, body, topic = "live-updates") => {
+  const message = {
+    notification: {
+      title,
+      body,
+    },
+    topic, // Replace with a specific topic or use tokens for individual devices
+  };
+
+  try {
+    const response = await messaging.send(message);
+    console.log("Notification sent successfully:", response);
+  } catch (error) {
+    console.error("Error sending notification:", error);
+  }
+};
+
 module.exports.addLiveDetails = async function () {
   try {
+    sendNotification(
+      `Lineups Out: }`,
+      `The lineups for are now available. Check out the details!`
+    );
     const turing = await MatchLive();
     let date = new Date();
     const endDate = new Date(date.getTime() + 0.5 * 60 * 60 * 1000);
-    date = new Date(date.getTime() - 2 * 60 * 60 * 1000);
+    date = new Date(date.getTime() - 200 * 60 * 60 * 1000);
     const matches = await Match.find({
       date: {
         $gte: new Date(date),
@@ -102,6 +124,12 @@ module.exports.addLiveDetails = async function () {
               if (match) {
                 console.log(
                   "Live Details of match is successfully added in db! "
+                );
+
+                // Example usage in your logic
+                sendNotification(
+                  `Lineups Out: ${s.matchInfo.team1.name} vs ${s.matchInfo.team2.name}`,
+                  `The lineups for ${s.matchInfo.team1.name} and ${s.matchInfo.team2.name} are now available. Check out the details!`
                 );
               }
             }

@@ -8,9 +8,12 @@ const {
   Timestamp,
   FieldValue,
 } = require("firebase-admin/firestore");
+const { getMessaging } = require("firebase-admin/messaging")
 const MatchLiveDetails = require("./models/match_live_details_scores_copy");
 const Matches = require("./models/matchtwo");
 const getkeys = require("../crickeys");
+
+
 
 const serviceAccount = {
   type: "service_account",
@@ -34,6 +37,7 @@ initializeApp({
 });
 
 const db = getFirestore();
+const messaging = getMessaging();
 // Add a new document with a generated id.
 module.exports.addLivecommentary = async function addcommentry() {
   try {
