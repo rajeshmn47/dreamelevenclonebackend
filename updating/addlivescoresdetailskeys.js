@@ -41,7 +41,7 @@ module.exports.addLivescoresDetailsCustom = async function (format) {
   const b = 100 * 60 * 60 * 1000 * 1;
   date = new Date(date.getTime() - b);
   const matches = await Match.find({
-    format:format,
+    format: format,
     date: {
       $gte: new Date(date),
       $lt: new Date(endDate),
