@@ -42,7 +42,7 @@ module.exports.addLiveDetails = async function () {
     const turing = await MatchLive();
     let date = new Date();
     const endDate = new Date(date.getTime() + 0.5 * 60 * 60 * 1000);
-    date = new Date(date.getTime() - 200 * 60 * 60 * 1000);
+    date = new Date(date.getTime() - 2 * 60 * 60 * 1000);
     const matches = await Match.find({
       date: {
         $gte: new Date(date),
