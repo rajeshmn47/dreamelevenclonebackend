@@ -38,10 +38,10 @@ module.exports.updateBalls = async function () {
         //});
         for (let i = 0; i < matches.length; i++) {
             const matchid = matches[i].matchId;
-                const match = await MatchLiveDetails.findOne({ matchId: matchid });
-                if (match && !(match.result == "Complete")&&match?.isInPlay) {
-                    matchess.push(matches[i]);
-                }
+            const match = await MatchLiveDetails.findOne({ matchId: matchid });
+            if (match && !(match.result == "Complete") && match?.isInPlay) {
+                matchess.push(matches[i]);
+            }
         }
         const m = matchess;
         for (let i = 0; i < matchess.length; i++) {

@@ -222,7 +222,7 @@
     },
     {
       "teamname": "germany",
-      "flag": "https://v2.convertapi.com/d/ew15fn3l9a9lh73f350c36uahkcwmmvp/Flag_of_Germany.png"
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/313100/313155.logo.png"
     },
     {
       "teamname": "netherlands",
@@ -333,8 +333,8 @@
       "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_80/lsci/db/PICTURES/CMS/313100/313175.logo.png"
     },
     {
-      "teamname":"argentina",
-      "flag":"https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_80/lsci/db/PICTURES/CMS/313100/313142.logo.png"
+      "teamname": "argentina",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_80/lsci/db/PICTURES/CMS/313100/313142.logo.png"
     },
     {
       "teamname": "west indies",
@@ -383,6 +383,42 @@
     {
       "teamname": "",
       "flag": "https://img.cricketworld.com/assets/uploads//2022/12/FC-KNTS@2x.png?team"
+    },
+    {
+      "teamname": "norway",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_80/lsci/db/PICTURES/CMS/313100/313199.logo.png"
+    },
+    {
+      "teamname": "portugal",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/383000/383038.png"
+    },
+    {
+      "teamname": "gibraltor",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/383000/383042.png"
+    },
+    {
+      "teamname":"indonesia",
+      "flag":"https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/313500/313549.logo.png"
+    },
+    {
+      "teamname":"cook islands",
+      "flag":"https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/386300/386355.png"
+    },
+    {
+      "teamname":"phillipines",
+      "flag":"https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/313200/313201.logo.png"
+    },
+    {
+      "teamname":"",
+      "flag":""
+    },
+    {
+      "teamname":"",
+      "flag":""
+    },
+    {
+      "teamname":"",
+      "flag":""
     },
     {
       "teamname": "north west dragons",
@@ -495,7 +531,8 @@
     {
       "teamname": "sri lankan lions",
       "flag": "https://static.cricbuzz.com/a/img/v1/25x18/i1/c384025/sri-lankan-lions.jpg"
-    },  {
+    },
+    {
       "teamname": "",
       "flag": ""
     },

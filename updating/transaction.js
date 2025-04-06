@@ -4,6 +4,7 @@ const Team = require("../models/team");
 const MatchLive = require("../models/matchlive");
 const User = require("../models/user");
 const express = require("express");
+const { messaging } = require("../utils/firebaseinitialize");
 
 // function prizeBreakupRules(prize, numWinners){
 //     let prizeMoneyBreakup = [];
@@ -53,6 +54,16 @@ module.exports.startTransaction = async function () {
             user.totalAmountWon += contests[k].prizeDetails[j].prize;
             try {
               await user.save();
+              if (user?.fcmtoken) {
+                const message = {
+                  notification: {
+                    title: "Congratulations!",
+                    body: `You won ₹${contests[k].prizeDetails[j].prize}! Check your wallet for details.`,
+                  },
+                  token: user.fcmtoken,
+                };
+                await messaging.send(message)
+              }
               //matches[i].transaction = true;
               //await matches.save();
               const matchUpdate = await MatchLive.updateOne(
@@ -64,7 +75,7 @@ module.exports.startTransaction = async function () {
                 }
               );
             } catch (e) {
-              console.log(error);
+              console.log(e);
             }
           }
         }
