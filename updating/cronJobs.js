@@ -12,13 +12,20 @@ const { addMatchIds } = require("./addMatchIds.js");
 const { updateBalls } = require("./updateBalls.js");
 const { addInPlayStatus } = require("./addInPlayStatus.js");
 const { addLivescoresDetailsCustom } = require("./addlivescoresdetailskeys.js");
+const { addLivecommentaryCustom } = require("./addCommentaryCustom.js");
 
 function cronjobs() {
   cron.schedule("0 * * * *", async function () {
     await startTransaction();
   });
+  //cron.schedule("* * * * *", async function () {
+  //  await addLivecommentary();
+  //});
+  cron.schedule("*/10 * * * *", async function () {
+    await addLivecommentaryCustom('test');
+  });
   cron.schedule("* * * * *", async function () {
-    await addLivecommentary();
+    await addLivecommentaryCustom('t20');
   });
   cron.schedule("* * * * *", async function () {
     await updateBalls();
