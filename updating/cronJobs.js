@@ -11,6 +11,7 @@ const { addteamPlayers } = require("./teamcreatecontroller.js");
 const { addMatchIds } = require("./addMatchIds.js");
 const { updateBalls } = require("./updateBalls.js");
 const { addInPlayStatus } = require("./addInPlayStatus.js");
+const { addLivescoresDetailsCustom } = require("./addlivescoresdetailskeys.js");
 
 function cronjobs() {
   cron.schedule("0 * * * *", async function () {
@@ -28,8 +29,14 @@ function cronjobs() {
   cron.schedule("*/5 * * * *", async function () {
     await addLiveDetails()
   });
+  //cron.schedule("* * * * *", async function () {
+  //  await addLivescoresDetails()
+  //});
+  cron.schedule("*/10 * * * *", async function () {
+    await addLivescoresDetailsCustom('test')
+  });
   cron.schedule("* * * * *", async function () {
-    await addLivescoresDetails()
+    await addLivescoresDetailsCustom('t20')
   });
   cron.schedule("0 */6 * * *", async function () {
     await addMatchtoDb();
