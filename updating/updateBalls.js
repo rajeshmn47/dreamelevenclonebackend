@@ -46,7 +46,6 @@ module.exports.updateBalls = async function () {
         const m = matchess;
         for (let i = 0; i < matchess.length; i++) {
             if (m[i].matchId.length > 3) {
-                const keys = await getkeys.getkeys();
                 try {
                     const commentaryRef = db.db.collection("commentary").doc(m[i].matchId);
                     const doc = await commentaryRef.get();
@@ -54,7 +53,7 @@ module.exports.updateBalls = async function () {
                         let xyz = doc.data().commentary;
                         let fBalls = [];
                         let sBalls = [];
-                        console.log(matchess[i].matchId, 'data')
+                       // console.log(matchess[i].matchId, 'data')
                         let firstTeam = matchess[i].isHomeFirst ? matchess[i].teamHomeName : matchess[i].teamAwayName;
                         let secondTeam = !matchess[i].isHomeFirst ? matchess[i].teamHomeName : matchess[i].teamAwayName;;
                         for (let a = 0; a < xyz.length; a++) {
@@ -96,7 +95,7 @@ module.exports.updateBalls = async function () {
                             const firInnBalls = [...detail.firstInningsBalls.filter((b, index) => detail.firstInningsBalls.find((l) => detail.firstInningsBalls.indexOf(l) == index))]
                             const secBalls = sBalls.filter((x) => !(detail.secondInningsBalls.find((b) => b.ballNbr == x.ballNbr)));
                             const secInnBalls = [...detail.secondInningsBalls.filter((b, index) => detail.secondInningsBalls.find((l) => detail.secondInningsBalls.indexOf(l) == index))]
-                            console.log(sBalls, fBalls, 'secdata')
+                          //  console.log(sBalls, fBalls, 'secdata')
                             await DetailScores.updateOne({
                                 matchId: m[i].matchId
                             }, {
