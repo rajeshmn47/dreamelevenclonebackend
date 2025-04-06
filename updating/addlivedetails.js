@@ -39,10 +39,6 @@ const sendNotification = async (title, body, topic = "live-updates") => {
 
 module.exports.addLiveDetails = async function () {
   try {
-    sendNotification(
-      `Lineups Out: }`,
-      `The lineups for are now available. Check out the details!`
-    );
     const turing = await MatchLive();
     let date = new Date();
     const endDate = new Date(date.getTime() + 0.5 * 60 * 60 * 1000);
