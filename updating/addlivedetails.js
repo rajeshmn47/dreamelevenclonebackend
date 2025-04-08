@@ -128,8 +128,12 @@ module.exports.addLiveDetails = async function () {
                   `Lineups Out: ${s.matchInfo.team1.name} vs ${s.matchInfo.team2.name}`,
                   `The lineups for ${s.matchInfo.team1.name} and ${s.matchInfo.team2.name} are now available. Check out the details!`
                 );
-                let tweetText = `The lineups for ${s.matchInfo.team1.name} and ${s.matchInfo.team2.name} are now available. Check out the details! Match Link: https://dream-11-clone-nu.vercel.app/contests/${matchId}`
-                sendTweet(tweetText)
+                const team1Name = matches[i]?.teamHomeCode || "Team1";
+                const team2Name = matches[i]?.teamAwayCode || "Team2";
+                const matchHashtags = `#${team1Name.replace(/\s/g, '')}Vs${team2Name.replace(/\s/g, '')} #Cricket #ipl`;
+                let tweetText = `The lineups for ${s.matchInfo.team1.name} and ${s.matchInfo.team2.name} are now available. Check out the details! Match Link: https://dream-11-clone-nu.vercel.app ${matchHashtags}`;
+                console.log(tweetText,'texttweet')
+                sendTweet(tweetText);
               }
             }
           } catch (error) {
