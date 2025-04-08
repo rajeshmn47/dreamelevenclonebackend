@@ -397,28 +397,28 @@
       "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/383000/383042.png"
     },
     {
-      "teamname":"indonesia",
-      "flag":"https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/313500/313549.logo.png"
+      "teamname": "indonesia",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/313500/313549.logo.png"
     },
     {
-      "teamname":"cook islands",
-      "flag":"https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/386300/386355.png"
+      "teamname": "cook islands",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/386300/386355.png"
     },
     {
-      "teamname":"phillipines",
-      "flag":"https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/313200/313201.logo.png"
+      "teamname": "philippines",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/313200/313201.logo.png"
     },
     {
-      "teamname":"",
-      "flag":""
+      "teamname": "thailand",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_80/lsci/db/PICTURES/CMS/313200/313217.logo.png"
     },
     {
-      "teamname":"",
-      "flag":""
+      "teamname": "",
+      "flag": ""
     },
     {
-      "teamname":"",
-      "flag":""
+      "teamname": "",
+      "flag": ""
     },
     {
       "teamname": "north west dragons",
@@ -533,8 +533,28 @@
       "flag": "https://static.cricbuzz.com/a/img/v1/25x18/i1/c384025/sri-lankan-lions.jpg"
     },
     {
-      "teamname": "",
-      "flag": ""
+      "teamname": "lahore qalandars",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_80/lsci/db/PICTURES/CMS/313500/313523.logo.png"
+    },
+    {
+      "teamname": "multan sultans",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_80/lsci/db/PICTURES/CMS/313500/313550.logo.png"
+    },
+    {
+      "teamname": "islamabad united",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_80/lsci/db/PICTURES/CMS/313500/313521.logo.png"
+    },
+    {
+      "teamname": "peshawar zalmi",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_80/lsci/db/PICTURES/CMS/313500/313519.logo.png"
+    },
+    {
+      "teamname": "quetta gladiators",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_80/lsci/db/PICTURES/CMS/313500/313522.logo.png"
+    },
+    {
+      "teamname": "karachi kings",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_80/lsci/db/PICTURES/CMS/313500/313520.logo.png"
     },
     {
       "teamname": "",
