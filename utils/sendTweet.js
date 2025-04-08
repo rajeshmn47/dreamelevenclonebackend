@@ -9,7 +9,6 @@ const accessSecret = process.env.TWITTER_ACCESS_SECRET;
 const appKey = process.env.API_KEY;
 const appSecret = process.env.API_KEY_SECRET;
 // Function to send a tweet
-console.log(clientId,clientSecret,accessToken,accessSecret,'secrets')
 async function sendTweet(text) {
   try {
     const twitterClient = new TwitterApi({

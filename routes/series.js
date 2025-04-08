@@ -155,7 +155,7 @@ router.get("/pointsTable/:seriesName", async (req, res) => {
                 as: "matchlive"//result var name
             }
         },]
-    ).sort({ date: -1 });
+    ).sort({ date: 1 });
     console.log(matches.length, 'allmatches')
     let allteams = [];
     let allmatches = []
@@ -295,7 +295,7 @@ router.get("/match-details", async (req, res) => {
 
 router.get("/match-details/:matchId", async (req, res) => {
     const match = await DetailScores.findOne({ matchId: req.params.matchId });
-    console.log(match,req.params.matchId, 'allmatches')
+    console.log(match, req.params.matchId, 'allmatches')
     try {
         res.status(200).json({
             message: "players added successfully",
