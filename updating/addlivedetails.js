@@ -3,6 +3,7 @@ const Match = require("../models/match");
 const MatchLive = require("../models/matchlive");
 const getkeys = require("../utils/crickeys");
 const { messaging } = require("../utils/firebaseinitialize");
+const sendTweet = require("../utils/sendTweet");
 
 function delay(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -127,6 +128,8 @@ module.exports.addLiveDetails = async function () {
                   `Lineups Out: ${s.matchInfo.team1.name} vs ${s.matchInfo.team2.name}`,
                   `The lineups for ${s.matchInfo.team1.name} and ${s.matchInfo.team2.name} are now available. Check out the details!`
                 );
+                let tweetText = `The lineups for ${s.matchInfo.team1.name} and ${s.matchInfo.team2.name} are now available. Check out the details! Match Link: https://dream-11-clone-nu.vercel.app/contests/${matchId}`
+                sendTweet(tweetText)
               }
             }
           } catch (error) {

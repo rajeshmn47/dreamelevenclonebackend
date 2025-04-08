@@ -10,7 +10,7 @@ module.exports.getflag = function (teamname) {
   if (flag) {
     return flag.flag;
   }
-  const team = teamname.split(' A').join('').split(' women').join('').split(' masters').join('')
+  const team = teamname.split(' A').join('').split(' women').join('').split(' a').join('').split(' masters').join('')
   console.log(team,'team')
   const flagUrl = data.flags.find(
     (t) => t.teamname.toLowerCase() === team.toLowerCase(),
