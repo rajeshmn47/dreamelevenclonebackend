@@ -1,9 +1,11 @@
 const express = require("express");
-const {Web3} = require("web3");
+const { Web3 } = require("web3");
 const dotenv = require("dotenv");
 const Transaction = require("../models/transaction");
 const fs = require('fs');
 const path = require('path');
+const CryptoTransaction = require("../models/cryptoTransaction");
+const User = require("../models/user");
 
 dotenv.config();
 
@@ -49,7 +51,7 @@ const depositDBC = async (req, res) => {
             return res.status(400).json({ error: "Invalid request" });
         }
 
-        const transaction = new Transaction({
+        const transaction = new CryptoTransaction({
             userAddress,
             type: "deposit",
             amount,
@@ -58,6 +60,20 @@ const depositDBC = async (req, res) => {
         });
 
         await transaction.save();
+
+        // Update user's crypto wallet
+        let uid = req.body.uidfromtoken;
+        console.log(uid,'uid')
+        const user = await User.findById(uid);
+        if (user) {
+            console.log(user?.cryptoWallet,'crypto wallet')
+            user.cryptoWallet += Number(amount);
+            user.totalAmountAdded += amount;
+            await user.save();
+        } else {
+            return res.status(404).json({ error: "User not found" });
+        }
+
         res.json({ success: true, message: "Deposit initiated", transaction });
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -71,7 +87,7 @@ const withdrawDBC = async (req, res) => {
             return res.status(400).json({ error: "Invalid request" });
         }
 
-        const transaction = new Transaction({
+        const transaction = new CryptoTransaction({
             userAddress,
             type: "withdraw",
             amount,
@@ -88,56 +104,56 @@ const withdrawDBC = async (req, res) => {
 
 const sendDBC = async (req, res) => {
     try {
-      const { sender, recipient, amount } = req.body;
-  
-      if (!web3.utils.isAddress(sender) || !web3.utils.isAddress(recipient)) {
-        return res.status(400).json({ success: false, error: "Invalid wallet address" });
-      }
-  
-      const privateKey = process.env.PRIVATE_KEY;
-      if (!privateKey) {
-        return res.status(400).json({ success: false, error: "Private key not found in backend" });
-      }
-  
-      const amountInWei = web3.utils.toWei(amount, "ether");
-  
-      // 🟢 Fetch Gas Price from Network
-      const gasPrice = await web3.eth.getGasPrice(); // Auto gas price fetch
-      const gasLimit = 200000; // Standard gas limit
-  
-      // 🟢 Create Transaction Object with Gas Fees
-      const tx = {
-        from: sender,
-        to: DBC_CONTRACT_ADDRESS,
-        gas: gasLimit,
-        gasPrice: gasPrice, // Gas price set kiya
-        data: dbcContract.methods.transfer(recipient, amountInWei).encodeABI(),
-      };
-  
-      // 🔹 Sign Transaction
-      const signedTx = await web3.eth.accounts.signTransaction(tx, privateKey);
-  
-      // 🔹 Send Signed Transaction
-      const receipt = await web3.eth.sendSignedTransaction(signedTx.rawTransaction);
-  
-      // 🔹 Store Transaction in MongoDB
-      const transaction = new Transaction({
-        userAddress: sender,
-        type: "send",
-        amount,
-        txHash: receipt.transactionHash,
-        status: "success",
-      });
-  
-      await transaction.save();
-  
-      res.json({ success: true, txHash: receipt.transactionHash });
-  
+        const { sender, recipient, amount } = req.body;
+
+        if (!web3.utils.isAddress(sender) || !web3.utils.isAddress(recipient)) {
+            return res.status(400).json({ success: false, error: "Invalid wallet address" });
+        }
+
+        const privateKey = process.env.PRIVATE_KEY;
+        if (!privateKey) {
+            return res.status(400).json({ success: false, error: "Private key not found in backend" });
+        }
+
+        const amountInWei = web3.utils.toWei(amount, "ether");
+
+        // 🟢 Fetch Gas Price from Network
+        const gasPrice = await web3.eth.getGasPrice(); // Auto gas price fetch
+        const gasLimit = 200000; // Standard gas limit
+
+        // 🟢 Create Transaction Object with Gas Fees
+        const tx = {
+            from: sender,
+            to: DBC_CONTRACT_ADDRESS,
+            gas: gasLimit,
+            gasPrice: gasPrice, // Gas price set kiya
+            data: dbcContract.methods.transfer(recipient, amountInWei).encodeABI(),
+        };
+
+        // 🔹 Sign Transaction
+        const signedTx = await web3.eth.accounts.signTransaction(tx, privateKey);
+
+        // 🔹 Send Signed Transaction
+        const receipt = await web3.eth.sendSignedTransaction(signedTx.rawTransaction);
+
+        // 🔹 Store Transaction in MongoDB
+        const transaction = new CryptoTransaction({
+            userAddress: sender,
+            type: "send",
+            amount,
+            txHash: receipt.transactionHash,
+            status: "success",
+        });
+
+        await transaction.save();
+
+        res.json({ success: true, txHash: receipt.transactionHash });
+
     } catch (error) {
-      console.error("Transaction failed:", error);
-      res.status(500).json({ success: false, error: error.message });
+        console.error("Transaction failed:", error);
+        res.status(500).json({ success: false, error: error.message });
     }
-  };
+};
 
 // Define routes
 router.post("/connectWallet", connectWallet);

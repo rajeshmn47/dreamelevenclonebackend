@@ -249,6 +249,10 @@ const matchDetailsSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    cryptoTransaction: {
+      type: Boolean,
+      default: false,
+    },
     isHomeFirst: {
       type: Boolean,
       required: true,

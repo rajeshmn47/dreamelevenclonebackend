@@ -278,7 +278,7 @@ router.post("/registerold", async (req, res) => {
     from: "rajeshmn47@gmail.com",
     to: req.body.email,
     subject: "Sending Email using Node.js[nodemailer]",
-    text: `enter this otp ${otp}`,
+    text: `Your OTP for account verification is: ${otp}. Please use it to complete your registration.`,
   };
 
   const options = {
@@ -324,27 +324,45 @@ router.post("/registerold", async (req, res) => {
         }
 
         if (!user) {
-          transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-              console.log(error);
-            } else {
-              console.log(`Email sent: ${info.response}`);
-            }
-          });
           transaction.createTransaction(userId, "", 100, "extra cash");
           User.create(user1, async (err, user) => {
             if (err) {
               console.log(err, "err");
-              res.status(400).json({
-                message: "something went wrong",
-              });
+              // res.status(400).json({
+              //   message: err,
+              // });
+              if (err.code === 11000 && err.keyPattern && err.keyValue) {
+                let message = "";
+                if (err.keyPattern.phonenumber) {
+                  message = "The phone number is already registered.";
+                } else if (err.keyPattern.username) {
+                  message = "The username is already registered.";
+                } else if (err.keyPattern.email) {
+                  message = "The email is already registered.";
+                } else {
+                  message = "The username or phone number is already registered. Please try a different one.";
+                }
+                res.status(400).json({
+                  message: message,
+                });
+              }
+              else {
+                res.status(400).json({
+                  message: "The username or phone number is already registered. Please try a different one.",
+                });
+              }
             } else {
               const userid = user._id;
-
               const token = jwt.sign({ userid }, activatekey, {
                 expiresIn: "5000000m",
               });
-
+              transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                  console.log(error);
+                } else {
+                  console.log(`Email sent: ${info.response}`);
+                }
+              });
               res.status(200).json({
                 message:
                   "enter otp recieved on your mail to activate your account",
@@ -367,7 +385,7 @@ router.post("/registerold", async (req, res) => {
             success: true,
           });
         } else {
-          res.status(200).json({
+          res.status(400).json({
             message: "user already exists,please log in",
             success: false,
           });

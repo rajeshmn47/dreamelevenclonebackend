@@ -13,16 +13,23 @@ const { updateBalls } = require("./updateBalls.js");
 const { addInPlayStatus } = require("./addInPlayStatus.js");
 const { addLivescoresDetailsCustom } = require("./addlivescoresdetailskeys.js");
 const { addLivecommentaryCustom } = require("./addCommentaryCustom.js");
+const { startCryptoTransaction } = require("./cryptoTransaction.js");
 
 function cronjobs() {
   cron.schedule("0 * * * *", async function () {
     await startTransaction();
+  });
+  cron.schedule("0 * * * *", async function () {
+    await startCryptoTransaction();
   });
   //cron.schedule("* * * * *", async function () {
   //  await addLivecommentary();
   //});
   cron.schedule("*/10 * * * *", async function () {
     await addLivecommentaryCustom('test');
+  });
+  cron.schedule("*/5 * * * *", async function () {
+    await addLivecommentaryCustom('odi');
   });
   cron.schedule("* * * * *", async function () {
     await addLivecommentaryCustom('t20');
@@ -41,6 +48,9 @@ function cronjobs() {
   //});
   cron.schedule("*/10 * * * *", async function () {
     await addLivescoresDetailsCustom('test')
+  });
+   cron.schedule("*/5 * * * *", async function () {
+    await addLivescoresDetailsCustom('odi')
   });
   cron.schedule("* * * * *", async function () {
     await addLivescoresDetailsCustom('t20')
