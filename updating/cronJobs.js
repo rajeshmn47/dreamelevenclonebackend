@@ -25,13 +25,13 @@ function cronjobs() {
   //cron.schedule("* * * * *", async function () {
   //  await addLivecommentary();
   //});
-  cron.schedule("*/10 * * * *", async function () {
+  cron.schedule("*/15 * * * *", async function () {
     await addLivecommentaryCustom('test');
   });
-  cron.schedule("*/5 * * * *", async function () {
+  cron.schedule("*/10 * * * *", async function () {
     await addLivecommentaryCustom('odi');
   });
-  cron.schedule("* * * * *", async function () {
+  cron.schedule("*/5 * * * *", async function () {
     await addLivecommentaryCustom('t20');
   });
   cron.schedule("* * * * *", async function () {
@@ -46,13 +46,13 @@ function cronjobs() {
   //cron.schedule("* * * * *", async function () {
   //  await addLivescoresDetails()
   //});
-  cron.schedule("*/10 * * * *", async function () {
+  cron.schedule("*/15 * * * *", async function () {
     await addLivescoresDetailsCustom('test')
   });
-   cron.schedule("*/5 * * * *", async function () {
+   cron.schedule("*/10 * * * *", async function () {
     await addLivescoresDetailsCustom('odi')
   });
-  cron.schedule("* * * * *", async function () {
+  cron.schedule("*/5 * * * *", async function () {
     await addLivescoresDetailsCustom('t20')
   });
   cron.schedule("0 */6 * * *", async function () {
