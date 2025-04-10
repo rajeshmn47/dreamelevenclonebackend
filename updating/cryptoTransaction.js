@@ -4,6 +4,7 @@ const Team = require("../models/team");
 const MatchLive = require("../models/matchlive");
 const User = require("../models/user");
 const express = require("express");
+const { messaging } = require("../utils/firebaseinitialize");
 
 // function prizeBreakupRules(prize, numWinners){
 //     let prizeMoneyBreakup = [];
@@ -49,12 +50,22 @@ module.exports.startCryptoTransaction = async function () {
           if (teams.length > 0 && teams[j]?.userId) {
             const user = await User.findById(teams[j].userId);
             //console.log(user, "user");
-            user.cryptoWallet += contests[k].prizeDetails[j].prize/10000;
+            user.cryptoWallet += contests[k].prizeDetails[j].prize / 10000;
             user.totalAmountWon += contests[k].prizeDetails[j].prize;
             try {
               await user.save();
               //matches[i].transaction = true;
               //await matches.save();
+              if (user?.fcmtoken) {
+                const message = {
+                  notification: {
+                    title: "Congratulations!",
+                    body: `You won DBC${contests?.[k]?.prizeDetails?.[j]?.prize/10000}! Check your wallet for details.`,
+                  },
+                  token: user.fcmtoken,
+                };
+                await messaging.send(message)
+              }
               const matchUpdate = await MatchLive.updateOne(
                 { matchId: matches[i]?.matchId },
                 {
