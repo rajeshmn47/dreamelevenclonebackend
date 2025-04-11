@@ -11,6 +11,7 @@ const unirest = require("unirest");
 const transaction = require("../updating/transaction_details_controller");
 const User = require("../models/user");
 const { messaging } = require("../utils/firebaseinitialize");
+const Config = require("../models/config");
 
 const transporter = nodemailer.createTransport(
   smtpTransport({
@@ -590,7 +591,8 @@ router.get("/forgot-password/:email", async (req, res) => {
     specialChars: false,
     specialChars: false,
   });
-
+  const config = await Config.findOne({});
+  const name = config?.name ? config?.name : 'fantasy11'
   try {
     const user1 = await User.findOne({ email: req.params.email });
 
@@ -609,7 +611,7 @@ OTP: ${otp}
 If you did not request a password reset, please ignore this email or contact support if you have concerns.
 
 Thank you,
-The Fantasycricket4u Team`,
+The ${name} Team`,
       };
 
       transporter.sendMail(mailOptions, (error, info) => {
