@@ -275,11 +275,22 @@ router.post("/registerold", async (req, res) => {
   user1.phonenumber = req.body.phoneNumber;
   user1.wallet = 10000;
   user1.otp = otp;
+  const config = await Config.findOne({});
+  const appName = config?.name ? config?.name : 'fantasy11'
   const mailOptions = {
-    from: "rajeshmn47@gmail.com",
+    from: process.env.smtp_email,
     to: req.body.email,
-    subject: "Sending Email using Node.js[nodemailer]",
-    text: `Your OTP for account verification is: ${otp}. Please use it to complete your registration.`,
+    subject: "Your OTP for Account Verification",
+    text: `Hey!
+
+Here’s your OTP: ${otp}
+
+Use this code to finish setting up your account. It expires in 10 minutes.
+
+If you didn’t request this, just ignore this email.
+
+Cheers,
+${appName} Team`,
   };
 
   const options = {
@@ -601,7 +612,7 @@ router.get("/forgot-password/:email", async (req, res) => {
       const mailOptions = {
         from: process.env.smtp_email,
         to: req.params.email,
-        subject: "Sending Email using Node.js[nodemailer]",
+        subject: "Reset Your Password",
         text: `Dear User,
 
 We received a request to reset your password for your account. Please use the following OTP to reset your password:
