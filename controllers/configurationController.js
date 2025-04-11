@@ -5,19 +5,29 @@ const router = express.Router();
 // Save or update config by name
 router.post("/", async (req, res) => {
   try {
-    const { name, tier } = req.body;
-    //await Config.deleteMany({})
-    const updated = await Config.findOneAndUpdate(
-      { name },
-      { tier: tier },
-      { upsert: true, new: true, setDefaultsOnInsert: true }
-    );
+    //await Config.deleteMany({});
+    const config = await Config.findOne({});
+    //if (!config) {
+    //  return res.status(400).json({ success: false, message: "Config not initialized" });
+    //}
+    if (config) {
+      if (req.body.name) config.name = req.body.name;
+      if (req.body.tier) config.tier = req.body.tier;
 
-    res.status(200).json({ success: true, config: updated });
-  } catch (error) {
-    console.error("Error saving config:", error);
-    res.status(500).json({ success: false, error: "Failed to save config" });
+      await config.save();
+      res.json({ success: true, config });
+    }
+    else {
+      await Config.create({
+        name: req.body.name,
+        tier: req.body.tier,
+      });
+      res.json({ success: true, message: "Config created successfully" });
+    }
+  } catch (err) {
+    res.status(500).json({ success: false, error: "Update failed" });
   }
+
 });
 
 // Get all config entries
