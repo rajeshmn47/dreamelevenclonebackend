@@ -39,6 +39,7 @@ const { addInPlayStatus } = require("./updating/addInPlayStatus.js");
 const { createDefaultContestTypes } = require("./updating/createContestTypes.js");
 const { cronjobs } = require("./updating/cronJobs.js");
 const { startCryptoTransaction } = require("./updating/cryptoTransaction.js");
+const configRoutes = require("./controllers/configurationController.js");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
@@ -58,6 +59,7 @@ app.use("/apikeys", checkloggedinuser, apikeys);
 app.use("/", checkloggedinuser, updatedata);
 app.use("/", checkloggedinuser, video);
 app.use("/api/match", checkloggedinuser, matches);
+app.use("/api/config", configRoutes);
 //app.use("/", transaction);
 mongoose.Promise = global.Promise;
 mongoose.connect(
