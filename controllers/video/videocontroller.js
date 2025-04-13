@@ -13,9 +13,10 @@ router.get("/video", function (req, res) {
   if (!range) {
     res.status(400).send("Requires Range header");
   }
-
-  const videoPath = "./controllers/Chris-Do.mp4";
-  const videoSize = fs.statSync("./controllers/Chris-Do.mp4").size;
+  const path = require("path");
+  const folderPath = path.resolve(__dirname, "../../sachinshots");
+  const videoPath = `${folderPath}/strightdrive.mp4`;
+  const videoSize = fs.statSync(`${folderPath}/strightdrive.mp4`).size;
 
   const CHUNK_SIZE = 10 ** 6; // 1MB
   const start = Number(range.replace(/\D/g, ""));
