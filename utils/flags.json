@@ -230,7 +230,7 @@
     },
     {
       "teamname": "denmark",
-      "flag": "https://v2.convertapi.com/d/wmwmtvmb4qox5nsx74cupo8dvumdu8tw/Flag_of_Denmark.png"
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_80/lsci/db/PICTURES/CMS/313100/313135.logo.png"
     },
     {
       "teamname": "hong kong",
@@ -275,10 +275,6 @@
     {
       "teamname": "turkey",
       "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_80/lsci/db/PICTURES/CMS/313200/313218.logo.png"
-    },
-    {
-      "teamname": "isle of man",
-      "flag": "https://v2.convertapi.com/d/88hja8l0s8a12bp3vqggrbdwv2ur8a0j/Flag_of_the_Isle_of_Man.png"
     },
     {
       "teamname": "luxembourg",
@@ -415,6 +411,30 @@
     {
       "teamname": "afghanistan",
       "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_80/lsci/db/PICTURES/CMS/381800/381892.png"
+    },
+    {
+      "teamname": "isle of man",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_80/lsci/db/PICTURES/CMS/383000/383040.png"
+    },
+    {
+      "teamname": "cyprus",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/383000/383068.png"
+    },
+    {
+      "teamname": "jersey",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_80/lsci/db/PICTURES/CMS/383000/383046.png"
+    },
+    {
+      "teamname": "",
+      "flag": ""
+    },
+    {
+      "teamname": "",
+      "flag": ""
+    },
+    {
+      "teamname": "",
+      "flag": ""
     },
     {
       "teamname": "",
