@@ -11,7 +11,7 @@ module.exports.updateBalls = async function () {
         let date = new Date();
         let matchess = [];
         const endDate = new Date(date.getTime());
-        date = new Date(date.getTime() - 26 * 60 * 60 * 1000);
+        date = new Date(date.getTime() - 24 * 60 * 60 * 1000);
         const matches = await Matches.find({
             date: {
                 $gte: new Date(date),
@@ -74,10 +74,11 @@ module.exports.updateBalls = async function () {
                         }
                         let updatedCommentary = []
                         for (let a = 0; a < xyz.length; a++) {
-                            console.log(xyz[a].event)
+                            //console.log(xyz[a].event)
                             const event = xyz[a].event;
                             if (!xyz[a]?.videoLink) {
-                                if (event === 'FOUR' || event === 'SIX' || event === 'WICKET') {
+                                let eventType=event.split('over-break,').join('')
+                                if (eventType === 'FOUR' || eventType === 'SIX' || eventType === 'WICKET') {
                                     const batsmanName = xyz[a]?.commText || 'batsman';
                                     const teamName = matchess[i]?.battingTeam?.replace(/ /g, "_") || 'team';
                                     const shotType = event === 'FOUR' ? 'four' : event === "SIX" ? 'six' : 'wicket';
