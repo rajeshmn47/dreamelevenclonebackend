@@ -40,6 +40,7 @@ const { createDefaultContestTypes } = require("./updating/createContestTypes.js"
 const { cronjobs } = require("./updating/cronJobs.js");
 const { startCryptoTransaction } = require("./updating/cryptoTransaction.js");
 const configRoutes = require("./controllers/configurationController.js");
+const { addLivecommentaryCustom } = require("./updating/addCommentaryCustom.js");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
@@ -92,6 +93,7 @@ const api_key =
 // addPlayersAPI();
 // startTransaction();
 // addLivecommentary();
+// addLivecommentaryCustom('odi')
 // updateBalls();
 // addInPlayStatus();
 // startCryptoTransaction();
