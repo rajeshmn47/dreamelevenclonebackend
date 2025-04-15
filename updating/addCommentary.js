@@ -112,27 +112,29 @@ module.exports.addLivecommentary = async function addcommentry() {
                 { merge: true }
               );
             } else {
-              const commentaryRef = db.db.collection("commentary").doc(m[i].matchId);
-              let xyz = doc.data().commentary;
-              let commentary = getcommentary.getcommentary(xyz, a);
-              console.log(miniscore?.batsmanStriker?.batId, 'miniscore')
-              if (miniscore?.batsmanStriker?.batId == 12305) {
-                transporter.sendMail(mailOptions, (error, info) => {
-                  if (error) {
-                    console.log(error);
-                  } else {
-                    console.log(`Email sent: ${info.response}`);
-                  }
-                });
+              if (a.length > 0) {
+                const commentaryRef = db.db.collection("commentary").doc(m[i].matchId);
+                let xyz = doc.data().commentary;
+                let commentary = getcommentary.getcommentary(xyz, a);
+                console.log(miniscore?.batsmanStriker?.batId, 'miniscore')
+                if (miniscore?.batsmanStriker?.batId == 12305) {
+                  transporter.sendMail(mailOptions, (error, info) => {
+                    if (error) {
+                      console.log(error);
+                    } else {
+                      console.log(`Email sent: ${info.response}`);
+                    }
+                  });
+                }
+                const res = await commentaryRef.set(
+                  {
+                    commentary: [...commentary],
+                    livedata: matchdata,
+                    miniscore,
+                  },
+                  { merge: true }
+                );
               }
-              const res = await commentaryRef.set(
-                {
-                  commentary: [...commentary],
-                  livedata: matchdata,
-                  miniscore,
-                },
-                { merge: true }
-              );
             }
           }
         } catch (error) {
