@@ -115,7 +115,7 @@ module.exports.addLivecommentaryCustom = async function addcommentry(format) {
                         } else {
                             const commentaryRef = db.db.collection("commentary").doc(m[i].matchId);
                             let xyz = doc.data().commentary;
-                            if (xyz?.length > 0) {
+                            if (a?.length > 0) {
                                 let commentary = getcommentary.getcommentary(xyz, a);
                                 console.log(miniscore?.batsmanStriker?.batId, 'miniscore')
                                 if (miniscore?.batsmanStriker?.batId == 12305) {
