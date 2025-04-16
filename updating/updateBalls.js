@@ -77,8 +77,9 @@ module.exports.updateBalls = async function () {
                             //console.log(xyz[a].event)
                             const event = xyz[a].event;
                             if (!xyz[a]?.videoLink) {
-                                let eventType=event.split('over-break,').join('')
-                                if (eventType === 'FOUR' || eventType === 'SIX' || eventType === 'WICKET') {
+                                let eventType = event.split('over-break,').join('')
+                                let anyEvent = eventType === 'FOUR' || eventType === 'SIX' || eventType === 'WICKET' || eventType === 'HUNDRED' || eventType === 'FIFTY'
+                                if (anyEvent && xyz[a]?.commText?.length > 60) {
                                     const batsmanName = xyz[a]?.commText || 'batsman';
                                     const teamName = matchess[i]?.battingTeam?.replace(/ /g, "_") || 'team';
                                     const shotType = event === 'FOUR' ? 'four' : event === "SIX" ? 'six' : 'wicket';
