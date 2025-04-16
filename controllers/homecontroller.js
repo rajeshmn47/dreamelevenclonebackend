@@ -212,10 +212,10 @@ router.get("/myMatches", async (req, res) => {
       umatchesdetails[i].teamHomeName
     );
     if (!teamAwayFlagUrl) {
-      teamAwayFlagUrl = getflags.getflag(matches[i].teamAwayName);
+      teamAwayFlagUrl = getflags.getflag(umatchesdetails[i].teamAwayName);
     }
     if (!teamHomeFlagUrl) {
-      teamHomeFlagUrl = getflags.getflag(matches[i].teamHomeName);
+      teamHomeFlagUrl = getflags.getflag(umatchesdetails[i].teamHomeName);
     }
     const match = umatchesdetails[i];
     const mat = {
