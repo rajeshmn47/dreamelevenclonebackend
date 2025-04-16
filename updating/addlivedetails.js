@@ -9,6 +9,31 @@ function delay(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+function generateMatchHashtags(team1, team2, seriesName) {
+  const baseTag = `#${team1.replace(/\s/g, '')}Vs${team2.replace(/\s/g, '')}`;
+  const tags = [baseTag, '#Cricket'];
+
+  const leagueMap = {
+    'indian premier league': ['#IPL', '#IPL2025'],
+    'pakistan super league': ['#PSL', '#PSL2025'],
+    'big bash league': ['#BBL', '#BBL2025'],
+    'caribbean premier league': ['#CPL', '#CPL2025'],
+    'the hundred': ['#TheHundred', '#TheHundred2025']
+    // Add more as needed
+  };
+
+  const normalizedSeries = seriesName.toLowerCase();
+
+  for (const [league, hashtags] of Object.entries(leagueMap)) {
+    if (normalizedSeries.includes(league)) {
+      tags.push(...hashtags);
+      break;
+    }
+  }
+
+  return tags.join(' ');
+}
+
 async function makeRequest(options) {
   return new Promise((resolve, reject) => {
     request(options, (error, response, body) => {
@@ -130,9 +155,9 @@ module.exports.addLiveDetails = async function () {
                 );
                 const team1Name = matches[i]?.teamHomeCode || "Team1";
                 const team2Name = matches[i]?.teamAwayCode || "Team2";
-                const matchHashtags = `#${team1Name.replace(/\s/g, '')}Vs${team2Name.replace(/\s/g, '')} #Cricket #ipl`;
+                //const matchHashtags = `#${team1Name.replace(/\s/g, '')}Vs${team2Name.replace(/\s/g, '')} #Cricket #ipl2025`;
+                const matchHashtags = generateMatchHashtags(team1Name, team2Name, matches[i]?.matchTitle || "IPL");
                 let tweetText = `The lineups for ${s.matchInfo.team1.name} and ${s.matchInfo.team2.name} are now available. Check out the details! Match Link: https://dream-11-clone-nu.vercel.app ${matchHashtags}`;
-                console.log(tweetText,'texttweet')
                 sendTweet(tweetText);
               }
             }
