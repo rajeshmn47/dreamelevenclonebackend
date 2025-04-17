@@ -12,6 +12,7 @@ const transaction = require("../updating/transaction_details_controller");
 const User = require("../models/user");
 const { messaging } = require("../utils/firebaseinitialize");
 const Config = require("../models/config");
+const axios = require("axios");
 
 const transporter = nodemailer.createTransport(
   smtpTransport({
@@ -31,6 +32,38 @@ const client = new OAuth2Client(
 
 const clientId =
   "438326678548-td4f7iss3q98btacu17h57mpi8tpn7cq.apps.googleusercontent.com";
+
+// Generate unique username
+async function generateUniqueUsername() {
+  const adjectives = ["crazy", "savage", "sly", "mighty", "legend", "quick", "silent", "epic", "bold"];
+  const cricketTerms = ["CoverDrive", "Googly", "Sixer", "Yorker", "SpinKing", "RunMachine", "WicketHero", "FantasyGod"];
+
+  for (let i = 0; i < 10; i++) {
+    const adj = adjectives[Math.floor(Math.random() * adjectives.length)];
+    const term = cricketTerms[Math.floor(Math.random() * cricketTerms.length)];
+    const number = Math.floor(100 + Math.random() * 900); // 3-digit
+
+    const username = `${adj}${term}${number}`;
+    const existing = await User.findOne({ username });
+
+    if (!existing) return username;
+  }
+
+  throw new Error("Couldn't generate a unique username.");
+}
+
+// Generate unique phone number (Indian-style dummy)
+async function generateUniquePhoneNumber() {
+  for (let i = 0; i < 10; i++) {
+    const phone = "7" + Math.floor(100000000 + Math.random() * 900000000).toString(); // 10-digit, starts with 7
+    const existing = await User.findOne({ phonenumber: phone });
+
+    if (!existing) return `${phone}`;
+  }
+
+  throw new Error("Couldn't generate a unique phone number.");
+}
+
 
 router.post("/googlelogin", async (req, res, next) => {
   const { tokenId } = req.body;
@@ -862,5 +895,146 @@ router.post("/save-token", async (req, res) => {
     res.status(500).json({ message: "Error saving FCM token.", error });
   }
 });
+
+router.get("/githublogin", async (req, res, next) => {
+  const code = req.query.code;
+  const tokenId = code;
+  try {
+    // Step 3: Exchange code for access token
+    const tokenRes = await axios.post(
+      `https://github.com/login/oauth/access_token`,
+      {
+        client_id: process.env.GITHUB_CLIENT_ID,
+        client_secret: process.env.GITHUB_CLIENT_SECRET,
+        code,
+        redirect_uri: process.env.GITHUB_REDIRECT_URI,
+      },
+      {
+        headers: { Accept: "application/json" },
+      }
+    );
+
+    const accessToken = tokenRes.data.access_token;
+    //console.log(tokenRes.data, 'data')
+    // Step 4: Fetch GitHub user
+    const userRes = await axios.get("https://api.github.com/user", {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+    //console.log(userRes, 'github user')
+    const githubUser = userRes.data;
+    const email = githubUser?.email ? githubUser?.email : `info@${githubUser?.login}.com`;
+    const name = githubUser?.name ? githubUser?.name : githubUser?.login;
+    if (email) {
+      const usert = await User.findOne({
+        email: { $eq: githubUser.email },
+      });
+      if (usert) {
+        usert.image = githubUser.avatar_url;
+        await usert.save();
+        const userid = usert._id;
+        const server_token = jwt.sign({ userid }, activatekey, {
+          expiresIn: "5000000m",
+        });
+        res.status(200).json({
+          success: true,
+          usert,
+          server_token,
+        });
+      } else {
+        const user1 = new User();
+        const phoneNumber = await generateUniquePhoneNumber();
+        console.log(phoneNumber, 'phonenumber')
+        const userId = email.split("@")[0];
+        user1.userId = userId;
+        user1.username = name;
+        user1.email = email;
+        user1.image = githubUser.avatar_url;
+        user1.password = "password";
+        user1.phonenumber = phoneNumber;
+        user1.verified = true;
+        user1.wallet = 10000;
+        const options = {
+          method: "POST",
+          url: "https://api.razorpay.com/v1/contacts",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization:
+              "Basic cnpwX3Rlc3RfT0N0MTBGeGpuWFROV0s6RlpyNW9YQjFCWnFtbDBhUlRhd0IwSUh1",
+          },
+          body: JSON.stringify({
+            name: name,
+            email: email,
+            contact: 7259293140,
+            type: "employee",
+            reference_id: "Domino Contact ID 12345",
+            notes: {
+              random_key_1: "Make it so.",
+              random_key_2: "Tea. Earl Grey. Hot.",
+            },
+          }),
+        };
+        let contact_id = "";
+        const promise = new Promise((resolve, reject) => {
+          request(options, (error, response) => {
+            if (error) reject(error);
+            const s = JSON.parse(response.body);
+            contact_id = s.id;
+            user1.contact_id = contact_id;
+            resolve();
+          });
+        });
+        promise
+          .then(async () => {
+            User.findOne({ email: githubUser.email }, async (err, user) => {
+              if (err) {
+                res.status(400).json({
+                  message: "something went wrong",
+                });
+              }
+              if (!user) {
+                transaction.createTransaction(userId, "", 100, "extra cash");
+                User.create(user1, async (err, user) => {
+                  if (err) {
+                    res.status(400).json({
+                      message: "something went wrong",
+                      error: err
+                    });
+                  } else {
+                    const userid = user._id;
+                    const token = jwt.sign({ userid }, activatekey, {
+                      expiresIn: "500000m",
+                    });
+                    res.status(200).json({
+                      success: true,
+                      user,
+                      server_token: token,
+                    });
+                  }
+                });
+              } else {
+                res.status(200).json({
+                  message: "user already exists",
+                  success: false,
+                });
+              }
+            });
+          })
+          .catch((err) => {
+            //console.log(`Error : ${err}`);
+          });
+      }
+    } else {
+      res.json({
+        status: 403,
+        message: "Email Not Verified, use another method to login!",
+      });
+    }
+  }
+  catch (error) {
+    // console.error("Error during GitHub login:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+}
+);
 
 module.exports = router;
