@@ -142,7 +142,7 @@ module.exports.addMatchtoDb = async function () {
               } catch (err) {
                 console.log(`Error : ${err}`);
               }
-            } else if (!(match.teamHomeCode.toLowerCase() == "tbc" || match.teamAwayCode.toLowerCase() == "tbc")) {
+            } else if (match.teamHomeCode.toLowerCase() == "tbc" || match.teamAwayCode.toLowerCase() == "tbc") {
               let teamHomeName = obj.results[i].team1.teamName?.toLowerCase();
               let teamAwayName = obj.results[i].team2.teamName?.toLowerCase();
               match.teamHomeCode = obj.results[i].team1.teamSName;

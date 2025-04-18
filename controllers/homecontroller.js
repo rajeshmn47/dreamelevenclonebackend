@@ -71,18 +71,8 @@ router.get("/myMatches", async (req, res) => {
   });
   for (let i = 0; i < matches.length; i++) {
     if (user.matchIds.includes(matches[i].matchId)) {
-      teamAwayFlagUrl = flagURLs.findFlagUrlByCountryName(
-        matches[i].teamAwayName
-      );
-      teamHomeFlagUrl = flagURLs.findFlagUrlByCountryName(
-        matches[i].teamHomeName
-      );
-      if (!teamAwayFlagUrl) {
-        teamAwayFlagUrl = getflags.getflag(matches[i].teamAwayName);
-      }
-      if (!teamHomeFlagUrl) {
-        teamHomeFlagUrl = getflags.getflag(matches[i].teamHomeName);
-      }
+      teamAwayFlagUrl = matches[i].teamAwayFlagUrl;
+      teamHomeFlagUrl = matches[i].teamHomeFlagUrl;
       const match = matches[i];
       const mat = {
         match_title: match.matchTitle,
@@ -534,8 +524,8 @@ router.get("/homeMatches", async (req, res) => {
       (m) => m.matchId == user.matchIds[i]
     );
     if (match_det) {
-      teamAwayFlagUrl = matches[i]?.teamAwayFlagUrl
-      teamHomeFlagUrl = matches[i]?.teamHomeFlagUrl;
+      teamAwayFlagUrl = match?.teamAwayFlagUrl
+      teamHomeFlagUrl = match?.teamHomeFlagUrl;
       const mat = {
         match_title: match.matchTitle,
         home: {

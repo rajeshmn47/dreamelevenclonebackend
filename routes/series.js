@@ -47,7 +47,7 @@ router.get("/updatePlayers", async (req, res) => {
 });
 
 router.get("/updateFlags", async (req, res) => {
-    const m = await Match.updateMany({}, { teamAwayFlagUrl: "", teamHomeFlagUrl });
+    //const m = await Match.updateMany({}, { teamAwayFlagUrl: "", teamHomeFlagUrl: "" });
     const matches = await Match.find();
     for (let i = 0; i < matches?.length; i++) {
         try {
