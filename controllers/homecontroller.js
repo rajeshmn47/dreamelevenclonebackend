@@ -534,18 +534,8 @@ router.get("/homeMatches", async (req, res) => {
       (m) => m.matchId == user.matchIds[i]
     );
     if (match_det) {
-      let teamHomeFlagUrl = flagURLs.findFlagUrlByCountryName(
-        match.teamHomeName
-      );
-      let teamAwayFlagUrl = flagURLs.findFlagUrlByCountryName(
-        match.teamAwayName
-      );
-      if (!teamAwayFlagUrl) {
-        teamAwayFlagUrl = getflags.getflag(match.teamAwayName);
-      }
-      if (!teamHomeFlagUrl) {
-        teamHomeFlagUrl = getflags.getflag(match.teamHomeName);
-      }
+      teamAwayFlagUrl = matches[i]?.teamAwayFlagUrl
+      teamHomeFlagUrl = matches[i]?.teamHomeFlagUrl;
       const mat = {
         match_title: match.matchTitle,
         home: {
@@ -613,24 +603,8 @@ router.get("/homeMatches", async (req, res) => {
     }
   }
   for (let i = 0; i < matches.length; i++) {
-    teamAwayFlagUrl = flagURLs.findFlagUrlByCountryName(
-      matches[i].teamAwayName
-    );
-    teamHomeFlagUrl = flagURLs.findFlagUrlByCountryName(
-      matches[i].teamHomeName
-    );
-    if (!teamAwayFlagUrl) {
-      teamAwayFlagUrl = getflags.getflag(matches[i].teamAwayName);
-    }
-    if (!teamHomeFlagUrl) {
-      teamHomeFlagUrl = getflags.getflag(matches[i].teamHomeName);
-    }
-    if (!teamAwayFlagUrl) {
-      teamAwayFlagUrl = "https://via.placeholder.com/150?text=Team+Logo+Unavailable"
-    }
-    if (!teamHomeFlagUrl) {
-      teamHomeFlagUrl = "https://via.placeholder.com/150?text=Team+Logo+Unavailable"
-    }
+    teamAwayFlagUrl = matches[i]?.teamAwayFlagUrl
+    teamHomeFlagUrl = matches[i].teamHomeFlagUrl;
     const match = matches[i];
     const mat = {
       match_title: match.matchTitle,
@@ -1161,7 +1135,7 @@ router.get("/allmatches", async (req, res) => {
       }
     ]);
 
-    console.log(matches,'Matches fetched successfully');
+    console.log(matches, 'Matches fetched successfully');
     res.status(200).json({
       message: "Matches fetched successfully",
       matches,

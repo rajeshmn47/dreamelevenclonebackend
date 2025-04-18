@@ -3,6 +3,8 @@ const Match = require("../models/match");
 const Contest = require("../models/contest");
 const MatchLiveDetails = require("../models/matchlive");
 const ContestType = require("../models/contestType");
+const { getflag } = require("../utils/getflags");
+const flagURLs = require("country-flags-svg");
 
 function compare(a, b) {
   return a.date < b.date;
@@ -77,6 +79,22 @@ module.exports.addMatchtoDb = async function () {
           match1.teamAwayId = obj.results[i].team2.teamId;
           match1.date = obj.results[i].startDate;
           match1.enddate = obj.results[i].endDate;
+          let teamHomeName = obj.results[i].team1.teamName?.toLowerCase();
+          let teamAwayName = obj.results[i].team2.teamName?.toLowerCase();
+          let teamAwayFlagUrl = flagURLs?.findFlagUrlByCountryName(
+            teamAwayName
+          );
+          let teamHomeFlagUrl = flagURLs?.findFlagUrlByCountryName(
+            teamHomeName
+          );
+          if (!teamAwayFlagUrl) {
+            teamAwayFlagUrl = getflag(teamAwayName);
+          }
+          if (!teamHomeFlagUrl) {
+            teamHomeFlagUrl = getflag(teamHomeName);
+          }
+          match1.teamHomeFlagUrl = teamHomeFlagUrl ? teamHomeFlagUrl : "https://via.placeholder.com/150?text=Team+Logo+Unavailable";
+          match1.teamAwayFlagUrl = teamAwayFlagUrl ? teamAwayFlagUrl : "https://via.placeholder.com/150?text=Team+Logo+Unavailable";
           if (obj.results[i].team1.teamSName == "") {
             continue;
           } else {
@@ -124,11 +142,27 @@ module.exports.addMatchtoDb = async function () {
               } catch (err) {
                 console.log(`Error : ${err}`);
               }
-            } else if (match.teamHomeCode.toLowerCase() == "tbc" || match.teamAwayCode.toLowerCase() == "tbc") {
+            } else if (!(match.teamHomeCode.toLowerCase() == "tbc" || match.teamAwayCode.toLowerCase() == "tbc")) {
+              let teamHomeName = obj.results[i].team1.teamName?.toLowerCase();
+              let teamAwayName = obj.results[i].team2.teamName?.toLowerCase();
               match.teamHomeCode = obj.results[i].team1.teamSName;
               match.teamAwayCode = obj.results[i].team2.teamSName;
               match.teamHomeName = obj.results[i].team1.teamName;
               match.teamAwayName = obj.results[i].team2.teamName;
+              let teamAwayFlagUrl = flagURLs?.findFlagUrlByCountryName(
+                teamAwayName
+              );
+              let teamHomeFlagUrl = flagURLs?.findFlagUrlByCountryName(
+                teamHomeName
+              );
+              if (!teamAwayFlagUrl) {
+                teamAwayFlagUrl = getflag(teamAwayName);
+              }
+              if (!teamHomeFlagUrl) {
+                teamHomeFlagUrl = getflag(teamHomeName);
+              }
+              match.teamHomeFlagUrl = teamHomeFlagUrl ? teamHomeFlagUrl : "https://via.placeholder.com/150?text=Team+Logo+Unavailable";
+              match.teamAwayFlagUrl = teamAwayFlagUrl ? teamAwayFlagUrl : "https://via.placeholder.com/150?text=Team+Logo+Unavailable";
               await match.save();
               console.log("match is successfully updated in db! ");
             }
