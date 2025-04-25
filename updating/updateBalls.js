@@ -4,7 +4,7 @@ const Team = require("../models/team");
 const getkeys = require("../utils/crickeys");
 const db = require("../utils/firebaseinitialize");
 const DetailScores = require("../models/detailscores");
-const { fuzzyMatchVideo } = require("../utils/fuzzyMatchVideo")
+const { fuzzyMatchVideo } = require("../utils/fuzzyMatchVideos")
 
 module.exports.updateBalls = async function () {
     try {
@@ -86,7 +86,7 @@ module.exports.updateBalls = async function () {
 
                                     const keyword = `${teamName}_${batsmanName}_${shotType}`;
 
-                                    const videoLink = await fuzzyMatchVideo(keyword) // your fuzzy logic to get video
+                                    const videoLink = await fuzzyMatchVideo(eventType, xyz[a]?.commText, xyz[a]) // your fuzzy logic to get video
 
                                     xyz[a].videoLink = videoLink || ''; // fallback if not found
                                     updatedCommentary.push({
