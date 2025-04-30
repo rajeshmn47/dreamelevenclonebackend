@@ -14,6 +14,9 @@ const { addInPlayStatus } = require("./addInPlayStatus.js");
 const { addLivescoresDetailsCustom } = require("./addlivescoresdetailskeys.js");
 const { addLivecommentaryCustom } = require("./addCommentaryCustom.js");
 const { startCryptoTransaction } = require("./cryptoTransaction.js");
+const { addLivescoresDetailsCustomfs } = require("./addScoredetailsCustom.js");
+
+const isSource = process.env.SOURCE === "true" ? true : false;
 
 function cronjobs() {
   cron.schedule("0 * * * *", async function () {
@@ -25,15 +28,6 @@ function cronjobs() {
   //cron.schedule("* * * * *", async function () {
   //  await addLivecommentary();
   //});
-  cron.schedule("*/15 * * * *", async function () {
-    await addLivecommentaryCustom('test');
-  });
-  cron.schedule("*/10 * * * *", async function () {
-    await addLivecommentaryCustom('odi');
-  });
-  cron.schedule("* * * * *", async function () {
-    await addLivecommentaryCustom('t20');
-  });
   cron.schedule("* * * * *", async function () {
     await updateBalls();
   });
@@ -46,15 +40,42 @@ function cronjobs() {
   //cron.schedule("* * * * *", async function () {
   //  await addLivescoresDetails()
   //});
-  cron.schedule("*/15 * * * *", async function () {
-    await addLivescoresDetailsCustom('test')
-  });
-   cron.schedule("*/10 * * * *", async function () {
-    await addLivescoresDetailsCustom('odi')
-  });
-  cron.schedule("* * * * *", async function () {
-    await addLivescoresDetailsCustom('t20')
-  });
+  if (isSource) {
+    cron.schedule("*/15 * * * *", async function () {
+      await addLivescoresDetailsCustom('test');
+    });
+
+    cron.schedule("*/10 * * * *", async function () {
+      await addLivescoresDetailsCustom('odi');
+    });
+
+    cron.schedule("* * * * *", async function () {
+      await addLivescoresDetailsCustom('t20');
+    });
+    cron.schedule("*/15 * * * *", async function () {
+      await addLivecommentaryCustom('test');
+    });
+    cron.schedule("*/10 * * * *", async function () {
+      await addLivecommentaryCustom('odi');
+    });
+    cron.schedule("* * * * *", async function () {
+      await addLivecommentaryCustom('t20');
+    });
+    console.log("✅ Cron jobs scheduled for source mode");
+  } else {
+    cron.schedule("*/15 * * * *", async function () {
+      await addLivescoresDetailsCustomfs('test');
+    });
+
+    cron.schedule("*/10 * * * *", async function () {
+      await addLivescoresDetailsCustomfs('odi');
+    });
+
+    cron.schedule("* * * * *", async function () {
+      await addLivescoresDetailsCustomfs('t20');
+    });
+    console.log("ℹ️ Skipping cron jobs — not in source mode");
+  }
   cron.schedule("0 */6 * * *", async function () {
     await addMatchtoDb();
     await addteamPlayers();
