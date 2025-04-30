@@ -34,7 +34,7 @@ module.exports.addLivescoresDetailsCustomfs = async function (format) {
     for (const matchDoc of matches) {
         const { matchId, date } = matchDoc;
         const existingLive = await MatchLive.findOne({ matchId });
-        if (!(!(!existingLive || !existingLive.result === "Complete" || !existingLive.isInPlay))) {
+        if ((!existingLive || existingLive.result === "Complete" || !existingLive.isInPlay)) {
             console.log(`Match ${matchId} is not in play or already completed.`);
             continue;
         }
