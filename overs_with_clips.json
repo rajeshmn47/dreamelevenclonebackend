@@ -9838,5 +9838,3357 @@
         "clip": "clip_0.4_at_399.9448275862069_89710_2.mp4",
         "batsman": "Shikhar Dhawan",
         "bowler": "Manimaran Siddharth"
+    },
+    {
+        "over": "19.2",
+        "commentary": " Spencer Johnson to Pooran, B0$, short of length on the stumps, Pooran stands back and slugs it over deep square leg, went a long way up and sailed over ",
+        "event": "SIX",
+        "clip": "clip_19.1_at_225.95924256086562_89770_1.mp4",
+        "batsman": "Nicholas Pooran",
+        "bowler": "Spencer Johnson"
+    },
+    {
+        "over": "18.3",
+        "commentary": " Rashid Khan to Pooran, B0$, there goes Pooran, tossed up on leg-stump, bowled from 24 yards too, Pooran slogsweeps on one knee and sends this over deep square leg ",
+        "event": "TEAM_HUNDRED,SIX",
+        "clip": "clip_18.2_at_218.96050495942288_89770_1.mp4",
+        "batsman": "Nicholas Pooran",
+        "bowler": "Rashid Khan"
+    },
+    {
+        "over": "18.1",
+        "commentary": " Rashid Khan to Ayush Badoni, B0$ Caught by Umesh Yadav!! Straight to deep mid-wicket. The slogsweep was on but Ayush Badoni could not get it off the middle. Rashid Khan has his first. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_18.0_at_204.9630297565374_89770_1.mp4",
+        "batsman": "Ayush Badoni",
+        "bowler": "Rashid Khan"
+    },
+    {
+        "over": "17.4",
+        "commentary": " Mohit Sharma to Ayush Badoni, B0$, another back of the hand slower ball outside off, Ayush Badoni pulls hard and gets it wide of long-on, handy boundary ",
+        "event": "FOUR",
+        "clip": "clip_17.3_at_199.96393146979258_89770_1.mp4",
+        "batsman": "Ayush Badoni",
+        "bowler": "Mohit Sharma"
+    },
+    {
+        "over": "15.2",
+        "commentary": " Spencer Johnson to Ayush Badoni, B0$, half-volley outside off, angling away from Ayush Badoni who gets forward and stylishly drives wide of cover, on a bent knee and all ",
+        "event": "FOUR",
+        "clip": "clip_15.1_at_188.96591523895398_89770_1.mp4",
+        "batsman": "Ayush Badoni",
+        "bowler": "Spencer Johnson"
+    },
+    {
+        "over": "14.5",
+        "commentary": " Darshan Nalkande to Stoinis, B0$ Caught by Sharath BR!! Darshan Nalkande comes back well. Full on middle, Stoinis gets forward to loft and it's a thick top-edge that goes miles, Sharath BR does well to hold his composure and take it. Big wicket for Stoinis was looking to turn it on. Nalkande is pumped. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_14.4_at_170.96916140667267_89770_1.mp4",
+        "batsman": "Marcus Stoinis",
+        "bowler": "Darshan Nalkande"
+    },
+    {
+        "over": "14.4",
+        "commentary": " Darshan Nalkande to Stoinis, B0$, second six of the over. Full and angling into off-stump, Stoinis holds his shape and gets forward to loft over wide long-on, clean hit ",
+        "event": "SIX",
+        "clip": "clip_14.3_at_165.97006311992786_89770_1.mp4",
+        "batsman": "Marcus Stoinis",
+        "bowler": "Darshan Nalkande"
+    },
+    {
+        "over": "14.1",
+        "commentary": " Darshan Nalkande to Stoinis, B0$, B1$ He will now get a move on. A slower ball on a length outside off, Stoinis gets forward and swipes that hard and flat over long-on ",
+        "event": "TEAM_HUNDRED,FIFTY,SIX",
+        "clip": "clip_14.0_at_160.97096483318305_89770_1.mp4",
+        "batsman": "Marcus Stoinis",
+        "bowler": "Darshan Nalkande"
+    },
+    {
+        "over": "13.3",
+        "commentary": " Noor Ahmad to Stoinis, 1 run, B0$ Tossed up googly on middle and leg, Stoinis gets forward to loft, thick leading-edge and Rashid ran in a long way and slid, but drops it, Gill pats him on the back for that effort, how costly will that be? ",
+        "event": "DROPPED",
+        "clip": "clip_13.2_at_147.97330928764652_89770_1.mp4",
+        "batsman": "Marcus Stoinis",
+        "bowler": "Noor Ahmad"
+    },
+    {
+        "over": "12.4",
+        "commentary": " Darshan Nalkande to Rahul, B0$ Caught by Rahul Tewatia!! \"Power failure,\" quips Ian Bishop on air as soon as Rahul mistimes this. Was pitched up by the pacer and Rahul tried to go after him. Takes the aerial route and launches this towards long-on, but due to lack of timing and power behind the shot, ends up getting caught at long-on. Tewatia the fielder who takes the skier as the LSG captain walks back after playing a scratchy knock. Did a decent job of rebuilding the innings though. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_12.3_at_131.9761947700631_89770_1.mp4",
+        "batsman": "KL Rahul",
+        "bowler": "Darshan Nalkande"
+    },
+    {
+        "over": "4.5",
+        "commentary": " Umesh Yadav to Stoinis, B0$, runs coming thick and fast. Drifting on the pads and Stoinis times his flick through mid-wicket. There were two fielders chasing it, but the placement and timing were just too good ",
+        "event": "FOUR",
+        "clip": "clip_4.4_at_110.9799819657349_89770_1.mp4",
+        "batsman": "Marcus Stoinis",
+        "bowler": "Umesh Yadav"
+    },
+    {
+        "over": "3.2",
+        "commentary": " Spencer Johnson to Rahul, B0$, B1$ Width on offer, slightly fuller and Rahul has carved it over backward point. No one in the deep and that's four more. Rahul trying to be aggressive despite the loss of two early wickets ",
+        "event": "FOUR",
+        "clip": "clip_3.1_at_99.98196573489629_89770_1.mp4",
+        "batsman": "KL Rahul",
+        "bowler": "Spencer Johnson"
+    },
+    {
+        "over": "3.1",
+        "commentary": " Spencer Johnson to Rahul, B0$, nicely timed drive. This was pitched up by the bowler and Rahul creams it through mid-off as he manages to beat the fielder's dive ",
+        "event": "FOUR",
+        "clip": "clip_3.0_at_91.98340847610459_89770_1.mp4",
+        "batsman": "KL Rahul",
+        "bowler": "Spencer Johnson"
+    },
+    {
+        "over": "2.2",
+        "commentary": " Umesh Yadav to Padikkal, B0$ Caught by Shankar!! B1$ Umesh inflicting early damage with the new ball. Was a back of a length delivery outside off, shaping away from the batter and Padikkal played away from his body. Chases it with lack of footwork and the outside edge flies to the lone slip fielder. Shankar stationed there takes a good low catch and Padikkal's string of low scores continues.. B2$ ",
+        "event": "WICKET",
+        "clip": "clip_2.1_at_77.9859332732191_89770_1.mp4",
+        "batsman": "Devdutt Padikkal",
+        "bowler": "Umesh Yadav"
+    },
+    {
+        "over": "2.1",
+        "commentary": " Umesh Yadav to Padikkal, B0$, short of a length on middle and leg, Padikkal pulls this through square leg and strikes his first boundary of the match ",
+        "event": "FOUR",
+        "clip": "clip_2.0_at_70.98719567177636_89770_1.mp4",
+        "batsman": "Devdutt Padikkal",
+        "bowler": "Umesh Yadav"
+    },
+    {
+        "over": "1.2",
+        "commentary": " Spencer Johnson to Rahul, leg byes, B0$, fires this one on leg, Rahul tries to glance it away, but the ball flicks the batter's pads, beats the keeper's dive down the leg-side and races away to the fence ",
+        "event": "FOUR",
+        "clip": "clip_1.1_at_63.98845807033363_89770_1.mp4",
+        "batsman": "KL Rahul",
+        "bowler": "Spencer Johnson"
+    },
+    {
+        "over": "1.1",
+        "commentary": " Spencer Johnson to Rahul, no run, B0$ That was a length delivery and Rahul got an inside edge on to the pads as he tried to defend it. Would had been a horrible start for Lucknow was there no bat involved ",
+        "event": "UDRS",
+        "clip": "clip_1.1_at_63.98845807033363_89770_1.mp4",
+        "batsman": "KL Rahul",
+        "bowler": "Spencer Johnson"
+    },
+    {
+        "over": "0.4",
+        "commentary": " Umesh Yadav to de Kock, B0$ Caught by Noor Ahmad!! Umesh Yadav has the last laugh! A length delivery around off, slides along the deck and de Kock gets a top edge as he looks to whip this across the line. Noor at third man settles under the skier and completes a safe catch as GT have struck in the first over. No de Kock special tonight as he walks back after hitting the only six. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_0.3_at_51.990622182146076_89770_1.mp4",
+        "batsman": "Quinton de Kock",
+        "bowler": "Umesh Yadav"
+    },
+    {
+        "over": "0.2",
+        "commentary": " Umesh Yadav to de Kock, B0$, B1$ Short of a length around middle and leg, de Kock stays put and pulls it over deep backward square leg for a towering six. That went high up in the night sky ",
+        "event": "SIX",
+        "clip": "clip_0.1_at_43.99206492335437_89770_1.mp4",
+        "batsman": "Quinton de Kock",
+        "bowler": "Umesh Yadav"
+    },
+    {
+        "over": "18.5",
+        "commentary": " Yash Thakur to Noor Ahmad, B0$ Caught by de Kock!! B1$ 133.7kph, pace on and banged into the wicket, Noor stays leg-side to pull and top-edges it straight to de Kock at mid-on. Yash Thakur has his arms aloft and Bishnoi is the first one to hug him. B2$ ",
+        "event": "WICKET",
+        "clip": "clip_18.4_at_500.90964833183045_89770_2.mp4",
+        "batsman": "Noor Ahmad",
+        "bowler": "Yash Thakur"
+    },
+    {
+        "over": "18.4",
+        "commentary": " Yash Thakur to Noor Ahmad, B0$, 125.2kph, almost! Bouncer into the deck, Noor Ahmad looks to glide it and gets some wood and the ball just manages to elude the jumping Rahul ",
+        "event": "FOUR",
+        "clip": "clip_18.3_at_493.9109107303877_89770_2.mp4",
+        "batsman": "Noor Ahmad",
+        "bowler": "Yash Thakur"
+    },
+    {
+        "over": "18.3",
+        "commentary": " Yash Thakur to Rahul Tewatia, B0$ Caught by Pooran!! Holes out! 124.5kph, Yash Thakur pulls his length back, Tewatia pulls it flat and straight to deep square leg. Couldn't generate much power behind it and didn't get the elevation as wel. Pooran doesn't err and that's wicket number four for Yash Thakur. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_18.2_at_486.91217312894497_89770_2.mp4",
+        "batsman": "Rahul Tewatia",
+        "bowler": "Yash Thakur"
+    },
+    {
+        "over": "18.2",
+        "commentary": " Yash Thakur to Rahul Tewatia, B0$, 122.9kph, slow, full and in the slot, Rahul Tewatia gets down low to flog it over deep midwicket for an 80m six. Rahul isn't happy with that delivery ",
+        "event": "SIX",
+        "clip": "clip_18.1_at_476.91397655545535_89770_2.mp4",
+        "batsman": "Rahul Tewatia",
+        "bowler": "Yash Thakur"
+    },
+    {
+        "over": "17.5",
+        "commentary": " Naveen-ul-Haq to Rahul Tewatia, B0$, finds the gap now. 114.9kph, short ball, Tewatia fetches from outside off and pulls fiercely through square leg ",
+        "event": "FOUR",
+        "clip": "clip_17.4_at_471.9148782687105_89770_2.mp4",
+        "batsman": "Rahul Tewatia",
+        "bowler": "Naveen-ul-Haq"
+    },
+    {
+        "over": "16.3",
+        "commentary": " Yash Thakur to Rahul Tewatia, B0$, 123.8kph, pace off and short, Rahul Tewatia gets inside the line to swivel-pull. Naveen-ul-Haq runs to his right from long-on to try and push the ball back into play but makes a mess of it. Yash Thakur isn't happy with that effort ",
+        "event": "FOUR",
+        "clip": "clip_16.2_at_463.9163210099188_89770_2.mp4",
+        "batsman": "Rahul Tewatia",
+        "bowler": "Yash Thakur"
+    },
+    {
+        "over": "16.1",
+        "commentary": " Yash Thakur to Rahul Tewatia, B0$, 135.1kph, just over deep backward square leg. Short of length ball, Tewatia walks across and stays back to slug it behind square on the leg-side. Siddharth goes for a one-handed catch with a jump but the ball is just out of his reach ",
+        "event": "SIX",
+        "clip": "clip_16.0_at_458.917222723174_89770_2.mp4",
+        "batsman": "Rahul Tewatia",
+        "bowler": "Yash Thakur"
+    },
+    {
+        "over": "15.5",
+        "commentary": " Naveen-ul-Haq to Rahul Tewatia, B0$, 2 runs, 133.4kph, full outside off, Tewatia throws the kitchen sink and slices it over extra cover. Bishnoi runs back and does a superb job to flick it back into play. Saves two but Naveen-ul-Haq has overstepped ",
+        "event": "TEAM_HUNDRED",
+        "clip": "clip_15.5_at_444.9197475202885_89770_2.mp4",
+        "batsman": "Rahul Tewatia",
+        "bowler": "Naveen-ul-Haq"
+    },
+    {
+        "over": "14.5",
+        "commentary": "Yash Thakur to Rashid Khan, B0$ Caught by (sub)Hooda!! Another one bites the dust! 117.3kph, slower ball on a short of a good length, Rashid Khan shimmies down the track in an attempt to slap it over the off-side. He's early into his shot and ends up toe-ending it towards mid-off where Hooda back-pedals and takes a comfortable catch. Three wickets in 11 balls for Yash Thakur! B1$",
+        "event": "WICKET",
+        "clip": "clip_14.4_at_435.92137060414785_89770_2.mp4",
+        "batsman": "Rashid Khan",
+        "bowler": "Yash Thakur"
+    },
+    {
+        "over": "14.2",
+        "commentary": " Yash Thakur to Shankar, B0$ Caught by Rahul!! Edged and gone! 133.8kph, short and wide outside off, Shankar hops and flashes his bat hard to flay it over backward point. All he manages is an audible edge that's been pouched by the keeper. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_14.1_at_417.9246167718665_89770_2.mp4",
+        "batsman": "Vijay Shankar",
+        "bowler": "Yash Thakur"
+    },
+    {
+        "over": "13.4",
+        "commentary": " Naveen-ul-Haq to Shankar, B0$, cracking sound! 112.7kph, pace off and into the deck, Shankar sees that coming. Waits for it, clears his front leg and dispatches it into the midwicket stands with a powerful pull shot ",
+        "event": "SIX",
+        "clip": "clip_13.3_at_411.92569882777275_89770_2.mp4",
+        "batsman": "Vijay Shankar",
+        "bowler": "Naveen-ul-Haq"
+    },
+    {
+        "over": "12.1",
+        "commentary": " Krunal Pandya to Darshan Nalkande, B0$ Caught by Yash Thakur!! Third wicket for Pandya! 99.1kph, not a good ball by any means but he gets a wicket. Fired down leg, Nalkande flicks it straight to short fine leg where Yash Thakur crouches low to reverse-cup it. GT have now lost half their side. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_12.0_at_398.9280432822362_89770_2.mp4",
+        "batsman": "Darshan Nalkande",
+        "bowler": "Krunal Pandya"
+    },
+    {
+        "over": "11.2",
+        "commentary": " M Siddharth to Darshan Nalkande, B0$, 94.6kph, much-needed six for GT! Fullish on the sticks, Darshan Nalkande makes room, gets low and swings his willow hard to bludgeon it over the bowler's head ",
+        "event": "SIX",
+        "clip": "clip_11.1_at_393.9289449954914_89770_2.mp4",
+        "batsman": "Darshan Nalkande",
+        "bowler": "Manimaran Siddharth"
+    },
+    {
+        "over": "8.5",
+        "commentary": " Krunal Pandya to Sharath BR, B0$ Caught by Ayush Badoni!! Four down! B1$, fullish outside off and Sharath BR gets down low to play a premeditated sweep shot. This one might have held onto the pitch a bit. Lobs up in the air off the top-edge and Badoni comes in from deep backward square leg to gobble it up. Second wicket in the over for Krunal Pandya. B2$ ",
+        "event": "WICKET",
+        "clip": "clip_8.4_at_376.932010820559_89770_2.mp4",
+        "batsman": "Sharath BR",
+        "bowler": "Krunal Pandya"
+    },
+    {
+        "over": "8.1",
+        "commentary": " Krunal Pandya to Sai Sudharsan, B0$ Caught by Ravi Bishnoi!! B1$ 100.3kph, short of length, Sai Sudharsan rocks back to pull and loses his shape in the process. Bit of extra bounce and he top-edges it to deep midwicket where Bishnoi takes a safe catch. GT have lost their top three within a span of 14 deliveries. Game on! B2$ ",
+        "event": "WICKET",
+        "clip": "clip_8.0_at_365.93399458972044_89770_2.mp4",
+        "batsman": "Sai Sudharsan",
+        "bowler": "Krunal Pandya"
+    },
+    {
+        "over": "5.2",
+        "commentary": " Yash Thakur to Shubman Gill, B0$, slapped away. Shubman Gill makes room and cuts the back of a length delivery from leg-stump, wide of point ",
+        "event": "TEAM_FIFTY,PARTNERSHIP,FOUR",
+        "clip": "clip_5.1_at_323.941568981064_89770_2.mp4",
+        "batsman": "Shubman Gill",
+        "bowler": "Yash Thakur"
+    },
+    {
+        "over": "3.4",
+        "commentary": " Mayank Yadav to Sai Sudharsan, B0$, 138.4kph, short of length on the pads, Sai Sudharsan flicks that wide of square leg and it races away, again compact batting ",
+        "event": "FOUR",
+        "clip": "clip_3.3_at_310.94391343552746_89770_2.mp4",
+        "batsman": "Sai Sudharsan",
+        "bowler": "Mayank Yadav"
+    },
+    {
+        "over": "3.1",
+        "commentary": " Mayank Yadav to Sai Sudharsan, B0$, 140.9kph, full outside off, Sai Sudharsan with a lovely off-drive, stays still and just a high elbow meeting the ball, so lovely to see ",
+        "event": "FOUR",
+        "clip": "clip_3.0_at_303.94517583408475_89770_2.mp4",
+        "batsman": "Sai Sudharsan",
+        "bowler": "Mayank Yadav"
+    },
+    {
+        "over": "1.4",
+        "commentary": " Naveen-ul-Haq to Sai Sudharsan, B0$, no slip and four. Sai Sudharsan gets lucky. Fullish outside off, Sudharsan throws the bat and the thick outside-edge flies to where a 1st or 2nd slip would have been ",
+        "event": "FOUR",
+        "clip": "clip_1.3_at_290.9475202885482_89770_2.mp4",
+        "batsman": "Sai Sudharsan",
+        "bowler": "Naveen-ul-Haq"
+    },
+    {
+        "over": "19.4",
+        "commentary": " Mustafizur to Starc, B0$ Caught by Ravindra!! Good idea but Starc finds the fielder. Gets across outside off, gets under the short ball and it's down deep backward square leg's throat. Ravindra moves across to take a smart catch. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_19.3_at_280.76904109589043_91380_1.mp4",
+        "batsman": "Mitchell Starc",
+        "bowler": "Mustafizur Rahman"
+    },
+    {
+        "over": "19.1",
+        "commentary": " Mustafizur to Shreyas Iyer, B0$ Caught by Jadeja!! Another miscue and Jadeja takes it so easily at deep mid-wicket. A slower ball off-cutter outside off, Shreyas Iyer slogs and does not find the middle of the bat, finds Jadeja. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_19.0_at_262.78383561643835_91380_1.mp4",
+        "batsman": "Shreyas Iyer",
+        "bowler": "Mustafizur Rahman"
+    },
+    {
+        "over": "18.4",
+        "commentary": " Tushar Deshpande to Shreyas Iyer, B0$, Shreyas Iyer gets lucky, a slower short ball outside off, he pulls and the top-edge loops over Dhoni and fine-leg is in ",
+        "event": "FOUR",
+        "clip": "clip_18.3_at_242.80027397260275_91380_1.mp4",
+        "batsman": "Shreyas Iyer",
+        "bowler": "Tushar Deshpande"
+    },
+    {
+        "over": "18.2",
+        "commentary": " Tushar Deshpande to Russell, B0$ Caught by Mitchell!! Bravo claps Tushar Deshpande after he gets Russell. Was in the slot, fullish outside off, Russell lofts but picks out long-on and Mitchell takes another catch, just inside the cushions. A few more yards and would have been six. Massive wicket as that wicket could make a difference of 10-15 to the final total. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_18.1_at_231.80931506849316_91380_1.mp4",
+        "batsman": "Andre Russell",
+        "bowler": "Tushar Deshpande"
+    },
+    {
+        "over": "18.1",
+        "commentary": " Tushar Deshpande to Russell, B0$, full and seam-up outside off, Russell carves that over cover-point, hit so hard and it flies to the fence ",
+        "event": "FOUR",
+        "clip": "clip_18.0_at_226.81342465753426_91380_1.mp4",
+        "batsman": "Andre Russell",
+        "bowler": "Tushar Deshpande"
+    },
+    {
+        "over": "17.4",
+        "commentary": " Mustafizur to Russell, no run, B0$ How costly will this be? A slower ball off-cutter full outside off, Russell gets a thick outside-edge on the swing, Dhoni was slow to react, lunged out with one glove to his right, hits the gloves hard and goes down. Usually Dhoni is agile and alert, this time he wasn't, looked a tad clumsy on replay that drop ",
+        "event": "DROPPED",
+        "clip": "clip_17.3_at_219.8191780821918_91380_1.mp4",
+        "batsman": "Andre Russell",
+        "bowler": "Mustafizur Rahman"
+    },
+    {
+        "over": "17.3",
+        "commentary": " Mustafizur to Russell, B0$, B1$, this time he moves across and it's a no-ball too, full outside off, blasted wide of extra-cover and beats sweeper cover too ",
+        "event": "FOUR",
+        "clip": "clip_17.2_at_212.8249315068493_91380_1.mp4",
+        "batsman": "Andre Russell",
+        "bowler": "Mustafizur Rahman"
+    },
+    {
+        "over": "16.4",
+        "commentary": " Tushar Deshpande to Rinku Singh, B0$ Bowled!! Dragged back on. Full outside off, Rinku Singh goes for a big drive, thick inside-edge is back on the stumps, was the slower ball and away from the left-hander. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_16.3_at_198.8364383561644_91380_1.mp4",
+        "batsman": "Rinku Singh",
+        "bowler": "Tushar Deshpande"
+    },
+    {
+        "over": "15.5",
+        "commentary": " Thakur to Shreyas Iyer, B0$, slower ball off-cutter dug in, Shreyas Iyer pulls wide of Theekshana at deep square leg, he runs and tries to palm it to Jadeja coming across, but fails to do so, Thakur is not happy ",
+        "event": "FOUR",
+        "clip": "clip_15.4_at_191.8421917808219_91380_1.mp4",
+        "batsman": "Shreyas Iyer",
+        "bowler": "Shardul Thakur"
+    },
+    {
+        "over": "11.5",
+        "commentary": "Theekshana to Ramandeep Singh, B0$ Bowled!! Theekshana has the last laugh! Ramandeep Singh makes room to play this, but Theekshana bowls a carrom ball and directs it at the stumps. Ramandeep gets beaten as the ball zips through and finds the middle stump rattled. CSK spinners owning KKR batters in front of the Chepauk crowd. B1$",
+        "event": "WICKET",
+        "clip": "clip_11.4_at_179.85205479452054_91380_1.mp4",
+        "batsman": "Ramandeep Singh ",
+        "bowler": "Maheesh Theekshana"
+    },
+    {
+        "over": "11.4",
+        "commentary": " Theekshana to Ramandeep Singh, B0$, just clears the boundary! Flatter through the air, Ramandeep Singh makes slight room and swings this over wide long-on where he clears the fielder ",
+        "event": "SIX",
+        "clip": "clip_11.3_at_170.85945205479453_91380_1.mp4",
+        "batsman": "Ramandeep Singh ",
+        "bowler": "Maheesh Theekshana"
+    },
+    {
+        "over": "8.2",
+        "commentary": " Jadeja to Venkatesh Iyer, B0$ Caught by Mitchell!! Venkatesh Iyer's struggle comes to an end. Walks back after playing a rusty knock as Jadeja is on absolute fire. Goes short and quick around middle, Venkatesh Iyer pulls it towards mid-wicket where Mitchell completes a fine running catch to his right. That shall also be the strategic timeout.. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_8.1_at_148.87753424657535_91380_1.mp4",
+        "batsman": "Venkatesh Iyer",
+        "bowler": "Ravindra Jadeja"
+    },
+    {
+        "over": "6.5",
+        "commentary": " Jadeja to Narine, B0$ Caught by Theekshana!! Jadeja strikes twice in his first over. Gets the wicket of the danger man - Sunil Narine. Width on offer outside off and Narine looks to take him on. Throws his hands at this widish delivery and miscues it towards wide long-off. Theekshana stationed in the deep takes a safe reverse cup and that's that from Narine with the bat. Didn't look comfortable since that shoulder niggle, but hopefully it's nothing serious. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_6.4_at_130.8923287671233_91380_1.mp4",
+        "batsman": "Sunil Narine",
+        "bowler": "Ravindra Jadeja"
+    },
+    {
+        "over": "5.1",
+        "commentary": " Mustafizur to Angkrish Raghuvanshi, B0$, deft touch. This was full in length outside off and Angkrish Raghuvanshi reaches out for it, slices it through backward point for four runs. No one in the deep to cut it down ",
+        "event": "FOUR",
+        "clip": "clip_5.0_at_116.90383561643836_91380_1.mp4",
+        "batsman": "Angkrish Raghuvanshi",
+        "bowler": "Mustafizur Rahman"
+    },
+    {
+        "over": "4.2",
+        "commentary": " Theekshana to Angkrish Raghuvanshi, B0$, first maximum for Angkrish Raghuvanshi! A tossed up delivery by Theekshana, Angkrish Raghuvanshi stays put and launches it over the bowler's head for half-a-dozen. 81m maximum as Gaikwad wipes off the sweat on his forehead ",
+        "event": "SIX",
+        "clip": "clip_4.1_at_97.91945205479452_91380_1.mp4",
+        "batsman": "Angkrish Raghuvanshi",
+        "bowler": "Maheesh Theekshana"
+    },
+    {
+        "over": "3.4",
+        "commentary": " Thakur to Narine, B0$, B1$ Thakur goes full on off and Narine drives it crisply past the non-striker. Still struggling with that shoulder, quite evident once he's going hard after the bowler ",
+        "event": "FOUR",
+        "clip": "clip_3.3_at_92.92356164383561_91380_1.mp4",
+        "batsman": "Sunil Narine",
+        "bowler": "Shardul Thakur"
+    },
+    {
+        "over": "3.1",
+        "commentary": " Thakur to Angkrish Raghuvanshi, B0$, B1$ Loose delivery down the leg-side, Angkrish Raghuvanshi glances away to the fine leg fence for four more. KKR's innings slowly getting back on track after that early dismissal ",
+        "event": "FOUR",
+        "clip": "clip_3.0_at_87.92767123287672_91380_1.mp4",
+        "batsman": "Angkrish Raghuvanshi",
+        "bowler": "Shardul Thakur"
+    },
+    {
+        "over": "2.5",
+        "commentary": " Tushar Deshpande to Narine, B0$, doesn't matter if he's injured, he'll do what he has been doing. Short of a length around leg, Narine flicks it over deep backward square leg and just manages to clear Mitchell's leap near the boundary ",
+        "event": "SIX",
+        "clip": "clip_2.4_at_81.93260273972602_91380_1.mp4",
+        "batsman": "Sunil Narine",
+        "bowler": "Tushar Deshpande"
+    },
+    {
+        "over": "2.4",
+        "commentary": " Tushar Deshpande to Narine, B0$, definitely some trouble with his shoulder. Was a length delivery and Narine thumped it over mid-off, immediately showed some discomfort confirm the replays.. ",
+        "event": "FOUR",
+        "clip": "clip_2.3_at_75.93753424657534_91380_1.mp4",
+        "batsman": "Sunil Narine",
+        "bowler": "Tushar Deshpande"
+    },
+    {
+        "over": "2.1",
+        "commentary": " Tushar Deshpande to Narine, leg byes, B0$, some bonus runs for KKR. Short of a length around leg, Narine was cramped for room as the ball clips the thigh pad and races away to the fine leg boundary ",
+        "event": "FOUR",
+        "clip": "clip_2.0_at_69.94246575342466_91380_1.mp4",
+        "batsman": "Sunil Narine",
+        "bowler": "Tushar Deshpande"
+    },
+    {
+        "over": "17.4",
+        "commentary": " Anukul Roy to Gaikwad, B0$, short around off, Gaikwad makes room and cuts it away through the off-side ring. Field was up and it races away for four. B1$ ",
+        "event": "FOUR",
+        "clip": "clip_17.3_at_542.553698630137_91380_2.mp4",
+        "batsman": "Ruturaj Gaikwad",
+        "bowler": "Anukul Roy"
+    },
+    {
+        "over": "16.5",
+        "commentary": " Vaibhav Arora to Shivam Dube, B0$ Bowled!! Cleaned up! Full and straight at 137kph, in the slot for Dube to slog but he's beaten completely. Off stump goes out of the ground. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_16.4_at_518.5734246575342_91380_2.mp4",
+        "batsman": "Shivam Dube",
+        "bowler": "Vaibhav Arora"
+    },
+    {
+        "over": "16.4",
+        "commentary": " Vaibhav Arora to Shivam Dube, B0$, wow that's massive! Length ball around leg, Dube backs away, creates swinging room and smokes it over midwicket ",
+        "event": "SIX",
+        "clip": "clip_16.3_at_510.58_91380_2.mp4",
+        "batsman": "Shivam Dube",
+        "bowler": "Vaibhav Arora"
+    },
+    {
+        "over": "15.4",
+        "commentary": " Chakaravarthy to Shivam Dube, B0$, full and wide, 92kph, and it's another powerful strike from Dube as he reaches out and hammers it into the crowd over long-off. Absolutely nailed on the front foot ",
+        "event": "SIX",
+        "clip": "clip_15.3_at_505.5841095890411_91380_2.mp4",
+        "batsman": "Shivam Dube",
+        "bowler": "Varun Chakaravarthy"
+    },
+    {
+        "over": "15.3",
+        "commentary": " Chakaravarthy to Shivam Dube, B0$, again looks to keep it wide outside off, but it's not wide enough to stop Dube from getting hold of it. He reaches out, swings hard and whacks it straight back for six ",
+        "event": "SIX",
+        "clip": "clip_15.2_at_496.59150684931507_91380_2.mp4",
+        "batsman": "Shivam Dube",
+        "bowler": "Varun Chakaravarthy"
+    },
+    {
+        "over": "13.3",
+        "commentary": " Starc to Shivam Dube, B0$, short of length around the tummy, an off-cutter that just sits up for Dube and he nails the pull through midwicket. One bounce and over the ropes ",
+        "event": "FOUR",
+        "clip": "clip_13.2_at_486.59972602739725_91380_2.mp4",
+        "batsman": "Shivam Dube",
+        "bowler": "Mitchell Starc"
+    },
+    {
+        "over": "12.3",
+        "commentary": " Narine to Mitchell, B0$ Bowled!! Right through the gate! Mitchell dances down for a lofted shot, isn't quite to the pitch of this off-break and it turns between bat and pad before crashing into middle. Narine punches the air and Mitchell nods his head to acknowledge that he was completely done in there. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_12.2_at_468.61452054794523_91380_2.mp4",
+        "batsman": "Daryl Mitchell",
+        "bowler": "Sunil Narine"
+    },
+    {
+        "over": "11.4",
+        "commentary": " Chakaravarthy to Gaikwad, 2 runs, streaky runs for Gaikwad, but it takes him to B0$! The whistles get louder at Chepauk. Length ball on off, turning in, he gets forward to defend and it takes an inside edge past leg stump ",
+        "event": "FIFTY",
+        "clip": "clip_11.3_at_447.6317808219178_91380_2.mp4",
+        "batsman": "Ruturaj Gaikwad",
+        "bowler": "Varun Chakaravarthy"
+    },
+    {
+        "over": "10.5",
+        "commentary": " Russell to Gaikwad, B0$, 131.4kph, short ball just outside off, another off-cutter into the pitch from Russell and Gaikwad pulls it nicely through square leg. Lovely timing, races away ",
+        "event": "FOUR",
+        "clip": "clip_10.4_at_442.6358904109589_91380_2.mp4",
+        "batsman": "Ruturaj Gaikwad",
+        "bowler": "Andre Russell"
+    },
+    {
+        "over": "6.5",
+        "commentary": " Narine to Mitchell, B0$, that's where he is so strong, Mitchell comes down the track and takes it on the half-volley, slams the loft way back over long-on ",
+        "event": "SIX",
+        "clip": "clip_6.4_at_426.6490410958904_91380_2.mp4",
+        "batsman": "Daryl Mitchell",
+        "bowler": "Sunil Narine"
+    },
+    {
+        "over": "5.5",
+        "commentary": " Vaibhav Arora to Gaikwad, B0$, poor ball and Gaikwad does not miss out, slower and short outside off, cut away in the air, wide of deep backward point though ",
+        "event": "TEAM_FIFTY,FOUR",
+        "clip": "clip_5.4_at_424.6506849315069_91380_2.mp4",
+        "batsman": "Ruturaj Gaikwad",
+        "bowler": "Vaibhav Arora"
+    },
+    {
+        "over": "5.4",
+        "commentary": " Vaibhav Arora to Gaikwad, B0$, what timing. Fullish outside off, Gaikwad opens the face of the bat and punches the square drive wide of backward point, races away, stayed beside the line and put it away ",
+        "event": "FOUR",
+        "clip": "clip_5.3_at_420.6539726027397_91380_2.mp4",
+        "batsman": "Ruturaj Gaikwad",
+        "bowler": "Vaibhav Arora"
+    },
+    {
+        "over": "5.3",
+        "commentary": " Vaibhav Arora to Mitchell, 1 run, B0$, short of length and Mitchell whips that in the air, Ramandeep sprints, gets both hands but drops it, should have been taken ",
+        "event": "DROPPED",
+        "clip": "clip_5.2_at_409.66301369863015_91380_2.mp4",
+        "batsman": "Daryl Mitchell",
+        "bowler": "Vaibhav Arora"
+    },
+    {
+        "over": "4.5",
+        "commentary": " Anukul Roy to Gaikwad, B0$, this is excellent from Gaikwad, he makes room outside the leg-stump and drives the full ball from there, wide of extra-cover and Starc has no chance at long-off ",
+        "event": "FOUR",
+        "clip": "clip_4.4_at_404.66712328767125_91380_2.mp4",
+        "batsman": "Ruturaj Gaikwad",
+        "bowler": "Anukul Roy"
+    },
+    {
+        "over": "4.4",
+        "commentary": " Anukul Roy to Gaikwad, B0$, nice, flat and fast, angling into leg-stump, Gaikwad makes room and steers wide of backward point, right into the gap ",
+        "event": "FOUR",
+        "clip": "clip_4.3_at_396.673698630137_91380_2.mp4",
+        "batsman": "Ruturaj Gaikwad",
+        "bowler": "Anukul Roy"
+    },
+    {
+        "over": "4.3",
+        "commentary": " Anukul Roy to Gaikwad, no run, Salt goes \"ahhhhhhhhhhhhhhhhhh\" for the LBW appeal, umpire Anil Chaudhary does not give it and Shreyas takes the B0$, quicker and fuller on the stumps, Gaikwad gets forward to defend, gets an inside-edge onto the pads, clear inside-edge and that's a poor review ",
+        "event": "UDRS",
+        "clip": "clip_4.3_at_396.673698630137_91380_2.mp4",
+        "batsman": "Ruturaj Gaikwad",
+        "bowler": "Anukul Roy"
+    },
+    {
+        "over": "3.2",
+        "commentary": " Vaibhav Arora to Ravindra, B0$ Caught by Chakaravarthy!! Straight to long-on. Ravindra takes it on a length outside off, lofts and straightaway he knew he had made a mistake. Did he not know there was a fielder there? Ravindra falls to a cheap score again. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_3.1_at_375.6909589041096_91380_2.mp4",
+        "batsman": "Rachin Ravindra",
+        "bowler": "Vaibhav Arora"
+    },
+    {
+        "over": "2.3",
+        "commentary": " Starc to Ravindra, B0$, Starc keeps going full and this is lofted over mid-on, two bounces and over, Starc needs to pull his length back ",
+        "event": "FOUR",
+        "clip": "clip_2.2_at_362.70164383561644_91380_2.mp4",
+        "batsman": "Rachin Ravindra",
+        "bowler": "Mitchell Starc"
+    },
+    {
+        "over": "2.2",
+        "commentary": " Starc to Ravindra, B0$, full on the stumps, Ravindra drives hard and in the air, wide of mid-on who is wide, runs away ",
+        "event": "FOUR",
+        "clip": "clip_2.1_at_356.7065753424658_91380_2.mp4",
+        "batsman": "Rachin Ravindra",
+        "bowler": "Mitchell Starc"
+    },
+    {
+        "over": "19.5",
+        "commentary": " Sam Curran to Bhuvneshwar, B0$ Caught by Bairstow!! Bhuvneshwar perishes for the team's cause. Full pitcher and it was in the slot, but Bhuvneshwar does not get hold of the loft and mistimes it to long-off, Bairstow runs in and takes a good catch. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_19.4_at_352.81362664990576_91389_1.mp4",
+        "batsman": "Bhuvneshwar Kumar",
+        "bowler": "Sam Curran"
+    },
+    {
+        "over": "18.5",
+        "commentary": " Arshdeep Singh to Shahbaz Ahmed, B0$, wow! That is as good as Abhishek's shot against Curran. Full and outside off, Shahbaz flows through the loft and sends it sailing over deep extra cover ",
+        "event": "SIX",
+        "clip": "clip_18.4_at_347.81626649905724_91389_1.mp4",
+        "batsman": "Shahbaz Ahmed",
+        "bowler": "Arshdeep Singh"
+    },
+    {
+        "over": "18.4",
+        "commentary": " Arshdeep Singh to Shahbaz Ahmed, B0$, much needed. Slower ball outside off, Shahbaz waits and slices the drive to the left of backward point ",
+        "event": "FOUR",
+        "clip": "clip_18.3_at_341.819434318039_91389_1.mp4",
+        "batsman": "Shahbaz Ahmed",
+        "bowler": "Arshdeep Singh"
+    },
+    {
+        "over": "17.3",
+        "commentary": " Rabada to Cummins, B0$ Bowled!! Cleaned up! Finally Rabada has his name in the wickets column. He's bowled well today without anything to show, now he cleans up the SRH skipper. Good length delivery and Cummins swings across the line, misses and the ball hits the top of middle-stump. SRH have lost their way completely in the last couple of overs. Will they be bowled out? B1$ ",
+        "event": "WICKET",
+        "clip": "clip_17.2_at_330.8252419861722_91389_1.mp4",
+        "batsman": "Pat Cummins",
+        "bowler": "Kagiso Rabada"
+    },
+    {
+        "over": "16.5",
+        "commentary": " Arshdeep Singh to Nitish Reddy, B0$ Caught by Rabada!! Arshdeep has turned the game on its head. Second wicket in the over and this is the big one of a well-set Reddy. Not a wicket-taking delivery and Reddy would be kicking himself. Full toss at a hittable height and Reddy throws his bat on the big shot, miscues it high and Rabada accepts the catch near long-off. Dhawan has a big smile on his face and the Punjab flags are waving across Mullanpur. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_16.4_at_325.8278818353237_91389_1.mp4",
+        "batsman": "Nitish Reddy",
+        "bowler": "Arshdeep Singh"
+    },
+    {
+        "over": "16.3",
+        "commentary": " Arshdeep Singh to Abdul Samad, B0$ Caught by Harshal Patel!! It is Arshdeep's night. Third wicket for him and more importantly  he breaks the partnership. Samad struck it well but picked out the fielder. Full delivery outside off, Samad slices the loft and hits it straight to deep backward point, Harshal came in a few steps to take the catch. Punjab needed that.. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_16.2_at_308.83685732243873_91389_1.mp4",
+        "batsman": "Abdul Samad",
+        "bowler": "Arshdeep Singh"
+    },
+    {
+        "over": "16.2",
+        "commentary": " Arshdeep Singh to Abdul Samad, no run, B0$ Very full delivery outside off, Samad throws his bat and does not connect with the drive. The ball was outside the wide guideline but Samad was standing outside off-stump, so no wide ",
+        "event": "UDRS",
+        "clip": "clip_16.2_at_308.83685732243873_91389_1.mp4",
+        "batsman": "Abdul Samad",
+        "bowler": "Arshdeep Singh"
+    },
+    {
+        "over": "16.1",
+        "commentary": " Arshdeep Singh to Abdul Samad, B0$, just wide of Jitesh Sharma. Wide yorker outside off, Samad bends down, opens the bat face and slices it to the right of Jitesh. No chance to take the catch ",
+        "event": "TEAM_HUNDRED,PARTNERSHIP,FOUR",
+        "clip": "clip_16.0_at_296.8431929604023_91389_1.mp4",
+        "batsman": "Abdul Samad",
+        "bowler": "Arshdeep Singh"
+    },
+    {
+        "over": "15.5",
+        "commentary": " Harshal Patel to Abdul Samad, B0$, Harshal has lost the plot against Samad. That's the fourth boundary Samad has scored off Harshal. Drifted down leg, Samad helps it along the way with a neat little clip ",
+        "event": "FOUR",
+        "clip": "clip_15.4_at_289.8468887492144_91389_1.mp4",
+        "batsman": "Abdul Samad",
+        "bowler": "Harshal Patel"
+    },
+    {
+        "over": "15.4",
+        "commentary": " Harshal Patel to Abdul Samad, B0$, slower ball bowled into the wicket, Samad had the width and he slaps it in front of square on the off-side, Shashank gets around from sweeper and cannot get there in time ",
+        "event": "FOUR",
+        "clip": "clip_15.3_at_282.8505845380264_91389_1.mp4",
+        "batsman": "Abdul Samad",
+        "bowler": "Harshal Patel"
+    },
+    {
+        "over": "14.5",
+        "commentary": " Harpreet Brar to Nitish Reddy, B0$, smashed! Reddy is turning it on for SRH. Brar has turned to his darts and is being carted around. Fired full and right in the slot, Reddy extends his arms and launches it over long-off ",
+        "event": "SIX",
+        "clip": "clip_14.4_at_272.85586423632935_91389_1.mp4",
+        "batsman": "Nitish Reddy",
+        "bowler": "Harpreet Brar"
+    },
+    {
+        "over": "14.4",
+        "commentary": " Harpreet Brar to Nitish Reddy, B0$, B1$ This is not quite short but Reddy goes for the pull, miscues it towards deep mid-wicket and Shashank moves to his left, gets both hands and parries it into the rope. He never looked settled and was on the move as he attempted to catch that. How costly will this prove? ",
+        "event": "FOUR,DROPPED",
+        "clip": "clip_14.3_at_260.8621998742929_91389_1.mp4",
+        "batsman": "Nitish Reddy",
+        "bowler": "Harpreet Brar"
+    },
+    {
+        "over": "14.3",
+        "commentary": " Harpreet Brar to Nitish Reddy, B0$, that's very unlike Brar. He gifts a juicy full toss and Reddy does not miss out, he smokes it into the cow corner stand for a 91-meter six. B1$ This has been a superb innings and one that has kept SRH in the game. He raises his bat and soaks in the applause of his team mates ",
+        "event": "FIFTY,SIX",
+        "clip": "clip_14.2_at_249.86800754242617_91389_1.mp4",
+        "batsman": "Nitish Reddy",
+        "bowler": "Harpreet Brar"
+    },
+    {
+        "over": "14.2",
+        "commentary": " Harpreet Brar to Nitish Reddy, B0$, wow! This is some shot from Reddy. This was darted at the stumps, Reddy reverses his stance, crouches low and swipes it over backward point ",
+        "event": "FOUR",
+        "clip": "clip_14.1_at_244.87064739157765_91389_1.mp4",
+        "batsman": "Nitish Reddy",
+        "bowler": "Harpreet Brar"
+    },
+    {
+        "over": "13.5",
+        "commentary": " Harshal Patel to Abdul Samad, B0$, back to back boundaries. This is angled in and ends up nicely on the pads, Samad leans forward and clips it wide of mid-wicket. All timing as the ball runs away.. Dhawan goes across to have a word with Harshal ",
+        "event": "FOUR",
+        "clip": "clip_13.4_at_236.87487115022_91389_1.mp4",
+        "batsman": "Abdul Samad",
+        "bowler": "Harshal Patel"
+    },
+    {
+        "over": "13.4",
+        "commentary": " Harshal Patel to Abdul Samad, B0$, full pitcher with width on offer, Samad throws his bat and slices it over backward point. Not quite where he wanted but SRH will take them any which way ",
+        "event": "FOUR",
+        "clip": "clip_13.3_at_230.87803896920178_91389_1.mp4",
+        "batsman": "Abdul Samad",
+        "bowler": "Harshal Patel"
+    },
+    {
+        "over": "13.1",
+        "commentary": " Harshal Patel to Klaasen, B0$ Caught by Sam Curran!! Klaasen turned around and started to walk as soon as he hit that. Curran takes the catch, turns towards the crowd and does a double fist pump. This is a massive wicket for Punjab Kings. Even Harshal is delighted. This was a I0$ good length delivery and Klaasen looks to loft through the line, gets it high on the bat and miscues it to long-off, Curran makes no mistake. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_13.0_at_221.88279069767444_91389_1.mp4",
+        "batsman": "Heinrich Klaasen",
+        "bowler": "Harshal Patel"
+    },
+    {
+        "over": "11.5",
+        "commentary": " Rabada to Nitish Reddy, B0$, B1$, short and at the stumps, Nitish picks the length early, gets inside the line, uses Rabada's pace and then helps it over long leg with the pull ",
+        "event": "SIX",
+        "clip": "clip_11.4_at_210.8885983658077_91389_1.mp4",
+        "batsman": "Nitish Reddy",
+        "bowler": "Kagiso Rabada"
+    },
+    {
+        "over": "10.3",
+        "commentary": " Harpreet Brar to Nitish Reddy, B0$, back-to-back boundaries for Nitish - a real drag-down by Brar, was looking to pull the length back, Nitish rocks back and then muscles the pull, high and deep into the stands at backward square leg ",
+        "event": "SIX",
+        "clip": "clip_10.2_at_194.8970458830924_91389_1.mp4",
+        "batsman": "Nitish Reddy",
+        "bowler": "Harpreet Brar"
+    },
+    {
+        "over": "10.2",
+        "commentary": " Harpreet Brar to Nitish Reddy, B0$, B1$, dropped short and wide of off - Nitish backs away, plays late and then cuts it square behind point, beating the fielder in the deep ",
+        "event": "FOUR",
+        "clip": "clip_10.1_at_187.90074167190448_91389_1.mp4",
+        "batsman": "Nitish Reddy",
+        "bowler": "Harpreet Brar"
+    },
+    {
+        "over": "9.4",
+        "commentary": "Harshal Patel to Tripathi, B0$ Caught by Jitesh Sharma!! An appeal for B1$, Jitesh Sharma wasn't so sure this time, but the bowler was confident, so was Sam Curran, he must have heard something because B2$. Was a slower short ball and Tripathi was looking to ramp it over the keeper's head, the ball has caught the toe-end though and PBKS have another successful review - Tripathi is OUT. A wicket out of nowhere, an innocuous slower bouncer and the right-hander only managed to toe-end it on its way to the keeper. B3$",
+        "event": "WICKET,UDRS",
+        "clip": "clip_9.3_at_161.91446888749215_91389_1.mp4",
+        "batsman": "Rahul Tripathi",
+        "bowler": "Harshal Patel"
+    },
+    {
+        "over": "6.4",
+        "commentary": " Harpreet Brar to Tripathi, B0$, B1$, dropped short and wide of off, Tripathi backs away, opens up the off-side and then places the cut square past point ",
+        "event": "FOUR",
+        "clip": "clip_6.3_at_149.9208045254557_91389_1.mp4",
+        "batsman": "Rahul Tripathi",
+        "bowler": "Harpreet Brar"
+    },
+    {
+        "over": "4.5",
+        "commentary": " Sam Curran to Abhishek Sharma, B0$, back-to-back boundaries for Abhishek - too full and too straight from Curran, Abhishek gets inside the line and then whips it over mid-on, one bounce and over the ropes ",
+        "event": "FOUR",
+        "clip": "clip_4.5_at_136.92766813324954_91389_1.mp4",
+        "batsman": "Abhishek Sharma",
+        "bowler": "Sam Curran"
+    },
+    {
+        "over": "4.4",
+        "commentary": " Sam Curran to Abhishek Sharma, B0$, B1$, Curran gets greedy and looks for swing, but this is a wide half-volley and it's sent soring over cover with a superb drive, went a long way into the stands ",
+        "event": "SIX",
+        "clip": "clip_4.3_at_125.93347580138278_91389_1.mp4",
+        "batsman": "Abhishek Sharma",
+        "bowler": "Sam Curran"
+    },
+    {
+        "over": "3.4",
+        "commentary": " Arshdeep Singh to Markram, B0$ Caught by Jitesh Sharma!! One brings two for Arshdeep and Punjab have been on the ball tonight. On a good length and shaping across the right-hander, Markram's feet hardly moved as he shaped for the drive, gets a thin edge and Jitesh Sharma does the rest. A blob for Markram and SRH find themselves in a spot of bother. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_3.3_at_115.93875549968574_91389_1.mp4",
+        "batsman": "Aiden Markram",
+        "bowler": "Arshdeep Singh"
+    },
+    {
+        "over": "3.2",
+        "commentary": "Arshdeep Singh to Head, B0$ Caught by Dhawan!! A good running catch and Dhawan does the thigh-slap celebrations after holding onto the catch. On a good length and angling across the left-hander, Head went hard on the drive, lost his poise and skewed it high in the air - it went over mid-off, but so did Dhawan as he ran back, kept his eyes on the ball all the time and completes a fine running catch. Head looked very scratchy and PBKS have removed him pretty cheaply. B1$",
+        "event": "WICKET",
+        "clip": "clip_3.1_at_100.94667504714018_91389_1.mp4",
+        "batsman": "Travis Head",
+        "bowler": "Arshdeep Singh"
+    },
+    {
+        "over": "3.1",
+        "commentary": "Arshdeep Singh to Abhishek Sharma, 1 run, a direct hit and it could have been close - Abhishek pushed one straight to cover-point and called his partner through for a quick single. He would have been short had there been a direct hit",
+        "event": "RUNOUT_MISS",
+        "clip": "clip_3.1_at_100.94667504714018_91389_1.mp4",
+        "batsman": "Abhishek Sharma",
+        "bowler": "Arshdeep Singh"
+    },
+    {
+        "over": "2.3",
+        "commentary": " Rabada to Head, B0$, B1$, Head is making Rabada pay now - on a length and at the stumps, Head gets forward and then drives it on the rise, clears mid-on and bounces away to the ropes ",
+        "event": "FOUR",
+        "clip": "clip_2.2_at_94.94984286612194_91389_1.mp4",
+        "batsman": "Travis Head",
+        "bowler": "Kagiso Rabada"
+    },
+    {
+        "over": "2.2",
+        "commentary": " Rabada to Head, B0$, back-to-back boundaries for Head - this will give him some confidence, back of a length and well wide of off, he gets on top of the bounce and then clatters it backward of square on the off-side for a boundary ",
+        "event": "FOUR",
+        "clip": "clip_2.1_at_89.95248271527342_91389_1.mp4",
+        "batsman": "Travis Head",
+        "bowler": "Kagiso Rabada"
+    },
+    {
+        "over": "2.1",
+        "commentary": "Rabada to Head, B0$, B1$, Head is living a charmed life, fuller length delivery and shaping back into the left-hander, Head clears his front-foot on the hoick, gets a thick inside edge and the ball runs away past the diving keeper",
+        "event": "FOUR",
+        "clip": "clip_2.0_at_83.95565053425518_91389_1.mp4",
+        "batsman": "Travis Head",
+        "bowler": "Kagiso Rabada"
+    },
+    {
+        "over": "1.5",
+        "commentary": " Arshdeep Singh to Abhishek Sharma, B0$, B1$, back of a length and shaping away from wide of off - Abhishek plays away from his body, an open-faced poke and he gets it wide of the diving fielder at backward point. Shashank Singh was the fielder ",
+        "event": "FOUR",
+        "clip": "clip_1.4_at_73.96093023255814_91389_1.mp4",
+        "batsman": "Abhishek Sharma",
+        "bowler": "Arshdeep Singh"
+    },
+    {
+        "over": "0.3",
+        "commentary": "Rabada to Head, B0$, B1$, full and wide from Rabada - Head saw the width and went hard on the drive, gets a thick edge that flew over the lone slip, one bounce and over the ropes",
+        "event": "FOUR",
+        "clip": "clip_0.2_at_66.96462602137021_91389_1.mp4",
+        "batsman": "Travis Head",
+        "bowler": "Kagiso Rabada"
+    },
+    {
+        "over": "19.5",
+        "commentary": "Unadkat to Ashutosh Sharma, 1 run, B0$ Off-pace length ball, swung away to deep mid where Tripathi comes in and puts down a straightforward catch",
+        "event": "DROPPED",
+        "clip": "clip_19.4_at_737.610358265242_91389_2.mp4",
+        "batsman": "Ashutosh Sharma",
+        "bowler": "Jaydev Unadkat"
+    },
+    {
+        "over": "19.2",
+        "commentary": " Unadkat to Ashutosh Sharma, B0$, would you believe it? B1$ Slot ball, Ashutosh Sharma stays deep in his crease to thump it over long-off. Samad jumps, not only does he not cach it but also lets the ball burst through his palms ",
+        "event": "PARTNERSHIP,DROPPED,SIX",
+        "clip": "clip_19.1_at_689.6357008170962_91389_2.mp4",
+        "batsman": "Ashutosh Sharma",
+        "bowler": "Jaydev Unadkat"
+    },
+    {
+        "over": "19.1",
+        "commentary": " Unadkat to Ashutosh Sharma, B0$, 107.7kph, round the wicket, slow and short, Ashutosh Sharma shuffles, waits and slams the pull over midwicket. Nitish times his jump well at deep mid but he ends up B1$ ",
+        "event": "SIX,DROPPED",
+        "clip": "clip_19.0_at_678.6415084852295_91389_2.mp4",
+        "batsman": "Ashutosh Sharma",
+        "bowler": "Jaydev Unadkat"
+    },
+    {
+        "over": "18.5",
+        "commentary": " T Natarajan to Shashank Singh, B0$, 133.9kph, low full toss outside off, meant to be the yorker. Shashank Singh gets low, gets under it too and then scoops it over short fine leg. A couple of bounces and into the fence ",
+        "event": "FOUR",
+        "clip": "clip_18.4_at_668.6467881835324_91389_2.mp4",
+        "batsman": "Shashank Singh",
+        "bowler": "T Natarajan"
+    },
+    {
+        "over": "18.4",
+        "commentary": " T Natarajan to Ashutosh Sharma, 1 run, 134.7kph, wide yorker, Ashutosh Sharma opens the bat-face to squeeze it to deep backward point ",
+        "event": "TEAM_HUNDRED",
+        "clip": "clip_18.4_at_668.6467881835324_91389_2.mp4",
+        "batsman": "Ashutosh Sharma",
+        "bowler": "T Natarajan"
+    },
+    {
+        "over": "18.2",
+        "commentary": " T Natarajan to Ashutosh Sharma, B0$, 132.7kph, very low full toss outside off, Ashutosh Sharma bends his back leg, gets under it and brings his bottom hand into play to superbly bunt it to wide long-on for a one-bounce four ",
+        "event": "FOUR",
+        "clip": "clip_18.1_at_663.6494280326839_91389_2.mp4",
+        "batsman": "Ashutosh Sharma",
+        "bowler": "T Natarajan"
+    },
+    {
+        "over": "17.3",
+        "commentary": " Cummins to Ashutosh Sharma, B0$, 111kph, slower ball into the wicket, Ashutosh Sharma spots it, waits for it and periscopes it over Klaasen's head ",
+        "event": "FOUR",
+        "clip": "clip_17.2_at_657.6525958516656_91389_2.mp4",
+        "batsman": "Ashutosh Sharma",
+        "bowler": "Pat Cummins"
+    },
+    {
+        "over": "17.2",
+        "commentary": " Cummins to Ashutosh Sharma, B0$, B1$, predictable length from Cummins. Ashutosh Sharma makes room and slaps it through point for a one-bounce four. The ball bulleted away. The deep backward point fielder didn't have much distance to cover but he had no chance of stopping it ",
+        "event": "FOUR",
+        "clip": "clip_17.2_at_657.6525958516656_91389_2.mp4",
+        "batsman": "Ashutosh Sharma",
+        "bowler": "Pat Cummins"
+    },
+    {
+        "over": "16.5",
+        "commentary": " Bhuvneshwar to Shashank Singh, B0$, 116.9kph, slow, shortish and wide of off. Shashank Singh spots it, waits for it and powerfully cuts it to the left of extra cover. No chance for the man in the deep to cut it off. Third boundary of the over! ",
+        "event": "FOUR",
+        "clip": "clip_16.4_at_640.6615713387807_91389_2.mp4",
+        "batsman": "Shashank Singh",
+        "bowler": "Bhuvneshwar Kumar"
+    },
+    {
+        "over": "16.2",
+        "commentary": " Bhuvneshwar to Shashank Singh, B0$, back-to-back fours! 135.9kph, Bhuvneshwar goes for the yorker outside off, misses by an inch or two. Shashank Singh stays back and drills it past extra cover. Races away to the fence ",
+        "event": "FOUR",
+        "clip": "clip_16.1_at_631.6663230672533_91389_2.mp4",
+        "batsman": "Shashank Singh",
+        "bowler": "Bhuvneshwar Kumar"
+    },
+    {
+        "over": "16.1",
+        "commentary": " Bhuvneshwar to Shashank Singh, B0$, 126.1kph, off-speed length ball outside off, Shashank Singh throws his bat hard at it and gets a fat outside edge that flies over short third man ",
+        "event": "FOUR",
+        "clip": "clip_16.0_at_624.6700188560654_91389_2.mp4",
+        "batsman": "Shashank Singh",
+        "bowler": "Bhuvneshwar Kumar"
+    },
+    {
+        "over": "15.3",
+        "commentary": " Nitish Reddy to Jitesh Sharma, B0$ Caught by Abhishek Sharma!! Nitish Reddy has the last laugh! 115.8kph, off-cutter into the pitch, Jitesh Sharma walks across to hook. Goes too hard and loses his shape as the ball comes slower than he expects. More height than distance. Abhishek Sharma runs forward and to his left to take a good tumbling catch. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_15.2_at_613.6758265241987_91389_2.mp4",
+        "batsman": "Jitesh Sharma",
+        "bowler": "Nitish Reddy"
+    },
+    {
+        "over": "15.2",
+        "commentary": " Nitish Reddy to Jitesh Sharma, B0$, Jitesh Sharma gives the charge to the bowler by shimmying down the track and pumps this short of length ball over long-off. Stood tall and made superb contact ",
+        "event": "SIX",
+        "clip": "clip_15.1_at_603.6811062225016_91389_2.mp4",
+        "batsman": "Jitesh Sharma",
+        "bowler": "Nitish Reddy"
+    },
+    {
+        "over": "15.1",
+        "commentary": " Nitish Reddy to Jitesh Sharma, 2 runs, B0$ 134.2kph, short of length ball, Jitesh Sharma shapes to heave and gets a fat top-edge. Natarajan settles under the skier at fine leg but makes a mess of it! Never looked comfortable even though he had the time. How costly will it be? ",
+        "event": "DROPPED",
+        "clip": "clip_15.0_at_591.6874418604651_91389_2.mp4",
+        "batsman": "Jitesh Sharma",
+        "bowler": "Nitish Reddy"
+    },
+    {
+        "over": "14.4",
+        "commentary": " T Natarajan to Jitesh Sharma, B0$, 132.6kph, fuller and wider, allows the batter to free his arms. Jitesh Sharma, with a big backlift, smashes it over extra cover for a one-bounce four ",
+        "event": "FOUR",
+        "clip": "clip_14.3_at_585.6906096794469_91389_2.mp4",
+        "batsman": "Jitesh Sharma",
+        "bowler": "T Natarajan"
+    },
+    {
+        "over": "14.3",
+        "commentary": " T Natarajan to Shashank Singh, 1 run, 134.4kph, width on offer, slashed over cover point and deep point makes a diving stop to his right ",
+        "event": "TEAM_HUNDRED",
+        "clip": "clip_14.3_at_585.6906096794469_91389_2.mp4",
+        "batsman": "Shashank Singh",
+        "bowler": "T Natarajan"
+    },
+    {
+        "over": "13.1",
+        "commentary": " Unadkat to Raza, B0$ Caught by Klaasen!! B1$ 130.7kph, on a length from round the wicket, Raza walks across and gets low to try and scoop it to fine leg. He's early into his shot and ends up spooning it to the keeper who doesn't err. Punjab have now lost half their side. B2$ ",
+        "event": "WICKET",
+        "clip": "clip_13.0_at_573.6969453174105_91389_2.mp4",
+        "batsman": "Sikandar Raza",
+        "bowler": "Jaydev Unadkat"
+    },
+    {
+        "over": "11.4",
+        "commentary": " Shahbaz Ahmed to Raza, B0$, that makes a cracking sound! 98.8kph, Shahbaz bowls one slightly short, Raza is quick to get down on one leg and nail the slogsweep. Dispatched over deep square leg for a B1$ ",
+        "event": "SIX",
+        "clip": "clip_11.3_at_556.7059208045255_91389_2.mp4",
+        "batsman": "Sikandar Raza",
+        "bowler": "Shahbaz Ahmed"
+    },
+    {
+        "over": "10.1",
+        "commentary": " Unadkat to Raza, B0$, 107.3kph, slower delivery, Raza sees that coming. Raza gets down on one leg and swings his bat hard to club it over deep midwicket ",
+        "event": "SIX",
+        "clip": "clip_10.0_at_550.7090886235072_91389_2.mp4",
+        "batsman": "Sikandar Raza",
+        "bowler": "Jaydev Unadkat"
+    },
+    {
+        "over": "9.4",
+        "commentary": " T Natarajan to Shashank Singh, B0$, 131.1kph, dug in short, Shashank Singh arches back and uses the bowler's pace and width to glide it over vacant first slip. Speeds away to third man for four ",
+        "event": "FOUR",
+        "clip": "clip_9.3_at_544.712256442489_91389_2.mp4",
+        "batsman": "Shashank Singh",
+        "bowler": "T Natarajan"
+    },
+    {
+        "over": "8.5",
+        "commentary": " Nitish Reddy to Sam Curran, B0$, Sam Curran uses the bowler's bounce and width to his advantage. Short outside off, Sam Curran hops and slashes it away over the off-side. The ball has the wings to go all the way. With third man and backward point inside the circle, that was a poor delivery and the batter took toll of it ",
+        "event": "SIX",
+        "clip": "clip_8.4_at_526.7217598994343_91389_2.mp4",
+        "batsman": "Sam Curran",
+        "bowler": "Nitish Reddy"
+    },
+    {
+        "over": "6.5",
+        "commentary": " Nitish Reddy to Raza, B0$, 130.8kph, short of a good length ball marginally outside off, Raza stays leg-side to punch and gets an outside edge that goes very fine to the third man fence. The man in the deep was too square ",
+        "event": "FOUR",
+        "clip": "clip_6.4_at_504.73337523570086_91389_2.mp4",
+        "batsman": "Sikandar Raza",
+        "bowler": "Nitish Reddy"
+    },
+    {
+        "over": "6.1",
+        "commentary": " Nitish Reddy to Sam Curran, B0$, 131.5kph, Sam Curran greets Nitish Reddy with a boundary. Back of a length ball that sits up nicely for the batter to wait and hammer the pull well in front of square on the leg-side ",
+        "event": "FOUR",
+        "clip": "clip_6.0_at_503.73390320553113_91389_2.mp4",
+        "batsman": "Sam Curran",
+        "bowler": "Nitish Reddy"
+    },
+    {
+        "over": "5.1",
+        "commentary": " T Natarajan to Sam Curran, B0$, full pitcher around off, Curran drags the drive off the inner half to the left of mid-on ",
+        "event": "FOUR",
+        "clip": "clip_5.0_at_491.7402388434947_91389_2.mp4",
+        "batsman": "Sam Curran",
+        "bowler": "T Natarajan"
+    },
+    {
+        "over": "4.4",
+        "commentary": " Bhuvneshwar to Dhawan, B0$ Stumped!! Brilliant glovework by Klaasen. The move to bring him up to the stumps works for SRH. Bhuvi has his second and Punjab are in trouble. Dhawan decides to step out and drive, but this good length ball was angled across and it beats the outside edge, Klaasen gloves it cleanly and lights up the stumps in a flash. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_4.3_at_481.74551854179765_91389_2.mp4",
+        "batsman": "Shikhar Dhawan",
+        "bowler": "Bhuvneshwar Kumar"
+    },
+    {
+        "over": "4.2",
+        "commentary": " Bhuvneshwar to Dhawan, B0$, B1$ Simple chance at slip and Samad does not hold on. Angled across off and Dhawan has a tentative push, the outside edge goes at a good height for Samad at slip and he makes a mess. Moreover the ball races away to the fence ",
+        "event": "FOUR",
+        "clip": "clip_4.1_at_472.7502702702703_91389_2.mp4",
+        "batsman": "Shikhar Dhawan",
+        "bowler": "Bhuvneshwar Kumar"
+    },
+    {
+        "over": "2.5",
+        "commentary": " Bhuvneshwar to Prabhsimran, B0$, not quite off the middle but enough to get Prabhsimran going. He advances and lofts through the line, does not get it off the middle but clears mid-on ",
+        "event": "FOUR",
+        "clip": "clip_2.4_at_445.7645254556883_91389_2.mp4",
+        "batsman": "Prabhsimran Singh",
+        "bowler": "Bhuvneshwar Kumar"
+    },
+    {
+        "over": "2.1",
+        "commentary": " Bhuvneshwar to Dhawan, B0$, crunched! Dhawan charges down, creates room and drives on the rise in front of square, beating the cover-point fielder to his left. Punjab need to counter here and not allow SRH to create pressure ",
+        "event": "FOUR",
+        "clip": "clip_2.0_at_440.76716530483975_91389_2.mp4",
+        "batsman": "Shikhar Dhawan",
+        "bowler": "Bhuvneshwar Kumar"
+    },
+    {
+        "over": "1.4",
+        "commentary": " Cummins to Bairstow, B0$ Bowled!! Cleaned up! Bairstow's poor run with the bat continues.. Cummins wins the match-up. He had the wood over Bairstow and it remains that way. SRH have an early wicket. Good length ball and Bairstow has an ugly swipe across the line, misses and the ball hits the top of off-stump. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_1.3_at_431.77191703331243_91389_2.mp4",
+        "batsman": "Jonny Bairstow",
+        "bowler": "Pat Cummins"
+    },
+    {
+        "over": "19.5",
+        "commentary": " Umesh Yadav to Samson, B0$, slower ball dug in outside off, too short and Samson leaps to cut, misses, GT lose the review as it is over the head ",
+        "event": "UDRS",
+        "clip": "clip_19.5_at_285.8836610169492_91393_1.mp4",
+        "batsman": "Sanju Samson",
+        "bowler": "Umesh Yadav"
+    },
+    {
+        "over": "19.3",
+        "commentary": " Umesh Yadav to Samson, B0$, that is a poor delivery, the attempted yorker is a low full-toss on off, lofted over long-on, easy for Samson ",
+        "event": "SIX",
+        "clip": "clip_19.2_at_279.8861016949153_91393_1.mp4",
+        "batsman": "Sanju Samson",
+        "bowler": "Umesh Yadav"
+    },
+    {
+        "over": "19.1",
+        "commentary": " Umesh Yadav to Hetmyer, B0$, smashed over wide long-off. Full outside off, in the slot and Hetmyer plays this shot well, gets under this and lofts ",
+        "event": "SIX",
+        "clip": "clip_19.0_at_273.8885423728814_91393_1.mp4",
+        "batsman": "Shimron Hetmyer",
+        "bowler": "Umesh Yadav"
+    },
+    {
+        "over": "18.5",
+        "commentary": " Mohit Sharma to Hetmyer, B0$, the back of the hand slower ball full outside off, in the slot and Hetmyer lofts it wide of long-on, one bounce over the ropes ",
+        "event": "FOUR",
+        "clip": "clip_18.4_at_266.8913898305085_91393_1.mp4",
+        "batsman": "Shimron Hetmyer",
+        "bowler": "Mohit Sharma"
+    },
+    {
+        "over": "18.4",
+        "commentary": "Mohit Sharma to Riyan Parag, B0$ Caught by Shankar!! Good catch by long-off. The back of the hand slower ball full outside off, lofted flat and Vijay Shankar takes it, but his feet are near the cushions, he is stumbling, so lobs it up, goes outside, flicks the cushions but the ball is in the air when he does that, then comes back in to catch it. End of another fine innings. B1$",
+        "event": "WICKET",
+        "clip": "clip_18.3_at_253.89667796610172_91393_1.mp4",
+        "batsman": "Riyan Parag",
+        "bowler": "Mohit Sharma"
+    },
+    {
+        "over": "18.2",
+        "commentary": " Mohit Sharma to Riyan Parag, B0$, predictable slower ball off-cutter dug in outside off, Riyan Parag waits for it and thumps the pull over deep mid-wicket, was not an easy shot with the ball bouncing over his shoulder but such is the form he is in, that he put it away easily ",
+        "event": "SIX",
+        "clip": "clip_18.1_at_246.89952542372882_91393_1.mp4",
+        "batsman": "Riyan Parag",
+        "bowler": "Mohit Sharma"
+    },
+    {
+        "over": "17.5",
+        "commentary": " Spencer Johnson to Samson, 1 run, just B0$ A yorker length delivery outside off, Samson tries the reverse-scoop and doe snot get all of it, gets lucky as it loops over Wade and falls short of Noor ",
+        "event": "DROPPED",
+        "clip": "clip_17.4_at_245.89993220338985_91393_1.mp4",
+        "batsman": "Sanju Samson",
+        "bowler": "Spencer Johnson"
+    },
+    {
+        "over": "17.4",
+        "commentary": " Spencer Johnson to Samson, B0$, Samson executes this beautifully. A full delivery outside off, he shuffles across and scoops over short fine-leg, superb stuff ",
+        "event": "FOUR",
+        "clip": "clip_17.3_at_239.90237288135594_91393_1.mp4",
+        "batsman": "Sanju Samson",
+        "bowler": "Spencer Johnson"
+    },
+    {
+        "over": "16.2",
+        "commentary": " Mohit Sharma to Riyan Parag, B0$, sloppy from Umesh at deep mid-wicket, full on off, whipped to Umesh on the bounce, it spins away and deceives him, 1 turns into 4 ",
+        "event": "FOUR,PARTNERSHIP",
+        "clip": "clip_16.1_at_215.91213559322034_91393_1.mp4",
+        "batsman": "Riyan Parag",
+        "bowler": "Mohit Sharma"
+    },
+    {
+        "over": "14.5",
+        "commentary": " Spencer Johnson to Samson, B0$, brilliant shot. Full and angling away from Samson outside off, he stands tall and crunches the drive wide of extra-cover, the fielders stood there and admired that hit ",
+        "event": "FOUR",
+        "clip": "clip_14.4_at_202.91742372881356_91393_1.mp4",
+        "batsman": "Sanju Samson",
+        "bowler": "Spencer Johnson"
+    },
+    {
+        "over": "14.3",
+        "commentary": " Spencer Johnson to Samson, B0$, thick outside-edge and four to third man. A short of length delivery outside off, Samson flashes the cut and no slip ",
+        "event": "FOUR",
+        "clip": "clip_14.2_at_196.91986440677968_91393_1.mp4",
+        "batsman": "Sanju Samson",
+        "bowler": "Spencer Johnson"
+    },
+    {
+        "over": "13.5",
+        "commentary": " Mohit Sharma to Riyan Parag, B0$, Riyan Parag's fine run continues. Gets under the back of the hand slower ball outside off, it's on a length, slugged away flat over wide long-on. Gets to B1$ ",
+        "event": "FIFTY,SIX",
+        "clip": "clip_13.4_at_179.92677966101695_91393_1.mp4",
+        "batsman": "Riyan Parag",
+        "bowler": "Mohit Sharma"
+    },
+    {
+        "over": "13.3",
+        "commentary": " Mohit Sharma to Samson, B0$, he has played this shot so well this season. Makes room and gets under the half-volley to carve it over cover, no chance for sweeper cover ",
+        "event": "FOUR",
+        "clip": "clip_13.2_at_174.92881355932204_91393_1.mp4",
+        "batsman": "Sanju Samson",
+        "bowler": "Mohit Sharma"
+    },
+    {
+        "over": "12.4",
+        "commentary": " Noor Ahmad to Riyan Parag, B0$, another cracking sweep from Parag who's on a roll! Tossed up outside leg, Parag gets low and whacks it over square leg this time. These aren't small sixes. He's hitting them way back into the crowd ",
+        "event": "TEAM_HUNDRED,SIX",
+        "clip": "clip_12.3_at_168.93125423728816_91393_1.mp4",
+        "batsman": "Riyan Parag",
+        "bowler": "Noor Ahmad"
+    },
+    {
+        "over": "12.1",
+        "commentary": " Noor Ahmad to Riyan Parag, B0$, absolutely nails the slog-sweep! Full ball on leg stump, tossed up by Noor and Parag gets on one knee and whacks it over midwicket. Goes a long way back into the stands ",
+        "event": "SIX,PARTNERSHIP",
+        "clip": "clip_12.0_at_161.93410169491526_91393_1.mp4",
+        "batsman": "Riyan Parag",
+        "bowler": "Noor Ahmad"
+    },
+    {
+        "over": "10.4",
+        "commentary": " Noor Ahmad to Riyan Parag, B0$, too full on middle, Parag goes for a big swipe across the line and drags it off the inside half through square leg. Races away to the boundary ",
+        "event": "FOUR",
+        "clip": "clip_10.3_at_155.93654237288138_91393_1.mp4",
+        "batsman": "Riyan Parag",
+        "bowler": "Noor Ahmad"
+    },
+    {
+        "over": "9.5",
+        "commentary": " Rashid Khan to Riyan Parag, B0$, beautifully done by Parag! Flat length ball outside off, he waits in the crease, picks the legbreak and dabs it past slip, using the pace of the bowler ",
+        "event": "FOUR",
+        "clip": "clip_9.4_at_148.93938983050847_91393_1.mp4",
+        "batsman": "Riyan Parag",
+        "bowler": "Rashid Khan"
+    },
+    {
+        "over": "8.2",
+        "commentary": " Noor Ahmad to Riyan Parag, B0$, Parag decides to go on the attack. When you're not picking it, sweep is not a bad option and he smokes it over midwicket. Goes just over the jumping fielder at the boundary ",
+        "event": "SIX",
+        "clip": "clip_8.1_at_142.9418305084746_91393_1.mp4",
+        "batsman": "Riyan Parag",
+        "bowler": "Noor Ahmad"
+    },
+    {
+        "over": "5.4",
+        "commentary": " Rashid Khan to Buttler, B0$ Caught by Rahul Tewatia!! Rashid continues his dominance against Buttler, getting him out for the fifth time in T20s. Full outside off, Buttler looks to loft down the ground but it turns away and takes the outside edge to slip. Sharp catch from Tewatia there. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_5.3_at_122.94996610169493_91393_1.mp4",
+        "batsman": "Jos Buttler",
+        "bowler": "Rashid Khan"
+    },
+    {
+        "over": "4.5",
+        "commentary": " Umesh Yadav to Samson, B0$, back-to-back boundaries as Samson gets going straightaway! Length ball on middle, he hangs back in the crease and clips it beautifully through midwicket ",
+        "event": "FOUR",
+        "clip": "clip_4.4_at_117.95200000000001_91393_1.mp4",
+        "batsman": "Sanju Samson",
+        "bowler": "Umesh Yadav"
+    },
+    {
+        "over": "4.4",
+        "commentary": " Umesh Yadav to Samson, B0$, short and wide outside off, Samson goes back in the crease, gets on top of the bounce and cuts it superbly through point ",
+        "event": "FOUR",
+        "clip": "clip_4.3_at_107.95606779661017_91393_1.mp4",
+        "batsman": "Sanju Samson",
+        "bowler": "Umesh Yadav"
+    },
+    {
+        "over": "4.2",
+        "commentary": " Umesh Yadav to Jaiswal, B0$ Caught by Wade!! Gone this time. Length ball around off, Jaiswal bends across to scoop and gets it very high on the bat. As a result, he doesn't get the desired elevation and Wade takes a superb jumping catch. Jaiswal's lean run this season continues. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_4.1_at_94.9613559322034_91393_1.mp4",
+        "batsman": "Yashasvi Jaiswal",
+        "bowler": "Umesh Yadav"
+    },
+    {
+        "over": "4.1",
+        "commentary": " Umesh Yadav to Jaiswal, B0$, there he goes! Back of a length just outside off, Jaiswal shuffles across, pulls hard and hoists it over midwicket. May have got it slightly high on the bat, but clears the infield easily ",
+        "event": "FOUR",
+        "clip": "clip_4.1_at_94.9613559322034_91393_1.mp4",
+        "batsman": "Yashasvi Jaiswal",
+        "bowler": "Umesh Yadav"
+    },
+    {
+        "over": "2.5",
+        "commentary": " Umesh Yadav to Jaiswal, B0$, this time he finds the gap! Back of a length outside off, width on offer for Jaiswal who frees his arms and slashes it through the covers ",
+        "event": "FOUR",
+        "clip": "clip_2.4_at_75.96908474576271_91393_1.mp4",
+        "batsman": "Yashasvi Jaiswal",
+        "bowler": "Umesh Yadav"
+    },
+    {
+        "over": "0.5",
+        "commentary": " Umesh Yadav to Jaiswal, B0$, cracking shot off the back foot! Back of a length outside off, Jaiswal stays in the crease and punches it beautifully through the covers ",
+        "event": "FOUR",
+        "clip": "clip_0.4_at_59.975593220338986_91393_1.mp4",
+        "batsman": "Yashasvi Jaiswal",
+        "bowler": "Umesh Yadav"
+    },
+    {
+        "over": "19.5",
+        "commentary": " Avesh Khan to Rahul Tewatia, B0$ Rahul Tewatia Run Out!! 2 runs completed. Slower short ball outside off. With mid-off up inside the ring, Tewatia just needed to time the loft over the infield, but instead he relied on his power and mistimed it over Buttler at mid-off. Buttler did his best to chase and drag the ball back inches inside the rope. He had no backing up, and hence took a while before hurling the ball back to Avesh. The duo took a risk and ran for the third, but Tewatia was caught well short of the crease there. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_19.4_at_645.7372203389831_91393_2.mp4",
+        "batsman": "Rahul Tewatia",
+        "bowler": "Avesh Khan"
+    },
+    {
+        "over": "19.3",
+        "commentary": " Avesh Khan to Rashid Khan, B0$, full and wide of off, Rashid Khan goes hard on the drive and slices a thick toe-edge that flies past the diving keeper to his right. Avesh Khan has a wry smile and the Titans dug-out is absolutely cock-a-hoop at the moment.... ",
+        "event": "FOUR",
+        "clip": "clip_19.2_at_633.7421016949153_91393_2.mp4",
+        "batsman": "Rashid Khan",
+        "bowler": "Avesh Khan"
+    },
+    {
+        "over": "19.1",
+        "commentary": " Avesh Khan to Rashid Khan, B0$, oh dear! It's getting bad to worse for RR. A I0$ low full toss on the stumps, Rashid Khan stands deep and heaves the pull through the vacant square leg area. There's no-one in the deep there.... ",
+        "event": "FOUR",
+        "clip": "clip_19.0_at_608.7522711864407_91393_2.mp4",
+        "batsman": "Rashid Khan",
+        "bowler": "Avesh Khan"
+    },
+    {
+        "over": "18.4",
+        "commentary": " Kuldeep Sen to Rashid Khan, B0$, B1$, that's a decent hit from Rashid Khan. And hang on! It's a front foot no ball from Kuldeep Sen. Steady base and still head from Rashid Khan as he slaps the low full toss up and over extra cover ",
+        "event": "FOUR",
+        "clip": "clip_18.3_at_591.759186440678_91393_2.mp4",
+        "batsman": "Rashid Khan",
+        "bowler": "Kuldeep Sen"
+    },
+    {
+        "over": "18.2",
+        "commentary": " Kuldeep Sen to Rahul Tewatia, B0$, I0$ low full toss outside off, Tewatia slaps the drive over extra cover and the ball teases Buttler (running backwards from mid-off) and his dive to his right before winning the race... ",
+        "event": "FOUR",
+        "clip": "clip_18.1_at_583.7624406779662_91393_2.mp4",
+        "batsman": "Rahul Tewatia",
+        "bowler": "Kuldeep Sen"
+    },
+    {
+        "over": "17.3",
+        "commentary": " Avesh Khan to Shahrukh Khan, B0$ Lbw!! Low full toss from Avesh Khan and Shahrukh Khan couldn't put bat on ball. Went shuffling across looking to flick/slog leg-side and misses it completely. Pinged dead in front of middle and umpire Vinod Seshan had no hesitation in putting his finger up. B1$ ",
+        "event": "WICKET,UDRS",
+        "clip": "clip_17.2_at_552.7750508474577_91393_2.mp4",
+        "batsman": "Shahrukh Khan",
+        "bowler": "Avesh Khan"
+    },
+    {
+        "over": "16.4",
+        "commentary": " Ashwin to Shahrukh Khan, B0$, once again he goes low and sweeps the carrom ball past the fielder at short fine to his left. Ashwin is just bowling really quick, has been that way for most part of his last 2 overs so far... ",
+        "event": "TEAM_HUNDRED,FOUR",
+        "clip": "clip_16.3_at_539.7803389830509_91393_2.mp4",
+        "batsman": "Shahrukh Khan",
+        "bowler": "Ravichandran Ashwin"
+    },
+    {
+        "over": "16.3",
+        "commentary": " Ashwin to Shahrukh Khan, B0$, Shahrukh Khan sends his state-mate into the stands. Kneels down, picks the length early and smokes the slogsweep into the mid-wicket orbit ",
+        "event": "SIX",
+        "clip": "clip_16.2_at_534.782372881356_91393_2.mp4",
+        "batsman": "Shahrukh Khan",
+        "bowler": "Ravichandran Ashwin"
+    },
+    {
+        "over": "15.3",
+        "commentary": " Chahal to Shubman Gill, B0$, B1$ Stumped!! No wonder he's called the B2$ He realized that Gill was really keen to use his feet and threw the ball fuller and wider of off, ensuring zero chance for Gill to meet that delivery. Though Gill tried to extend his arms belatedly, it was too late. Knew he was done in by the loop and line there. Had no option but to give up. Samson collected it calmly and executed the rest. B3$ ",
+        "event": "WICKET",
+        "clip": "clip_15.2_at_519.7884745762713_91393_2.mp4",
+        "batsman": "Shubman Gill",
+        "bowler": "Yuzvendra Chahal"
+    },
+    {
+        "over": "15.2",
+        "commentary": " Chahal to Shubman Gill, B0$, Chahal shortens the length a bit and gets the ball to spin away outside off, Gill delays the cut and plays it really late to smash it square to the left of deep extra cover ",
+        "event": "FOUR",
+        "clip": "clip_15.1_at_512.7913220338984_91393_2.mp4",
+        "batsman": "Shubman Gill",
+        "bowler": "Yuzvendra Chahal"
+    },
+    {
+        "over": "15.1",
+        "commentary": " Chahal to Shubman Gill, B0$, comes dancing down the wicket, uses his reach to get closer to the full delivery and blazes the drive in the gap through extra cover ",
+        "event": "FOUR",
+        "clip": "clip_15.0_at_506.7937627118644_91393_2.mp4",
+        "batsman": "Shubman Gill",
+        "bowler": "Yuzvendra Chahal"
+    },
+    {
+        "over": "14.4",
+        "commentary": " Ashwin to Shubman Gill, B0$, runs down the pitch, gets closer to the pitch of the full delivery and thumps it in the gap through extra cover with terrific timing ",
+        "event": "FOUR",
+        "clip": "clip_14.3_at_499.79661016949154_91393_2.mp4",
+        "batsman": "Shubman Gill",
+        "bowler": "Ravichandran Ashwin"
+    },
+    {
+        "over": "14.1",
+        "commentary": " Ashwin to Shubman Gill, B0$, full on leg stump, Shubman Gill sinks to one knee and helps the sweep past the fielder at short fine to his left. GT need many more of these... ",
+        "event": "FOUR",
+        "clip": "clip_14.0_at_485.8023050847458_91393_2.mp4",
+        "batsman": "Shubman Gill",
+        "bowler": "Ravichandran Ashwin"
+    },
+    {
+        "over": "13.3",
+        "commentary": " Chahal to Shankar, B0$, superb from Vijay Shankar. He premeditated the switch hit but executed it brilliantly. Was helped by the fuller length of Chahal and Shankar's smacked that clean over backward point ",
+        "event": "FOUR",
+        "clip": "clip_13.2_at_471.80800000000005_91393_2.mp4",
+        "batsman": "Vijay Shankar",
+        "bowler": "Yuzvendra Chahal"
+    },
+    {
+        "over": "13.1",
+        "commentary": " Chahal to Shubman Gill, 2 runs, short outside off, B0$ with a cut to the right of sweeper cover. No real celebrations from the skipper, for obvious reasons of course... ",
+        "event": "FIFTY",
+        "clip": "clip_13.0_at_452.81572881355936_91393_2.mp4",
+        "batsman": "Shubman Gill",
+        "bowler": "Yuzvendra Chahal"
+    },
+    {
+        "over": "12.1",
+        "commentary": " Kuldeep Sen to Shankar, B0$, just lifted it over the infield. A bit too full just outside off, Shankar shows full face of the bat and punches it off the bottom half over the fielder at mid-off. The pace of Kuldeep Sen takes care of the rest... ",
+        "event": "FOUR",
+        "clip": "clip_12.0_at_446.81816949152545_91393_2.mp4",
+        "batsman": "Vijay Shankar",
+        "bowler": "Kuldeep Sen"
+    },
+    {
+        "over": "10.4",
+        "commentary": " Kuldeep Sen to Abhinav Manohar, B0$ Bowled!! 3/3 for Kuldeep Sen. The off peg has gone for a walk and my colleague, I0$, who rates Kuldeep very highly is loving every bit of it here in the buzz-box. Crikey! Don't we all love raw pace and wood-work dispersing to all corners? It's a B1$ Seam-up and gets the ball to shape away late around off, Abhinav Manohar played for the angle but was beaten all ends up as he left his bat hanging on the back foot. Timber!! B2$ ",
+        "event": "WICKET",
+        "clip": "clip_10.3_at_430.8246779661017_91393_2.mp4",
+        "batsman": "Abhinav Manohar",
+        "bowler": "Kuldeep Sen"
+    },
+    {
+        "over": "10.1",
+        "commentary": " Kuldeep Sen to Wade, B0$ Bowled!! Chop on. Oh dear! How often do we see this in cricket? A wicket right after the break. A wobble seam short of length delivery angling away wide of off, Wade wanted to go really hard on the cut and got a thick inside edge that deflected back to hit middle and off. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_10.0_at_423.82752542372884_91393_2.mp4",
+        "batsman": "Matthew Wade",
+        "bowler": "Kuldeep Sen"
+    },
+    {
+        "over": "10.1",
+        "commentary": " Kuldeep Sen to Wade, B0$, a wasted review from RR. It was short and angling away wide of off. Past the tramline and went past the attempted cut of Wade. not sure what convinced Samson to go for a review. Did he hear something? Could well be... ",
+        "event": "UDRS",
+        "clip": "clip_10.0_at_423.82752542372884_91393_2.mp4",
+        "batsman": "Matthew Wade",
+        "bowler": "Kuldeep Sen"
+    },
+    {
+        "over": "8.2",
+        "commentary": " Kuldeep Sen to Sai Sudharsan, B0$ Lbw!! Sai Sudharsan knew he was a goner. Soon as he saw the first couple of replays, he started ambling towards the dug-out. Paused momentarily only to glance at the obvious on the giant screen. Fuller and straighter from Kuldeep Sen, the length was not too short and neither too full. Sai Sudharsan wanted to go for a lap/scoop and moved a bit too far across in the process. Misses it completely and was struck plumb in front of middle. B1$ ",
+        "event": "WICKET,UDRS",
+        "clip": "clip_8.1_at_388.8417627118644_91393_2.mp4",
+        "batsman": "Sai Sudharsan",
+        "bowler": "Kuldeep Sen"
+    },
+    {
+        "over": "5.4",
+        "commentary": " Avesh Khan to Shubman Gill, B0$, this is an outstanding shot. Fullish and on off, not a bad ball but Shubman Gill again gets forward and lofts, holds his shape and it's all the way over long-on ",
+        "event": "SIX",
+        "clip": "clip_5.3_at_371.8486779661017_91393_2.mp4",
+        "batsman": "Shubman Gill",
+        "bowler": "Avesh Khan"
+    },
+    {
+        "over": "5.1",
+        "commentary": " Avesh Khan to Shubman Gill, B0$, I0$, fullish outside off, Shubman Gill gets forward and lofts on the rise, straight down the ground ",
+        "event": "FOUR",
+        "clip": "clip_5.0_at_360.8531525423729_91393_2.mp4",
+        "batsman": "Shubman Gill",
+        "bowler": "Avesh Khan"
+    },
+    {
+        "over": "3.2",
+        "commentary": " Maharaj to Shubman Gill, B0$, beautiful shot; Shubman Gill comes down the track and makes room to loft inside-out, the off-side field is up and it is all the way over deep extra-cover ",
+        "event": "SIX",
+        "clip": "clip_3.1_at_354.855593220339_91393_2.mp4",
+        "batsman": "Shubman Gill",
+        "bowler": "Keshav Maharaj"
+    },
+    {
+        "over": "1.5",
+        "commentary": " Avesh Khan to Sai Sudharsan, B0$, short and wide outside off, Sai Sudharsan reaches for it and upper-cuts with an open face, flies over deep backward point, was on his tiptoes to play that ",
+        "event": "SIX",
+        "clip": "clip_1.4_at_348.8580338983051_91393_2.mp4",
+        "batsman": "Sai Sudharsan",
+        "bowler": "Avesh Khan"
+    },
+    {
+        "over": "0.2",
+        "commentary": " Boult to Sai Sudharsan, B0$, lovely shot. A back of a length delivery outside off, Sai Sudharsan punches with a high elbow and wide of point and cover-point ",
+        "event": "FOUR",
+        "clip": "clip_0.1_at_338.8621016949153_91393_2.mp4",
+        "batsman": "Sai Sudharsan",
+        "bowler": "Trent Boult"
+    },
+    {
+        "over": "19.5",
+        "commentary": " Akash Madhwal to Karthik, B0$, Madhwal switches to the fuller length and DK's spanked that past the diving Hardik Pandya at mid-off to his left. That will be B1$ and the RCB dressing room absolutely cock-a-hoop at the moment ",
+        "event": "FIFTY,FOUR",
+        "clip": "clip_19.4_at_371.94239999999996_91398_1.mp4",
+        "batsman": "Dinesh Karthik",
+        "bowler": "Akash Madhwal"
+    },
+    {
+        "over": "19.4",
+        "commentary": " Akash Madhwal to Karthik, B0$, he's smashed the bones out of this one. Short and into the body, DK swivels and slams the pull into the square leg stands with terrific timing. Gee, he's playing an absolute blinder here... ",
+        "event": "SIX",
+        "clip": "clip_19.3_at_365.943329032258_91398_1.mp4",
+        "batsman": "Dinesh Karthik",
+        "bowler": "Akash Madhwal"
+    },
+    {
+        "over": "19.3",
+        "commentary": " Akash Madhwal to Karthik, B0$, DK goes for the slice again and he's made a habit of flirting with the boundary ropes here. Once again the ball lands just over the ropes at square third man ",
+        "event": "SIX",
+        "clip": "clip_19.2_at_354.9450322580645_91398_1.mp4",
+        "batsman": "Dinesh Karthik",
+        "bowler": "Akash Madhwal"
+    },
+    {
+        "over": "18.4",
+        "commentary": " Bumrah to Vijaykumar Vyshak, B0$ Caught by Nabi!! Number B1$ Goes for the back of a length and extracts extra bounce off the turf. Vijaykumar Vyshak came dancing down the wicket in search of something full, but instead got a ball that hurried onto his bat from a shorter length. Heaves and toe-ends it straight to Nabi at mid-off for catching practice. B2$ ",
+        "event": "WICKET",
+        "clip": "clip_18.3_at_329.9489032258064_91398_1.mp4",
+        "batsman": "Vijaykumar Vyshak",
+        "bowler": "Jasprit Bumrah"
+    },
+    {
+        "over": "18.3",
+        "commentary": " Bumrah to Saurav Chauhan, B0$ Caught by Akash Madhwal!! Wicket number B1$ He digs it short and angles it into the batter, Chauhan goes for the pull but it's (the pace) too hot to handle and he's top-edged that to the fielder at mid-wicket. Akash Madhwal couldn't have asked for an easier catch than that. B2$ ",
+        "event": "WICKET",
+        "clip": "clip_18.2_at_321.9501419354838_91398_1.mp4",
+        "batsman": "Saurav Chauhan",
+        "bowler": "Jasprit Bumrah"
+    },
+    {
+        "over": "16.5",
+        "commentary": " Bumrah to Lomror, B0$ Lbw!! Jasprit B1$ Goes for the toe-crushing yorker and Lomror had no time to react. Tried to defend/push into the on-side but the ball dipped and clonked him on the front toe in line with middle and leg. Finger went up straightaway and Lomror took a chance with the review as he felt it might sneak down leg, not to be. B2$ ",
+        "event": "WICKET,UDRS",
+        "clip": "clip_16.4_at_274.9574193548387_91398_1.mp4",
+        "batsman": "Mahipal Lomror",
+        "bowler": "Jasprit Bumrah"
+    },
+    {
+        "over": "16.4",
+        "commentary": " Bumrah to du Plessis, B0$ Caught by Tim David!! Excellent catch by Tim David. Faf mistimes the full toss off the splice and David comes running in from long-on to time the slide to absolute perfection. He also had to maintain his balance after the slide and took the catch inches above the turf. Top stuff. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_16.3_at_261.9594322580645_91398_1.mp4",
+        "batsman": "Faf du Plessis",
+        "bowler": "Jasprit Bumrah"
+    },
+    {
+        "over": "15.5",
+        "commentary": " Akash Madhwal to Karthik, B0$, has someone told DK that only runs behind the keeper counts? He shuffles outside off, goes deep inside the crease and slices the full and wide delivery to the right of the keeper. Coetzee, at short third, dives and gets a hand but he only succeeds in palming it away to the fine leg fence... ",
+        "event": "FOUR",
+        "clip": "clip_15.4_at_248.9614451612903_91398_1.mp4",
+        "batsman": "Dinesh Karthik",
+        "bowler": "Akash Madhwal"
+    },
+    {
+        "over": "15.4",
+        "commentary": " Akash Madhwal to Karthik, B0$, and again! DK wants to toy with the field it appears. He camps back and moves outside off to slice the scoop between the keeper and the short third fielder.... ",
+        "event": "FOUR",
+        "clip": "clip_15.3_at_241.96252903225806_91398_1.mp4",
+        "batsman": "Dinesh Karthik",
+        "bowler": "Akash Madhwal"
+    },
+    {
+        "over": "15.2",
+        "commentary": " Akash Madhwal to Karthik, B0$, that's not ABD folks, it's DK. Goes deep inside the crease and past his off-stump, waits for something full and he's helped the full toss with a gentle ramp-like scoop fine of the third man fence... ",
+        "event": "FOUR",
+        "clip": "clip_15.1_at_236.96330322580644_91398_1.mp4",
+        "batsman": "Dinesh Karthik",
+        "bowler": "Akash Madhwal"
+    },
+    {
+        "over": "15.1",
+        "commentary": " Akash Madhwal to du Plessis, B0$, I0$ low full toss spilled wide of the tramline outside off, Faf shoulders arms. MI have reviewed this. Faf didn't move much and the ball was clearly a shade outside off. The onfield call stays... ",
+        "event": "UDRS",
+        "clip": "clip_15.1_at_236.96330322580644_91398_1.mp4",
+        "batsman": "Faf du Plessis",
+        "bowler": "Akash Madhwal"
+    },
+    {
+        "over": "14.3",
+        "commentary": " Shreyas Gopal to du Plessis, B0$, Shreyas Gopal goes full and serves it in the slot for Faf who made room early to tonk it over long-on for an B1$ ",
+        "event": "SIX",
+        "clip": "clip_14.2_at_230.9642322580645_91398_1.mp4",
+        "batsman": "Faf du Plessis",
+        "bowler": "Shreyas Gopal"
+    },
+    {
+        "over": "13.5",
+        "commentary": "Shepherd to du Plessis, 1 run, B0$ Gets there with a pull to deep mid-wicket and the dressing room looks a happy bunch...",
+        "event": "FIFTY",
+        "clip": "clip_13.4_at_214.96670967741935_91398_1.mp4",
+        "batsman": "Faf du Plessis",
+        "bowler": "Romario Shepherd"
+    },
+    {
+        "over": "13.4",
+        "commentary": " Shepherd to du Plessis, B0$, overpitches the I0$ full delivery and du Plessis bends his back knee to slam it up and over extra cover for a one-bounce boundary... ",
+        "event": "FOUR",
+        "clip": "clip_13.3_at_207.96779354838708_91398_1.mp4",
+        "batsman": "Faf du Plessis",
+        "bowler": "Romario Shepherd"
+    },
+    {
+        "over": "12.2",
+        "commentary": " Shreyas Gopal to Maxwell, B0$ Lbw!! Another failure for Maxwell and he walks away in disappointment - was the wrong 'un and he didn't spot it, was shuffling across and tried to flick it onto the on-side, missed it completely and is struck bang in front of off - the ball was going on and crashing into the middle-stump, easy call for umpire Nitin Menon and Maxwell doesn't bother to ponder about a review either. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_12.1_at_200.96887741935484_91398_1.mp4",
+        "batsman": "Glenn Maxwell",
+        "bowler": "Shreyas Gopal"
+    },
+    {
+        "over": "11.3",
+        "commentary": " Gerald Coetzee to Rajat Patidar, B0$ Caught by Ishan Kishan!! Coetzee gets his man now - banged in short and angling into the body, Patidar was shaping to pull off the front-foot, he's slightly rushed onto the shot, the ball popping off the glove and lobbing into the hands of Ishan Kishan. Patidar walks off to a good reception though, he's played his hand in setting up RCB tonight. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_11.2_at_179.97212903225807_91398_1.mp4",
+        "batsman": "Rajat Patidar",
+        "bowler": "Gerald Coetzee"
+    },
+    {
+        "over": "11.2",
+        "commentary": " Gerald Coetzee to Rajat Patidar, B0$, back-to-back sixes for Patidar, B1$, length ball at the stumps, he leans forward and then sends it whistling into the stands at wide mid-wicket - a 25-ball half-century ",
+        "event": "TEAM_HUNDRED,FIFTY,SIX",
+        "clip": "clip_11.1_at_172.9732129032258_91398_1.mp4",
+        "batsman": "Rajat Patidar",
+        "bowler": "Gerald Coetzee"
+    },
+    {
+        "over": "11.1",
+        "commentary": " Gerald Coetzee to Rajat Patidar, B0$, Patidar is in some form tonight - low full-toss and he's picked the bones off it, shovels it high and over mid-wicket, the ball dropping over the ropes for a maximum ",
+        "event": "SIX",
+        "clip": "clip_11.1_at_172.9732129032258_91398_1.mp4",
+        "batsman": "Rajat Patidar",
+        "bowler": "Gerald Coetzee"
+    },
+    {
+        "over": "9.5",
+        "commentary": " Hardik Pandya to Rajat Patidar, B0$, B1$, on a good length and just outside off - Patidar gets forward, swings through the line and sends it sailing, high and deep into the stands at wide long-on ",
+        "event": "SIX",
+        "clip": "clip_9.4_at_158.9753806451613_91398_1.mp4",
+        "batsman": "Rajat Patidar",
+        "bowler": "Hardik Pandya"
+    },
+    {
+        "over": "8.4",
+        "commentary": " Shreyas Gopal to Rajat Patidar, B0$, B1$, tossed up invitingly on off, Patidar gets under it on the slog-sweep, sends it soaring - high and deep into the stands at mid-wicket ",
+        "event": "SIX,PARTNERSHIP",
+        "clip": "clip_8.3_at_152.97630967741935_91398_1.mp4",
+        "batsman": "Rajat Patidar",
+        "bowler": "Shreyas Gopal"
+    },
+    {
+        "over": "5.2",
+        "commentary": " Akash Madhwal to Rajat Patidar, B0$, B1$, back of a length and at the stumps, Patidar swivels across, lets the ball come and then plays the half-arm jab, up and over mid-on, bounces away to the ropes ",
+        "event": "FOUR",
+        "clip": "clip_5.1_at_120.98126451612903_91398_1.mp4",
+        "batsman": "Rajat Patidar",
+        "bowler": "Akash Madhwal"
+    },
+    {
+        "over": "4.5",
+        "commentary": "Gerald Coetzee to du Plessis, B0$, B1$, on a good length and well wide of off - du Plessis stays deep in the crease, throws his hands on the drive and smacks it over mid-off, went flat and skimmed over the ropes",
+        "event": "SIX",
+        "clip": "clip_4.4_at_119.9814193548387_91398_1.mp4",
+        "batsman": "Faf du Plessis",
+        "bowler": "Gerald Coetzee"
+    },
+    {
+        "over": "3.5",
+        "commentary": " Akash Madhwal to Rajat Patidar, B0$, nicely played, short of a good length and at the hips, Patidar gets inside the line, uses Madhwal's pace and clips it fine, beats the fielder in the ring and runs away to the ropes ",
+        "event": "FOUR",
+        "clip": "clip_3.4_at_107.98327741935483_91398_1.mp4",
+        "batsman": "Rajat Patidar",
+        "bowler": "Akash Madhwal"
+    },
+    {
+        "over": "3.4",
+        "commentary": " Akash Madhwal to Will Jacks, B0$ Caught by Tim David!! Caught at mid-on - RCB have lost two early, back of a length and at the stumps, Jacks backs away on the pull, struck it crisply, but he's hit it straight and flat, a straightforward catch to mid-on where David takes it with glee. Started well and showed some intent, but it's all too brief though. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_3.3_at_97.98482580645161_91398_1.mp4",
+        "batsman": "Will Jacks",
+        "bowler": "Akash Madhwal"
+    },
+    {
+        "over": "3.2",
+        "commentary": " Akash Madhwal to Will Jacks, B0$, B1$, on a good length and angling into the right-hander, Jacks picks the length early and then swings through the line, high and over mid-on, bounces away to the ropes ",
+        "event": "FOUR",
+        "clip": "clip_3.1_at_88.98621935483871_91398_1.mp4",
+        "batsman": "Will Jacks",
+        "bowler": "Akash Madhwal"
+    },
+    {
+        "over": "2.5",
+        "commentary": " Bumrah to Will Jacks, B0$, B1$, full and into the pads, Jacks gets inside the line and then flicks it backward of square on the on-side, splits the two fielders in the deep to perfection - first runs of the IPL for Jacks ",
+        "event": "FOUR",
+        "clip": "clip_2.4_at_80.98745806451612_91398_1.mp4",
+        "batsman": "Will Jacks",
+        "bowler": "Jasprit Bumrah"
+    },
+    {
+        "over": "2.3",
+        "commentary": " Bumrah to Kohli, B0$ Caught by Ishan Kishan!! This was coming - Kohli was looking very shaky, tries to go after Bumrah and perishes in the process, short of a good length and shaping back into the right-hander, Kohli swings across the line, the ball catches the inside edge and Ishan Kishan completes a fine catch, diving to his left. The edge was audible and umpire Nitin Menon's finger went up in a flash, a rare failure for Kohli and RCB lose an early wicket. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_2.2_at_68.98931612903226_91398_1.mp4",
+        "batsman": "Virat Kohli",
+        "bowler": "Jasprit Bumrah"
+    },
+    {
+        "over": "15.3",
+        "commentary": " Akash Deep to Hardik Pandya, B0$, and it's all over! RCB can finally go and lie down after this mauling. Full and wide, Pandya reaches out and carves it over cover for six to complete a sensational run-chase at the Wankhede ",
+        "event": "SIX",
+        "clip": "clip_15.2_at_739.8854193548386_91398_2.mp4",
+        "batsman": "Hardik Pandya",
+        "bowler": "Akash Deep"
+    },
+    {
+        "over": "15.1",
+        "commentary": " Akash Deep to Tilak Varma, B0$, high full toss outside off, plenty of width for Tilak who slaps it over extra cover ",
+        "event": "FOUR",
+        "clip": "clip_15.0_at_734.886193548387_91398_2.mp4",
+        "batsman": "Tilak Varma",
+        "bowler": "Akash Deep"
+    },
+    {
+        "over": "14.4",
+        "commentary": " Siraj to Tilak Varma, B0$, back of a length outside off, Tilak looks to pull and drags it through midwicket. No timing on it but it's in the gap. Kohli gives up the chase early at deep midwicket ",
+        "event": "FOUR",
+        "clip": "clip_14.3_at_727.8872774193547_91398_2.mp4",
+        "batsman": "Tilak Varma",
+        "bowler": "Mohammed Siraj"
+    },
+    {
+        "over": "13.4",
+        "commentary": " Vijaykumar Vyshak to Tilak Varma, B0$, short of length on middle, Tilak advances first ball, looks to pull and drags it off a thick under-edge to the right of the keeper ",
+        "event": "FOUR",
+        "clip": "clip_13.3_at_721.8882064516129_91398_2.mp4",
+        "batsman": "Tilak Varma",
+        "bowler": "Vijaykumar Vyshak"
+    },
+    {
+        "over": "13.3",
+        "commentary": " Vijaykumar Vyshak to Suryakumar Yadav, B0$ Caught by Lomror!! High full toss outside off, Surya slaps it in the air and holes out at deep point. Is that above the waist? It was the slower one so it was dipping on him. MI have taken the review to check if it's a fair delivery, and ball-tracking confirms it's below the waist. Surya's breathtaking knock is over and he walks off raising his bat to the crowd. B1$ ",
+        "event": "WICKET,UDRS",
+        "clip": "clip_13.2_at_690.8930064516129_91398_2.mp4",
+        "batsman": "Suryakumar Yadav",
+        "bowler": "Vijaykumar Vyshak"
+    },
+    {
+        "over": "13.1",
+        "commentary": " Vijaykumar Vyshak to Hardik Pandya, B0$, slower length ball at 113kph, Pandya clears the front leg and absolutely hammers it over long-on. Just no respite from either end ",
+        "event": "SIX",
+        "clip": "clip_13.0_at_684.8939354838709_91398_2.mp4",
+        "batsman": "Hardik Pandya",
+        "bowler": "Vijaykumar Vyshak"
+    },
+    {
+        "over": "12.5",
+        "commentary": " Topley to Suryakumar Yadav, B0$, Kishan raised fifty off 23 balls, and Surya has got there off just 17! B1$ Absolutely no signs of rustiness from him after coming back into the team. Short of length at the body, slower one, and he pulls it over midwicket. Didn't quite get hold of it but clears the infield comfortably ",
+        "event": "FIFTY,FOUR",
+        "clip": "clip_12.4_at_666.8967225806451_91398_2.mp4",
+        "batsman": "Suryakumar Yadav",
+        "bowler": "Reece Topley"
+    },
+    {
+        "over": "12.4",
+        "commentary": " Topley to Suryakumar Yadav, B0$, length ball outside off, Surya walks across, gets low and scoops it over short fine ",
+        "event": "FOUR",
+        "clip": "clip_12.3_at_659.8978064516128_91398_2.mp4",
+        "batsman": "Suryakumar Yadav",
+        "bowler": "Reece Topley"
+    },
+    {
+        "over": "12.3",
+        "commentary": " Topley to Suryakumar Yadav, B0$, full and wide, Surya reaches out and slices it over point for six! Putting on a show are these MI batters ",
+        "event": "SIX",
+        "clip": "clip_12.2_at_653.898735483871_91398_2.mp4",
+        "batsman": "Suryakumar Yadav",
+        "bowler": "Reece Topley"
+    },
+    {
+        "over": "12.1",
+        "commentary": " Topley to Suryakumar Yadav, B0$, full delivery just outside off, Surya throws his hands at it, opens the face and carves it over backward point ",
+        "event": "FOUR",
+        "clip": "clip_12.0_at_648.8995096774194_91398_2.mp4",
+        "batsman": "Suryakumar Yadav",
+        "bowler": "Reece Topley"
+    },
+    {
+        "over": "11.5",
+        "commentary": " Will Jacks to Suryakumar Yadav, B0$, not in control as he looks to drive, B1$ but finds the gap between point and short third. It's tossed up outside off and dips on Surya as he reaches out. Gets a lucky boundary ",
+        "event": "TEAM_HUNDRED,FOUR",
+        "clip": "clip_11.4_at_642.9004387096774_91398_2.mp4",
+        "batsman": "Suryakumar Yadav",
+        "bowler": "Will Jacks"
+    },
+    {
+        "over": "11.3",
+        "commentary": " Will Jacks to Hardik Pandya, B0$, tossed up outside off, Pandya gets on one knee and nails the slog-sweep over wide long-on ",
+        "event": "SIX",
+        "clip": "clip_11.2_at_632.9019870967742_91398_2.mp4",
+        "batsman": "Hardik Pandya",
+        "bowler": "Will Jacks"
+    },
+    {
+        "over": "11.2",
+        "commentary": " Will Jacks to Rohit, B0$ Caught by Topley!! B1$. An absolute screamer at short fine leg, diving across to his left, reaching out with one hand and clutching it right at the end of his fingers. It's a full ball around middle, Rohit looks to sweep, drags it behind square and Topley sends him packing. B2$ ",
+        "event": "WICKET",
+        "clip": "clip_11.1_at_614.9047741935484_91398_2.mp4",
+        "batsman": "Rohit Sharma",
+        "bowler": "Will Jacks"
+    },
+    {
+        "over": "11.1",
+        "commentary": " Will Jacks to Rohit, B0$, back of a length on middle, Rohit pulls hard and finds the boundary at square leg. One bounce and over the ropes ",
+        "event": "FOUR",
+        "clip": "clip_11.1_at_614.9047741935484_91398_2.mp4",
+        "batsman": "Rohit Sharma",
+        "bowler": "Will Jacks"
+    },
+    {
+        "over": "10.5",
+        "commentary": " Akash Deep to Suryakumar Yadav, B0$, wow! Akash Deep watches the ball in awe as it goes sailing over square leg. Surya has well and truly arrived in this tournament. Length ball outside off, he picks it up effortlessly and dumps it over the leg-side boundary ",
+        "event": "SIX",
+        "clip": "clip_10.4_at_586.9091096774193_91398_2.mp4",
+        "batsman": "Suryakumar Yadav",
+        "bowler": "Akash Deep"
+    },
+    {
+        "over": "10.4",
+        "commentary": " Akash Deep to Suryakumar Yadav, 2 runs, B0$ It was struck really hard and came to him in a flash..Short and wide, Surya throws his bat at it and slaps it to backward point. He goes with both hands but can't hold on. To make it worse, he's in pain and going off the field ",
+        "event": "DROPPED",
+        "clip": "clip_10.4_at_586.9091096774193_91398_2.mp4",
+        "batsman": "Suryakumar Yadav",
+        "bowler": "Akash Deep"
+    },
+    {
+        "over": "10.3",
+        "commentary": " Akash Deep to Suryakumar Yadav, B0$, short of length around the waist, slower one, and Surya pulls it all the way over deep midwicket. It's a very short boundary there, so despite the connection not being great, it clears comfortably ",
+        "event": "SIX",
+        "clip": "clip_10.2_at_580.9100387096773_91398_2.mp4",
+        "batsman": "Suryakumar Yadav",
+        "bowler": "Akash Deep"
+    },
+    {
+        "over": "10.1",
+        "commentary": " Akash Deep to Suryakumar Yadav, B0$, what lovely wristwork from Surya! Picks a full ball from well outside off and whips it over midwicket. It's bowled at 139kph and he makes it look so easy ",
+        "event": "FOUR",
+        "clip": "clip_10.0_at_574.9109677419355_91398_2.mp4",
+        "batsman": "Suryakumar Yadav",
+        "bowler": "Akash Deep"
+    },
+    {
+        "over": "9.2",
+        "commentary": " Vijaykumar Vyshak to Rohit, B0$, B1$ Slower bouncer around the head, Rohit isn't in control of the pull and it loops over short fine. Jumping effort from Topley there but he tips it over ",
+        "event": "FOUR,DROPPED",
+        "clip": "clip_9.1_at_567.9120516129032_91398_2.mp4",
+        "batsman": "Rohit Sharma",
+        "bowler": "Vijaykumar Vyshak"
+    },
+    {
+        "over": "8.5",
+        "commentary": " Akash Deep to Ishan Kishan, B0$ Caught by Kohli!! Finally some relief for RCB! Kishan advances, gets a slower short ball outside off and looks to flat-bat it down the ground for six. But it gets big on him, and he miscues it to long-on where Kohli takes a simple catch and throws the ball in the air without much of a celebration. So a blistering knock comes to an end. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_8.4_at_551.9145290322581_91398_2.mp4",
+        "batsman": "Ishan Kishan",
+        "bowler": "Akash Deep"
+    },
+    {
+        "over": "8.4",
+        "commentary": " Akash Deep to Rohit, B0$, slower bouncer outside off, left alone by Rohit. Umpire calls it a wide for height. 100 up already for MI ",
+        "event": "TEAM_HUNDRED,PARTNERSHIP",
+        "clip": "clip_8.4_at_551.9145290322581_91398_2.mp4",
+        "batsman": "Rohit Sharma",
+        "bowler": "Akash Deep"
+    },
+    {
+        "over": "8.2",
+        "commentary": " Akash Deep to Ishan Kishan, B0$, full toss on off stump at 137kph, and it disappears over the ropes! Kishan swings hard, makes good enough contact and hammers it over wide long-on ",
+        "event": "SIX",
+        "clip": "clip_8.1_at_546.9153032258064_91398_2.mp4",
+        "batsman": "Ishan Kishan",
+        "bowler": "Akash Deep"
+    },
+    {
+        "over": "6.5",
+        "commentary": " Vijaykumar Vyshak to Rohit, B0$, now the outside edge runs away for four as well! More frustration for RCB! Length ball on off stump, on-pace delivery, Rohit gets forward to defend but it finds the edge that runs away past the keeper ",
+        "event": "FOUR",
+        "clip": "clip_6.4_at_536.9168516129032_91398_2.mp4",
+        "batsman": "Rohit Sharma",
+        "bowler": "Vijaykumar Vyshak"
+    },
+    {
+        "over": "6.4",
+        "commentary": " Vijaykumar Vyshak to Rohit, B0$, whacked into the crowd! Slower full toss on off stump, Rohit picks it and deposits it over midwicket. Barrage of boundaries and sixes continues ",
+        "event": "SIX",
+        "clip": "clip_6.3_at_530.9177806451613_91398_2.mp4",
+        "batsman": "Rohit Sharma",
+        "bowler": "Vijaykumar Vyshak"
+    },
+    {
+        "over": "5.5",
+        "commentary": " Maxwell to Ishan Kishan, B0$, Maxwell goes even quicker and Ishan Kishan is up for it. Goes on the back foot and slaps it past the fielder at mid-on to his right. B1$ ",
+        "event": "FOUR",
+        "clip": "clip_5.4_at_520.919329032258_91398_2.mp4",
+        "batsman": "Ishan Kishan",
+        "bowler": "Glenn Maxwell"
+    },
+    {
+        "over": "5.4",
+        "commentary": " Maxwell to Ishan Kishan, B0$, he goes quick to Kishan and gets launched for a maximum. A B1$ as he uses the depth of the crease to muscle the pull over long-on ",
+        "event": "FIFTY,SIX",
+        "clip": "clip_5.3_at_512.9205677419354_91398_2.mp4",
+        "batsman": "Ishan Kishan",
+        "bowler": "Glenn Maxwell"
+    },
+    {
+        "over": "5.1",
+        "commentary": " Maxwell to Ishan Kishan, B0$, out for a 4-ball duck and he concedes a 4 first ball does Glenn Maxwell. Drops it short on the stumps, Ishan Kishan swivels on the back foot and pulls it to the left of long-on ",
+        "event": "FOUR",
+        "clip": "clip_5.0_at_510.92087741935484_91398_2.mp4",
+        "batsman": "Ishan Kishan",
+        "bowler": "Glenn Maxwell"
+    },
+    {
+        "over": "4.5",
+        "commentary": " Siraj to Rohit, B0$, the MI batters are carting Siraj to all corners of the ground. It's the turn of Rohit Sharma now. Picks the full delivery off his pads and whips nonchalantly over mid-wicket. B1$ ",
+        "event": "TEAM_FIFTY,PARTNERSHIP,SIX",
+        "clip": "clip_4.4_at_501.9222709677419_91398_2.mp4",
+        "batsman": "Rohit Sharma",
+        "bowler": "Mohammed Siraj"
+    },
+    {
+        "over": "4.3",
+        "commentary": " Siraj to Ishan Kishan, B0$, wow. That is some shot from Ishan Kishan. I0$ skiddy length delivery just outside off, Ishan Kishan makes room early and uses his fast hands to great effect as he flays it flat square on the off-side for an impressive maximum ",
+        "event": "SIX",
+        "clip": "clip_4.2_at_493.9235096774193_91398_2.mp4",
+        "batsman": "Ishan Kishan",
+        "bowler": "Mohammed Siraj"
+    },
+    {
+        "over": "4.2",
+        "commentary": " Siraj to Ishan Kishan, B0$, now Siraj goes short outside off, Ishan Kishan stands deep inside the crease and slashes in the gap between backward point and cover. Kohli was just a spectator at cover... ",
+        "event": "FOUR",
+        "clip": "clip_4.1_at_486.92459354838707_91398_2.mp4",
+        "batsman": "Ishan Kishan",
+        "bowler": "Mohammed Siraj"
+    },
+    {
+        "over": "4.1",
+        "commentary": " Siraj to Ishan Kishan, B0$, I0$ hit-me short of length delivery just outside off, Ishan Kishan swivels and powers the pull over the leaping deep square fielder. Packed enough power on that shot to clear the fielder ",
+        "event": "SIX",
+        "clip": "clip_4.1_at_486.92459354838707_91398_2.mp4",
+        "batsman": "Ishan Kishan",
+        "bowler": "Mohammed Siraj"
+    },
+    {
+        "over": "2.3",
+        "commentary": " Topley to Ishan Kishan, B0$, Topley goes full again and Ishan Kishan is happy to power that on-drive wide of mid-on to his left ",
+        "event": "FOUR",
+        "clip": "clip_2.2_at_464.928_91398_2.mp4",
+        "batsman": "Ishan Kishan",
+        "bowler": "Reece Topley"
+    },
+    {
+        "over": "2.2",
+        "commentary": " Topley to Ishan Kishan, B0$, B1$ Full and just outside off, Ishan Kishan swings hard and the outside edge flies past the diving right hand of Maxwell at slip ",
+        "event": "FOUR,DROPPED",
+        "clip": "clip_2.1_at_456.9292387096774_91398_2.mp4",
+        "batsman": "Ishan Kishan",
+        "bowler": "Reece Topley"
+    },
+    {
+        "over": "2.1",
+        "commentary": " Topley to Ishan Kishan, B0$, full and in the zone outside off, Ishan Kishan slices the drive square on the off-side and beats the diving effort of deep backward point to his left ",
+        "event": "FOUR",
+        "clip": "clip_2.0_at_449.9303225806451_91398_2.mp4",
+        "batsman": "Ishan Kishan",
+        "bowler": "Reece Topley"
+    },
+    {
+        "over": "1.3",
+        "commentary": " Siraj to Ishan Kishan, B0$, into the stands. Full at the pads, Ishan Kishan plays the pick up whip and sends it soaring for a B1$ ",
+        "event": "SIX",
+        "clip": "clip_1.2_at_442.9314064516129_91398_2.mp4",
+        "batsman": "Ishan Kishan",
+        "bowler": "Mohammed Siraj"
+    },
+    {
+        "over": "19.5",
+        "commentary": " Ishant to Arshad Khan, 1 run, B0$ But Warner prevented the six. Juicy full toss and Arshad swipes it flat towards long-on, Warner leaps up and gets both hands, but he was falling over and does well to release the ball into the playing area, saved five runs ",
+        "event": "DROPPED",
+        "clip": "clip_19.4_at_353.92209078404403_91407_1.mp4",
+        "batsman": "Arshad Khan",
+        "bowler": "Ishant Sharma"
+    },
+    {
+        "over": "19.4",
+        "commentary": " Ishant to Arshad Khan, B0$, Arshad telling Badoni he can also do it. Ishant tries the wide yorker but Arshad reaches for it, opens the bat face and slices thre loft in front of square on the off-side, one bounce and over the ropes ",
+        "event": "FOUR",
+        "clip": "clip_19.3_at_348.9231911966988_91407_1.mp4",
+        "batsman": "Arshad Khan",
+        "bowler": "Ishant Sharma"
+    },
+    {
+        "over": "19.1",
+        "commentary": " Ishant to Ayush Badoni, B0$, LSG have touched 160. Full pitcher outside off, Badoni walks across and thumps it over extra cover ",
+        "event": "FOUR",
+        "clip": "clip_19.0_at_331.9269325997249_91407_1.mp4",
+        "batsman": "Ayush Badoni",
+        "bowler": "Ishant Sharma"
+    },
+    {
+        "over": "18.2",
+        "commentary": " Mukesh Kumar to Ayush Badoni, B0$, wow! Badoni has just swept Mukesh Kumar. Mid-off was sent back and square leg brought in, so Badoni shuffles across and sends down, nails the sweep over the square leg region ",
+        "event": "TEAM_HUNDRED,FOUR",
+        "clip": "clip_18.1_at_319.9295735900963_91407_1.mp4",
+        "batsman": "Ayush Badoni",
+        "bowler": "Mukesh Kumar"
+    },
+    {
+        "over": "18.1",
+        "commentary": " Mukesh Kumar to Ayush Badoni, B0$, B1$ This is good batting and poor planning. Mukesh pitches it up with mid-off inside the ring. Badoni just had to clear the infield and he does so with ease, one bounce and over the ropes ",
+        "event": "FOUR,PARTNERSHIP",
+        "clip": "clip_18.0_at_312.93111416781295_91407_1.mp4",
+        "batsman": "Ayush Badoni",
+        "bowler": "Mukesh Kumar"
+    },
+    {
+        "over": "17.3",
+        "commentary": " Khaleel Ahmed to Arshad Khan, B0$, Arshad joins the act. Width on offer and it is stand and deliver stuff. Arshad stays on the back foot and dismisses the flat-batted hit between cover and mid-off ",
+        "event": "FOUR",
+        "clip": "clip_17.2_at_287.93661623108665_91407_1.mp4",
+        "batsman": "Arshad Khan",
+        "bowler": "Khaleel Ahmed"
+    },
+    {
+        "over": "17.1",
+        "commentary": " Khaleel Ahmed to Ayush Badoni, B0$, wow! That's some way to greet Khaleel back to the attack. Short of length delivery and Badoni is quick to pounce, he transfers his weight back and nails the pull comfortably over deep square leg ",
+        "event": "SIX",
+        "clip": "clip_17.0_at_276.9390371389271_91407_1.mp4",
+        "batsman": "Ayush Badoni",
+        "bowler": "Khaleel Ahmed"
+    },
+    {
+        "over": "6.5",
+        "commentary": " Axar to Stoinis, B0$, B1$ He advances down the track and thumps it over the bowler's head. Couldn't have placed it any straighter ",
+        "event": "FOUR",
+        "clip": "clip_6.4_at_167.96302613480054_91407_1.mp4",
+        "batsman": "Marcus Stoinis",
+        "bowler": "Axar Patel"
+    },
+    {
+        "over": "5.2",
+        "commentary": " Mukesh Kumar to Rahul, B0$, Rahul dealing in boundaries. Timing the ball so well. Advances down the wicket and times his drive through cover, back-to-back boundaries against Mukesh Kumar ",
+        "event": "FOUR",
+        "clip": "clip_5.1_at_160.9645667125172_91407_1.mp4",
+        "batsman": "KL Rahul",
+        "bowler": "Mukesh Kumar"
+    },
+    {
+        "over": "5.1",
+        "commentary": " Mukesh Kumar to Rahul, B0$, B1$ Mukesh Kumar goes short on leg and Rahul has glanced this away to the fine leg fence with nonchalance ",
+        "event": "TEAM_FIFTY,FOUR",
+        "clip": "clip_5.0_at_154.9658872077029_91407_1.mp4",
+        "batsman": "KL Rahul",
+        "bowler": "Mukesh Kumar"
+    },
+    {
+        "over": "4.4",
+        "commentary": " Khaleel Ahmed to Rahul, B0$, B1$ Khaleel Ahmed goes full on middle and Rahul nails his straight drive, a glorious boundary for the LSG captain ",
+        "event": "FOUR",
+        "clip": "clip_4.3_at_145.96786795048143_91407_1.mp4",
+        "batsman": "KL Rahul",
+        "bowler": "Khaleel Ahmed"
+    },
+    {
+        "over": "4.3",
+        "commentary": " Khaleel Ahmed to Stoinis, 1 run, B0$ Khaleel Ahmed goes full and Stoinis chips it right back at the pacer. He does well to get his hands to it, but it hit him on the forearm I guess. Hardly had any time to react, was a tough chance. Allows Stoinis to open his account ",
+        "event": "DROPPED",
+        "clip": "clip_4.2_at_136.96984869326_91407_1.mp4",
+        "batsman": "Marcus Stoinis",
+        "bowler": "Khaleel Ahmed"
+    },
+    {
+        "over": "4.2",
+        "commentary": "Khaleel Ahmed to Padikkal, B0$ Lbw!! B1$ On a length around middle and leg, the ball skids along the deck as Padikkal gets beaten and rapped on the pads. Khaleel goes up in an appeal and up goes the umpire's finger. KL Rahul reckons this would have crashed into the stumps, hence they don't review it either. Replays confirm three reds. Good call not to go for the review. B2$",
+        "event": "WICKET",
+        "clip": "clip_4.1_at_122.97292984869327_91407_1.mp4",
+        "batsman": "Devdutt Padikkal",
+        "bowler": "Khaleel Ahmed"
+    },
+    {
+        "over": "3.5",
+        "commentary": " Ishant to Rahul, B0$, width on offer and Rahul has smashed it. Gets hold of it and slaps the short and wide ball through cover with disdain. No need to run for those ",
+        "event": "FOUR",
+        "clip": "clip_3.4_at_116.97425034387896_91407_1.mp4",
+        "batsman": "KL Rahul",
+        "bowler": "Ishant Sharma"
+    },
+    {
+        "over": "3.4",
+        "commentary": "Ishant to Padikkal, B0$, another loose delivery by Ishant, it's a wide down the leg-side. Pant had reviewed for a wide, but he is now walking up to the umpire and having an argument with him. The DC captain reckons he didn't want to review it, but replays confirm he had done so. Think Pant was checking with one of the fielders",
+        "event": "UDRS",
+        "clip": "clip_3.4_at_116.97425034387896_91407_1.mp4",
+        "batsman": "Devdutt Padikkal",
+        "bowler": "Ishant Sharma"
+    },
+    {
+        "over": "2.5",
+        "commentary": " Khaleel Ahmed to de Kock, B0$ Lbw!! B1$ de Kock departs after playing a handy cameo. Khaleel Ahmed goes full and quick on leg, de Kock like most of the times swings across the line, and has to pay the price for it. Clipping the leg-stump, confirm the replays and the southpaw has to take the long way back to the pavilion.. B2$'' ",
+        "event": "WICKET,UDRS",
+        "clip": "clip_2.4_at_84.98129298486933_91407_1.mp4",
+        "batsman": "Quinton de Kock",
+        "bowler": "Khaleel Ahmed"
+    },
+    {
+        "over": "2.3",
+        "commentary": " Khaleel Ahmed to de Kock, B0$, B1$ Khaleel Ahmed pitches it up and de Kock has thumped it over cover for a rollicking boundary. He's off to a brisk start ",
+        "event": "FOUR",
+        "clip": "clip_2.2_at_77.98283356258597_91407_1.mp4",
+        "batsman": "Quinton de Kock",
+        "bowler": "Khaleel Ahmed"
+    },
+    {
+        "over": "2.1",
+        "commentary": " Khaleel Ahmed to Rahul, B0$, B1$ Khaleel Ahmed goes full on off and Rahul has timed it to perfection. Lofts it over deep extra cover for a flat six. Couldn't have hit that any better, class written all over it ",
+        "event": "SIX",
+        "clip": "clip_2.0_at_68.98481430536451_91407_1.mp4",
+        "batsman": "KL Rahul",
+        "bowler": "Khaleel Ahmed"
+    },
+    {
+        "over": "0.1",
+        "commentary": " Khaleel Ahmed to de Kock, B0$, on the shorter side, de Kock throws his hands at it, slashes hard as the outside edge flies gully, off the mark with a boundary ",
+        "event": "FOUR",
+        "clip": "clip_0.1_at_56.987455295735906_91407_1.mp4",
+        "batsman": "Quinton de Kock",
+        "bowler": "Khaleel Ahmed"
+    },
+    {
+        "over": "18.1",
+        "commentary": " Arshad Khan to Tristan Stubbs, B0$, into the crowds and I0$ A length ball onto middle and leg, Stubbs with a nonchalant pull over deep backward square leg for a maximum. B1$ ",
+        "event": "SIX",
+        "clip": "clip_18.0_at_677.8507840440166_91407_2.mp4",
+        "batsman": "Tristan Stubbs",
+        "bowler": "Arshad Khan"
+    },
+    {
+        "over": "15.4",
+        "commentary": " Ravi Bishnoi to Shai Hope, B0$, flighted up and wide, Hope gets closer with a big stride and drives it powerfully in front of square. All timing on that one to start off with a boundary! ",
+        "event": "TEAM_HUNDRED,FOUR",
+        "clip": "clip_15.3_at_663.8538651994498_91407_2.mp4",
+        "batsman": "Shai Hope",
+        "bowler": "Ravi Bishnoi"
+    },
+    {
+        "over": "15.3",
+        "commentary": " Ravi Bishnoi to Pant, B0$ Stumped!! A twist in the tale? Pant dances down the track for a big slog. Bishnoi with a brave hearted full delivery that spins away from the batter. Pant loses his shape and his bat, and the bat falls onto the arms of KL Rahul, who was undistrubed as he had his eyes on the stumping. Second wicket for Bishnoi. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_15.2_at_650.8567262723521_91407_2.mp4",
+        "batsman": "Rishabh Pant",
+        "bowler": "Ravi Bishnoi"
+    },
+    {
+        "over": "14.4",
+        "commentary": " Naveen-ul-Haq to Fraser-McGurk, B0$ Caught by Arshad Khan!! Muted celebrations from the home team. Naveen-ul-Haq goes full and almost on the wide line outside off. Fraser-McGurk goes chasing for a big heave through the line but slices it down towards the deep backward point fielder. Nicely judged by Arshad Khan. B1$ B2$ ",
+        "event": "WICKET",
+        "clip": "clip_14.3_at_631.8609078404402_91407_2.mp4",
+        "batsman": "Jake Fraser-McGurk",
+        "bowler": "Naveen-ul-Haq"
+    },
+    {
+        "over": "13.5",
+        "commentary": " Yash Thakur to Pant, B0$, pace off and back of length on off, Pant reads it off the hands and gives it powerful pull over deep mid-wicket for a maximum. It felt like he literally snatched that out the hands off Thakur and hit it away into the stands... ",
+        "event": "SIX",
+        "clip": "clip_13.4_at_623.8626685006877_91407_2.mp4",
+        "batsman": "Rishabh Pant",
+        "bowler": "Yash Thakur"
+    },
+    {
+        "over": "13.2",
+        "commentary": "Yash Thakur to Fraser-McGurk, 3 runs, on a length angling onto the thigh pad, clipped softly behind square and that's good enough for a triple. B0$ hopefully just the start of many more beautiful things for this incredibly talented hiiter from South Australia!",
+        "event": "FIFTY",
+        "clip": "clip_13.1_at_595.8688308115544_91407_2.mp4",
+        "batsman": "Jake Fraser-McGurk",
+        "bowler": "Yash Thakur"
+    },
+    {
+        "over": "13.1",
+        "commentary": " Yash Thakur to Fraser-McGurk, B0$, slot ball outside off, Fraser-McGurk throws his bat out at it. Gives it a big swing and toe-ends it over backward point for a boundary ",
+        "event": "FOUR",
+        "clip": "clip_13.0_at_588.870371389271_91407_2.mp4",
+        "batsman": "Jake Fraser-McGurk",
+        "bowler": "Yash Thakur"
+    },
+    {
+        "over": "12.3",
+        "commentary": " Krunal Pandya to Fraser-McGurk, B0$, a hat-trick of sixes!! And that's why this young lad is making so much buzz on social media. A flat delivery onto off, Fraser-McGurk is fearless as he makes some room and gives it a big, old golf swing over long-off. Making an International bowler like Krunal Pandya look pedestrain out here! ",
+        "event": "SIX",
+        "clip": "clip_12.2_at_583.8714718019257_91407_2.mp4",
+        "batsman": "Jake Fraser-McGurk",
+        "bowler": "Krunal Pandya"
+    },
+    {
+        "over": "12.2",
+        "commentary": " Krunal Pandya to Fraser-McGurk, B0$, six more!! This one is fired quick outside off, Fraser-McGurk gets closer, gets under it and slams it over deep extra cover for a maximum ",
+        "event": "SIX,PARTNERSHIP",
+        "clip": "clip_12.1_at_576.8730123796424_91407_2.mp4",
+        "batsman": "Jake Fraser-McGurk",
+        "bowler": "Krunal Pandya"
+    },
+    {
+        "over": "12.1",
+        "commentary": " Krunal Pandya to Fraser-McGurk, B0$, launched!! Right out of the meat of the bat as Krunal dishes out an arm ball in the swinging arc of Jake Fraser-McGurk. Clears his front leg and heaves it over deep mid-wicket ",
+        "event": "SIX",
+        "clip": "clip_12.0_at_568.87477303989_91407_2.mp4",
+        "batsman": "Jake Fraser-McGurk",
+        "bowler": "Krunal Pandya"
+    },
+    {
+        "over": "10.5",
+        "commentary": " Ravi Bishnoi to Pant, B0$, dances down again and Bishnoi shortens the length and tries to squeeze it wide outside off. Pant adjusts, reaches out and slaps it to the right of long-off for a boundary. Skipper Rahul continues to encourage his bowler ",
+        "event": "FOUR",
+        "clip": "clip_10.4_at_544.8800550206328_91407_2.mp4",
+        "batsman": "Rishabh Pant",
+        "bowler": "Ravi Bishnoi"
+    },
+    {
+        "over": "10.4",
+        "commentary": " Ravi Bishnoi to Pant, B0$, there comes the Rishabh Pant countercharge!! A boundary after 29 deliveries.. Dances down to the pitch of it and hoists it over the bowler's head for a straight six as Bishnoi floats it up slightly. ",
+        "event": "SIX",
+        "clip": "clip_10.3_at_535.8820357634113_91407_2.mp4",
+        "batsman": "Rishabh Pant",
+        "bowler": "Ravi Bishnoi"
+    },
+    {
+        "over": "5.4",
+        "commentary": " Krunal Pandya to Prithvi Shaw, B0$, the length is shortened and Shaw is quick to pounce, he pulls it over mid-on and manages to clear the infield easily ",
+        "event": "FOUR",
+        "clip": "clip_5.3_at_515.8864374140303_91407_2.mp4",
+        "batsman": "Prithvi Shaw",
+        "bowler": "Krunal Pandya"
+    },
+    {
+        "over": "5.3",
+        "commentary": " Krunal Pandya to Prithvi Shaw, B0$, this is smart batting. Shaw knows Krunal is darting them in, he moves inside the line and helps it over backward square leg, one bounce and over the ropes ",
+        "event": "FOUR",
+        "clip": "clip_5.2_at_507.88819807427785_91407_2.mp4",
+        "batsman": "Prithvi Shaw",
+        "bowler": "Krunal Pandya"
+    },
+    {
+        "over": "5.2",
+        "commentary": " Krunal Pandya to Fraser-McGurk, B0$, this is all Fraser-McGurk. He's put the pressure on the LSG bowlers. Krunal darts it down leg and Rahul cannot do much, he gets a hand but the ball still runs away to the fence ",
+        "event": "TEAM_FIFTY",
+        "clip": "clip_5.2_at_507.88819807427785_91407_2.mp4",
+        "batsman": "Jake Fraser-McGurk",
+        "bowler": "Krunal Pandya"
+    },
+    {
+        "over": "4.4",
+        "commentary": " Arshad Khan to Fraser-McGurk, B0$, the first one just cleared the rope and this one sailed into the stands. LSG bowlers need to quickly learn, Fraser-McGurk loves anything slightly short, he clears his front leg and has a free swing, connects cleanly and the ball whistles over wide long-on ",
+        "event": "SIX",
+        "clip": "clip_4.3_at_491.8917193947731_91407_2.mp4",
+        "batsman": "Jake Fraser-McGurk",
+        "bowler": "Arshad Khan"
+    },
+    {
+        "over": "3.5",
+        "commentary": " Yash Thakur to Fraser-McGurk, B0$, Fraser-McGurk off the mark in IPL with a six. He's fearless and does not back away from playing his shots. Short of length delivery and he loves it there, hangs back and hammers the pull over deep mid-wicket ",
+        "event": "SIX",
+        "clip": "clip_3.4_at_476.89502063273727_91407_2.mp4",
+        "batsman": "Jake Fraser-McGurk",
+        "bowler": "Yash Thakur"
+    },
+    {
+        "over": "3.3",
+        "commentary": "Yash Thakur to Warner, B0$ Bowled!! Played on! Yash Thakur starts off from where left off the other night. He was a bit lucky here but he won't be complaining. Warner shuffles across once again to play the pick up shot or the lap, gets cramped for room and is struck on the back thigh, the ball lobs up and spins back onto the stumps, dislodging the leg-bail. Warner tries to push the ball away but is a bit late. B1$",
+        "event": "WICKET",
+        "clip": "clip_3.2_at_457.8992022008253_91407_2.mp4",
+        "batsman": "David Warner",
+        "bowler": "Yash Thakur"
+    },
+    {
+        "over": "2.5",
+        "commentary": " Arshad Khan to Prithvi Shaw, B0$, not off the middle but enough to pick up a boundary. I0$ short of length delivery, Shaw slaps it straight down the ground and it came off the sticker ",
+        "event": "FOUR",
+        "clip": "clip_2.4_at_448.9011829436039_91407_2.mp4",
+        "batsman": "Prithvi Shaw",
+        "bowler": "Arshad Khan"
+    },
+    {
+        "over": "1.3",
+        "commentary": " Naveen-ul-Haq to Prithvi Shaw, B0$, glorious! Good length ball outside off, Shaw drives through the line and that too on the rise, struck it uppishly but into the vacant extra cover region. Rahul shakes his head behind the stumps ",
+        "event": "FOUR",
+        "clip": "clip_1.2_at_442.90250343878955_91407_2.mp4",
+        "batsman": "Prithvi Shaw",
+        "bowler": "Naveen-ul-Haq"
+    },
+    {
+        "over": "1.2",
+        "commentary": " Naveen-ul-Haq to Prithvi Shaw, B0$, width on offer and Shaw does not miss out, he reaches with an open face and slices it over point. There was a sweeper but he had no chance of stopping that ",
+        "event": "FOUR",
+        "clip": "clip_1.1_at_434.90426409903716_91407_2.mp4",
+        "batsman": "Prithvi Shaw",
+        "bowler": "Naveen-ul-Haq"
+    },
+    {
+        "over": "19.2",
+        "commentary": " Boult to Ashutosh Sharma, B0$, hammered! A full ball outside off, Ashutosh Sharma with a firm base smashes it past extra cover for a rocketing boundary. Hit that one so hard ",
+        "event": "FOUR",
+        "clip": "clip_19.1_at_277.9750858849888_91416_1.mp4",
+        "batsman": "Ashutosh Sharma",
+        "bowler": "Trent Boult"
+    },
+    {
+        "over": "18.5",
+        "commentary": " Avesh Khan to Ashutosh Sharma, B0$, B1$ On a  back of a length around off, Ashutosh Sharma makes room and flat-bats it towards long-off. Parag leaps but he can only see it sailing over the fence ",
+        "event": "SIX",
+        "clip": "clip_18.4_at_271.9756235997013_91416_1.mp4",
+        "batsman": "Ashutosh Sharma",
+        "bowler": "Avesh Khan"
+    },
+    {
+        "over": "18.3",
+        "commentary": " Avesh Khan to Ashutosh Sharma, B0$, shot! In the arc for Ashutosh Sharma. He lines it up and smashes it over wide long-on for another maximum ",
+        "event": "SIX",
+        "clip": "clip_18.2_at_262.97643017177_91416_1.mp4",
+        "batsman": "Ashutosh Sharma",
+        "bowler": "Avesh Khan"
+    },
+    {
+        "over": "18.2",
+        "commentary": " Avesh Khan to Ashutosh Sharma, 2 runs,B0$ Confusion between the bowler and the keeper and it goes down. A fullish ball angling in. Ashutosh Sharma tries to heave it and miscues it towards mid-wicket. Avesh Khan is running towards it and is closer to the ball but Samson charges in. Both go for it but neither can hang on. ",
+        "event": "DROPPED",
+        "clip": "clip_18.1_at_244.9780433159074_91416_1.mp4",
+        "batsman": "Ashutosh Sharma",
+        "bowler": "Avesh Khan"
+    },
+    {
+        "over": "17.5",
+        "commentary": " Chahal to Ashutosh Sharma, B0$ Livingstone Run Out!! 1 run completed! Tossed up full ball on middle and leg, Ashutosh Sharma drags his heave towards deep mid-wicket. Livingstone wants the second but he has been sent back. He is struggling to get back as Samson collects the flat throw to his left and gets low to throw it back onto the stumps. It is taken upstairs and Livingstone is short. Brilliant tag-team work from Kotian and Samson. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_17.4_at_212.98091112770726_91416_1.mp4",
+        "batsman": "Ashutosh Sharma",
+        "bowler": "Yuzvendra Chahal"
+    },
+    {
+        "over": "17.4",
+        "commentary": " Chahal to Ashutosh Sharma, B0$, B1$  On a back of a length outside off, slow through the air and Ashutosh Sharma has ample time to line it up. He tonks it over wide long-on for a maximum ",
+        "event": "SIX",
+        "clip": "clip_17.3_at_209.9811799850635_91416_1.mp4",
+        "batsman": "Ashutosh Sharma",
+        "bowler": "Yuzvendra Chahal"
+    },
+    {
+        "over": "16.5",
+        "commentary": " Avesh Khan to Livingstone, B0$, well played! A very full ball moving in on off, almost a yorker length ball. Livingstone clears his front leg and hits it through wide mid-on. Deep mid-wicket moves to his left but he has no chance ",
+        "event": "FOUR",
+        "clip": "clip_16.4_at_199.98207617625096_91416_1.mp4",
+        "batsman": "Liam Livingstone",
+        "bowler": "Avesh Khan"
+    },
+    {
+        "over": "16.1",
+        "commentary": " Avesh Khan to Jitesh Sharma, B0$ Caught by Riyan Parag!! B1$ A skiddy good length ball angling in on off, Jitesh Sharma tries to go over mid-off but he completely miscues it. Parag inside the ring takes an easy catch. Jitesh Sharma looked promising tonight but fell before his innings could blossom. B2$ ",
+        "event": "WICKET",
+        "clip": "clip_16.0_at_187.98315160567589_91416_1.mp4",
+        "batsman": "Jitesh Sharma",
+        "bowler": "Avesh Khan"
+    },
+    {
+        "over": "15.5",
+        "commentary": " Kuldeep Sen to Livingstone, B0$, fuller length ball angling in on off, Livingstone heaves it over mid-wicket and beats the fielder in the deep to his left. Not off the meat of the bat but Livingstone is a powerful man ",
+        "event": "FOUR",
+        "clip": "clip_15.4_at_175.98422703510084_91416_1.mp4",
+        "batsman": "Liam Livingstone",
+        "bowler": "Kuldeep Sen"
+    },
+    {
+        "over": "15.1",
+        "commentary": " Kuldeep Sen to Jitesh Sharma, B0$, B1$ Long-off is up inside the ring and Jitesh Sharma takes full advantage. It's in the slot alright but the bat swing from Jitesh Sharma is spot on. He crunches it down the ground for a biggie ",
+        "event": "SIX",
+        "clip": "clip_15.0_at_115.98960418222555_91416_1.mp4",
+        "batsman": "Jitesh Sharma",
+        "bowler": "Kuldeep Sen"
+    },
+    {
+        "over": "6.3",
+        "commentary": " Chahal to Prabhsimran, B0$ Caught by Dhruv Jurel!! That's ugly and Prabhsimran has holed out to wide long-on - came down the pitch, got too close to the ball, no timing on the lofted drive, hits it into the wind and the ball sails down the throat of Jurel, who doesn't drop those. A first-over wicket for Chahal and Punjab continue to struggle. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_6.2_at_91.99175504107544_91416_1.mp4",
+        "batsman": "Prabhsimran Singh",
+        "bowler": "Yuzvendra Chahal"
+    },
+    {
+        "over": "5.5",
+        "commentary": " Avesh Khan to Prabhsimran, B0$, B1$, much needed for the Kings, overpitched and wide of off - Prabhsimran leans into the drive and drills it over mid-off, one bounce and over the ropes ",
+        "event": "FOUR",
+        "clip": "clip_5.4_at_87.99211351755042_91416_1.mp4",
+        "batsman": "Prabhsimran Singh",
+        "bowler": "Avesh Khan"
+    },
+    {
+        "over": "3.4",
+        "commentary": " Avesh Khan to Atharva Taide, B0$ Caught by Kuldeep Sen!! A massive top-edge on the pull, goes straight up and Samson calls for the catch, so does Kuldeep at short third man, a minor collision, but Kuldeep held on and has a word with his captain, was always his catch and he makes Samson know. Banged in short and following Taide as he came down the pitch, he tries to pull, gets cramped for room and only manages a top-edge - Kuldeep didn't have to move an inch as he accepted it with glee. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_3.3_at_73.99336818521284_91416_1.mp4",
+        "batsman": "Atharva Taide",
+        "bowler": "Avesh Khan"
+    },
+    {
+        "over": "2.4",
+        "commentary": " Boult to Bairstow, B0$, B1$, overpitched by Boult, Bairstow leans forward, presents a straight bat and then drives it back past the non-striker, races away to the straight boundary ",
+        "event": "FOUR",
+        "clip": "clip_2.3_at_67.99390589992532_91416_1.mp4",
+        "batsman": "Jonny Bairstow",
+        "bowler": "Trent Boult"
+    },
+    {
+        "over": "1.2",
+        "commentary": " Kuldeep Sen to Atharva Taide, B0$, back-to-back boundaries for Taide - pitched up by Kuldeep, but the length is too full and wide of off, lets Taide lean into the drive and place it to the left of cover, runs away to the ropes ",
+        "event": "FOUR",
+        "clip": "clip_1.1_at_58.99471247199403_91416_1.mp4",
+        "batsman": "Atharva Taide",
+        "bowler": "Kuldeep Sen"
+    },
+    {
+        "over": "1.1",
+        "commentary": " Kuldeep Sen to Atharva Taide, B0$, B1$, overpitched and wide of off - Taide leans across, plays with an open face and then finds the gap square past cover-point, races away to the ropes ",
+        "event": "FOUR",
+        "clip": "clip_1.1_at_58.99471247199403_91416_1.mp4",
+        "batsman": "Atharva Taide",
+        "bowler": "Kuldeep Sen"
+    },
+    {
+        "over": "19.5",
+        "commentary": " Arshdeep Singh to Hetmyer, B0$, hit-me ball and Hetmyer accepts it gleefully! 137.8kph, high full toss down leg and Hetmyer swings it over fine leg. Hits the boundary cushion on the full and B1$ ",
+        "event": "TEAM_HUNDRED,SIX",
+        "clip": "clip_19.4_at_606.9456011949217_91416_2.mp4",
+        "batsman": "Shimron Hetmyer",
+        "bowler": "Arshdeep Singh"
+    },
+    {
+        "over": "19.3",
+        "commentary": "Arshdeep Singh to Hetmyer, B0$, 138kph, wow! That's a superb hit from Hetmyer. He shimmies down the track and it's not a yorker from Arshdeep. Turns it into a half-volley and smashes it over straight long-on for a flat six",
+        "event": "SIX",
+        "clip": "clip_19.2_at_587.9473039581778_91416_2.mp4",
+        "batsman": "Shimron Hetmyer",
+        "bowler": "Arshdeep Singh"
+    },
+    {
+        "over": "18.3",
+        "commentary": " Sam Curran to Powell, B0$ Caught by Jitesh Sharma!! Edged and gone! Powell is walking. Banged in short outside off, Powell probably didn't expect it. Good lift outside off and Powell looks to pull through backward square leg. Not a convincing shot and all he manages to get is a faint top edge. Jitesh Sharma doesn't err. Punjab continue to fight. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_18.2_at_544.9511575802838_91416_2.mp4",
+        "batsman": "Rovman Powell",
+        "bowler": "Sam Curran"
+    },
+    {
+        "over": "18.2",
+        "commentary": " Sam Curran to Powell, B0$, 130,1kph, very full outside off and Powell leans across to slap-drive it through extra cover. Back-to-back boundaries! ",
+        "event": "FOUR",
+        "clip": "clip_18.1_at_537.951784914115_91416_2.mp4",
+        "batsman": "Rovman Powell",
+        "bowler": "Sam Curran"
+    },
+    {
+        "over": "18.1",
+        "commentary": " Sam Curran to Powell, B0$, hammered! 121.6kph, off-speed full delivery outside off, Powell walks across, bends his back leg and drills it past mid-off. Bairstow, the man in the deep, sprints and drives but to no avail ",
+        "event": "FOUR",
+        "clip": "clip_18.0_at_530.9524122479463_91416_2.mp4",
+        "batsman": "Rovman Powell",
+        "bowler": "Sam Curran"
+    },
+    {
+        "over": "17.5",
+        "commentary": " Harshal Patel to Hetmyer, B0$, 133.9kph, shortish delivery, Hetmyer clears his front leg to heave it away between deep midwicket and long-on. Hits him high on the bat but he's muscled it ",
+        "event": "FOUR",
+        "clip": "clip_17.4_at_517.9535772964899_91416_2.mp4",
+        "batsman": "Shimron Hetmyer",
+        "bowler": "Harshal Patel"
+    },
+    {
+        "over": "16.4",
+        "commentary": " Arshdeep Singh to Riyan Parag, B0$ Caught by Rabada!! The slower ball does the trick! 120.5kph, pace off and into the wicket, Riyan Parag spots the length but is a bit early into his pull shot. Top-edges, more height than distance. Rabada, at deep midwicket, calls for it, settles under it and takes a calm catch. The in-form Parag departs for 23, wasn't at his fluent best today. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_16.3_at_487.9562658700523_91416_2.mp4",
+        "batsman": "Riyan Parag",
+        "bowler": "Arshdeep Singh"
+    },
+    {
+        "over": "16.2",
+        "commentary": " Arshdeep Singh to Riyan Parag, B0$, 131kph, streaky and much-needed for RR! Shortish ball, Parag swings hard to pull over midwicket and gets a fat top edge that flies over the keeper's head. Goes all the way ",
+        "event": "SIX",
+        "clip": "clip_16.1_at_478.957072442121_91416_2.mp4",
+        "batsman": "Riyan Parag",
+        "bowler": "Arshdeep Singh"
+    },
+    {
+        "over": "14.3",
+        "commentary": " Harpreet Brar to Riyan Parag, B0$, in the air and safe! 96.2kph, fullish ball outside off and Riyan Parag throws his arms at it to flay it over the leaping backward point fielder ",
+        "event": "FOUR",
+        "clip": "clip_14.2_at_470.95778939507096_91416_2.mp4",
+        "batsman": "Riyan Parag",
+        "bowler": "Harpreet Brar"
+    },
+    {
+        "over": "13.2",
+        "commentary": " Rabada to Samson, B0$ Lbw!! 134.3kph, vociferous appeal for lbw and up goes Anil Kumar Chaudhary's finger. Samson reluctantly reviews. Lack of bounce from a back of a length, Samson shapes to pull and misses as the ball scoots under his blade. Struck on the back thigh adjacent to the sticks and that's B1$ RR lose their captain as well as a review. Big wicket for Punjab who continue to fight. Replays show that it was a leg-cutter from Rabada which wasn't picked by the batter. B2$ ",
+        "event": "WICKET,UDRS",
+        "clip": "clip_13.1_at_435.96092606422707_91416_2.mp4",
+        "batsman": "Sanju Samson",
+        "bowler": "Kagiso Rabada"
+    },
+    {
+        "over": "11.4",
+        "commentary": " Rabada to Jaiswal, B0$ Caught by Harshal Patel!! Rabada comes back to remove Jaiswal. Banged in short outside off, Jaiswal clears his front leg and goes after it. Flashes his bat hard for an upper-cut but gets it off the bottom part of the bat. Ends up hitting it straight down third man's throat. Jaiswal falls after getting a start. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_11.3_at_420.9622703510082_91416_2.mp4",
+        "batsman": "Yashasvi Jaiswal",
+        "bowler": "Kagiso Rabada"
+    },
+    {
+        "over": "10.4",
+        "commentary": " Livingstone to Samson, B0$, 94.3kph, Livingstone bowls short and Samson is quick to trek back and pull it. Superb placement as he splits the gap between deep midwicket and long-on ",
+        "event": "FOUR",
+        "clip": "clip_10.3_at_412.9629873039582_91416_2.mp4",
+        "batsman": "Sanju Samson",
+        "bowler": "Liam Livingstone"
+    },
+    {
+        "over": "10.1",
+        "commentary": "Livingstone to Samson, B0$, 88.7kph, full and in the slot, Samson clears his front leg, gets under it and thumps this leggie downtown. Struck hard and over the bowler's head",
+        "event": "SIX",
+        "clip": "clip_10.0_at_407.96343539955194_91416_2.mp4",
+        "batsman": "Sanju Samson",
+        "bowler": "Liam Livingstone"
+    },
+    {
+        "over": "8.2",
+        "commentary": " Livingstone to Tanush Kotian, B0$ Bowled!! Gone! This was on the cards. Plenty of dot balls, he tries to slog his way out of trouble and perishes in the process. Pushed quicker and flatter by Livingstone, Kotian shimmies down the track to swing it over midwicket. Got saved by an inside edge last ball but this time he misses it altogether to hear the death rattle. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_8.1_at_397.9643315907394_91416_2.mp4",
+        "batsman": "Tanush Kotian",
+        "bowler": "Liam Livingstone"
+    },
+    {
+        "over": "5.1",
+        "commentary": " Rabada to Tanush Kotian, B0$, that's an audacious shot! A length ball angling in on middle, Tanush Kotian clears his front leg and smashes it past the right side of mid-on for a boundary. He is growing in confidence slowly but certainly ",
+        "event": "FOUR",
+        "clip": "clip_5.0_at_375.96630321135177_91416_2.mp4",
+        "batsman": "Tanush Kotian",
+        "bowler": "Kagiso Rabada"
+    },
+    {
+        "over": "3.1",
+        "commentary": " Arshdeep Singh to Jaiswal, B0$, lovely! Slower ball at 115.5 clicks outside off, Jaiswal reads it perfectly as he leans ahead and drills the drive past extra cover for a rocketing boundary ",
+        "event": "FOUR",
+        "clip": "clip_3.0_at_358.96782673637045_91416_2.mp4",
+        "batsman": "Yashasvi Jaiswal",
+        "bowler": "Arshdeep Singh"
+    },
+    {
+        "over": "1.5",
+        "commentary": " Rabada to Jaiswal, B0$, beautiful timing! Pitched up ball on middle and off, Jaiswal flicks it nonchalantly through mid-wicket to get the desired result. All grace and timing there ",
+        "event": "FOUR",
+        "clip": "clip_1.4_at_353.96827483196415_91416_2.mp4",
+        "batsman": "Yashasvi Jaiswal",
+        "bowler": "Kagiso Rabada"
+    },
+    {
+        "over": "0.5",
+        "commentary": " Arshdeep Singh to Tanush Kotian, B0$, nicely played! B1$ Shortish delivery shaping across Tanush Kotian. He rises with the bounce and cuts it past backward point to find the fence ",
+        "event": "FOUR",
+        "clip": "clip_0.4_at_345.9689917849141_91416_2.mp4",
+        "batsman": "Tanush Kotian",
+        "bowler": "Arshdeep Singh"
+    },
+    {
+        "over": "19.2",
+        "commentary": " Starc to Arshad Khan, B0$, one bounce and over the ropes! Bumper outside off, Arshad Khan pulls and the top-edge flies over the keeper to his right. No chance for the fielder at short fine ",
+        "event": "FOUR",
+        "clip": "clip_19.1_at_262.806719160105_91420_1.mp4",
+        "batsman": "Arshad Khan",
+        "bowler": "Mitchell Starc"
+    },
+    {
+        "over": "19.1",
+        "commentary": " Starc to Pooran, B0$ Caught by Philip Salt!! Ouch! He's gone first ball. Starc hits the good length and keeps it well wide of off, Pooran was all hands on the slashy drive and gets a faint outside edge through to the keeper. Starc knew straightaway and had a cheeky smile before watching Pooran trudge back to the dug-out. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_19.0_at_249.81627296587928_91420_1.mp4",
+        "batsman": "Nicholas Pooran",
+        "bowler": "Mitchell Starc"
+    },
+    {
+        "over": "18.3",
+        "commentary": " Harshit Rana to Pooran, B0$, the luck is shining bright on Pooran today. He gets a thick top-edge on the pull and it skips away to the deep square fence beating the diving effort of Starc to his left. It was the bumper from Harshit Rana and hurried Pooran for pace on the back foot.... ",
+        "event": "FOUR",
+        "clip": "clip_18.2_at_238.82435695538058_91420_1.mp4",
+        "batsman": "Nicholas Pooran",
+        "bowler": "Harshit Rana"
+    },
+    {
+        "over": "18.3",
+        "commentary": " Harshit Rana to Pooran, B0$, this is a massive wide, the idea was to take it wide of off but Harshit Rana has hurled this nearly outside the strip ",
+        "event": "TEAM_HUNDRED",
+        "clip": "clip_18.2_at_238.82435695538058_91420_1.mp4",
+        "batsman": "Nicholas Pooran",
+        "bowler": "Harshit Rana"
+    },
+    {
+        "over": "18.2",
+        "commentary": " Harshit Rana to Pooran, B0$, another slower delivery bowled at I0$ outside off. The length was a fraction fuller and Pooran's slog-attempt finds the top-edge that sails over the fielder at short third ",
+        "event": "FOUR",
+        "clip": "clip_18.1_at_231.82950131233596_91420_1.mp4",
+        "batsman": "Nicholas Pooran",
+        "bowler": "Harshit Rana"
+    },
+    {
+        "over": "17.3",
+        "commentary": " Vaibhav Arora to Pooran, B0$, and now he angles in the bumper at the body, gets big on Pooran but the top-edge sails all the way over fine leg for another maximum ",
+        "event": "SIX",
+        "clip": "clip_17.2_at_222.8361154855643_91420_1.mp4",
+        "batsman": "Nicholas Pooran",
+        "bowler": "Vaibhav Arora"
+    },
+    {
+        "over": "17.2",
+        "commentary": " Vaibhav Arora to Pooran, B0$, bumper aiming for the left shoulder, Pooran was hurried on the pull and didn't time it as well as he would have liked. Manages to pack enough power to send it soaring for a B1$ ",
+        "event": "SIX",
+        "clip": "clip_17.2_at_222.8361154855643_91420_1.mp4",
+        "batsman": "Nicholas Pooran",
+        "bowler": "Vaibhav Arora"
+    },
+    {
+        "over": "16.3",
+        "commentary": " Harshit Rana to Pooran, B0$, it's pace time and that's an alarm alert for six-hitting for Nicholas Pooran. Fetches the juicy short ball from outside off and heaves it for an B1$ over mid-wicket ",
+        "event": "SIX",
+        "clip": "clip_16.2_at_208.84640419947507_91420_1.mp4",
+        "batsman": "Nicholas Pooran",
+        "bowler": "Harshit Rana"
+    },
+    {
+        "over": "14.4",
+        "commentary": " Narine to Ayush Badoni, B0$ Caught by Angkrish Raghuvanshi!! Ayush Badoni got his eye in, but will be hugely disappointed for failing to convert yet another start into a big one. He dragged the offbreak from outside off looking to swipe it square and got a healthy top-edge that went straight down the throat of Raghuvanshi at deep square. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_14.3_at_194.85669291338584_91420_1.mp4",
+        "batsman": "Ayush Badoni",
+        "bowler": "Sunil Narine"
+    },
+    {
+        "over": "13.1",
+        "commentary": " Chakaravarthy to Pooran, B0$, a dolly from Varun Chakaravarthy and Pooran accepts it gleefully. A hip high full toss and Pooran has smoked that into the mid-wicket stands with an air of authority... ",
+        "event": "TEAM_HUNDRED,SIX",
+        "clip": "clip_13.0_at_185.86330708661418_91420_1.mp4",
+        "batsman": "Nicholas Pooran",
+        "bowler": "Varun Chakaravarthy"
+    },
+    {
+        "over": "11.4",
+        "commentary": " Chakaravarthy to Stoinis, B0$ Caught by Philip Salt!! KKR keep chipping away, but the credit goes to Philip Salt. Was the wrong 'un from Chakaravarthy, Stoinis didn't spot it as he looked to work it onto the on-side, gets a big inside edge onto the thigh and the ball pops to the off-side - Salt is watching it all along, moves to his right and then leaps, completing a good two-handed catch. Wickets in consecutive overs and KKR have edged ahead. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_11.3_at_175.870656167979_91420_1.mp4",
+        "batsman": "Marcus Stoinis",
+        "bowler": "Varun Chakaravarthy"
+    },
+    {
+        "over": "11.2",
+        "commentary": " Chakaravarthy to Ayush Badoni, B0$, B1$, Badoni breaks the shackles, flighted delivery on off, right in the slot and Badoni gets down low on the slog-sweep, the timing is sublime and the ball sails into the crowd ",
+        "event": "SIX",
+        "clip": "clip_11.1_at_169.8750656167979_91420_1.mp4",
+        "batsman": "Ayush Badoni",
+        "bowler": "Varun Chakaravarthy"
+    },
+    {
+        "over": "10.5",
+        "commentary": " Russell to Stoinis, B0$, B1$, banged in short once again, Stoinis swivels across and then thumps the pull through mid-wicket, sent it sailing through for a boundary ",
+        "event": "FOUR",
+        "clip": "clip_10.4_at_158.8831496062992_91420_1.mp4",
+        "batsman": "Marcus Stoinis",
+        "bowler": "Andre Russell"
+    },
+    {
+        "over": "10.3",
+        "commentary": "Russell to Stoinis, B0$, B1$, banged in short by Russell, but he's bowled it to a man from Australia, Stoinis picks the length early, swivels across and then pulls it in front of square on the on-side for a boundary",
+        "event": "FOUR",
+        "clip": "clip_10.2_at_153.88682414698164_91420_1.mp4",
+        "batsman": "Marcus Stoinis",
+        "bowler": "Andre Russell"
+    },
+    {
+        "over": "10.2",
+        "commentary": " Russell to Rahul, B0$ Caught by Ramandeep Singh !! Six and OUT! This is a big wicket in the context of the innings, Rahul was beginning to shift gears, but he falls in the quest of quick runs, back of a length and just outside off, Rahul swivelled across and then hammered the flat-batted pull, hit it hard and straight into the hands of Ramandeep at deep mid-wicket. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_10.1_at_138.89784776902889_91420_1.mp4",
+        "batsman": "KL Rahul",
+        "bowler": "Andre Russell"
+    },
+    {
+        "over": "10.1",
+        "commentary": " Russell to Rahul, B0$, an upper-cut and B1$, width on offer and Rahul didn't bother to keep the cut down, smashed it hard and gets enough on the shot to clear the fielder in the deep ",
+        "event": "SIX",
+        "clip": "clip_10.0_at_131.90299212598427_91420_1.mp4",
+        "batsman": "KL Rahul",
+        "bowler": "Andre Russell"
+    },
+    {
+        "over": "5.2",
+        "commentary": " Harshit Rana to Ayush Badoni, B0$, B1$, overpitched and wide of off - Badoni leans into the drive, opens the face of the bat at the last moment and beats cover-point to his right ",
+        "event": "FOUR",
+        "clip": "clip_5.1_at_112.91695538057743_91420_1.mp4",
+        "batsman": "Ayush Badoni",
+        "bowler": "Harshit Rana"
+    },
+    {
+        "over": "4.4",
+        "commentary": " Starc to Hooda, B0$ Caught by Ramandeep Singh !! That's a sharp catch and LSG have lost their second wicket. On a length and well wide of off, Hooda saw the width and went hard on the open-faced drive, was to the right of backward point where Ramandeep dived full length, went with both hands and completed a smart catch. He's mobbed by his mates and LSG are in early trouble once again. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_4.3_at_102.92430446194226_91420_1.mp4",
+        "batsman": "Deepak Hooda",
+        "bowler": "Mitchell Starc"
+    },
+    {
+        "over": "4.2",
+        "commentary": " Starc to Rahul, B0$, B1$, on a good length and well wide of off - Rahul gets on top of the bounce and then crashes the drive over cover, one bounce and over the ropes ",
+        "event": "FOUR",
+        "clip": "clip_4.1_at_94.93018372703412_91420_1.mp4",
+        "batsman": "KL Rahul",
+        "bowler": "Mitchell Starc"
+    },
+    {
+        "over": "3.4",
+        "commentary": " Vaibhav Arora to Hooda, B0$, B1$, banged in short by Arora, Hooda was swievlling across on the pull, he's undone by the extra bounce, but gets enough on the shot to clear the keeper ",
+        "event": "FOUR",
+        "clip": "clip_3.3_at_88.93459317585302_91420_1.mp4",
+        "batsman": "Deepak Hooda",
+        "bowler": "Vaibhav Arora"
+    },
+    {
+        "over": "1.5",
+        "commentary": " Vaibhav Arora to de Kock, B0$ Caught by Narine!! Edged and caught! Another loose waft and de Kock has edged it straight into the hands of Narine at short third. On a good length and pushed across the left-hander - de Kock's feet hardly moved as he threw his hands on the drive, plays well away from his body and the thick edge went straight into the gleeful hands of Narine. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_1.4_at_71.94708661417323_91420_1.mp4",
+        "batsman": "Quinton de Kock",
+        "bowler": "Vaibhav Arora"
+    },
+    {
+        "over": "1.2",
+        "commentary": " Vaibhav Arora to Rahul, B0$, B1$, on a good length and well wide of off, Rahul leans across, plays with an open face and then carves it over cover, sails over the ropes and he's off the mark with a maximum ",
+        "event": "SIX",
+        "clip": "clip_1.1_at_56.95811023622048_91420_1.mp4",
+        "batsman": "KL Rahul",
+        "bowler": "Vaibhav Arora"
+    },
+    {
+        "over": "1.1",
+        "commentary": " Vaibhav Arora to Rahul, B0$, fuller length delivery and well wide of off, close to the tramlines and is called as a wide. They've reviewed it though, it's a 50-50 call, right on the tramline. The batter is at his normal stance, so the on-field call stays and B1$ ",
+        "event": "UDRS",
+        "clip": "clip_1.1_at_56.95811023622048_91420_1.mp4",
+        "batsman": "KL Rahul",
+        "bowler": "Vaibhav Arora"
+    },
+    {
+        "over": "0.2",
+        "commentary": " Starc to de Kock, B0$, back-to-back boundaries for de Kock - fuller length delivery and shaping away from wide of off, drew de Kock into the drive and finds a thick edge, flies behind square on the off-side and beats Rana's dive in the deep ",
+        "event": "FOUR",
+        "clip": "clip_0.1_at_49.963254593175854_91420_1.mp4",
+        "batsman": "Quinton de Kock",
+        "bowler": "Mitchell Starc"
+    },
+    {
+        "over": "0.1",
+        "commentary": " Starc to de Kock, B0$, B1$, hint of swing for Starc, but he's overpitched on middle - meets the middle of de Kock's bat and the ball races away straight of mid-on for a boundary ",
+        "event": "FOUR",
+        "clip": "clip_0.1_at_49.963254593175854_91420_1.mp4",
+        "batsman": "Quinton de Kock",
+        "bowler": "Mitchell Starc"
+    },
+    {
+        "over": "15.4",
+        "commentary": " Ravi Bishnoi to Philip Salt, B0$, that's it! B1$, and it wasn't much more than a stroll in the park. Fittingly it's Salt who finishes it off, gets a slightly short ball on leg stump and pulls it to the long leg boundary ",
+        "event": "FOUR",
+        "clip": "clip_15.3_at_526.6127034120735_91420_2.mp4",
+        "batsman": "Philip Salt",
+        "bowler": "Ravi Bishnoi"
+    },
+    {
+        "over": "14.1",
+        "commentary": " Mohsin Khan to Philip Salt, B0$, short of length at the body, slower one, and Salt pulls it past short fine. Just 15 more to get ",
+        "event": "FOUR",
+        "clip": "clip_14.0_at_513.6222572178477_91420_2.mp4",
+        "batsman": "Philip Salt",
+        "bowler": "Mohsin Khan"
+    },
+    {
+        "over": "13.5",
+        "commentary": "Yash Thakur to Philip Salt, B0$, slow and wide, length ball, Salt gets hold of it and slaps it over extra cover. KKR racing towards the target",
+        "event": "FOUR,PARTNERSHIP",
+        "clip": "clip_13.4_at_507.62666666666667_91420_2.mp4",
+        "batsman": "Philip Salt",
+        "bowler": "Yash Thakur"
+    },
+    {
+        "over": "13.2",
+        "commentary": " Yash Thakur to Philip Salt, B0$, full toss down leg, Salt swings, gets bat on it and it races away past short fine ",
+        "event": "FOUR",
+        "clip": "clip_13.1_at_501.6310761154856_91420_2.mp4",
+        "batsman": "Philip Salt",
+        "bowler": "Yash Thakur"
+    },
+    {
+        "over": "13.1",
+        "commentary": " Yash Thakur to Philip Salt, B0$, full and wide, slower one again, Salt throws his bat at it and slaps it to the cover boundary. Fielder in the deep was too square, no chance for him ",
+        "event": "FOUR",
+        "clip": "clip_13.0_at_494.636220472441_91420_2.mp4",
+        "batsman": "Philip Salt",
+        "bowler": "Yash Thakur"
+    },
+    {
+        "over": "12.2",
+        "commentary": " Shamar Joseph to Shreyas Iyer, B0$, 143.5kph short of length delivery around the waist, Iyer hops across on one foot and pulls nicely wide of fine leg. Desperate dive from the fielder goes in vain ",
+        "event": "FOUR",
+        "clip": "clip_12.1_at_480.6465091863517_91420_2.mp4",
+        "batsman": "Shreyas Iyer",
+        "bowler": "Shamar Joseph"
+    },
+    {
+        "over": "9.4",
+        "commentary": " Arshad Khan to Philip Salt, B0$, full outside off, Salt throws his hands at it and cracks it away through backward point. B1$ Iyer gives him a hug and the dugout rises in applause ",
+        "event": "TEAM_HUNDRED,FIFTY,FOUR",
+        "clip": "clip_9.3_at_462.65973753280844_91420_2.mp4",
+        "batsman": "Philip Salt",
+        "bowler": "Arshad Khan"
+    },
+    {
+        "over": "9.3",
+        "commentary": " Arshad Khan to Philip Salt, B0$, another boundary off the inside edge for Salt! Second time this has happened off Arshad who's on the floor in his followthrough, Back of a length on middle, he's cramped for room while looking to hit through the off-side, gets an inside edge and it races away past short fine ",
+        "event": "FOUR",
+        "clip": "clip_9.2_at_450.6685564304462_91420_2.mp4",
+        "batsman": "Philip Salt",
+        "bowler": "Arshad Khan"
+    },
+    {
+        "over": "8.1",
+        "commentary": " Ravi Bishnoi to Shreyas Iyer, B0$, half-tracker on leg stump from Bishnoi to start off, sits up nicely for Iyer who pulls it over short fine. Such a gift for the KKR captain who is struggling out there ",
+        "event": "FOUR",
+        "clip": "clip_8.0_at_437.6781102362205_91420_2.mp4",
+        "batsman": "Shreyas Iyer",
+        "bowler": "Ravi Bishnoi"
+    },
+    {
+        "over": "6.5",
+        "commentary": " Shamar Joseph to Philip Salt, B0$, B1$ and tipped over for six! 140kph length ball on middle and leg, Salt plays a pick-up shot and seems to have struck it nicely. But it goes straight to the fielder at deep square leg who is on the edge of the boundary. Being close to the rope must've been on the back of his mind, he looks to take it with the reverse-cup but ends up palming it over the boundary ",
+        "event": "SIX,DROPPED",
+        "clip": "clip_6.4_at_413.69574803149607_91420_2.mp4",
+        "batsman": "Philip Salt",
+        "bowler": "Shamar Joseph"
+    },
+    {
+        "over": "5.2",
+        "commentary": " Yash Thakur to Philip Salt, B0$, short and wide of off, Philip Salt gets up on his toes and flays it square on the off-side. The quick outfield takes care of the rest... ",
+        "event": "FOUR",
+        "clip": "clip_5.1_at_405.70162729658796_91420_2.mp4",
+        "batsman": "Philip Salt",
+        "bowler": "Yash Thakur"
+    },
+    {
+        "over": "5.1",
+        "commentary": " Yash Thakur to Philip Salt, B0$, I0$ short and wide, Salt makes room and guides with an open bat face in the gap between cover and backward point ",
+        "event": "TEAM_FIFTY,FOUR",
+        "clip": "clip_5.0_at_396.7082414698163_91420_2.mp4",
+        "batsman": "Philip Salt",
+        "bowler": "Yash Thakur"
+    },
+    {
+        "over": "4.4",
+        "commentary": " Shamar Joseph to Shreyas Iyer, B0$, full and angled down leg at B1$, Iyer flicks and the pace of Shamar Joseph takes care of the rest. Raced away to the fine leg fence ",
+        "event": "FOUR",
+        "clip": "clip_4.3_at_391.7119160104987_91420_2.mp4",
+        "batsman": "Shreyas Iyer",
+        "bowler": "Shamar Joseph"
+    },
+    {
+        "over": "3.1",
+        "commentary": " Mohsin Khan to Angkrish Raghuvanshi, B0$ Caught by Rahul!! KL didn't even appeal. Just tossed the ball gently into the air for he knew there was a clear edge. Raghuvanshi has to go. Seam-up short ball angling away from the right-hander, Raghuvanshi follows the line and opens the bat face to guide the faintest of outside edges through to the keeper. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_3.0_at_383.71779527559056_91420_2.mp4",
+        "batsman": "Angkrish Raghuvanshi",
+        "bowler": "Mohsin Khan"
+    },
+    {
+        "over": "2.3",
+        "commentary": " Krunal Pandya to Philip Salt, B0$, a nothing delivery from Krunal Pandya. Short and quick outside off, Philip Salt hangs back and spanks it in the gap between mid-off and extra cover ",
+        "event": "FOUR",
+        "clip": "clip_2.2_at_376.72293963254594_91420_2.mp4",
+        "batsman": "Philip Salt",
+        "bowler": "Krunal Pandya"
+    },
+    {
+        "over": "2.2",
+        "commentary": " Krunal Pandya to Philip Salt, B0$, quicker and drifting into leg stump, Philip Salt sinks to one knee and swipes it neatly behind square on the leg-side. One bounce and over the ropes... ",
+        "event": "FOUR",
+        "clip": "clip_2.1_at_370.7273490813648_91420_2.mp4",
+        "batsman": "Philip Salt",
+        "bowler": "Krunal Pandya"
+    },
+    {
+        "over": "2.1",
+        "commentary": " Krunal Pandya to Philip Salt, B0$, spin or pace - Philip Salt only plays one way. Sees the full delivery land in his slot and he's lifted that back over the bowler's head with an air of nonchalance ",
+        "event": "FOUR",
+        "clip": "clip_2.0_at_364.73175853018375_91420_2.mp4",
+        "batsman": "Philip Salt",
+        "bowler": "Krunal Pandya"
+    },
+    {
+        "over": "1.3",
+        "commentary": " Mohsin Khan to Narine, B0$ Caught by Stoinis!! There's the first wicket for LSG. Mohsin Khan rolls his fingers on this short ball just outside off, Narine made room looking to slap it on the off-side. Doesn't get the desired connection and slices it off the thick top-edge towards cover, Stoinis runs back and accepts the opportunity. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_1.2_at_345.7457217847769_91420_2.mp4",
+        "batsman": "Sunil Narine",
+        "bowler": "Mohsin Khan"
+    },
+    {
+        "over": "0.3",
+        "commentary": " Shamar Joseph to Narine, B0$, Sunil Narine showing who's boss here in the IPL. Leans back, fetches the short of length delivery from outside off and slaps it away through covers with disdain.... ",
+        "event": "FOUR",
+        "clip": "clip_0.2_at_317.7662992125984_91420_2.mp4",
+        "batsman": "Sunil Narine",
+        "bowler": "Shamar Joseph"
+    },
+    {
+        "over": "19.5",
+        "commentary": " Hardik Pandya to Dhoni, B0$, B1$ A full toss on the pads and Dhoni has flicked this over deep square leg. MI's present captain running out of ideas against CSK's former skipper. An absolute fest for Dhoni fans at the Wankhede ",
+        "event": "TEAM_HUNDRED,SIX",
+        "clip": "clip_19.4_at_346.9632804232804_91425_1.mp4",
+        "batsman": "MS Dhoni",
+        "bowler": "Hardik Pandya"
+    },
+    {
+        "over": "19.4",
+        "commentary": " Hardik Pandya to Dhoni, B0$, B1$ Insane. Right into the slot, Dhoni stays put and clubs it over wide long-on for back-to-back sixes. Striking at a rate of 600. Enough content for social media to go berserk for the next few weeks ",
+        "event": "SIX",
+        "clip": "clip_19.3_at_330.96497354497353_91425_1.mp4",
+        "batsman": "MS Dhoni",
+        "bowler": "Hardik Pandya"
+    },
+    {
+        "over": "19.3",
+        "commentary": " Hardik Pandya to Dhoni, B0$, and he starts off with a maximum! The crowd erupts. Slower delivery around off, Dhoni stands tall and smokes it over long-off for a six ",
+        "event": "SIX",
+        "clip": "clip_19.2_at_317.9663492063492_91425_1.mp4",
+        "batsman": "MS Dhoni",
+        "bowler": "Hardik Pandya"
+    },
+    {
+        "over": "19.2",
+        "commentary": " Hardik Pandya to Mitchell, B0$ Caught by Nabi!! Hardik Pandya gets Mitchell, probably a blessing in disguise as Mitchell was struggling out there. A full toss by Hardik Pandya and Mitchell lofts it straight to Nabi at long-on. A regulation catch taken.. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_19.1_at_302.9679365079365_91425_1.mp4",
+        "batsman": "Daryl Mitchell",
+        "bowler": "Hardik Pandya"
+    },
+    {
+        "over": "19.2",
+        "commentary": " Hardik Pandya to Mitchell, B0$, full and wide outside off, misses the tramline again. The wide called has been challenged again by MI. Mitchell had shuffled a touch, but the ball was still out of his reach ",
+        "event": "UDRS",
+        "clip": "clip_19.1_at_302.9679365079365_91425_1.mp4",
+        "batsman": "Daryl Mitchell",
+        "bowler": "Hardik Pandya"
+    },
+    {
+        "over": "19.1",
+        "commentary": " Hardik Pandya to Mitchell, B0$, Mitchell finally connects one. On a length around off and Mitchell thumps it over the bowler's head, just manages to beat the fielder who was charging to his left from long-on ",
+        "event": "FOUR",
+        "clip": "clip_19.0_at_294.96878306878307_91425_1.mp4",
+        "batsman": "Daryl Mitchell",
+        "bowler": "Hardik Pandya"
+    },
+    {
+        "over": "19.1",
+        "commentary": " Hardik Pandya to Mitchell, B0$, goes wide outside off and it just misses the tramline, the wide decision stays.. ",
+        "event": "UDRS",
+        "clip": "clip_19.0_at_294.96878306878307_91425_1.mp4",
+        "batsman": "Daryl Mitchell",
+        "bowler": "Hardik Pandya"
+    },
+    {
+        "over": "17.1",
+        "commentary": " Gerald Coetzee to Shivam Dube, B0$, full toss on middle and leg, Shivam Dube flicks it away to the deep square leg fence. Not all about power, he can't toy with the field too ",
+        "event": "FOUR",
+        "clip": "clip_17.0_at_284.96984126984125_91425_1.mp4",
+        "batsman": "Shivam Dube",
+        "bowler": "Gerald Coetzee"
+    },
+    {
+        "over": "16.5",
+        "commentary": " Bumrah to Shivam Dube, B0$, finally connects one. A full toss outside off and Shivam Dube drills it through cover as the ball races away to the fence at the rate of knots. Much needed for CSK as the boundaries have dried up ",
+        "event": "FOUR",
+        "clip": "clip_16.4_at_276.97068783068784_91425_1.mp4",
+        "batsman": "Shivam Dube",
+        "bowler": "Jasprit Bumrah"
+    },
+    {
+        "over": "15.2",
+        "commentary": " Hardik Pandya to Gaikwad, B0$ Caught by Nabi!! Skipper Pandya strikes. Gives the much needed breakthrough. Goes full and slightly slow outside off, Gaikwad looks to take him on. Goes for the aerial route, but doesn't middle it. Nabi from long-on charges in and completes a fine running catch. Gaikwad walks back after playing his best knock of this season. Slowly but surely getting back into his groove. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_15.1_at_250.97343915343913_91425_1.mp4",
+        "batsman": "Ruturaj Gaikwad",
+        "bowler": "Hardik Pandya"
+    },
+    {
+        "over": "15.1",
+        "commentary": " Hardik Pandya to Shivam Dube, 1 run, B0$ On a length around off, Shivam Dube slashes it over cover-point to get to his fifty. Raises his bat to acknowledge the crowd. Has been the most consistent batter for CSK this season ",
+        "event": "TEAM_HUNDRED,FIFTY",
+        "clip": "clip_15.0_at_241.97439153439151_91425_1.mp4",
+        "batsman": "Shivam Dube",
+        "bowler": "Hardik Pandya"
+    },
+    {
+        "over": "14.5",
+        "commentary": " Akash Madhwal to Gaikwad, B0$, exciting stuff! Runs coming thick and fast from both the ends. Was a full toss outside off, Gaikwad advances down the wicket and slices it over Shepherd at deep point. A flat six that was! ",
+        "event": "SIX",
+        "clip": "clip_14.4_at_227.975873015873_91425_1.mp4",
+        "batsman": "Ruturaj Gaikwad",
+        "bowler": "Akash Madhwal"
+    },
+    {
+        "over": "14.3",
+        "commentary": " Akash Madhwal to Shivam Dube, B0$, just eludes the fielder at cover. Shivam Dube had smashed it uppishly and the fielder at cover dives to his right, fails to get his hand to it though. Was Rohit Sharma who couldn't get there ",
+        "event": "FOUR",
+        "clip": "clip_14.2_at_222.9764021164021_91425_1.mp4",
+        "batsman": "Shivam Dube",
+        "bowler": "Akash Madhwal"
+    },
+    {
+        "over": "13.4",
+        "commentary": " Shepherd to Shivam Dube, B0$, 6,6,4 as the crowd is absolutely loving it. Shepherd goes short and Shivam Dube pulls it powerfully through mid-wicket, manages to beat the fielder's dive in the deep. Shepherd running out of ideas, that expression on his face says it all ",
+        "event": "FOUR",
+        "clip": "clip_13.3_at_209.97777777777776_91425_1.mp4",
+        "batsman": "Shivam Dube",
+        "bowler": "Romario Shepherd"
+    },
+    {
+        "over": "13.3",
+        "commentary": " Shepherd to Shivam Dube, B0$, this one's enornous! Shepherd getting a taste of his own medicine. He did something similar to Nortje a few days back at the same venue. At the receiving end tonight. Goes full and Shivam Dube launches it over long-on for half-a-dozen ",
+        "event": "SIX",
+        "clip": "clip_13.2_at_203.97841269841268_91425_1.mp4",
+        "batsman": "Shivam Dube",
+        "bowler": "Romario Shepherd"
+    },
+    {
+        "over": "13.2",
+        "commentary": " Shepherd to Shivam Dube, B0$, Shivam Dube taking down the medium pacers. Short of a length on leg, Shivam Dube picks it up nicely and clears deep backward square leg, the fielder near the boundary was a mere spectator ",
+        "event": "SIX",
+        "clip": "clip_13.1_at_193.9794708994709_91425_1.mp4",
+        "batsman": "Shivam Dube",
+        "bowler": "Romario Shepherd"
+    },
+    {
+        "over": "12.4",
+        "commentary": " Gerald Coetzee to Gaikwad, B0$, brilliant shot to raise his fifty! This guy loves pace on the ball and Gerald Coetzee offered slot too. Rutu with mid-off up just lofted it easily over long-off for a maximum ",
+        "event": "FIFTY,SIX",
+        "clip": "clip_12.3_at_181.98074074074074_91425_1.mp4",
+        "batsman": "Ruturaj Gaikwad",
+        "bowler": "Gerald Coetzee"
+    },
+    {
+        "over": "10.1",
+        "commentary": " Shepherd to Shivam Dube, B0$, in the airrrr and beats Hardik's full length dive at mid-off. Short of a length delivery outside off stump, Dube slaps it hard off the back foot, didn't middle it as well as he would have liked but he managed to escape mid-off ",
+        "event": "FOUR",
+        "clip": "clip_10.0_at_163.98264550264548_91425_1.mp4",
+        "batsman": "Shivam Dube",
+        "bowler": "Romario Shepherd"
+    },
+    {
+        "over": "9.3",
+        "commentary": " Hardik Pandya to Shivam Dube, B0$, neat off-drive! Fullish delivery outside off stump, Dube leans forward and drives wide of mid-off and it's racing away for four ",
+        "event": "FOUR",
+        "clip": "clip_9.2_at_155.98349206349206_91425_1.mp4",
+        "batsman": "Shivam Dube",
+        "bowler": "Hardik Pandya"
+    },
+    {
+        "over": "5.4",
+        "commentary": " Akash Madhwal to Gaikwad, B0$, this is very good batting from Rutu! He's moving around in the crease according to the field and then placing the ball in gaps. Fine leg in, so he moves across and glances this short of length delivery behind square to collect four ",
+        "event": "FOUR",
+        "clip": "clip_5.3_at_113.9879365079365_91425_1.mp4",
+        "batsman": "Ruturaj Gaikwad",
+        "bowler": "Akash Madhwal"
+    },
+    {
+        "over": "5.2",
+        "commentary": " Akash Madhwal to Ravindra, B0$, oh dear! Should have been a dot ball but Shreyas Gopal has let this go right through him! Short of a length delivery outside off stump, Ravindra cuts straight to backward point and gets four instead ",
+        "event": "FOUR",
+        "clip": "clip_5.1_at_102.98910052910053_91425_1.mp4",
+        "batsman": "Rachin Ravindra",
+        "bowler": "Akash Madhwal"
+    },
+    {
+        "over": "4.4",
+        "commentary": " Gerald Coetzee to Gaikwad, B0$, but this is a friendly full toss to which no captain can set a field to. Rutu gets inside the line and clips it over mid-wicket for an easy boundary. CSK will feel better with runs coming in this over after a great start from MI ",
+        "event": "FOUR",
+        "clip": "clip_4.3_at_96.98973544973545_91425_1.mp4",
+        "batsman": "Ruturaj Gaikwad",
+        "bowler": "Gerald Coetzee"
+    },
+    {
+        "over": "4.2",
+        "commentary": " Gerald Coetzee to Gaikwad, B0$, now nails the upper cut! This is why he was backing away first ball. He knows Gerald Coetzee offers pace and bowls into the wicket, so he goes off-side to free his arms and slices it for a maximum ",
+        "event": "SIX",
+        "clip": "clip_4.1_at_88.990582010582_91425_1.mp4",
+        "batsman": "Ruturaj Gaikwad",
+        "bowler": "Gerald Coetzee"
+    },
+    {
+        "over": "4.1",
+        "commentary": " Gerald Coetzee to Gaikwad, B0$, unlucky for the bowler! He did the right thing of following the batter as he backed away. Did rush the batter with a pact short of length delivery, Rutu just trying to fend and got lucky with a thick inside edge that escaped for four ",
+        "event": "FOUR",
+        "clip": "clip_4.1_at_88.990582010582_91425_1.mp4",
+        "batsman": "Ruturaj Gaikwad",
+        "bowler": "Gerald Coetzee"
+    },
+    {
+        "over": "2.4",
+        "commentary": " Nabi to Gaikwad, B0$, overpitched and Rutu goes aerial over long-on. He's gone down one knee to get under the ball and powered it over the fence. In the slot and he didn't miss out ",
+        "event": "SIX",
+        "clip": "clip_2.3_at_75.99195767195766_91425_1.mp4",
+        "batsman": "Ruturaj Gaikwad",
+        "bowler": "Mohammad Nabi"
+    },
+    {
+        "over": "0.5",
+        "commentary": " Nabi to Rahane, B0$, first boundary of the match! A flatter delivery by Nabi, Rahane goes for a sweep and gets a top edge that flies over backward square leg. Was in the air for a long time, but eludes the fielders chasing it ",
+        "event": "FOUR",
+        "clip": "clip_0.4_at_52.99439153439153_91425_1.mp4",
+        "batsman": "Ajinkya Rahane",
+        "bowler": "Mohammad Nabi"
+    },
+    {
+        "over": "19.4",
+        "commentary": " Pathirana to Rohit, B0$, shuffles in to this full delivery at the stumps and flicks it away behind square for a boundary ",
+        "event": "FOUR",
+        "clip": "clip_19.3_at_701.9257142857142_91425_2.mp4",
+        "batsman": "Rohit Sharma",
+        "bowler": "Matheesha Pathirana"
+    },
+    {
+        "over": "19.3",
+        "commentary": " Pathirana to Rohit, B0$, B1$He knows the game is beyond the team, he's not one to play for records either way. A full, quick delivery on off, Rohit backs away and drills it to the right of extra cover for a boundary ",
+        "event": "HUNDRED,FOUR",
+        "clip": "clip_19.2_at_694.926455026455_91425_2.mp4",
+        "batsman": "Rohit Sharma",
+        "bowler": "Matheesha Pathirana"
+    },
+    {
+        "over": "17.3",
+        "commentary": " Pathirana to Shepherd, B0$ Bowled!! You miss, I hit! Romario can't do it with the floodlights beaming down on him in a pressure chase. He was lethal against DC, but this time plays the wrong line to this full, stump lined delivery. Pathirana strikes timber and that's the game titling back in favour of CSK. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_17.2_at_679.9280423280422_91425_2.mp4",
+        "batsman": "Romario Shepherd",
+        "bowler": "Matheesha Pathirana"
+    },
+    {
+        "over": "16.5",
+        "commentary": " Mustafizur to Rohit, B0$, low full toss outside off, Rohit shuffles closer and hoists it through the line over extra cover. Couple of bounces and beyond towards the longer side of the boundary ",
+        "event": "TEAM_HUNDRED,FOUR",
+        "clip": "clip_16.4_at_670.9289947089947_91425_2.mp4",
+        "batsman": "Rohit Sharma",
+        "bowler": "Mustafizur Rahman"
+    },
+    {
+        "over": "16.3",
+        "commentary": " Mustafizur to Tim David, B0$ Caught by Ravindra!! 6,6 and OUT!! Another pace off delivery, this was a bit wider outside off. David tries to smoke it down the ground again but off the bottom end this time. Holes out to long-off. Mustafizur wins the battle, gets rid of dangerous Dave! B1$ ",
+        "event": "WICKET",
+        "clip": "clip_16.2_at_659.9301587301587_91425_2.mp4",
+        "batsman": "Tim David",
+        "bowler": "Mustafizur Rahman"
+    },
+    {
+        "over": "16.2",
+        "commentary": " Mustafizur to Tim David, B0$, slot ball onto off stump, was pace off. David shuffles in and gets under it. Hoists it over wide long-on for a maximum. That's another one that's disappeared ",
+        "event": "SIX",
+        "clip": "clip_16.1_at_651.9310052910052_91425_2.mp4",
+        "batsman": "Tim David",
+        "bowler": "Mustafizur Rahman"
+    },
+    {
+        "over": "16.1",
+        "commentary": " Mustafizur to Tim David, B0$, pace off and on a length on off, David waits for the ball to arrive and smokes it over long-on for a maximum. A loud cheer breaks out, the home team believe again. This is a venue where magic happens, it has in the past, will it happen today? ",
+        "event": "SIX",
+        "clip": "clip_16.0_at_646.9315343915343_91425_2.mp4",
+        "batsman": "Tim David",
+        "bowler": "Mustafizur Rahman"
+    },
+    {
+        "over": "15.3",
+        "commentary": " Tushar Deshpande to Hardik Pandya, B0$ Caught by Jadeja!! Jeez, you want the ground to swallow you whole if you are Hardik Pandya at this moment. Not often that a home wicket gets welcomed with cheers, and MS Dhoni isn't even the next player to walk out on this occasion. A short pitched delivery onto the body, Pandya takes it on with the pull but holes out to deep mid-wicket. Never got going today, timing all off for the MI skipper. Clever tactics from CSK, using Deshpande with the longer leg side boundary. Knew MI would come hard at them this over. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_15.2_at_634.9328042328042_91425_2.mp4",
+        "batsman": "Hardik Pandya",
+        "bowler": "Tushar Deshpande"
+    },
+    {
+        "over": "13.5",
+        "commentary": " Pathirana to Tilak Varma, B0$ Caught by Thakur!! Partnership broken once again! Was on a length and angling outside off, Varma was through his big heave early and toe-ends it over mid-off. Shardul runs back and takes a nice, tumbling catch to send Tilak Varma back to the hut. B1$ ",
+        "event": "WICKET",
+        "clip": "clip_13.4_at_620.9342857142857_91425_2.mp4",
+        "batsman": "Tilak Varma",
+        "bowler": "Matheesha Pathirana"
+    },
+    {
+        "over": "13.3",
+        "commentary": " Pathirana to Tilak Varma, B0$, what a shot!! Almost the perfect yorker at 150.6 clicks, Varma somehow manages to manufacture the room by clearing his front leg and guides his drive between long-on and deep mid-wicket ",
+        "event": "FOUR",
+        "clip": "clip_13.2_at_613.9350264550264_91425_2.mp4",
+        "batsman": "Tilak Varma",
+        "bowler": "Matheesha Pathirana"
+    },
+    {
+        "over": "12.3",
+        "commentary": " Jadeja to Tilak Varma, B0$, Tilak Varma with the switch hit now, but this is a shot we've seen plenty of times and he looks very confident in the execution. Darted outside off and Varma with the switch hit gets it between backward point and short third ",
+        "event": "FOUR,PARTNERSHIP",
+        "clip": "clip_12.2_at_607.9356613756613_91425_2.mp4",
+        "batsman": "Tilak Varma",
+        "bowler": "Ravindra Jadeja"
+    },
+    {
+        "over": "10.5",
+        "commentary": " Jadeja to Tilak Varma, B0$, pure timing!! 104.8 clicks, really fizzed in outside off, sits under the bat for Tilak Varma to dish out the cover drive. To the left of the fielder in the circle and always running away from long-off ",
+        "event": "FOUR",
+        "clip": "clip_10.4_at_593.9371428571428_91425_2.mp4",
+        "batsman": "Tilak Varma",
+        "bowler": "Ravindra Jadeja"
+    },
+    {
+        "over": "10.2",
+        "commentary": " Jadeja to Rohit, B0$, fired in onto middle and leg, Rohit gets low on one knee and plays a big slog sweep. Gets more elevation than distance but that's the shorter part of the crowd, and Deshpande ends up bobbing the ball beyond the ropes as he tried to catch it. Will go down as a drop catch, but the fielder was always running for that one ",
+        "event": "TEAM_HUNDRED,SIX",
+        "clip": "clip_10.1_at_581.9384126984127_91425_2.mp4",
+        "batsman": "Rohit Sharma",
+        "bowler": "Ravindra Jadeja"
+    },
+    {
+        "over": "10.1",
+        "commentary": " Jadeja to Rohit, B0$, a lesser seen version of Rohit Sharma. Switches over like a left-hander for a big switch hit, ends up getting it off the toe-end over short third and it runs away for a boundary ",
+        "event": "FOUR",
+        "clip": "clip_10.0_at_574.9391534391534_91425_2.mp4",
+        "batsman": "Rohit Sharma",
+        "bowler": "Ravindra Jadeja"
+    },
+    {
+        "over": "9.2",
+        "commentary": " Tushar Deshpande to Tilak Varma, B0$, B1$ A length ball angling outside off, Varma reaches out and slaps his drive to the left of mid-off. The fielder decides the let the ball boy retrieve it from beyond the ropes, doesn't even make an attempt ",
+        "event": "FOUR",
+        "clip": "clip_9.1_at_566.9399999999999_91425_2.mp4",
+        "batsman": "Tilak Varma",
+        "bowler": "Tushar Deshpande"
+    },
+    {
+        "over": "8.3",
+        "commentary": "Jadeja to Rohit, B0$, flat and wide, Rohit slashes hard at it and gets it behind square for a boundary. B1$",
+        "event": "FIFTY,FOUR",
+        "clip": "clip_8.2_at_547.9420105820105_91425_2.mp4",
+        "batsman": "Rohit Sharma",
+        "bowler": "Ravindra Jadeja"
+    },
+    {
+        "over": "5.5",
+        "commentary": " Thakur to Rohit, B0$, Rohit ain't sparing his Mumbai mate Shardul Thakur either. Advances down the wicket and the full length ball gets converted to a yorker. Late adjustment done as he squeezes it into the pocket at point for four runs ",
+        "event": "FOUR",
+        "clip": "clip_5.4_at_484.9486772486772_91425_2.mp4",
+        "batsman": "Rohit Sharma",
+        "bowler": "Shardul Thakur"
+    },
+    {
+        "over": "5.2",
+        "commentary": " Thakur to Rohit, B0$, that's a freebie. Low full toss on middle and leg, Rohit flicks it over the leg-side and adds four more to the tally ",
+        "event": "FOUR",
+        "clip": "clip_5.1_at_478.9493121693121_91425_2.mp4",
+        "batsman": "Rohit Sharma",
+        "bowler": "Shardul Thakur"
+    },
+    {
+        "over": "4.2",
+        "commentary": "Mustafizur to Rohit, B0$, Mumbai's king is in the mood tonight! Back of a length delivery by Mustafizur, Rohit gets into position quickly and pummels the pull over the leg-side for a 90 metre maximum. The Fizz under pressure",
+        "event": "SIX",
+        "clip": "clip_4.1_at_466.95058201058197_91425_2.mp4",
+        "batsman": "Rohit Sharma",
+        "bowler": "Mustafizur Rahman"
+    },
+    {
+        "over": "4.1",
+        "commentary": " Mustafizur to Rohit, B0$, Rohit off to a positive start. Advances down the wicket and smashes this length ball over wide mid-off ",
+        "event": "FOUR",
+        "clip": "clip_4.1_at_466.95058201058197_91425_2.mp4",
+        "batsman": "Rohit Sharma",
+        "bowler": "Mustafizur Rahman"
+    },
+    {
+        "over": "3.3",
+        "commentary": " Thakur to Ishan Kishan, B0$, pitched up by the bowler on off, Ishan Kishan lunges forward and creams it through cover for a glorious boundary. Not all about power, there's class in his shots too ",
+        "event": "FOUR",
+        "clip": "clip_3.2_at_446.9526984126984_91425_2.mp4",
+        "batsman": "Ishan Kishan",
+        "bowler": "Shardul Thakur"
+    },
+    {
+        "over": "3.2",
+        "commentary": " Thakur to Ishan Kishan, B0$, B1$ Thakur goes short and Ishan Kishan sends it sailing over deep backward square leg with a clean swing. Couldn't have nailed that pull any better ",
+        "event": "SIX",
+        "clip": "clip_3.1_at_441.9532275132275_91425_2.mp4",
+        "batsman": "Ishan Kishan",
+        "bowler": "Shardul Thakur"
+    },
+    {
+        "over": "2.5",
+        "commentary": " Tushar Deshpande to Rohit, B0$, B1$ Short of a length by Tushar Deshpande, keeps a tad low as Rohit pummels it over deep mid-wicket for half-a-dozen ",
+        "event": "SIX",
+        "clip": "clip_2.4_at_435.9538624338624_91425_2.mp4",
+        "batsman": "Rohit Sharma",
+        "bowler": "Tushar Deshpande"
+    },
+    {
+        "over": "2.2",
+        "commentary": " Tushar Deshpande to Ishan Kishan, B0$, pulled away! On the shorter side, Ishan Kishan picks the length early and hammers the pull through mid-wicket, rockets away to the fence as he struck it so powerfully. Right off the meat ",
+        "event": "FOUR",
+        "clip": "clip_2.1_at_430.9543915343915_91425_2.mp4",
+        "batsman": "Ishan Kishan",
+        "bowler": "Tushar Deshpande"
+    },
+    {
+        "over": "0.5",
+        "commentary": " Tushar Deshpande to Rohit, B0$, Rohit opens his account with a boundary. On a length around middle and leg, Rohit times his flick through square leg and finds the fence with nonchalance ",
+        "event": "FOUR",
+        "clip": "clip_0.4_at_419.9555555555555_91425_2.mp4",
+        "batsman": "Rohit Sharma",
+        "bowler": "Tushar Deshpande"
     }
 ]
