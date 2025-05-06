@@ -5,8 +5,8 @@ const MatchLiveDetails = require("../models/matchlive");
 const Matches = require("../models/match");
 const Team = require("../models/team");
 const getkeys = require("../utils/crickeys");
-const getcommentary = require("../utils/getcommentary");
 const db = require("../utils/firebaseinitialize");
+const { getcommentary } = require("../utils/getcommentary");
 
 const transporter = nodemailer.createTransport(
     smtpTransport({
@@ -21,9 +21,9 @@ const transporter = nodemailer.createTransport(
 );
 
 const mailOptions = {
-    from: process.env.smtp_user,
+    from: process.env.smtp_email,
     to: "rajeshmn47@gmail.com",
-    subject: "Sending Email using Node.js[nodemailer]",
+    subject: "Real time notification of your favourite player",
     text: `riyan parag is batting`,
 };
 
@@ -77,12 +77,16 @@ module.exports.addLivecommentaryCustom = async function addcommentry(format) {
             }
         }
         const m = allMatches;
+        console.log(m.length, "allmatches");
         for (let i = 0; i < allMatches.length; i++) {
             if (m[i].matchId.length > 3) {
-                const keys = await getkeys.getkeys();
+                console.log(m[i]?.matchId, "matchid");
+                //const keys = await getkeys.getkeys();
                 const options = {
                     method: "GET",
-                    url: `https://cricbuzz-cricket.p.rapidapi.com/mcenter/v1/${m[i].matchId}/comm`,
+                    //url: `https://cricbuzz-cricket.p.rapidapi.com/mcenter/v1/${m[i].matchId}/comm`,
+                    //url: `https://m.cricbuzz.com/api/mcenter/highlights/${m[i].matchId}/2`,
+                    url: `https://www.cricbuzz.com/api/cricket-match/${m[i].matchId}/full-commentary/1`,
                     headers: {
                         //"X-RapidAPI-Key": 'b9ac58be1fmsh1dc31cbe511d761p103bb8jsn4389ec6b3355',
                         //"X-RapidAPI-Key":"f39c66c5a9mshe4e04348c634a6ap1f75edjsn3d3394bd6fc0",
@@ -90,16 +94,17 @@ module.exports.addLivecommentaryCustom = async function addcommentry(format) {
                         //"X-RapidAPI-Key": "bcb2a1e864msh516fde1e4c87b71p1fd9cfjsna047a0277aa0",
                         //"X-RapidAPI-Key": "3a990f059cmsh70cd4953ddaf696p1ac371jsnff076beee96d",
                         //"X-RapidAPI-Key":'375b34052emsh67282e5524cc40bp1d3caajsnc0805e37d86e',
-                        "X-RapidAPI-Key": keys,
-                        "X-RapidAPI-Host": "cricbuzz-cricket.p.rapidapi.com",
+                        //"X-RapidAPI-Key": "17394dbe40mshd53666ab6bed910p118357jsn7d63181f2556",
+                        //"X-RapidAPI-Host": "cricbuzz-cricket.p.rapidapi.com",
                     },
                 };
                 try {
                     const response = await axios.request(options);
-                    if (response?.data?.commentaryList?.length > 0) {
-                        const a = response?.data?.commentaryList.reverse();
-                        const matchdata = response.data.matchHeader;
-                        const { miniscore } = response.data;
+                    //console.log(response?.data, "commentary");
+                    if (response?.data?.commentary?.[0]?.commentaryList?.length > 0) {
+                        const a = response?.data?.commentary?.[0]?.commentaryList.reverse();
+                        const matchdata = response.data.matchDetails?.matchHeader;
+                        const { miniscore } = response.data?.matchDetails;
                         const commentaryRef = db.db.collection("commentary").doc(m[i].matchId);
                         const doc = await commentaryRef.get();
                         if (!doc.exists) {
@@ -116,7 +121,8 @@ module.exports.addLivecommentaryCustom = async function addcommentry(format) {
                             const commentaryRef = db.db.collection("commentary").doc(m[i].matchId);
                             let xyz = doc.data().commentary;
                             if (a?.length > 0) {
-                                let commentary = getcommentary.getcommentary(xyz, a);
+                                //let commentary = getcommentary(xyz, a);
+                                let commentary = a;
                                 console.log(miniscore?.batsmanStriker?.batId, 'miniscore')
                                 if (miniscore?.batsmanStriker?.batId == 12305) {
                                     transporter.sendMail(mailOptions, (error, info) => {
