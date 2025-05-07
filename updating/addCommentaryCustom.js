@@ -38,7 +38,7 @@ module.exports.addLivecommentaryCustom = async function addcommentry(format) {
         let date = new Date();
         let allMatches = [];
         const endDate = new Date(date.getTime());
-        date = new Date(date.getTime() - 100 * 60 * 60 * 1000);
+        date = new Date(date.getTime() - 12 * 60 * 60 * 1000);
         const matches = await Matches.find({
             format: format,
             date: {
@@ -86,6 +86,22 @@ module.exports.addLivecommentaryCustom = async function addcommentry(format) {
                     method: "GET",
                     //url: `https://cricbuzz-cricket.p.rapidapi.com/mcenter/v1/${m[i].matchId}/comm`,
                     //url: `https://m.cricbuzz.com/api/mcenter/highlights/${m[i].matchId}/2`,
+                    url: `https://www.cricbuzz.com/api/cricket-match/${m[i].matchId}/full-commentary/2`,
+                    headers: {
+                        //"X-RapidAPI-Key": 'b9ac58be1fmsh1dc31cbe511d761p103bb8jsn4389ec6b3355',
+                        //"X-RapidAPI-Key":"f39c66c5a9mshe4e04348c634a6ap1f75edjsn3d3394bd6fc0",
+                        //"X-RapidAPI-Key":"4725ff9c4dmshd2f385a556069f6p10a2efjsn34ee02dac63e"
+                        //"X-RapidAPI-Key": "bcb2a1e864msh516fde1e4c87b71p1fd9cfjsna047a0277aa0",
+                        //"X-RapidAPI-Key": "3a990f059cmsh70cd4953ddaf696p1ac371jsnff076beee96d",
+                        //"X-RapidAPI-Key":'375b34052emsh67282e5524cc40bp1d3caajsnc0805e37d86e',
+                        //"X-RapidAPI-Key": "17394dbe40mshd53666ab6bed910p118357jsn7d63181f2556",
+                        //"X-RapidAPI-Host": "cricbuzz-cricket.p.rapidapi.com",
+                    },
+                };
+                const options2 = {
+                    method: "GET",
+                    //url: `https://cricbuzz-cricket.p.rapidapi.com/mcenter/v1/${m[i].matchId}/comm`,
+                    //url: `https://m.cricbuzz.com/api/mcenter/highlights/${m[i].matchId}/2`,
                     url: `https://www.cricbuzz.com/api/cricket-match/${m[i].matchId}/full-commentary/1`,
                     headers: {
                         //"X-RapidAPI-Key": 'b9ac58be1fmsh1dc31cbe511d761p103bb8jsn4389ec6b3355',
@@ -99,8 +115,14 @@ module.exports.addLivecommentaryCustom = async function addcommentry(format) {
                     },
                 };
                 try {
-                    const response = await axios.request(options);
+                    let response = await axios.request(options);
                     //console.log(response?.data, "commentary");
+                    if (response?.data?.commentary?.[0]?.commentaryList?.length > 0) {
+                        response = await axios.request(options);
+                    }
+                    else {
+                        response = await axios.request(options2);
+                    }
                     if (response?.data?.commentary?.[0]?.commentaryList?.length > 0) {
                         const a = response?.data?.commentary?.[0]?.commentaryList.reverse();
                         const matchdata = response.data.matchDetails?.matchHeader;
