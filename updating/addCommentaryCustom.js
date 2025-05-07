@@ -143,8 +143,8 @@ module.exports.addLivecommentaryCustom = async function addcommentry(format) {
                             const commentaryRef = db.db.collection("commentary").doc(m[i].matchId);
                             let xyz = doc.data().commentary;
                             if (a?.length > 0) {
-                                //let commentary = getcommentary(xyz, a);
-                                let commentary = a;
+                                let commentary = getcommentary(xyz, a);
+                                //let commentary = a;
                                 console.log(miniscore?.batsmanStriker?.batId, 'miniscore')
                                 if (miniscore?.batsmanStriker?.batId == 12305) {
                                     transporter.sendMail(mailOptions, (error, info) => {
@@ -155,7 +155,7 @@ module.exports.addLivecommentaryCustom = async function addcommentry(format) {
                                         }
                                     });
                                 }
-                                console.log(commentary.length, 'commentary')
+                                console.log(commentary, 'commentary')
 
                                 const res = await commentaryRef.set(
                                     {
