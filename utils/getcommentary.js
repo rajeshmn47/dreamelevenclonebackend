@@ -1,14 +1,32 @@
 module.exports.getcommentary = function (old, current) {
-  let l = current.length;
+  let cur = current;
+  let older = old.reverse();
+  let l = cur.length;
   let lastball = current[l - 1];
-  let d = old.length;
-  let oldlastball = old[d - 1];
-  if (oldlastball?.ballNbr) {
-    let u = current.filter((c) => c.ballNbr > oldlastball?.ballNbr);
-    let x = old.filter((o) => o.ballNbr < lastball?.ballNbr);
+  let d = older.length;
+  let oldlastball = older[d - 1];
+  console.log(lastball, l, 'oldlastball')
+  if (oldlastball?.ballNbr || parseInt(oldlastball?.ballNbr) == 0) {
+    let u = cur.filter((c) => c.timestamp > oldlastball?.timestamp);
+    let x = older.filter((o) => o.timestamp < lastball?.timestamp);
+    //console.log(x?.length, u?.length, oldlastball, 'x')
     x.push(...u);
-    return x;
+    let commentary = [];
+    if (Array.isArray(x)) {
+      commentary.push(...x)
+      if (Array.isArray(lastball)) {
+        commentary.push(...u)
+      }
+    }
+    return commentary;
   } else {
-    return current;
+    if (Array.isArray(cur)) {
+      console.log(cur?.length, 'currenty')
+      return cur;
+    }
+    else {
+      console.log(older, 'old')
+      return older;
+    }
   }
 };
