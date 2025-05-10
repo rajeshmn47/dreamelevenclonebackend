@@ -28,7 +28,7 @@ module.exports.updateSquads = async function () {
 
         for (const series of ongoingSeries) {
             const seriesId = series.seriesId;
-            const key = getkeys()
+            const key = await getkeys()
             const options = {
                 method: 'GET',
                 hostname: 'cricbuzz-cricket.p.rapidapi.com',

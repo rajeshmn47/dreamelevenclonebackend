@@ -16,7 +16,7 @@ async function fetchSeriesByType(type) {
   };
 
   try {
-    const key=getkeys()
+    const key=await getkeys()
     const response = await axios.get(`https://cricbuzz-cricket.p.rapidapi.com/series/v1/${type}`, {
       headers: {
         'x-rapidapi-key': key,
