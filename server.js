@@ -50,6 +50,7 @@ app.use(express.json());
 app.use(cors({ origin: "*", credentials: false }));
 app.use('/images', express.static(path.join('images')));
 app.use('/mockvideos', express.static(path.join('sachinshots')));
+app.use('/mockvideos', express.static(path.join('allvideos')));
 app.use('/', video);
 app.use("/auth", auth);
 app.use("/", player);
