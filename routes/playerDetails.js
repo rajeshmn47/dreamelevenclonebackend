@@ -11,20 +11,23 @@ var fs = require('fs');
 const { uploadImage } = require("../utils/firebaseinitialize");
 const { default: axios } = require("axios");
 const DetailScores = require("../models/detailscores");
+const Squad = require("../models/squad");
 
 router.get("/allplayers", async (req, res) => {
-    const directoryPath = './images/backgroundremovalneeded';
+    //const directoryPath = './images/backgroundremovalneeded';
 
     // Get the list of files in the directory.
-    const files = fs.readdirSync(directoryPath);
+    //const files = fs.readdirSync(directoryPath);
 
     // Count the number of files.
-    const numberOfFiles = files.length;
+    //const numberOfFiles = files.length;
+    const squads = await Squad.find();
     const players = await Player.find();
     res.status(200).json({
         message: "players got successfully",
         player: players,
-        numberOfFiles: numberOfFiles
+        squads: squads
+        //numberOfFiles: numberOfFiles
     });
 });
 
@@ -442,16 +445,16 @@ router.get("/withbackground-new", (req, res) => {
     }
 });
 
-router.get("/updatedatabases", async (req, res) => {  
+router.get("/updatedatabases", async (req, res) => {
     let date = new Date();
     const endDate = new Date(date.getTime());
     date = new Date(date.getTime() - 1200 * 60 * 60 * 1000);
     const allmatches = await MatchLive.find({
         date: {
-          $gte: new Date(date),
-          $lt: new Date(endDate),
+            $gte: new Date(date),
+            $lt: new Date(endDate),
         },
-      });
+    });
     console.log(allmatches?.length, 'allmatches')
     try {
         for (let i = 0; i < allmatches?.length; i++) {
@@ -517,7 +520,7 @@ router.get("/updatedatabases", async (req, res) => {
 
 router.get("/updateball-details", async (req, res) => {
     const allmatches = await DetailScores.find();
-    try{
+    try {
         res.status(200).json({
             message: "players added successfully",
             matches: allmatches

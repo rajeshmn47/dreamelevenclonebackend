@@ -173,6 +173,13 @@ const matchSchema = new mongoose.Schema(
         type: String,
       },
     ],
+
+    seriesId: {
+      type: String,
+      required: true, // If every match should belong to a series
+      trim: true,
+      default: "",
+    },
   },
   {
     timestamps: true,

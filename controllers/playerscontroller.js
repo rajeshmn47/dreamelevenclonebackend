@@ -2,7 +2,8 @@ const express = require("express");
 const Matches = require("../models/match");
 const LiveMatches = require("../models/matchlive");
 const Players = require("../models/players");
-const { capitalize } = require("../utils/capitalize")
+const { capitalize } = require("../utils/capitalize");
+const Squad = require("../models/squad");
 const router = express.Router();
 
 router.get("/getplayers/:id", async (req, res) => {
@@ -25,6 +26,38 @@ router.get("/getplayers/:id", async (req, res) => {
       live: true,
     });
   } else if (matchdetails) {
+    res.status(200).json({
+      players: matchdetails,
+      matchdetails,
+      live: false,
+    });
+  }
+});
+
+router.get("/getplayers_new/:id", async (req, res) => {
+  // const matchdetails = await MatchLiveDetails.findOne({ matchId: req.params.id });
+  const livedetails = await LiveMatches.findOne({ matchId: req.params.id });
+  const matchdetails = await Matches.findOne({ matchId: req.params.id });
+  let th = await Squad.findOne({ teamId: matchdetails?.teamHomeId })
+  let ta = await Squad.findOne({ teamId: matchdetails?.teamAwayId })
+  console.log(matchdetails, 'line 12');
+  if (livedetails) {
+    let data = {};
+    livedetails.teamHomePlayers = livedetails.teamHomePlayers;
+    data = {
+      ...livedetails._doc,
+      teamHomeCode: matchdetails.teamHomeCode,
+      teamAwayCode: matchdetails.teamAwayCode,
+    };
+    matchdetails.teamAwayPlayers = livedetails.teamAwayPlayers;
+    res.status(200).json({
+      players: livedetails,
+      matchdetails: data,
+      live: true,
+    });
+  } else if (matchdetails) {
+    matchdetails.teamHomePlayers = th.players;
+    matchdetails.teamAwayPlayers = ta.players;
     res.status(200).json({
       players: matchdetails,
       matchdetails,

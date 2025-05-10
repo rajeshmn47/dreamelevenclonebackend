@@ -72,6 +72,7 @@ module.exports.addMatchtoDb = async function () {
           match1.matchId = matchId;
           obj.results.sort(compare);
           match1.matchTitle = obj.results[i].seriesName;
+          match1.seriesId = obj.results[i].seriesId;
           match1.format = obj.results[i].matchFormat.toLowerCase();
           match1.teamHomeName = obj.results[i].team1.teamName;
           match1.teamAwayName = obj.results[i].team2.teamName;
@@ -149,6 +150,7 @@ module.exports.addMatchtoDb = async function () {
               match.teamAwayCode = obj.results[i].team2.teamSName;
               match.teamHomeName = obj.results[i].team1.teamName;
               match.teamAwayName = obj.results[i].team2.teamName;
+              match.seriesId = obj.results[i].seriesId;
               let teamAwayFlagUrl = flagURLs?.findFlagUrlByCountryName(
                 teamAwayName
               );

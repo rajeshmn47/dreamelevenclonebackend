@@ -5,7 +5,6 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 var express = require("express");
 const path = require('path');
-const cron = require("node-cron");
 const bodyParser = require("body-parser");
 const home = require("./controllers/homecontroller");
 const video = require("./controllers/video/videocontroller.js");
@@ -41,6 +40,10 @@ const { cronjobs } = require("./updating/cronJobs.js");
 const { startCryptoTransaction } = require("./updating/cryptoTransaction.js");
 const configRoutes = require("./controllers/configurationController.js");
 const { addLivecommentaryCustom } = require("./updating/addCommentaryCustom.js");
+const { addLivescoresDetailsCustomfs } = require("./updating/addScoredetailsCustom.js");
+const { addLivescoresDetailsCustom } = require("./updating/addlivescoresdetailskeys.js");
+const { updateSeries } = require("./updating/addSeries.js");
+const { updateSquads } = require("./updating/updateSquads.js");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
@@ -76,11 +79,8 @@ mongoose.connect(
     }
   }
 );
-const api_key =
-  "s16rcBDzWjgNhJXPEUV9HA3QMSfvpen2GyL7a4F8ubdwICk5KOHPT32vI5b6cSxs8JpUhirCOjqogGwk";
-// ...
 
-// cronjobs()
+ cronjobs()
 // createDefaultContestTypes()
 // updateBalls();
 // addMatchtoDb();
@@ -93,10 +93,14 @@ const api_key =
 // addPlayersAPI();
 // startTransaction();
 // addLivecommentary();
-// addLivecommentaryCustom('odi')
+// addLivecommentaryCustom('t20')
+// addLivescoresDetailsCustom('t20')
 // updateBalls();
 // addInPlayStatus();
 // startCryptoTransaction();
+// updateSeries()
+// updateSquads()
+
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
   console.warn(`App listening on http://localhost:${PORT}`);
