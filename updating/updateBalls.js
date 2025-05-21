@@ -8,6 +8,8 @@ const db = require("../utils/firebaseinitialize");
 const DetailScores = require("../models/detailscores");
 const { fuzzyMatchVideo } = require("../utils/fuzzyMatchVideos");
 const { findBestMatchingOver } = require("../utils/stringSimilar");
+const { appendClipWithOverlay } = require('../utils/combineClips');
+const Clip = require('../models/clips');
 
 const oversJsonPath = path.join(__dirname, './../overs_with_clips.json');
 const data = JSON.parse(fs.readFileSync(oversJsonPath, 'utf-8'));
@@ -92,8 +94,9 @@ module.exports.updateBalls = async function () {
 
                                     const keyword = `${teamName}_${batsmanName}_${shotType}`;
 
-                                    //const videoLinke = await fuzzyMatchVideo(eventType, xyz[a]?.commText, xyz[a]) // your fuzzy logic to get video
-                                    const videoLink = findBestMatchingOver(data,eventType, xyz[a]?.commText)
+                                    //onst videoLink = await fuzzyMatchVideo(eventType, xyz[a]?.commText, xyz[a]) // your fuzzy logic to get video
+                                    const clips = await Clip.find({ event: eventType })
+                                    const videoLink = findBestMatchingOver(clips, eventType, xyz[a]?.commText)
                                     xyz[a].videoLink = videoLink || ''; // fallback if not found
                                     updatedCommentary.push({
                                         ...xyz[a],
