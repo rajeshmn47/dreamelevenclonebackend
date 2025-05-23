@@ -1216,6 +1216,42 @@ router.post('/cut', (req, res) => {
     .run();
 });
 
+router.post('/merge', async (req, res) => {
+  console.log(req.body,'body')
+  const { clips } = req.body; // array of filenames, e.g., ["cut-1.mp4", "cut-2.mp4"]
+  files = clips
+  console.log(clips,files,'files')
+  if (!Array.isArray(files) || files.length < 2) {
+    return res.status(400).json({ success: false, message: 'At least two files required to merge' });
+  }
+
+  const tempFileList = path.join(__dirname, '../temp_file_list.txt');
+  const videoDir = path.join(__dirname, '../allclips');
+
+  // Create FFmpeg input list file
+  const listContent = files.map(file => `file '${path.join(videoDir, file)}'`).join('\n');
+  fs.writeFileSync(tempFileList, listContent);
+
+  const outputFilename = `merged-${Date.now()}.mp4`;
+  const outputPath = path.join(videoDir, outputFilename);
+
+  ffmpeg()
+    .input(tempFileList)
+    .inputOptions(['-f concat', '-safe 0'])
+    .outputOptions('-c copy')
+    .output(outputPath)
+    .on('end', () => {
+      fs.unlinkSync(tempFileList); // clean up
+      res.json({ success: true, file: outputFilename });
+    })
+    .on('error', (err) => {
+      console.error(err);
+      fs.unlinkSync(tempFileList);
+      res.status(500).json({ success: false, message: 'Merge failed', error: err.message });
+    })
+    .run();
+});
+
 async function processFiles() {
   const files = fs.readdirSync(folderPath).filter(file => file.endsWith(".json"));
 
