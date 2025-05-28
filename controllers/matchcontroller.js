@@ -9,13 +9,96 @@ const { isInPlay } = require("../utils/isInPlay");
 
 const router = express.Router();
 
+router.post("/create", async (req, res) => {
+    try {
+        const {
+            matchId,
+            matchTitle,
+            seriesId,
+            teamHomeName,
+            teamAwayName,
+            teamHomeCode,
+            teamAwayCode,
+            teamHomeId,
+            teamAwayId,
+            teamHomeFlagUrl,
+            teamAwayFlagUrl,
+            date,
+            endDate:enddate,
+            format,
+            type,
+        } = req.body;
+
+        // Check for existing match
+        const existingMatch = await Match.findOne({ matchId });
+        if (existingMatch) {
+            return res.status(400).json({ message: "Match already exists" });
+        }
+
+        // Create Match
+        await Match.create({
+            matchId,
+            matchTitle,
+            seriesId,
+            teamHomeName,
+            teamAwayName,
+            teamHomeCode,
+            teamAwayCode,
+            teamHomeId,
+            teamAwayId,
+            teamHomeFlagUrl,
+            teamAwayFlagUrl,
+            date,
+            enddate: enddate, // Make sure your model uses 'endDate' not 'enddate'
+            format,
+            type,
+        });
+
+        res.status(201).json({ message: "Match created successfully" });
+    } catch (err) {
+        console.error("Error creating match:", err);
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
+
 router.put("/update_match/:matchId", async (req, res) => {
     console.log(req.body, 'body');
     const matchId = req.params.matchId;
+    const {
+        matchTitle,
+        seriesId,
+        teamHomeName,
+        teamAwayName,
+        teamHomeCode,
+        teamAwayCode,
+        teamHomeId,
+        teamAwayId,
+        teamHomeFlagUrl,
+        teamAwayFlagUrl,
+        date,
+        enddate,
+        format,
+        type,
+    } = req.body;
     const match = await Match.findOne({ matchId: req.params.matchId });
     if (match) {
-        const { date, endDate, isInPlay, teamHomeName, teamAwayName, runsFI, runsSI } = req.body;
-        await Match.updateOne({ matchId }, { date: date, endDate: endDate, teamHomeName: teamHomeName, teamAwayName: teamAwayName });
+        const { isInPlay, runsFI, runsSI } = req.body;
+        await Match.updateOne({ matchId }, {
+            matchTitle,
+            seriesId,
+            teamHomeName,
+            teamAwayName,
+            teamHomeCode,
+            teamAwayCode,
+            teamHomeId,
+            teamAwayId,
+            teamHomeFlagUrl,
+            teamAwayFlagUrl,
+            date,
+            enddate,
+            format,
+            type,
+        });
         await MatchLive.updateOne({ matchId }, { isInPlay: isInPlay, runsFI: runsFI, runsSI: runsSI });
         res.status(200).json({
             'team': 'team',
@@ -442,122 +525,122 @@ router.get("/update_to_live/:matchId", async (req, res) => {
 
 router.get("/livescore/:matchId", async (req, res) => {
     const { matchId } = req.params;
-  
+
     try {
-      const match = await Match.findOne({ matchId });
-      const matchLive = await MatchLive.findOne({ matchId });
-  
-      if (!match || !matchLive) {
-        return res.status(404).json({ error: "Match not found in database" });
-      }
-  
-      const response = {
-        matchId,
-        status: matchLive.result || "N/A",
-        toss: matchLive.toss || "N/A",
-        result: matchLive.result || "N/A",
-        titleFI: matchLive.titleFI || "",
-        oversFI: matchLive.oversFI || 0,
-        runFI: matchLive.runFI || 0,
-        wicketsFI: matchLive.wicketsFI || 0,
-        extrasDetailFI: matchLive.extrasDetailFI || 0,
-        titleSI: matchLive.titleSI || "",
-        oversSI: matchLive.oversSI || 0,
-        runSI: matchLive.runSI || 0,
-        wicketsSI: matchLive.wicketsSI || 0,
-        extrasDetailSI: matchLive.extrasDetailSI || 0,
-        teamHomePlayers: matchLive.teamHomePlayers || [],
-        teamAwayPlayers: matchLive.teamAwayPlayers || []
-      };
-  
-      res.json(response);
+        const match = await Match.findOne({ matchId });
+        const matchLive = await MatchLive.findOne({ matchId });
+
+        if (!match || !matchLive) {
+            return res.status(404).json({ error: "Match not found in database" });
+        }
+
+        const response = {
+            matchId,
+            status: matchLive.result || "N/A",
+            toss: matchLive.toss || "N/A",
+            result: matchLive.result || "N/A",
+            titleFI: matchLive.titleFI || "",
+            oversFI: matchLive.oversFI || 0,
+            runFI: matchLive.runFI || 0,
+            wicketsFI: matchLive.wicketsFI || 0,
+            extrasDetailFI: matchLive.extrasDetailFI || 0,
+            titleSI: matchLive.titleSI || "",
+            oversSI: matchLive.oversSI || 0,
+            runSI: matchLive.runSI || 0,
+            wicketsSI: matchLive.wicketsSI || 0,
+            extrasDetailSI: matchLive.extrasDetailSI || 0,
+            teamHomePlayers: matchLive.teamHomePlayers || [],
+            teamAwayPlayers: matchLive.teamAwayPlayers || []
+        };
+
+        res.json(response);
     } catch (error) {
-      console.error("Error fetching live score:", error);
-      res.status(500).json({ error: "Internal server error" });
+        console.error("Error fetching live score:", error);
+        res.status(500).json({ error: "Internal server error" });
     }
-  });  
+});
 
 router.get("/live-scores/:matchId", async (req, res) => {
-  const { matchId } = req.params;
+    const { matchId } = req.params;
 
-  try {
-    const match = await Match.findOne({ matchId });
-    const live = await MatchLive.findOne({ matchId });
+    try {
+        const match = await Match.findOne({ matchId });
+        const live = await MatchLive.findOne({ matchId });
 
-    if (!match || !live) {
-      return res.status(404).json({ message: "Match data not found." });
+        if (!match || !live) {
+            return res.status(404).json({ message: "Match data not found." });
+        }
+
+        // Build mock scoreCard & matchHeader structure expected by addLivescoresDetailsCustom
+        const scoreCard = [];
+
+        const makeScoreCardEntry = (teamPlayers, run, wickets, overs, extras, teamName, bowlers = [], batsmen = [], wicketsData = {}) => ({
+            batTeamDetails: {
+                batTeamName: teamName,
+                batsmenData: Object.fromEntries(
+                    batsmen.map(p => [p.playerId, {
+                        batId: p.playerId,
+                        runs: p.runs || 0,
+                        balls: p.balls || 0,
+                        boundaries: p.fours || 0,
+                        sixes: p.sixes || 0,
+                        strikeRate: p.strikeRate || 0,
+                        outDesc: p.howOut || "",
+                    }])
+                )
+            },
+            bowlTeamDetails: {
+                bowlersData: Object.fromEntries(
+                    bowlers.map(p => [p.playerId, {
+                        bowlerId: p.playerId,
+                        overs: p.overs || 0,
+                        maidens: p.maidens || 0,
+                        runs: p.runsConceded || 0,
+                        wickets: p.wickets || 0,
+                        economy: p.economy || 0,
+                    }])
+                )
+            },
+            scoreDetails: {
+                runs: run || 0,
+                wickets: wickets || 0,
+                overs: overs || 0
+            },
+            extrasData: {
+                total: extras || 0
+            },
+            wicketsData
+        });
+
+        if (live.titleFI) {
+            const batsmenFI = live.teamHomePlayers.concat(live.teamAwayPlayers).filter(p => p.runs || p.balls);
+            const bowlersFI = live.teamHomePlayers.concat(live.teamAwayPlayers).filter(p => p.wickets);
+            scoreCard.push(makeScoreCardEntry([], live.runFI, live.wicketsFI, live.oversFI, live.extrasDetailFI, live.titleFI, bowlersFI, batsmenFI));
+        }
+
+        if (live.titleSI) {
+            const batsmenSI = live.teamHomePlayers.concat(live.teamAwayPlayers).filter(p => p.runs || p.balls);
+            const bowlersSI = live.teamHomePlayers.concat(live.teamAwayPlayers).filter(p => p.wickets);
+            scoreCard.push(makeScoreCardEntry([], live.runSI, live.wicketsSI, live.oversSI, live.extrasDetailSI, live.titleSI, bowlersSI, batsmenSI));
+        }
+
+        const matchHeader = {
+            status: live.status,
+            tossResults: {
+                tossWinnerName: live.toss
+            },
+            state: live.result
+        };
+
+        return res.json({
+            scoreCard,
+            matchHeader
+        });
+
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ message: "Server error." });
     }
-
-    // Build mock scoreCard & matchHeader structure expected by addLivescoresDetailsCustom
-    const scoreCard = [];
-
-    const makeScoreCardEntry = (teamPlayers, run, wickets, overs, extras, teamName, bowlers = [], batsmen = [], wicketsData = {}) => ({
-      batTeamDetails: {
-        batTeamName: teamName,
-        batsmenData: Object.fromEntries(
-          batsmen.map(p => [p.playerId, {
-            batId: p.playerId,
-            runs: p.runs || 0,
-            balls: p.balls || 0,
-            boundaries: p.fours || 0,
-            sixes: p.sixes || 0,
-            strikeRate: p.strikeRate || 0,
-            outDesc: p.howOut || "",
-          }])
-        )
-      },
-      bowlTeamDetails: {
-        bowlersData: Object.fromEntries(
-          bowlers.map(p => [p.playerId, {
-            bowlerId: p.playerId,
-            overs: p.overs || 0,
-            maidens: p.maidens || 0,
-            runs: p.runsConceded || 0,
-            wickets: p.wickets || 0,
-            economy: p.economy || 0,
-          }])
-        )
-      },
-      scoreDetails: {
-        runs: run || 0,
-        wickets: wickets || 0,
-        overs: overs || 0
-      },
-      extrasData: {
-        total: extras || 0
-      },
-      wicketsData
-    });
-
-    if (live.titleFI) {
-      const batsmenFI = live.teamHomePlayers.concat(live.teamAwayPlayers).filter(p => p.runs || p.balls);
-      const bowlersFI = live.teamHomePlayers.concat(live.teamAwayPlayers).filter(p => p.wickets);
-      scoreCard.push(makeScoreCardEntry([], live.runFI, live.wicketsFI, live.oversFI, live.extrasDetailFI, live.titleFI, bowlersFI, batsmenFI));
-    }
-
-    if (live.titleSI) {
-      const batsmenSI = live.teamHomePlayers.concat(live.teamAwayPlayers).filter(p => p.runs || p.balls);
-      const bowlersSI = live.teamHomePlayers.concat(live.teamAwayPlayers).filter(p => p.wickets);
-      scoreCard.push(makeScoreCardEntry([], live.runSI, live.wicketsSI, live.oversSI, live.extrasDetailSI, live.titleSI, bowlersSI, batsmenSI));
-    }
-
-    const matchHeader = {
-      status: live.status,
-      tossResults: {
-        tossWinnerName: live.toss
-      },
-      state: live.result
-    };
-
-    return res.json({
-      scoreCard,
-      matchHeader
-    });
-
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({ message: "Server error." });
-  }
 });
 
 module.exports = router;
