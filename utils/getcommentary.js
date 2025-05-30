@@ -18,15 +18,41 @@ module.exports.getcommentary = function (old, current) {
         commentary.push(...u)
       }
     }
-    return commentary;
+
+    const seen = new Set();
+    const uniqueByOver = [];
+
+    for (let i = commentary.length - 1; i >= 0; i--) {
+      const item = commentary[i];
+      const over = item.overNumber;
+      if (!seen.has(over)) {
+        seen.add(over);
+        uniqueByOver.unshift(item);  // keep latest one (from end)
+      }
+    }
+
+    return uniqueByOver;
   } else {
     if (Array.isArray(cur)) {
       console.log(cur?.length, 'currenty')
       return cur;
     }
     else {
-      console.log(older, 'old')
-      return older;
+      //console.log(older, 'old')
+      const seen = new Set();
+      const uniqueByOver = [];
+
+      for (let i = older.length - 1; i >= 0; i--) {
+        const item = older[i];
+        const over = item.overNumber;
+        if (!seen.has(over)) {
+          seen.add(over);
+          uniqueByOver.unshift(item);  // keep latest one (from end)
+        }
+      }
+
+      return uniqueByOver;
+      //return older;
     }
   }
 };
