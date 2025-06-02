@@ -534,5 +534,54 @@ router.get("/updateball-details", async (req, res) => {
     }
 });
 
+router.post("/player/create", async (req, res) => {
+  try {
+    const exists = await Player.findOne({ id: req.body.id });
+    if (exists) return res.status(400).json({ message: "Player already exists" });
+
+    const player = new Player(req.body);
+    await player.save();
+
+    res.status(201).json({ message: "Player created", player });
+  } catch (err) {
+    res.status(500).json({ message: "Error creating player", error: err.message });
+  }
+});
+
+// Get All Players
+router.get("/player/all", async (req, res) => {
+  try {
+    const players = await Player.find().sort({ createdAt: -1 });
+    res.json(players);
+  } catch (err) {
+    res.status(500).json({ message: "Error fetching players" });
+  }
+});
+
+// Edit Player
+router.put("/player/update/:id", async (req, res) => {
+  try {
+    const player = await Player.findOneAndUpdate({ id: req.params.id }, req.body, { new: true });
+    if (!player) return res.status(404).json({ message: "Player not found" });
+
+    res.json({ message: "Player updated", player });
+  } catch (err) {
+    res.status(500).json({ message: "Error updating player" });
+  }
+});
+
+// Delete Player
+router.delete("/player/delete/:id", async (req, res) => {
+  try {
+    const result = await Player.findOneAndDelete({ id: req.params.id });
+    if (!result) return res.status(404).json({ message: "Player not found" });
+
+    res.json({ message: "Player deleted" });
+  } catch (err) {
+    res.status(500).json({ message: "Error deleting player" });
+  }
+});
+
+
 
 module.exports = router;
