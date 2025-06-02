@@ -44,6 +44,8 @@ const { addLivescoresDetailsCustomfs } = require("./updating/addScoredetailsCust
 const { addLivescoresDetailsCustom } = require("./updating/addlivescoresdetailskeys.js");
 const { updateSeries } = require("./updating/addSeries.js");
 const { updateSquads } = require("./updating/updateSquads.js");
+const { generateShotTypes } = require("./generate_shottype.js");
+const { fetchAndSaveTeams } = require("./updating/createTeams.js");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
@@ -102,6 +104,8 @@ mongoose.connect(
 // startCryptoTransaction();
 // updateSeries()
 // updateSquads()
+// generateShotTypes()
+// fetchAndSaveTeams();
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {

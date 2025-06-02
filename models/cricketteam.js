@@ -1,65 +1,41 @@
 const mongoose = require("mongoose");
-const crypto = require("crypto");
 
-const cricketteamSchema = new mongoose.Schema(
-  {
-    teamName: {
-      type: String,
-      trim: true,
-      required: true,
-      unique: true,
-      lowercase: true,
-    },
-    teamId: {
-      type: String,
-      trim: true,
-      required: true,
-      lowercase: true,
-      default: "",
-    },
-    players: [
-      {
-        playerId: {
-          type: String,
-          trim: true,
-          required: true,
-          lowercase: true,
-        },
-        playerName: {
-          type: String,
-          trim: true,
-          required: true,
-          lowercase: true,
-        },
-        image: {
-          type: String,
-          trim: true,
-          required: true,
-          lowercase: true,
-          default: "",
-        },
-        position: {
-          type: String,
-          trim: true,
-          required: true,
-          lowercase: true,
-        },
-        batOrder: {
-          type: Number,
-          default: -1,
-        },
-        default: "",
-      },
-    ],
-    date: {
-      type: Date,
-      required: true,
-    },
+const teamSchema = new mongoose.Schema({
+  id: { type: Number, required: true, unique: true },
+
+  teamName: { type: String, required: true },
+  shortName: { type: String },
+  image: { type: String },
+  flagUrl: {
+    type: String,
+    trim: true,
   },
-  {
-    timestamps: true,
-  }
-);
+  // One of: international, domestic, league
+  type: {
+    type: String,
+    enum: ["international", "domestic", "league"],
+    required: true,
+  },
 
-const CricketTeam = mongoose.model("CricketTeam", cricketteamSchema);
-module.exports = CricketTeam;
+  // Applies to international and domestic teams
+  country: {
+    type: String,
+    default: "",
+  },
+
+  // Applies to league teams
+  league: {
+    type: String,
+    default: "", // e.g., IPL, BBL, PSL
+  },
+
+  // Optional: association to state or region for domestic
+  region: {
+    type: String,
+    default: "", // e.g., "Karnataka", "Punjab"
+  }
+}, {
+  timestamps: true,
+});
+
+module.exports = mongoose.model("CricketTeam", teamSchema);

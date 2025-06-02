@@ -6,6 +6,9 @@ const Match = require("../models/match");
 const MatchLive = require("../models/matchlive");
 const { getkeys } = require("../utils/crickeys");
 const { isInPlay } = require("../utils/isInPlay");
+const Series = require("../models/series");
+const Squad = require("../models/squad");
+const CricketTeam = require("../models/cricketteam");
 
 const router = express.Router();
 
@@ -24,7 +27,7 @@ router.post("/create", async (req, res) => {
             teamHomeFlagUrl,
             teamAwayFlagUrl,
             date,
-            endDate:enddate,
+            endDate: enddate,
             format,
             type,
         } = req.body;
@@ -129,6 +132,203 @@ router.delete("/deletematch/:matchId", async (req, res) => {
             message: "cannot find team",
         });
     }
+});
+
+router.get("/series/all", async (req, res) => {
+    try {
+        const series = await Series.find({});
+        res.status(200).json(series);
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching series", error });
+    }
+});
+
+// Create new series
+router.post("/series/create", async (req, res) => {
+    try {
+        const { seriesId, name, type, date, startDate, endDate } = req.body;
+
+        const existing = await Series.findOne({ seriesId });
+        if (existing) {
+            return res.status(400).json({ message: "Series with this ID already exists" });
+        }
+
+        const newSeries = new Series({
+            seriesId,
+            name,
+            type,
+            date,
+            startDate,
+            endDate,
+        });
+
+        await newSeries.save();
+
+        res.status(201).json({ message: "Series created successfully", series: newSeries });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Failed to create series", error: err.message });
+    }
+});
+
+router.put("/series/:seriesId", async (req, res) => {
+    try {
+        const { seriesId } = req.params;
+        const { name, type, date, startDate, endDate } = req.body;
+
+        const updatedSeries = await Series.findOneAndUpdate(
+            { seriesId: Number(seriesId) }, // find by seriesId
+            { name, type, date, startDate, endDate },
+            { new: true, runValidators: true }
+        );
+
+        if (!updatedSeries) {
+            return res.status(404).json({ message: "Series not found" });
+        }
+
+        res.json({ message: "Series updated successfully", series: updatedSeries });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Failed to update series", error: err.message });
+    }
+});
+
+// Fetch all squads
+router.get("/squads", async (req, res) => {
+    try {
+        const squads = await Squad.find();
+        res.json(squads);
+    } catch (err) {
+        console.error("Fetch Squads Error:", err);
+        res.status(500).json({ message: "Failed to fetch squads" });
+    }
+});
+
+
+
+router.post("/squad/create", async (req, res) => {
+    try {
+        const { squadId, teamId, teamName, seriesId, players } = req.body;
+
+        if (!squadId || !teamId || !seriesId || !teamName || !Array.isArray(players)) {
+            return res.status(400).json({ message: "Missing required fields" });
+        }
+
+        const existing = await Squad.findOne({ squadId, teamId, seriesId });
+
+        if (existing) {
+            // Update
+            existing.players = players;
+            existing.teamName = teamName;
+            await existing.save();
+            return res.status(200).json({ message: "Squad updated", squad: existing });
+        } else {
+            // Create
+            const newSquad = new Squad({
+                squadId,
+                teamId,
+                teamName,
+                seriesId,
+                players,
+            });
+
+            await newSquad.save();
+            return res.status(201).json({ message: "Squad created", squad: newSquad });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Failed to create squad", error: err.message });
+    }
+});
+
+// Update Squad
+router.put("/squads/:id", async (req, res) => {
+    try {
+        const squadId = req.params.id;
+        const { teamId, squadId: newSquadId, seriesId, teamName, players } = req.body;
+
+        const updated = await Squad.findByIdAndUpdate(
+            squadId,
+            { teamId, squadId: newSquadId, seriesId, teamName, players },
+            { new: true }
+        );
+
+        if (!updated) {
+            return res.status(404).json({ message: "Squad not found" });
+        }
+
+        res.json({ message: "Squad updated successfully", squad: updated });
+    } catch (err) {
+        console.error("Update Squad Error:", err);
+        res.status(500).json({ message: "Failed to update squad", error: err.message });
+    }
+});
+
+// Delete Squad
+router.delete("/squads/:id", async (req, res) => {
+  try {
+    const deleted = await Squad.findByIdAndDelete(req.params.id);
+    if (!deleted) {
+      return res.status(404).json({ message: "Squad not found" });
+    }
+
+    res.json({ message: "Squad deleted successfully" });
+  } catch (err) {
+    console.error("Delete Squad Error:", err);
+    res.status(500).json({ message: "Failed to delete squad" });
+  }
+});
+
+router.post("/team/create", async (req, res) => {
+  try {
+    const team = await CricketTeam.create(req.body);
+    res.status(201).json(team);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+// GET /api/teams - Get all teams
+router.get("/team/all", async (req, res) => {
+  try {
+    const teams = await CricketTeam.find();
+    res.status(200).json(teams);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// GET /api/teams/:id - Get one team by MongoDB ID
+router.get("/team/:id", async (req, res) => {
+  try {
+    const team = await CricketTeam.findById(req.params.id);
+    if (!team) return res.status(404).json({ error: "Team not found" });
+    res.status(200).json(team);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// PUT /api/teams/:id - Update a team
+router.put("/team/:id", async (req, res) => {
+  try {
+    const updated = await CricketTeam.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    if (!updated) return res.status(404).json({ error: "Team not found" });
+    res.status(200).json(updated);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+// DELETE /api/teams/:id - Delete a team
+router.delete("/team/:id", async (req, res) => {
+  try {
+    const deleted = await CricketTeam.findByIdAndDelete(req.params.id);
+    if (!deleted) return res.status(404).json({ error: "Team not found" });
+    res.status(200).json({ message: "Team deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
 function pointCalculator(
