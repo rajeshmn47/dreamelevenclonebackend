@@ -40,7 +40,7 @@ router.get("/getplayers_new/:id", async (req, res) => {
   const matchdetails = await Matches.findOne({ matchId: req.params.id });
   let th = await Squad.findOne({ teamId: matchdetails?.teamHomeId })
   let ta = await Squad.findOne({ teamId: matchdetails?.teamAwayId })
-  console.log(matchdetails, 'line 12');
+  console.log(matchdetails?.teamHomeId, th, 'line 12');
   if (livedetails) {
     let data = {};
     livedetails.teamHomePlayers = livedetails.teamHomePlayers;
@@ -55,9 +55,16 @@ router.get("/getplayers_new/:id", async (req, res) => {
       matchdetails: data,
       live: true,
     });
-  } else if (matchdetails) {
+  } else if (matchdetails&&th?.players?.length) {
     matchdetails.teamHomePlayers = th.players;
     matchdetails.teamAwayPlayers = ta.players;
+    res.status(200).json({
+      players: matchdetails,
+      matchdetails,
+      live: false,
+    });
+  }
+  else {
     res.status(200).json({
       players: matchdetails,
       matchdetails,
