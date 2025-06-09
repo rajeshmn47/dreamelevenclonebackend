@@ -15,6 +15,8 @@ const { addLivescoresDetailsCustom } = require("./addlivescoresdetailskeys.js");
 const { addLivecommentaryCustom } = require("./addCommentaryCustom.js");
 const { startCryptoTransaction } = require("./cryptoTransaction.js");
 const { addLivescoresDetailsCustomfs } = require("./addScoredetailsCustom.js");
+const { updateSeries } = require("./addSeries.js");
+const { updateSquads } = require("./updateSquads.js");
 
 const isSource = process.env.SOURCE === "true" ? true : false;
 
@@ -79,6 +81,10 @@ function cronjobs() {
   cron.schedule("0 */6 * * *", async function () {
     await addMatchtoDb();
     await addteamPlayers();
+  });
+  cron.schedule("0 */12 * * *", async function () {
+    await updateSeries()
+    await updateSquads()
   });
   cron.schedule("0 */20 * * *", async function () {
     await addTeamstandingstodb()
