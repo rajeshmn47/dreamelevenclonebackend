@@ -9,8 +9,11 @@ const { isInPlay } = require("../utils/isInPlay");
 const Series = require("../models/series");
 const Squad = require("../models/squad");
 const CricketTeam = require("../models/cricketteam");
-
+const ContestType = require("../models/contestType");
+const Contest = require("../models/contest");
 const router = express.Router();
+const { getflag } = require("../utils/getflags");
+const flagURLs = require("country-flags-svg");
 
 router.post("/create", async (req, res) => {
     try {
@@ -24,13 +27,27 @@ router.post("/create", async (req, res) => {
             teamAwayCode,
             teamHomeId,
             teamAwayId,
-            teamHomeFlagUrl,
-            teamAwayFlagUrl,
             date,
             endDate: enddate,
             format,
             type,
         } = req.body;
+
+        teamAwayFlagUrl = flagURLs?.findFlagUrlByCountryName(
+            teamAwayName
+        );
+        teamHomeFlagUrl = flagURLs?.findFlagUrlByCountryName(
+            teamHomeName
+        );
+        if (!teamAwayFlagUrl) {
+            teamAwayFlagUrl = getflag(teamAwayName);
+        }
+        if (!teamHomeFlagUrl) {
+            teamHomeFlagUrl = getflag(teamHomeName);
+        }
+        teamHomeFlagUrl = teamHomeFlagUrl ? teamHomeFlagUrl : "https://via.placeholder.com/150?text=Team+Logo+Unavailable";
+        teamAwayFlagUrl = teamAwayFlagUrl ? teamAwayFlagUrl : "https://via.placeholder.com/150?text=Team+Logo+Unavailable";
+
 
         // Check for existing match
         const existingMatch = await Match.findOne({ matchId });
@@ -39,6 +56,33 @@ router.post("/create", async (req, res) => {
         }
 
         // Create Match
+        const contestId = [];
+        const contestTypes = await ContestType.find({});
+        for (let k = 0; k < contestTypes.length; k++) {
+            const prizeDetails = contestTypes[k].prizes.map(prize => ({
+                prize: prize.amount,
+                prizeHolder: ""
+            }));
+
+            const contest1 = new Contest({
+                price: contestTypes[k].prize,
+                totalSpots: contestTypes[k].totalSpots,
+                spotsLeft: contestTypes[k].totalSpots,
+                matchId: matchId,
+                prizeDetails: prizeDetails,
+                numWinners: contestTypes[k].numWinners,
+                entryFee: contestTypes[k].entryFee,
+            });
+
+            try {
+                const contest2 = await Contest.create(contest1);
+                if (contest2) {
+                    contestId.push(contest2._id);
+                }
+            } catch (err) {
+                console.log(`Error : ${err}`);
+            }
+        }
         await Match.create({
             matchId,
             matchTitle,
@@ -55,8 +99,8 @@ router.post("/create", async (req, res) => {
             enddate: enddate, // Make sure your model uses 'endDate' not 'enddate'
             format,
             type,
+            contestId: contestId
         });
-
         res.status(201).json({ message: "Match created successfully" });
     } catch (err) {
         console.error("Error creating match:", err);
@@ -266,69 +310,69 @@ router.put("/squads/:id", async (req, res) => {
 
 // Delete Squad
 router.delete("/squads/:id", async (req, res) => {
-  try {
-    const deleted = await Squad.findByIdAndDelete(req.params.id);
-    if (!deleted) {
-      return res.status(404).json({ message: "Squad not found" });
-    }
+    try {
+        const deleted = await Squad.findByIdAndDelete(req.params.id);
+        if (!deleted) {
+            return res.status(404).json({ message: "Squad not found" });
+        }
 
-    res.json({ message: "Squad deleted successfully" });
-  } catch (err) {
-    console.error("Delete Squad Error:", err);
-    res.status(500).json({ message: "Failed to delete squad" });
-  }
+        res.json({ message: "Squad deleted successfully" });
+    } catch (err) {
+        console.error("Delete Squad Error:", err);
+        res.status(500).json({ message: "Failed to delete squad" });
+    }
 });
 
 router.post("/team/create", async (req, res) => {
-  try {
-    const team = await CricketTeam.create(req.body);
-    res.status(201).json(team);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
+    try {
+        const team = await CricketTeam.create(req.body);
+        res.status(201).json(team);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
 });
 
 // GET /api/teams - Get all teams
 router.get("/team/all", async (req, res) => {
-  try {
-    const teams = await CricketTeam.find();
-    res.status(200).json(teams);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+    try {
+        const teams = await CricketTeam.find();
+        res.status(200).json(teams);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
 });
 
 // GET /api/teams/:id - Get one team by MongoDB ID
 router.get("/team/:id", async (req, res) => {
-  try {
-    const team = await CricketTeam.findById(req.params.id);
-    if (!team) return res.status(404).json({ error: "Team not found" });
-    res.status(200).json(team);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+    try {
+        const team = await CricketTeam.findById(req.params.id);
+        if (!team) return res.status(404).json({ error: "Team not found" });
+        res.status(200).json(team);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
 });
 
 // PUT /api/teams/:id - Update a team
 router.put("/team/:id", async (req, res) => {
-  try {
-    const updated = await CricketTeam.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (!updated) return res.status(404).json({ error: "Team not found" });
-    res.status(200).json(updated);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
+    try {
+        const updated = await CricketTeam.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        if (!updated) return res.status(404).json({ error: "Team not found" });
+        res.status(200).json(updated);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
 });
 
 // DELETE /api/teams/:id - Delete a team
 router.delete("/team/:id", async (req, res) => {
-  try {
-    const deleted = await CricketTeam.findByIdAndDelete(req.params.id);
-    if (!deleted) return res.status(404).json({ error: "Team not found" });
-    res.status(200).json({ message: "Team deleted successfully" });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+    try {
+        const deleted = await CricketTeam.findByIdAndDelete(req.params.id);
+        if (!deleted) return res.status(404).json({ error: "Team not found" });
+        res.status(200).json({ message: "Team deleted successfully" });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
 });
 
 function pointCalculator(
@@ -840,6 +884,96 @@ router.get("/live-scores/:matchId", async (req, res) => {
     } catch (err) {
         console.error(err);
         return res.status(500).json({ message: "Server error." });
+    }
+});
+
+router.get("/live-status/:matchId", async (req, res) => {
+    const { matchId } = req.params;
+
+    try {
+        const matchLive = await MatchLive.findOne({ matchId });
+        if (!matchLive) {
+            return res.status(404).json({ message: "Match live data not found." });
+        }
+        const response = {
+            matchId: matchLive.matchId,
+            inPlay: matchLive.inPlay,
+            status: matchLive.status,
+            toss: matchLive.toss,
+            result: matchLive.result,
+            isInPlay: matchLive.isInPlay
+        };
+        res.json(response);
+    } catch (error) {
+        console.error("Error fetching live status:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+}
+)
+
+router.get("/live-details/:matchId", async (req, res) => {
+    const { matchId } = req.params;
+
+    try {
+        const match = await Match.findOne({ matchId });
+        const matchLive = await MatchLive.findOne({ matchId });
+
+        if (!match || !matchLive) {
+            return res.status(404).json({ message: "Match or live data not found." });
+        }
+
+        res.json({
+            matchId: match.matchId,
+            matchTitle: match.matchTitle,
+            seriesId: match.seriesId,
+            teamHomeName: match.teamHomeName,
+            teamAwayName: match.teamAwayName,
+            teamHomeCode: match.teamHomeCode,
+            teamAwayCode: match.teamAwayCode,
+            teamHomeId: match.teamHomeId,
+            teamAwayId: match.teamAwayId,
+            teamHomeFlagUrl: match.teamHomeFlagUrl,
+            teamAwayFlagUrl: match.teamAwayFlagUrl,
+            date: match.date,
+            enddate: match.enddate,
+            format: match.format,
+            type: match.type,
+            contestId: match.contestId,
+            // Live details
+            inPlay: matchLive.inPlay,
+            status: matchLive.status,
+            toss: matchLive.toss,
+            result: matchLive.result,
+            isInPlay: matchLive.isInPlay,
+            teamHomePlayers: matchLive.teamHomePlayers,
+            teamAwayPlayers: matchLive.teamAwayPlayers,
+            titleFI: matchLive.titleFI,
+            oversFI: matchLive.oversFI,
+            runFI: matchLive.runFI,
+            wicketsFI: matchLive.wicketsFI,
+            extrasDetailFI: matchLive.extrasDetailFI,
+            titleSI: matchLive.titleSI,
+            oversSI: matchLive.oversSI,
+            runSI: matchLive.runSI,
+            wicketsSI: matchLive.wicketsSI,
+            extrasDetailSI: matchLive.extrasDetailSI,
+        });
+    } catch (error) {
+        console.error("Error fetching live details:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
+
+// Get all matches for a specific series
+router.get("/series/:seriesId/matches", async (req, res) => {
+    try {
+        const { seriesId } = req.params;
+        // Find all matches with this seriesId
+        const matches = await Match.find({ seriesId: String(seriesId) });
+        res.status(200).json(matches);
+    } catch (err) {
+        console.error("Error fetching matches for series:", err);
+        res.status(500).json({ message: "Failed to fetch matches for series", error: err.message });
     }
 });
 
