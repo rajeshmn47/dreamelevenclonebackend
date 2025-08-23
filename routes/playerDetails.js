@@ -12,6 +12,7 @@ const { uploadImage } = require("../utils/firebaseinitialize");
 const { default: axios } = require("axios");
 const DetailScores = require("../models/detailscores");
 const Squad = require("../models/squad");
+const Series = require("../models/series");
 
 router.get("/allplayers", async (req, res) => {
     //const directoryPath = './images/backgroundremovalneeded';
@@ -221,6 +222,7 @@ router.get("/playerDetails/:id", async (req, res) => {
     if (player) {
         let matches = [];
         for (let i = 0; i < player.teamIds.length; i++) {
+            if (player.teamIds[i] == '106') continue;
             let w = await MatchLive.aggregate(
                 [{ $match: { $or: [{ teamHomeId: player?.teamIds[i] }, { teamAwayId: player?.teamIds[i] }] } },
                 {
@@ -262,7 +264,7 @@ router.get("/playerSeriesDetails/:playerId/:seriesId", async (req, res) => {
             let w = await Match.aggregate(
                 [{
                     $match: {
-                        $or: [{ teamHomeId: player?.teamIds[i] }, { teamAwayId: player?.teamIds[i] }], matchTitle: req.params.seriesId,
+                        $or: [{ teamHomeId: player?.teamIds[i] }, { teamAwayId: player?.teamIds[i] }], seriesId: req.params.seriesId,
                         date: {
                             $lt: new Date(),
                         },
@@ -448,7 +450,7 @@ router.get("/withbackground-new", (req, res) => {
 router.get("/updatedatabases", async (req, res) => {
     let date = new Date();
     const endDate = new Date(date.getTime());
-    date = new Date(date.getTime() - 1200 * 60 * 60 * 1000);
+    date = new Date(date.getTime() - 1200000 * 60 * 60 * 1000);
     const allmatches = await MatchLive.find({
         date: {
             $gte: new Date(date),
@@ -459,49 +461,53 @@ router.get("/updatedatabases", async (req, res) => {
     try {
         for (let i = 0; i < allmatches?.length; i++) {
             for (let k = 0; k < allmatches[i]?.teamAwayPlayers?.length; + k++) {
-                let player = await Player.findOne({ id: allmatches[i].teamAwayPlayers[k].playerId });
-                console.log(player, 'player');
-                if (!player) {
-                    await Player.create({
-                        name: allmatches[i].teamAwayPlayers[k].playerName,
-                        id: allmatches[i].teamAwayPlayers[k].playerId,
-                        image: allmatches[i].teamAwayPlayers[k].image,
-                        teamId: allmatches[i].teamAwayId
-                    })
-                    console.log('player added successfully');
-                }
-                else if (!player.teamIds.includes(allmatches[i].teamAwayId)) {
-                    await Player.updateOne(
-                        { id: allmatches[i].teamAwayPlayers[k].playerId },
-                        {
-                            $set: {
-                                teamIds: [...player.teamIds, allmatches[i].teamAwayId],
-                            },
-                        }
-                    );
+                if (!(allmatches[i]?.teamHomeId == '106' || allmatches[i]?.teamAwayId == '106')) {
+                    let player = await Player.findOne({ id: allmatches[i].teamAwayPlayers[k].playerId });
+                    console.log(player, 'player');
+                    if (!player) {
+                        await Player.create({
+                            name: allmatches[i].teamAwayPlayers[k].playerName,
+                            id: allmatches[i].teamAwayPlayers[k].playerId,
+                            image: allmatches[i].teamAwayPlayers[k].image,
+                            teamId: allmatches[i].teamAwayId
+                        })
+                        console.log('player added successfully');
+                    }
+                    else if (!player.teamIds.includes(allmatches[i].teamAwayId)) {
+                        await Player.updateOne(
+                            { id: allmatches[i].teamAwayPlayers[k].playerId },
+                            {
+                                $set: {
+                                    teamIds: [...player.teamIds, allmatches[i].teamAwayId],
+                                },
+                            }
+                        );
+                    }
                 }
             }
             for (let k = 0; k < allmatches[i]?.teamHomePlayers?.length; + k++) {
-                let player = await Player.findOne({ id: allmatches[i].teamHomePlayers[k].playerId });
-                console.log(player, 'homeplayer');
-                if (!player) {
-                    await Player.create({
-                        name: allmatches[i].teamHomePlayers[k].playerName,
-                        id: allmatches[i].teamHomePlayers[k].playerId,
-                        image: allmatches[i].teamHomePlayers[k].image,
-                        teamId: allmatches[i].teamHomeId
-                    })
-                    console.log('player added successfully');
-                }
-                else if (!player.teamIds.includes(allmatches[i].teamHomeId)) {
-                    await Player.updateOne(
-                        { id: allmatches[i].teamHomePlayers[k].playerId },
-                        {
-                            $set: {
-                                teamIds: [...player.teamIds, allmatches[i].teamHomeId],
-                            },
-                        }
-                    );
+                if (!(allmatches[i]?.teamHomeId == '106' || allmatches[i]?.teamAwayId == '106')) {
+                    let player = await Player.findOne({ id: allmatches[i].teamHomePlayers[k].playerId });
+                    console.log(player, 'homeplayer');
+                    if (!player) {
+                        await Player.create({
+                            name: allmatches[i].teamHomePlayers[k].playerName,
+                            id: allmatches[i].teamHomePlayers[k].playerId,
+                            image: allmatches[i].teamHomePlayers[k].image,
+                            teamId: allmatches[i].teamHomeId
+                        })
+                        console.log('player added successfully');
+                    }
+                    else if (!player.teamIds.includes(allmatches[i].teamHomeId)) {
+                        await Player.updateOne(
+                            { id: allmatches[i].teamHomePlayers[k].playerId },
+                            {
+                                $set: {
+                                    teamIds: [...player.teamIds, allmatches[i].teamHomeId],
+                                },
+                            }
+                        );
+                    }
                 }
             }
         }
@@ -535,51 +541,60 @@ router.get("/updateball-details", async (req, res) => {
 });
 
 router.post("/player/create", async (req, res) => {
-  try {
-    const exists = await Player.findOne({ id: req.body.id });
-    if (exists) return res.status(400).json({ message: "Player already exists" });
+    try {
+        const exists = await Player.findOne({ id: req.body.id });
+        if (exists) return res.status(400).json({ message: "Player already exists" });
 
-    const player = new Player(req.body);
-    await player.save();
+        const player = new Player(req.body);
+        await player.save();
 
-    res.status(201).json({ message: "Player created", player });
-  } catch (err) {
-    res.status(500).json({ message: "Error creating player", error: err.message });
-  }
+        res.status(201).json({ message: "Player created", player });
+    } catch (err) {
+        res.status(500).json({ message: "Error creating player", error: err.message });
+    }
 });
 
 // Get All Players
 router.get("/player/all", async (req, res) => {
-  try {
-    const players = await Player.find().sort({ createdAt: -1 });
-    res.json(players);
-  } catch (err) {
-    res.status(500).json({ message: "Error fetching players" });
-  }
+    try {
+        const players = await Player.find().sort({ createdAt: -1 });
+        res.json(players);
+    } catch (err) {
+        res.status(500).json({ message: "Error fetching players" });
+    }
 });
 
 // Edit Player
 router.put("/player/update/:id", async (req, res) => {
-  try {
-    const player = await Player.findOneAndUpdate({ id: req.params.id }, req.body, { new: true });
-    if (!player) return res.status(404).json({ message: "Player not found" });
+    try {
+        const player = await Player.findOneAndUpdate({ id: req.params.id }, req.body, { new: true });
+        if (!player) return res.status(404).json({ message: "Player not found" });
 
-    res.json({ message: "Player updated", player });
-  } catch (err) {
-    res.status(500).json({ message: "Error updating player" });
-  }
+        res.json({ message: "Player updated", player });
+    } catch (err) {
+        res.status(500).json({ message: "Error updating player" });
+    }
 });
 
 // Delete Player
 router.delete("/player/delete/:id", async (req, res) => {
-  try {
-    const result = await Player.findOneAndDelete({ id: req.params.id });
-    if (!result) return res.status(404).json({ message: "Player not found" });
+    try {
+        const result = await Player.findOneAndDelete({ id: req.params.id });
+        if (!result) return res.status(404).json({ message: "Player not found" });
 
-    res.json({ message: "Player deleted" });
-  } catch (err) {
-    res.status(500).json({ message: "Error deleting player" });
-  }
+        res.json({ message: "Player deleted" });
+    } catch (err) {
+        res.status(500).json({ message: "Error deleting player" });
+    }
+});
+
+router.get("/series/all", async (req, res) => {
+    try {
+        const series = await Series.find();
+        res.status(200).json(series);
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching series", error });
+    }
 });
 
 

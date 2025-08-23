@@ -84,7 +84,7 @@ router.get("/updateFlags", async (req, res) => {
 router.get("/seriesDetails/:name", async (req, res) => {
     //const series = await Match.find({ matchTitle: req.params.name });
     let series = await Match.aggregate(
-        [{ $match: { matchTitle: req.params.name, date: { $lt: new Date() }, } },
+        [{ $match: { seriesId: req.params.name, date: { $lt: new Date() }, } },
         {
             $lookup: {
                 from: "matchlivedetails",//your schema name from mongoDB
@@ -146,7 +146,7 @@ router.get("/seriesDetails/:name", async (req, res) => {
 router.get("/pointsTable/:seriesName", async (req, res) => {
     //const series = await Match.find({ matchTitle: req.params.name });
     let matches = await Match.aggregate(
-        [{ $match: { matchTitle: req.params.seriesName, date: { $lt: new Date() }, } },
+        [{ $match: { seriesId: req.params.seriesName, date: { $lt: new Date() }, } },
         {
             $lookup: {
                 from: "matchlivedetails",//your schema name from mongoDB
