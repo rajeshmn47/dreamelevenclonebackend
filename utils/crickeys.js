@@ -8,12 +8,14 @@ module.exports.getkeys = async function () {
     user.totalhits = 0;
     await user.save();
   }
-  user.totalhits = user.totalhits + 1;
+  //user.totalhits = user.totalhits + 1;
+  user.totalhits=1105
   await user.save();
   const keyi = Math.floor(totalhits / 100);
   const keys = process.env.crickeys
     .replace(/(\r\n|\n|\r)/gm, "")
     .replace(/ /g, "")
     .split(",");
+    console.log(keys,keyi,'keyies')
   return keys[keyi];
 };

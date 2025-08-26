@@ -24,7 +24,7 @@ function convertWicketsData(wicketsData) {
 
 module.exports.addLivescoresDetailsCustomfs = async function (format) {
     let now = new Date();
-    const past = new Date(now.getTime() - 100 * 60 * 60 * 1000); // last 100 hours
+    const past = new Date(now.getTime() - 6000 * 60 * 60 * 1000); // last 100 hours
     const URL = process.env.BACKEND_URL
     const matches = await Match.find({
         format: format,

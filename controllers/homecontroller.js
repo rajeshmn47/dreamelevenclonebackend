@@ -1100,7 +1100,7 @@ router.get("/allmatchese", async (req, res) => {
 router.get("/allmatches", async (req, res) => {
   try {
     var start = new Date();
-    start.setMonth(start.getMonth() - 1); // Set the start date to one month ago
+    start.setMonth(start.getMonth() - 100000); // Set the start date to one month ago
     start.setUTCHours(0, 0, 0, 0);
     var end = new Date();
     end.setUTCHours(23, 59, 59, 999);

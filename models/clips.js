@@ -16,6 +16,8 @@ const clipSchema = new mongoose.Schema({
   bowling_team: String,
   matchType: String,
   series: String,
+  seriesId: String,
+  matchId: String,
   season: String,
   duration: Number,
   createdAt: { type: Date, default: Date.now },

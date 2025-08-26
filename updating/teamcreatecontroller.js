@@ -10,7 +10,7 @@ const MatchLiveDetails = require("../models/matchlive");
 
 module.exports.addteamPlayers = async function () {
   let date = new Date();
-  const endDate = new Date(date.getTime() + 202 * 60 * 60 * 1000);
+  const endDate = new Date(date.getTime() -200 * 60 * 60 * 1000);
   date = new Date(date.getTime());
   const matches = await Match.find({
     date: {

@@ -63,14 +63,13 @@ const sendNotification = async (title, body, topic = "live-updates") => {
   }
 };
 
-module.exports.addLiveDetails = async function () {
+module.exports.addLiveDetailsFS = async function () {
   try {
     const turing = await MatchLive();
     let date = new Date();
     const endDate = new Date(date.getTime() + 0.5 * 60 * 60 * 1000);
-    date = new Date(date.getTime() - 2000000 * 60 * 60 * 1000);
+    date = new Date(date.getTime() - 2000000000 * 60 * 60 * 1000);
     const matches = await Match.find({
-      seriesId: '2697',
       date: {
         $gte: new Date(date),
         $lt: new Date(endDate),
@@ -81,18 +80,17 @@ module.exports.addLiveDetails = async function () {
       const matchId = matches[i].matchId;
       const match = await MatchLive.findOne({ matchId: matchId });
       if (match) {
-        console.log('exists');
+        //console.log('exists');
       } else {
-        const keys = await getkeys.getkeys();
-        console.log('not exists')
+        //const keys = await getkeys.getkeys();
+        //console.log(s,'not exists')
         const date1 = matches[i].date
+        const URL = process.env.BACKEND_URL || "http://localhost:9000";
         const options = {
           method: "GET",
-          url: `https://cricbuzz-cricket.p.rapidapi.com/mcenter/v1/${matchId}`,
+          url: `${URL}/api/match/live-details/${matchId}`,
           headers: {
-            "x-rapidapi-host": "cricbuzz-cricket.p.rapidapi.com",
-            "X-RapidAPI-Key": keys,
-            useQueryString: true,
+            "servertoken": process.env.SERVER_TOKEN, // if you use server token for auth
           },
         };
 
@@ -100,47 +98,18 @@ module.exports.addLiveDetails = async function () {
         while (!success) {
           try {
             await delay(300); // Add a delay of 1 second between requests
+            console.log('Making request for matchId:', matchId);
             const s = await makeRequest(options);
             success = true;
             console.log(s, 's')
-            if (s.matchInfo?.team1 != null && s.matchInfo?.team1.length != 0) {
+            if (s?.teamAwayId != null && s?.teamAwayId != undefined && s?.teamHomeId != null && s?.teamHomeId != undefined) {
               const LiveMatchDet = new MatchLive();
               LiveMatchDet.matchId = matchId;
               LiveMatchDet.date = date1;
-              const r = [];
-              for (const x of s.matchInfo.team1.playerDetails) {
-                if (x.role == "Unknown") {
-                  x.position = "Batsman";
-                }
-                const a = {
-                  playerId: x.id,
-                  playerName: x.name,
-                  image: x.faceImageId,
-                  points: 4,
-                  position: x.role,
-                  batOrder: -1,
-                };
-                r.push(a);
-              }
-              const y = [];
-              for (const x of s.matchInfo.team2.playerDetails) {
-                if (x.role == "Unknown") {
-                  x.position = "Batsman";
-                }
-                const playerDet = {
-                  playerId: x.id,
-                  playerName: x.name,
-                  points: 4,
-                  image: x.faceImageId,
-                  position: x.role,
-                  batOrder: -1,
-                };
-                y.push(playerDet);
-              }
-              LiveMatchDet.teamHomePlayers = r;
-              LiveMatchDet.teamAwayPlayers = y;
-              LiveMatchDet.teamHomeId = s.matchInfo.team1.id;
-              LiveMatchDet.teamAwayId = s.matchInfo.team2.id;
+              LiveMatchDet.teamHomePlayers = s.teamHomePlayers;
+              LiveMatchDet.teamAwayPlayers = s.teamAwayPlayers;
+              LiveMatchDet.teamHomeId = s.teamHomeId;
+              LiveMatchDet.teamAwayId = s.teamAwayId;
               LiveMatchDet.isInPlay = true;
               const m = await MatchLive.findOne({ matchId });
               const match = await MatchLive.create(LiveMatchDet);
@@ -150,16 +119,16 @@ module.exports.addLiveDetails = async function () {
                 );
 
                 // Example usage in your logic
-                sendNotification(
-                  `Lineups Out: ${s.matchInfo.team1.name} vs ${s.matchInfo.team2.name}`,
-                  `The lineups for ${s.matchInfo.team1.name} and ${s.matchInfo.team2.name} are now available. Check out the details!`
-                );
+                //sendNotification(
+                //  `Lineups Out: ${s.teamHomeName} vs ${s.teamAwayName}`,
+                //  `The lineups for ${s.teamHomeName} and ${s.teamAwayName} are now available. Check out the details!`
+                //);
                 const team1Name = matches[i]?.teamHomeCode || "Team1";
                 const team2Name = matches[i]?.teamAwayCode || "Team2";
                 //const matchHashtags = `#${team1Name.replace(/\s/g, '')}Vs${team2Name.replace(/\s/g, '')} #Cricket #ipl2025`;
                 const matchHashtags = generateMatchHashtags(team1Name, team2Name, matches[i]?.matchTitle || "IPL");
-                let tweetText = `The lineups for ${s.matchInfo.team1.name} and ${s.matchInfo.team2.name} are now available. Check out the details! Match Link: https://dream-11-clone-nu.vercel.app ${matchHashtags}`;
-                sendTweet(tweetText);
+                let tweetText = `The lineups for ${s.teamHomeName} and ${s.teamAwayName} are now available. Check out the details! Match Link: https://dream-11-clone-nu.vercel.app ${matchHashtags}`;
+                //sendTweet(tweetText);
               }
             }
           } catch (error) {

@@ -1,0 +1,82 @@
+{
+  "shotType": {
+    "cut": [
+      "cut it off",
+      "cut loose",
+      "upper cut",
+      "cut him in",
+      "cut short",
+      "upper-cut",
+      "cut the angle",
+      "cut back"
+    ]
+  },
+  "direction": {
+    "point": [
+      "point of impact",
+      "bowled at around this point"
+    ],
+    "cover": [
+      "cover point"
+    ],
+    "mid_off": [
+      "back over the bowler's head"
+    ],
+    "long_on": [
+      "No chance for long-on"
+    ],
+    "mid_wicket": [],
+    "square_leg": [],
+    "fine_leg": [
+      "deep fine leg"
+    ],
+    "slip": [
+      "slips through",
+      "slip through",
+      "slip further",
+      "slip further down",
+      "slip out of his",
+      "slip away",
+      "after a slip",
+      "slip under",
+      "slips in the",
+      "let it slip",
+      "slip deeper"
+    ]
+  },
+  "ballType": {
+    "good_length": [
+      "short of a good length",
+      "shorter than good length"
+    ],
+    "yorker": [
+      "full toss",
+      "full-toss",
+      "just misses the mark",
+      "misses by a long margin",
+      "very full",
+      "not quite yorker length",
+      "misses his yorker",
+      "misses the yorker",
+      "misses the blockhole",
+      "undercooked the yorker",
+      "miss the yorker",
+      "doesn't quite nail the yorker",
+      "overpitched ball",
+      "falls short of the mark",
+      "it's not a yorker",
+      "but misses by a few inches",
+      "looks for the yorker and misses",
+      "went for the hard length",
+      "tries a wide yorker but fails to keep it inside the marker",
+      "misses the wide yorker",
+      "missed the yorker",
+      "The yorker is missed"
+    ]
+  },
+  "lofted": {
+    "lofted": [
+      "That was hit uppishly"
+    ]
+  }
+}

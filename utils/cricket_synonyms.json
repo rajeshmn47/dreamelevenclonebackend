@@ -1,0 +1,496 @@
+{
+  "shotType": {
+    "inside_out": [
+      "inside out",
+      "extra cover",
+      "over covers",
+      "inside out drive"
+    ],
+    "uppercut": [
+      "upper cut",
+      "uppercut"
+    ],
+    "scoop": [
+      "scoop",
+      "ramp shot",
+      "paddle scoop"
+    ],
+    "reverse_sweep": [
+      "reverse sweep",
+      "switch hit",
+      "reverse hit"
+    ],
+    "pull": [
+      "pull",
+      "pull shot"
+    ],
+    "cut": [
+      "cut",
+      "square cut",
+      "upper cut"
+    ],
+    "lofted": [
+      "lofted",
+      "slapped over",
+      "over mid-off",
+      "over mid-on",
+      "over midwicket",
+      "over the cover",
+      "over cover",
+      "over extra cover",
+      "aerial",
+      "over the top",
+      "slammed over",
+      "airily",
+      "lifts it",
+      "lofts",
+      "over the bowler",
+      "over deep square",
+      "over point",
+      "over long-on",
+      "over the",
+      "over long-off",
+      "loft",
+      "heave",
+      "over the infield",
+      "over the wide",
+      "over infield",
+      "slog"
+    ],
+    "helicopter_shot": [
+      "helicopter shot",
+      "dhoni shot"
+    ],
+    "glance": [
+      "glance",
+      "leg glance"
+    ],
+    "flick": [
+      "flick",
+      "leg flick"
+    ],
+    "dab": [
+      "dab",
+      "third man dab"
+    ],
+    "defensive_shot": [
+      "defensive shot",
+      "block"
+    ],
+    "sweep": [
+      "sweep",
+      "conventional sweep"
+    ],
+    "paddle_sweep": [
+      "paddle sweep",
+      "fine sweep"
+    ],
+    "ramp_shot": [
+      "ramp shot",
+      "ramp"
+    ],
+    "on_drive": [
+      "on drive",
+      "mid on drive",
+      "drives it to mid-on",
+      "on-drive"
+    ],
+    "off_drive": [
+      "off drive",
+      "mid off drive",
+      "drives it to mid-off",
+      "off-drive"
+    ],
+    "straight_drive": [
+      "straight drive",
+      "down the ground",
+      "drives it straight",
+      "straight-drive"
+    ],
+    "cover_drive": [
+      "covers",
+      "cover",
+      "cover drive",
+      "through covers",
+      "driven through covers",
+      "drives through cover",
+      "cover region drive",
+      "classic cover drive",
+      "beautiful cover drive",
+      "driven through the covers",
+      "cover boundary drive",
+      "cover driven",
+      "cover area drive",
+      "drive through cover"
+    ],
+    "square_drive": [
+      "square drive",
+      "square cut"
+    ]
+  },
+  "direction": {
+    "fine_leg": [
+      "fine leg",
+      "short fine",
+      "deep fine leg",
+      "leg boundary"
+    ],
+    "long_on": [
+      "long on",
+      "longon",
+      "long-on",
+      "deep long on"
+    ],
+    "long_off": [
+      "long off",
+      "longoff",
+      "long-off",
+      "deep long off"
+    ],
+    "mid_on": [
+      "mid on",
+      "mid-on",
+      "straight mid on"
+    ],
+    "mid_off": [
+      "mid off",
+      "mid-off",
+      "straight mid off"
+    ],
+    "deep_mid_wicket": [
+      "deep mid wicket",
+      "cow corner",
+      "cow-corner",
+      "deep mid"
+    ],
+    "deep_cover": [
+      "deep cover",
+      "cover boundary"
+    ],
+    "deep_square_leg": [
+      "deep square leg",
+      "square leg boundary"
+    ],
+    "deep_fine_leg": [
+      "deep fine leg",
+      "fine leg boundary"
+    ],
+    "deep_point": [
+      "deep point",
+      "point boundary",
+      "deep backward point"
+    ],
+    "third_man": [
+      "third man",
+      "deep third man"
+    ],
+    "slip": [
+      "slip",
+      "first slip",
+      "second slip",
+      "third slip"
+    ],
+    "gully": [
+      "gully",
+      "deep gully"
+    ],
+    "cover": [
+      "cover",
+      "extra cover"
+    ],
+    "extra_cover": [
+      "extra cover",
+      "deep extra cover"
+    ],
+    "point": [
+      "point",
+      "backward point"
+    ],
+    "square_leg": [
+      "square leg",
+      "backward square leg",
+      "deep square",
+      "backward square"
+    ],
+    "leg_gully": [
+      "leg gully"
+    ],
+    "short_leg": [
+      "short leg",
+      "bat pad"
+    ],
+    "silly_point": [
+      "silly point"
+    ],
+    "mid_wicket": [
+      "mid wicket",
+      "deep mid wicket",
+      "mid-wicket"
+    ],
+    "backward_point": [
+      "backward point",
+      "backward-point"
+    ],
+    "backward_square_leg": [
+      "backward square leg"
+    ],
+    "leg_slip": [
+      "leg slip",
+      "leg-slip"
+    ],
+    "short_third_man": [
+      "short third man"
+    ],
+    "silly_mid_off": [
+      "silly mid off"
+    ],
+    "silly_mid_on": [
+      "silly mid on"
+    ],
+    "other": [
+      "other"
+    ],
+    "straight": [
+      "straight-batted",
+      "straight-drive",
+      "straight drive",
+      "straight back",
+      "down the ground",
+      "straight down the ground",
+      "straight field",
+      "straight hit",
+      "over the bowler"
+    ]
+  },
+  "ballType": {
+    "yorker": [
+      "yorker",
+      "blockhole",
+      "block hole",
+      "toe crusher",
+      "in the blockhole",
+      "very full"
+    ],
+    "full_toss": [
+      "full toss",
+      "full toss ball",
+      "full-toss"
+    ],
+    "good_length": [
+      "good length",
+      "perfect length",
+      "good length ball"
+    ],
+    "short_of_length": [
+      "short of a length",
+      "short length"
+    ],
+    "bouncer": [
+      "bouncer",
+      "banged in short"
+    ],
+    "slow_ball": [
+      "slow ball",
+      "slower ball",
+      "slower one",
+      "slow",
+      "off pace",
+      "off-pace"
+    ],
+    "off_cutter": [
+      "off cutter",
+      "off break cutter"
+    ],
+    "leg_cutter": [
+      "leg cutter",
+      "leg break cutter"
+    ],
+    "slower_bouncer": [
+      "slower bouncer",
+      "slow bouncer"
+    ],
+    "no_ball": [
+      "no ball",
+      "noball"
+    ],
+    "beamer": [
+      "beamer",
+      "waist high full toss"
+    ],
+    "length_ball": [
+      "length ball",
+      "good length"
+    ],
+    "full_length": [
+      "full length",
+      "full length ball"
+    ],
+    "half_volley": [
+      "half volley",
+      "half-volley",
+      "overpitched",
+      "over-pitched",
+      "pitched up",
+      "pitched-up"
+    ],
+    "short_ball": [
+      "short ball",
+      "short pitched"
+    ],
+    "back_of_length": [
+      "back of a length",
+      "back length"
+    ],
+    "overpitched": [
+      "overpitched",
+      "over pitched"
+    ],
+    "inswinger": [
+      "inswinger",
+      "in swinger",
+      "inswing",
+      "in swing",
+      "swinging in",
+      "swinging into",
+      "swung in"
+    ],
+    "outswinger": [
+      "outswinger",
+      "out swinger",
+      "outswing",
+      "out swing",
+      "swinging out",
+      "swinging away",
+      "swung out",
+      "swung away"
+    ],
+    "reverse_swing": [
+      "reverse swing",
+      "reverse swinger"
+    ],
+    "googly": [
+      "googly",
+      "wrong'un",
+      "wrongun",
+      "wrong one",
+      "wrong 'un"
+    ],
+    "doosra": [
+      "doosra",
+      "the other one",
+      "turns the other way",
+      "spun the other way",
+      "went the other way"
+    ],
+    "carrom_ball": [
+      "carrom ball",
+      "carrom"
+    ],
+    "top_spin": [
+      "top spin",
+      "topspinner"
+    ],
+    "flipper": [
+      "flipper"
+    ],
+    "arm_ball": [
+      "arm ball",
+      "arm delivery",
+      "skids on",
+      "skidding on",
+      "goes straight on",
+      "slides on",
+      "the one that goes on with the arm",
+      "went with the arm"
+    ],
+    "seam_up": [
+      "seam up",
+      "seam upright"
+    ],
+    "cross_seam": [
+      "cross seam",
+      "cross-seam"
+    ],
+    "leg_break": [
+      "leg break",
+      "leggie"
+    ],
+    "off_break": [
+      "off break",
+      "offie"
+    ],
+    "knuckle_ball": [
+      "knuckle ball",
+      "knuckleball"
+    ],
+    "split_finger": [
+      "split finger",
+      "split-finger"
+    ],
+    "slower_ball_bouncer": [
+      "slower ball bouncer",
+      "slow bouncer"
+    ],
+    "reverse_swing_yorker": [
+      "reverse swing yorker",
+      "reverse yorker"
+    ],
+    "other": [
+      "other"
+    ]
+  },
+  "keeperCatch": {
+    "keeper_catch": [
+      "keeper catch",
+      "caught by keeper",
+      "caught by wicketkeeper",
+      "caught by the keeper",
+      "caught wk",
+      "caught by wk",
+      "keeper",
+      "caught wkts",
+      "caught behind",
+      "wicketkeeper catch",
+      "wktkeeper catch",
+      "caught †",
+      "caught †wicketkeeper",
+      "caught by †",
+      "caught by †wicketkeeper"
+    ]
+  },
+  "isCleanBowled": {
+    "isCleanBowled": [
+      "Bowled"
+    ]
+  },
+  "connection": {
+    "inside_edge": [
+      "inside edge",
+      "inside-edge"
+    ],
+    "outside_edge": [
+      "outside edge",
+      "outside-edge"
+    ],
+    "thick_edge": [
+      "thick edge",
+      "thick-edge"
+    ],
+    "thin_edge": [
+      "thin edge",
+      "thin-edge"
+    ],
+    "thick_inside_edge": [
+      "thick inside edge",
+      "thick inside-edge"
+    ],
+    "top_edge": [
+      "top edge",
+      "top-edge"
+    ],
+    "bottom_edge": [
+      "bottom edge",
+      "bottom-edge"
+    ]
+  }
+}

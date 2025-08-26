@@ -542,14 +542,18 @@ router.get("/updateball-details", async (req, res) => {
 
 router.post("/player/create", async (req, res) => {
     try {
+        console.log(req.body, 'body');
+        let = data = req.body;
+        data.country_id=91;
         const exists = await Player.findOne({ id: req.body.id });
         if (exists) return res.status(400).json({ message: "Player already exists" });
 
-        const player = new Player(req.body);
+        const player = new Player(data);
         await player.save();
 
         res.status(201).json({ message: "Player created", player });
     } catch (err) {
+        console.log(err);
         res.status(500).json({ message: "Error creating player", error: err.message });
     }
 });

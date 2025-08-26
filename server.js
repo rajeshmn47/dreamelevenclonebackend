@@ -45,8 +45,13 @@ const { addLivescoresDetailsCustomfs } = require("./updating/addScoredetailsCust
 const { addLivescoresDetailsCustom } = require("./updating/addlivescoresdetailskeys.js");
 const { updateSeries } = require("./updating/addSeries.js");
 const { updateSquads } = require("./updating/updateSquads.js");
-const { generateShotTypes } = require("./generate_shottype.js");
+//const { generateShotTypes } = require("./generate_shottype.js");
 const { fetchAndSaveTeams } = require("./updating/createTeams.js");
+const { addMatchesForAllCurrentSeries } = require("./updating/addMatchFromSeries.js");
+const { addLiveDetailsFS } = require("./updating/addlivedetailsFS.js");
+const { updateSeriesArchives } = require("./updating/addSeriesArchives.js");
+const Clip = require("./models/clips.js");
+const { default: axios } = require("axios");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
@@ -61,7 +66,7 @@ app.use('/', video);
 app.use("/auth", auth);
 app.use("/", player);
 app.use("/", series);
-app.use("/admin",checkloggedinadmin,admin)
+app.use("/admin", checkloggedinuser, admin)
 app.use("/payment", checkloggedinuser, payments);
 app.use("/crypto", checkloggedinuser, cryptoPaymentController);
 app.use("/cryptocontest", checkloggedinuser, cryptoContestController);
@@ -88,7 +93,7 @@ mongoose.connect(
   }
 );
 
- cronjobs()
+// cronjobs()
 // createDefaultContestTypes()
 // updateBalls();
 // addMatchtoDb();
@@ -101,8 +106,9 @@ mongoose.connect(
 // addPlayersAPI();
 // startTransaction();
 // addLivecommentary();
-// addLivecommentaryCustom('t20')
+// addLivecommentaryCustom('odi')
 // addLivescoresDetailsCustom('t20')
+// addLivescoresDetailsCustomfs('t20')
 // updateBalls();
 // addInPlayStatus();
 // startCryptoTransaction();
@@ -110,6 +116,10 @@ mongoose.connect(
 // updateSquads()
 // generateShotTypes()
 // fetchAndSaveTeams();
+// addMatchesForAllCurrentSeries()
+// addLiveDetailsFS()
+// updateSeriesArchives()
+
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
