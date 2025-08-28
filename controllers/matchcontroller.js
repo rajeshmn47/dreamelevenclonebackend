@@ -15,6 +15,10 @@ const router = express.Router();
 const { getflag } = require("../utils/getflags");
 const flagURLs = require("country-flags-svg");
 
+function convertWicketsData(wicketsData) {
+    return Object.keys(wicketsData).map(key => wicketsData[key]);
+}
+
 router.post("/create", async (req, res) => {
     try {
         const {
@@ -397,7 +401,7 @@ function pointCalculator(
     return totalPoints + 4;
 }
 
-router.get("/update_live_scores/:matchId", async (req, res) => {
+router.get("/update_live_scoress/:matchId", async (req, res) => {
     const matches = await Match.find({
         matchId: req.params.matchId
     });
@@ -651,7 +655,7 @@ router.get("/update_live_scores/:matchId", async (req, res) => {
     }
 });
 
-router.get("/update_to_live/:matchId", async (req, res) => {
+router.get("/update_to_lives/:matchId", async (req, res) => {
     try {
         const turing = await MatchLive();
         let date = new Date();
