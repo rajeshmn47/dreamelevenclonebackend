@@ -53,7 +53,6 @@ const { updateSeriesArchives } = require("./updating/addSeriesArchives.js");
 const Clip = require("./models/clips.js");
 const { default: axios } = require("axios");
 const { addInPlayStatusFS } = require("./updating/addInPlayStatusFS.js");
-const { addLivePlayers } = require("./updating/addLivePlayers.js");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
