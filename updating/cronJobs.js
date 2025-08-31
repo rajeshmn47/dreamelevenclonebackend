@@ -17,84 +17,142 @@ const { startCryptoTransaction } = require("./cryptoTransaction.js");
 const { addLivescoresDetailsCustomfs } = require("./addScoredetailsCustom.js");
 const { updateSeries } = require("./addSeries.js");
 const { updateSquads } = require("./updateSquads.js");
+const { addLiveDetailsFS } = require("./addlivedetailsFS.js");
+const config = require("../models/config.js");
+const { addInPlayStatusFS } = require("./addInPlayStatusFS.js");
 
-const isSource = process.env.SOURCE === "true" ? true : false;
+const isSource = process.env.SOURCE === "true";
 
-function cronjobs() {
-  cron.schedule("0 * * * *", async function () {
-    await startTransaction();
+let jobs = {}; // store references to all cron jobs
+
+function getCronPattern(minutes) {
+  if (minutes < 1) return "* * * * *";
+  return `*/${minutes} * * * *`;
+}
+
+// Stop all existing cron jobs
+function stopAllJobs() {
+  for (let key in jobs) {
+    jobs[key]?.stop();
+    delete jobs[key];
+  }
+  console.log("🛑 All cron jobs stopped");
+}
+
+// Schedule all cron jobs dynamically
+async function scheduleJobs(frequencies) {
+  stopAllJobs();
+
+  // General jobs (always run)
+  jobs.startTransaction = cron.schedule("0 * * * *", async () => {
+    await startTransaction()
   });
-  cron.schedule("0 * * * *", async function () {
-    await startCryptoTransaction();
+
+  jobs.startCryptoTransaction = cron.schedule("0 * * * *", async () => {
+    await startCryptoTransaction()
   });
-  //cron.schedule("* * * * *", async function () {
-  //  await addLivecommentary();
-  //});
-  cron.schedule("* * * * *", async function () {
-    await updateBalls();
+
+  jobs.updateBalls = cron.schedule("* * * * *", async () => {
+    await updateBalls()
   });
-  cron.schedule("*/2 * * * *", async function () {
-    await addTeamstandingstodb();
+
+  jobs.teamStandings = cron.schedule("*/2 * * * *", async () => {
+    await addTeamstandingstodb()
   });
-  cron.schedule("*/5 * * * *", async function () {
-    await addLiveDetails()
-  });
-  //cron.schedule("* * * * *", async function () {
-  //  await addLivescoresDetails()
-  //});
+
+  // Source mode jobs
   if (isSource) {
-    cron.schedule("*/15 * * * *", async function () {
-      await addLivescoresDetailsCustom('test');
+    jobs.liveDetails = cron.schedule("*/5 * * * *", async () => {
+      await addLiveDetails()
+    })
+    jobs.inPlayStatus = cron.schedule("*/15 7-23 * * *", async () => {
+      await addInPlayStatus()
     });
 
-    cron.schedule("*/10 * * * *", async function () {
-      await addLivescoresDetailsCustom('odi');
+    jobs.test = cron.schedule(getCronPattern(frequencies.test), async () => {
+      await addLivescoresDetailsCustom("test");
     });
 
-    cron.schedule("* * * * *", async function () {
-      await addLivescoresDetailsCustom('t20');
+    jobs.odi = cron.schedule(getCronPattern(frequencies.odi), async () => {
+      await addLivescoresDetailsCustom("odi");
     });
-    cron.schedule("*/15 * * * *", async function () {
-      await addLivecommentaryCustom('test');
+
+    jobs.t20 = cron.schedule(getCronPattern(frequencies.t20), async () => {
+      await addLivescoresDetailsCustom("t20");
     });
-    cron.schedule("*/10 * * * *", async function () {
-      await addLivecommentaryCustom('odi');
+
+    jobs.important = cron.schedule(getCronPattern(frequencies.important), async () => {
+      await addLivescoresDetailsCustom("important");
     });
-    cron.schedule("* * * * *", async function () {
-      await addLivecommentaryCustom('t20');
+
+    jobs.unimportant = cron.schedule(getCronPattern(frequencies.important), async () => {
+      await addLivescoresDetailsCustom("unimportant");
     });
+
+    jobs.liveCommentaryTest = cron.schedule("*/15 * * * *", async () => {
+      await addLivecommentaryCustom("test");
+    });
+
+    jobs.liveCommentaryOdi = cron.schedule("*/10 * * * *", async () => {
+      await addLivecommentaryCustom("odi");
+    });
+
+    jobs.liveCommentaryT20 = cron.schedule("* * * * *", async () => {
+      await addLivecommentaryCustom("t20");
+    });
+
     console.log("✅ Cron jobs scheduled for source mode");
   } else {
-    cron.schedule("*/15 * * * *", async function () {
-      await addLivescoresDetailsCustomfs('test');
+    // Non-source mode
+    jobs.liveDetailsFS = cron.schedule("*/5 * * * *", async () => {
+      await addLiveDetailsFS();
+    });
+    jobs.inPlayStatusFS = cron.schedule("*/15 7-23 * * *", async () => {
+      await addInPlayStatusFS()
+    });
+    jobs.testFS = cron.schedule(getCronPattern(frequencies.test), async () => {
+      await addLivescoresDetailsCustomfs("test");
+    });
+    jobs.odiFS = cron.schedule(getCronPattern(frequencies.odi), async () => {
+      await addLivescoresDetailsCustomfs("odi");
+    });
+    jobs.t20FS = cron.schedule(getCronPattern(frequencies.t20), async () => {
+      await addLivescoresDetailsCustomfs("t20");
+    });
+    jobs.importantFS = cron.schedule(getCronPattern(frequencies.important), async () => {
+      await addLivescoresDetailsCustomfs("important");
+    });
+    jobs.unimportantFS = cron.schedule(getCronPattern(frequencies.important), async () => {
+      await addLivescoresDetailsCustomfs("unImportant");
     });
 
-    cron.schedule("*/10 * * * *", async function () {
-      await addLivescoresDetailsCustomfs('odi');
-    });
-
-    cron.schedule("* * * * *", async function () {
-      await addLivescoresDetailsCustomfs('t20');
-    });
-    console.log("ℹ️ Skipping cron jobs — not in source mode");
+    console.log("ℹ️ Cron jobs scheduled for non-source mode");
   }
-  cron.schedule("0 */6 * * *", async function () {
+
+  // Other periodic jobs
+  jobs.addMatchDb = cron.schedule("0 */6 * * *", async () => {
     await addMatchtoDb();
     await addteamPlayers();
   });
-  cron.schedule("0 */12 * * *", async function () {
-    await updateSeries()
-    await updateSquads()
+
+  jobs.updateSeriesSquads = cron.schedule("0 */12 * * *", async () => {
+    await updateSeries();
+    await updateSquads();
   });
-  cron.schedule("0 */20 * * *", async function () {
+
+  jobs.teamStandings20 = cron.schedule("0 */20 * * *", async () => {
     await addTeamstandingstodb()
   });
-  cron.schedule("0 */1 * * *", async function () {
-    await addMatchIds();
-  });
-  cron.schedule("*/15 7-23 * * *", async () => {
-    await addInPlayStatus();
+  jobs.addMatchIds = cron.schedule("0 */1 * * *", async () => {
+    await addMatchIds()
   });
 }
 
-module.exports = { cronjobs };
+// Initialize cron jobs on startup
+async function cronjobs() {
+  const cfg = await config.findOne();
+  const frequencies = cfg?.frequencies || { t20: 2, odi: 5, test: 15, important: 1 };
+  await scheduleJobs(frequencies);
+}
+
+module.exports = { cronjobs, scheduleJobs };

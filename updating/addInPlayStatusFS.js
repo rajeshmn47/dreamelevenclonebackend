@@ -7,7 +7,7 @@ module.exports.addInPlayStatusFS = async function () {
         //const keys = await getkeys.getkeys();
         const now = new Date();
         const endDate = new Date(now.getTime());
-        const b = 100 * 60 * 60 * 1000 * 1;
+        const b = 120 * 60 * 60 * 1000 * 1;
         date = new Date(now.getTime() - b);
         // Fetch matches that are ongoing but not marked as "Complete"
         const matches = await MatchLive.find({

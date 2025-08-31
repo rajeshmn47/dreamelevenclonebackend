@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 
 module.exports.checkloggedinuser = function (req, res, next) {
-    console.log('checking')
+    //console.log('checking')
     const tokenheader = req.body.headers || req.headers.servertoken;
     const activatekey = "accountactivatekey123";
     if (tokenheader) {

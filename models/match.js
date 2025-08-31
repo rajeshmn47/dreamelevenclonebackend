@@ -180,6 +180,16 @@ const matchSchema = new mongoose.Schema(
       trim: true,
       default: "",
     },
+
+    important: {
+      type: Boolean,
+      default: false,
+    },
+
+    notImportant: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,

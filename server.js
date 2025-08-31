@@ -52,6 +52,9 @@ const { addLiveDetailsFS } = require("./updating/addlivedetailsFS.js");
 const { updateSeriesArchives } = require("./updating/addSeriesArchives.js");
 const Clip = require("./models/clips.js");
 const { default: axios } = require("axios");
+const { addMissingPlayers } = require("./helperfunctions/firebase_upload.js");
+const { addInPlayStatusFS } = require("./updating/addInPlayStatusFS.js");
+const { addLivePlayers } = require("./updating/addLivePlayers.js");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
@@ -98,6 +101,7 @@ mongoose.connect(
 // updateBalls();
 // addMatchtoDb();
 // addLiveDetails();
+// addLivePlayers();
 // addLivescoresDetails();
 // addMatchIds();
 // addTeamstandingstodb();
@@ -116,9 +120,11 @@ mongoose.connect(
 // updateSquads()
 // generateShotTypes()
 // fetchAndSaveTeams();
-// addMatchesForAllCurrentSeries()
+addMatchesForAllCurrentSeries()
 // addLiveDetailsFS()
 // updateSeriesArchives()
+// addMissingPlayers()
+// addInPlayStatusFS()
 
 
 const PORT = process.env.PORT || 8000;

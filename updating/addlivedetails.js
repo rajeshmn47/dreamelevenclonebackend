@@ -1,9 +1,9 @@
 const request = require("request");
 const Match = require("../models/match");
 const MatchLive = require("../models/matchlive");
-const getkeys = require("../utils/crickeys");
 const { messaging } = require("../utils/firebaseinitialize");
 const sendTweet = require("../utils/sendTweet");
+const { getkeys } = require("../utils/apikeys");
 
 function delay(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -68,9 +68,8 @@ module.exports.addLiveDetails = async function () {
     const turing = await MatchLive();
     let date = new Date();
     const endDate = new Date(date.getTime() + 0.5 * 60 * 60 * 1000);
-    date = new Date(date.getTime() - 2000000 * 60 * 60 * 1000);
+    date = new Date(date.getTime() - 2 * 60 * 60 * 1000);
     const matches = await Match.find({
-      seriesId: '2697',
       date: {
         $gte: new Date(date),
         $lt: new Date(endDate),
@@ -83,7 +82,7 @@ module.exports.addLiveDetails = async function () {
       if (match) {
         console.log('exists');
       } else {
-        const keys = await getkeys.getkeys();
+        const keys = await getkeys()
         console.log('not exists')
         const date1 = matches[i].date
         const options = {
@@ -103,12 +102,12 @@ module.exports.addLiveDetails = async function () {
             const s = await makeRequest(options);
             success = true;
             console.log(s, 's')
-            if (s.matchInfo?.team1 != null && s.matchInfo?.team1.length != 0) {
+            if (s.team1 != null && s.team1.length != 0) {
               const LiveMatchDet = new MatchLive();
               LiveMatchDet.matchId = matchId;
               LiveMatchDet.date = date1;
               const r = [];
-              for (const x of s.matchInfo.team1.playerDetails) {
+              for (const x of s.team1.playerDetails) {
                 if (x.role == "Unknown") {
                   x.position = "Batsman";
                 }
@@ -123,7 +122,7 @@ module.exports.addLiveDetails = async function () {
                 r.push(a);
               }
               const y = [];
-              for (const x of s.matchInfo.team2.playerDetails) {
+              for (const x of s.team2.playerDetails) {
                 if (x.role == "Unknown") {
                   x.position = "Batsman";
                 }
