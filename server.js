@@ -52,7 +52,6 @@ const { addLiveDetailsFS } = require("./updating/addlivedetailsFS.js");
 const { updateSeriesArchives } = require("./updating/addSeriesArchives.js");
 const Clip = require("./models/clips.js");
 const { default: axios } = require("axios");
-const { addMissingPlayers } = require("./helperfunctions/firebase_upload.js");
 const { addInPlayStatusFS } = require("./updating/addInPlayStatusFS.js");
 const { addLivePlayers } = require("./updating/addLivePlayers.js");
 
@@ -96,7 +95,7 @@ mongoose.connect(
   }
 );
 
-// cronjobs()
+cronjobs()
 // createDefaultContestTypes()
 // updateBalls();
 // addMatchtoDb();
@@ -120,7 +119,7 @@ mongoose.connect(
 // updateSquads()
 // generateShotTypes()
 // fetchAndSaveTeams();
-addMatchesForAllCurrentSeries()
+// addMatchesForAllCurrentSeries()
 // addLiveDetailsFS()
 // updateSeriesArchives()
 // addMissingPlayers()
