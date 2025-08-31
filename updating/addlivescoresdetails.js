@@ -38,7 +38,7 @@ function convertWicketsData(wicketsData) {
 module.exports.addLivescoresDetails = async function () {
   let date = new Date();
   const endDate = new Date(date.getTime());
-  const b = 100 * 60 * 60 * 1000 * 1;
+  const b = 120 * 60 * 60 * 1000 * 1;
   date = new Date(date.getTime() - b);
   const matches = await Match.find({
     date: {
@@ -50,7 +50,7 @@ module.exports.addLivescoresDetails = async function () {
   for (let i = 0; i < matches.length; i++) {
     const matchId = matches[i].matchId;
     const match = await MatchLive.findOne({ matchId: matchId });
-    if (!match || match?.result == "Complete" || !match?.isInPlay) {
+    if ((!match) || !match?.result == "Complete" || match?.isInPlay) {
       continue;
     } else {
       const keys = await getkeys();

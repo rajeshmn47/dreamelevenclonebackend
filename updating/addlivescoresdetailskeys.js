@@ -38,11 +38,10 @@ function convertWicketsData(wicketsData) {
 module.exports.addLivescoresDetailsCustom = async function (format) {
   let date = new Date();
   const endDate = new Date(date.getTime());
-  const b = 100000000 * 60 * 60 * 1000 * 1;
+  const b = 120 * 60 * 60 * 1000 * 1;
   date = new Date(date.getTime() - b);
   const matches = await Match.find({
     format: format,
-    seriesId: '2697',
     date: {
       $gte: new Date(date),
       $lt: new Date(endDate),
