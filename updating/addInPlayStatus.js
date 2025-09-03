@@ -7,7 +7,7 @@ module.exports.addInPlayStatus = async function () {
         //const keys = await getkeys.getkeys();
         const now = new Date();
         const endDate = new Date(now.getTime());
-        const b = 100 * 60 * 60 * 1000 * 1;
+        const b = 120 * 60 * 60 * 1000 * 1;
         date = new Date(now.getTime() - b);
         // Fetch matches that are ongoing but not marked as "Complete"
         const matches = await MatchLive.find({
@@ -49,9 +49,9 @@ module.exports.addInPlayStatus = async function () {
             }
 
             if (match.result?.toLowerCase() == 'innings break') {
-                let inningsBreakDuration = format === "ODI" ? 30 * 60 * 1000 : 15 * 60 * 1000; // 30 min (ODI) or 15 min (T20)
+                let inningsBreakDuration = format === "odi" ? 30 * 60 * 1000 : 15 * 60 * 1000; // 30 min (ODI) or 15 min (T20)
                 const inningsBreakNextCheck = new Date(updatedAt.getTime() + inningsBreakDuration);
-
+                console.log(now, inningsBreakNextCheck, 'now')
                 if (now < inningsBreakNextCheck) {
                     console.log(`Skipping Match ${matchId}, innings break ongoing.`);
                     continue;
@@ -93,6 +93,7 @@ module.exports.addInPlayStatus = async function () {
                     if (error) {
                         reject(error);
                     }
+                    console.log(body, 'body')
                     resolve(JSON.parse(body));
                 });
             });
@@ -100,22 +101,23 @@ module.exports.addInPlayStatus = async function () {
             promise
                 .then(async (matchData) => {
                     //console.log(matchData, 'matchdata')
-                    if (!matchData || !matchData.matchInfo) return;
+                    if (!matchData) return;
 
-                    const matchState = matchData.matchInfo.state.toLowerCase();
+                    const matchState = matchData.state.toLowerCase();
                     console.log(matchState, matchId, 'matchstate')
                     if (matchState.includes("stumps")) {
                         console.log(`Match ${matchId} is in Stumps, setting next check for next day.`);
-                        //await MatchLive.updateOne({ matchId }, { isInPlay: false, stumpsTime: now });
+                        await MatchLive.updateOne({ matchId }, { isInPlay: true });
                         return;
                     }
 
                     if (matchState.includes("innings break")) {
-                        const breakDuration = format === "ODI" ? 30 * 60 * 1000 : 15 * 60 * 1000;
-                        //await MatchLive.updateOne({ matchId }, { inningsBreakTime: now });
+                        const breakDuration = format === "odi" ? 30 * 60 * 1000 : 15 * 60 * 1000;
+                        await MatchLive.updateOne({ matchId }, { isInPlay: true });
                         console.log(`Match ${matchId} in innings break, checking after ${breakDuration / 60000} min.`);
                         return;
                     }
+                    
                     console.log(matchState, 'matchstate')
                     if (matchState?.includes("in progress") || matchState?.includes("inprogress")) {
                         await MatchLive.updateOne({ matchId }, { isInPlay: true });
