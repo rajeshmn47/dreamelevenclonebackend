@@ -799,6 +799,54 @@ router.post("/updateUser", checkloggedinuser, async (req, res) => {
   });
 });
 
+// Update user by ID or phone/email (adjust according to your auth system)
+router.put("/updateProfile/:userId", async (req, res) => {
+  const { userId } = req.params;
+  const {
+    username,
+    email,
+    phonenumber,
+    dateOfBirth,
+    country,
+    state,
+    city,
+    wallet,
+    cryptoWallet,
+    // Add other fields you want to allow update
+  } = req.body;
+  console.log(req.body, 'req body');
+  try {
+    // Build the update object dynamically
+    const updateData = {};
+
+    if (username !== undefined) updateData.username = username;
+    if (email !== undefined) updateData.email = email;
+    if (phonenumber !== undefined) updateData.phonenumber = phonenumber;
+    if (dateOfBirth !== undefined) updateData.dateOfBirth = dateOfBirth;
+    if (country !== undefined) updateData.country = country;
+    if (state !== undefined) updateData.state = state;
+    if (city !== undefined) updateData.city = city;
+    if (wallet !== undefined) updateData.wallet = wallet;
+    if (cryptoWallet !== undefined) updateData.cryptoWallet = cryptoWallet;
+
+    // Update user in DB
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { $set: updateData },
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.json({ message: "User updated successfully", user: updatedUser });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+});
+
 router.get("/getuser/:id", async (req, res) => {
   const user = await User.findOne({ _id: req.params.id });
   if (user) {

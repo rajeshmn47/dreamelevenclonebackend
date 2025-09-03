@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: false,
       unique: true,
-      sparse: true  
+      sparse: true
     },
     verified: {
       type: Boolean,
@@ -137,6 +137,21 @@ const userSchema = new mongoose.Schema(
       enum: ["slow", "medium", "fast", "extremely fast"],
       default: "medium",
     },
+    dateOfBirth: {
+      type: Date,
+    },
+    country: {
+      type: String,
+      trim: true,
+    },
+    state: {
+      type: String,
+      trim: true,
+    },
+    city: {
+      type: String,
+      trim: true,
+    }
   },
   {
     timestamps: true,
