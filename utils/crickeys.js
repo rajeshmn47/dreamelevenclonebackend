@@ -8,8 +8,8 @@ module.exports.getkeys = async function () {
   const totalhits = config.totalhits;
   console.log(totalhits, 'totalhits')
   if (totalhits > 1800) {
-    user.totalhits = 0;
-    await user.save();
+    config.totalhits = 0;
+    await config.save();
   }
   config.totalhits = config.totalhits + 1;
   config.totalhits = 1405
