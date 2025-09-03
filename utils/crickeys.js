@@ -12,7 +12,7 @@ module.exports.getkeys = async function () {
     await config.save();
   }
   config.totalhits = config.totalhits + 1;
-  config.totalhits = 1405
+  //config.totalhits = 1405
   await config.save();
   const keyi = Math.floor(totalhits / 100);
   const keys = process.env.crickeys
