@@ -58,7 +58,7 @@ router.get("/usage", async (req, res) => {
 });
 
 router.get("/test", async (req, res) => {
-   try {
+  try {
     //console.log(req.body, 'uidfromtokennnnrr')
     const user = await User.findById(req.body.uidfromtoken);
     const config_file = await config.findOne({ name: "default" });
@@ -72,7 +72,7 @@ router.get("/test", async (req, res) => {
   } catch (error) {
     res.status(400).json({ message: "Error retrieving API keys", error });
   }
-}); 
+});
 
 router.get("/fusage", async (req, res) => {
   try {
@@ -96,12 +96,15 @@ router.put("/updateUsage", async (req, res) => {
     //console.log(req.body, 'uidfromtokennnn')
     const user = await User.findById(req.body.uidfromtoken);
     id = process.env.refUserId;
-    const refUser = await User.findById(id);
+    const refConfig = await config.findOne()
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    else if (refUser) {
-      res.status(200).json({ message: "API keys retrieved successfully", "usageCount": refUser.totalhits });
+    else if (refConfig) {
+      console.log(refConfig, 'ref')
+      refConfig.totalhits = parseInt(req.body.usageCount);
+      await refConfig.save()
+      res.status(200).json({ message: "API keys retrieved successfully", "usageCount": refConfig.totalhits });
     }
   } catch (error) {
     res.status(400).json({ message: "Error retrieving API keys", error });
@@ -154,7 +157,7 @@ router.delete("/delete/:id", async (req, res) => {
 });
 
 router.get("/get_tier", async (req, res) => {
-   try {
+  try {
     //console.log(req.body, 'uidfromtokennnnrr')
     const user = await User.findById(req.body.uidfromtoken);
     const config_file = await config.findOne({ name: "default" });
