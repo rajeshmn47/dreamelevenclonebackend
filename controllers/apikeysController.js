@@ -44,7 +44,7 @@ router.get("/usage", async (req, res) => {
   try {
     //console.log(req.body, 'uidfromtokennnnrr')
     const user = await User.findById(req.body.uidfromtoken);
-    const config_file = await config.findOne({ name: "default" });
+    const config_file = await config.findOne();
     //console.log(config_file, 'config_file')
     if (!user) {
       return res.status(404).json({ message: "User not found" });
