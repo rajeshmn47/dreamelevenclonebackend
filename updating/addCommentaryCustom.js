@@ -39,13 +39,37 @@ module.exports.addLivecommentaryCustom = async function addcommentry(format) {
         let allMatches = [];
         const endDate = new Date(date.getTime());
         date = new Date(date.getTime() - 120 * 60 * 60 * 1000);
-        const matches = await Matches.find({
-            format: format,
-            date: {
-                $gte: new Date(date),
-                $lt: new Date(endDate),
-            },
-        });
+        let matches;
+        if (format === 'important' || format === 'notImportant') {
+            matches = await Matches.find({
+                date: {
+                    $gte: new Date(date),
+                    $lt: new Date(endDate),
+                }
+            }).populate("series");
+            if (format === 'important') {
+                matches = matches.filter(m => {
+                    if (!m.seriesId) return false;
+                    return m.important === true || m.series.important === true
+                });
+            } else {
+                matches = matches.filter(m => {
+                    if (!m.seriesId) return false;
+                    return m.series.notImportant === true
+                });
+            }
+        }
+        else {
+            matches = await Matches.find({
+                format: format,
+                date: {
+                    $gte: new Date(date),
+                    $lt: new Date(endDate),
+                },
+            });
+        }
+
+        console.log(matches?.length, matches, 'matchest')
 
         //  const citiesRef = db.db.collection('commentary');
         //  const snapshot = await citiesRef.get();
@@ -69,10 +93,10 @@ module.exports.addLivecommentaryCustom = async function addcommentry(format) {
             const matchid = matches[i].matchId;
             //const teams = await Team.find({ matchId: matchid });
             const teams = ['1']
-                const match = await MatchLiveDetails.findOne({ matchId: matchid });
-                if (match && (!(match.result == "Complete")) && (match?.isInPlay)) {
-                    allMatches.push(matches[i]);
-                }
+            const match = await MatchLiveDetails.findOne({ matchId: matchid });
+            if (match && (!(match.result == "Complete")) && (match?.isInPlay)) {
+                allMatches.push(matches[i]);
+            }
         }
         const m = allMatches;
         console.log(m.length, "allmatches");
