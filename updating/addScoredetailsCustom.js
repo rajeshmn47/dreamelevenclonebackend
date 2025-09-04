@@ -23,13 +23,38 @@ function convertWicketsData(wicketsData) {
 }
 
 module.exports.addLivescoresDetailsCustomfs = async function (format) {
-    let now = new Date();
-    const past = new Date(now.getTime() - 120 * 60 * 60 * 1000); // last 100 hours
+    let date = new Date();
+    const endDate = new Date(date.getTime());
+    const b = 120 * 60 * 60 * 1000 * 1;
+    date = new Date(date.getTime() - b);
     const URL = process.env.BACKEND_URL
-    const matches = await Match.find({
-        format: format,
-        date: { $gte: past, $lt: now }
-    });
+    let matches;
+    if (format === 'important' || format === 'notImportant') {
+        if (format === 'important') {
+            matches = await Match.find({
+                date: {
+                    $gte: new Date(date),
+                    $lt: new Date(endDate),
+                }, important: true
+            });
+        } else {
+            matches = await Match.find({
+                date: {
+                    $gte: new Date(date),
+                    $lt: new Date(endDate),
+                }, notImportant: true
+            });
+        }
+    }
+    else {
+        matches = await Match.find({
+            format: format,
+            date: {
+                $gte: new Date(date),
+                $lt: new Date(endDate),
+            },
+        });
+    }
     console.log(matches?.length, 'matchest')
     for (const matchDoc of matches) {
         const { matchId, date } = matchDoc;

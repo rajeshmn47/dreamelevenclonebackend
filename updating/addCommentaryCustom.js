@@ -69,12 +69,10 @@ module.exports.addLivecommentaryCustom = async function addcommentry(format) {
             const matchid = matches[i].matchId;
             //const teams = await Team.find({ matchId: matchid });
             const teams = ['1']
-            if (teams.length > 0) {
                 const match = await MatchLiveDetails.findOne({ matchId: matchid });
-                if (match && (match.result == "Complete") && !(match?.isInPlay)) {
+                if (match && (!(match.result == "Complete")) && (match?.isInPlay)) {
                     allMatches.push(matches[i]);
                 }
-            }
         }
         const m = allMatches;
         console.log(m.length, "allmatches");

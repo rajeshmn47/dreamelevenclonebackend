@@ -11,6 +11,7 @@ const configSchema = new mongoose.Schema(
       odi: { type: Number, default: 5 },       // every 5 min
       test: { type: Number, default: 15 },     // every 15 min
       important: { type: Number, default: 1 }, // every 1 min
+      notImportant: { type: Number, default: 30 } // every 30 min
     },
   },
   { timestamps: true }

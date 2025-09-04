@@ -130,6 +130,8 @@ router.put("/update_match/:matchId", async (req, res) => {
         enddate,
         format,
         type,
+        important,
+        notImportant
     } = req.body;
     const match = await Match.findOne({ matchId: req.params.matchId });
     if (match) {
@@ -149,6 +151,8 @@ router.put("/update_match/:matchId", async (req, res) => {
             enddate,
             format,
             type,
+            important,
+            notImportant
         });
         await MatchLive.updateOne({ matchId }, { isInPlay: isInPlay, runsFI: runsFI, runsSI: runsSI });
         res.status(200).json({
@@ -222,11 +226,11 @@ router.post("/series/create", async (req, res) => {
 router.put("/series/:seriesId", async (req, res) => {
     try {
         const { seriesId } = req.params;
-        const { name, type, date, startDate, endDate } = req.body;
+        const { name, type, date, startDate, endDate, important, notImportant } = req.body;
 
         const updatedSeries = await Series.findOneAndUpdate(
             { seriesId: Number(seriesId) }, // find by seriesId
-            { name, type, date, startDate, endDate },
+            { name, type, date, startDate, endDate, important, notImportant },
             { new: true, runValidators: true }
         );
 

@@ -29,6 +29,14 @@ const seriesSchema = new mongoose.Schema(
       type: Date,
       required: true,
     },
+    important: {
+      type: Boolean,
+      default: false,
+    },
+    notImportant: {
+      type: Boolean,
+      default: false,
+    }
   },
   {
     timestamps: true,

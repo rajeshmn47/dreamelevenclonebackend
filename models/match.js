@@ -181,6 +181,12 @@ const matchSchema = new mongoose.Schema(
       default: "",
     },
 
+    series: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Series",   // references Series collection
+      required: true,
+    },
+
     important: {
       type: Boolean,
       default: false,
@@ -189,7 +195,7 @@ const matchSchema = new mongoose.Schema(
     notImportant: {
       type: Boolean,
       default: false,
-    },
+    }
   },
   {
     timestamps: true,

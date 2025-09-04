@@ -1,5 +1,5 @@
 module.exports.isInPlay = function isInPlay(r, date) {
-    let result = r.toLowerCase()
+    let result = r?.toLowerCase()
     console.log(date, r, 're')
     if (result == 'upcoming') {
         if (new Date() > new Date(date)) {

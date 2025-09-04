@@ -19,7 +19,7 @@ module.exports.updateBalls = async function () {
         let date = new Date();
         let matchess = [];
         const endDate = new Date(date.getTime());
-        date = new Date(date.getTime() - 2400 * 60 * 60 * 1000);
+        date = new Date(date.getTime() - 24 * 60 * 60 * 1000);
         const matches = await Matches.find({
             date: {
                 $gte: new Date(date),
@@ -48,7 +48,7 @@ module.exports.updateBalls = async function () {
         for (let i = 0; i < matches.length; i++) {
             const matchid = matches[i].matchId;
             const match = await MatchLiveDetails.findOne({ matchId: matchid });
-            if (match && (match.result == "Complete") && match?.isInPlay) {
+            if (match && (!(match.result == "Complete")) && match?.isInPlay) {
                 matchess.push(matches[i]);
             }
         }

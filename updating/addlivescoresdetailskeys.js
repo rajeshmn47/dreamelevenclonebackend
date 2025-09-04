@@ -40,17 +40,42 @@ module.exports.addLivescoresDetailsCustom = async function (format) {
   const endDate = new Date(date.getTime());
   const b = 120 * 60 * 60 * 1000 * 1;
   date = new Date(date.getTime() - b);
-  const matches = await Match.find({
-    format: format,
-    date: {
-      $gte: new Date(date),
-      $lt: new Date(endDate),
-    },
-  });
+  let matches;
+  if (format === 'important' || format === 'notImportant') {
+    matches = await Match.find({
+      date: {
+        $gte: new Date(date),
+        $lt: new Date(endDate),
+      }
+    }).populate("series");
+    if (format === 'important') {
+      matches = matches.filter(m => {
+        if (!m.seriesId) return false;
+        return m.important === true || m.series.important === true
+      });
+    } else {
+      matches = matches.filter(m => {
+        if (!m.seriesId) return false;
+        return m.series.notImportant === true
+      });
+    }
+  }
+  else {
+    matches = await Match.find({
+      format: format,
+      date: {
+        $gte: new Date(date),
+        $lt: new Date(endDate),
+      },
+    });
+  }
+
+  console.log(matches?.length, matches, 'matchest')
 
   for (let i = 0; i < matches.length; i++) {
     const matchId = matches[i].matchId;
     const match = await MatchLive.findOne({ matchId: matchId });
+    console.log(match?.isInPlay, 'match is in play');
     if (!match || match?.result == "Complete" || !match?.isInPlay) {
       continue;
     } else {

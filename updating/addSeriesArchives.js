@@ -17,7 +17,7 @@ async function fetchSeriesByType(type) {
 
   try {
     const key=await getkeys()
-    const response = await axios.get(`https://cricbuzz-cricket.p.rapidapi.com/series/v1/archives/${type}?year=2015`, {
+    const response = await axios.get(`https://cricbuzz-cricket.p.rapidapi.com/series/v1/archives/${type}?year=2014`, {
       headers: {
         'x-rapidapi-key': key,
         'x-rapidapi-host': 'cricbuzz-cricket.p.rapidapi.com',

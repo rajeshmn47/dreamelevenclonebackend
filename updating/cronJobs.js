@@ -52,7 +52,7 @@ async function scheduleJobs(frequencies) {
     await startCryptoTransaction()
   });
 
-  jobs.updateBalls = cron.schedule("* * * * *", async () => {
+  jobs.updateBalls = cron.schedule("*/5 * * * *", async () => {
     await updateBalls()
   });
 
@@ -85,7 +85,7 @@ async function scheduleJobs(frequencies) {
       await addLivescoresDetailsCustom("important");
     });
 
-    jobs.unimportant = cron.schedule(getCronPattern(frequencies.important), async () => {
+    jobs.unimportant = cron.schedule(getCronPattern(frequencies.notImportant), async () => {
       await addLivescoresDetailsCustom("unimportant");
     });
 
@@ -122,7 +122,7 @@ async function scheduleJobs(frequencies) {
     jobs.importantFS = cron.schedule(getCronPattern(frequencies.important), async () => {
       await addLivescoresDetailsCustomfs("important");
     });
-    jobs.unimportantFS = cron.schedule(getCronPattern(frequencies.important), async () => {
+    jobs.unimportantFS = cron.schedule(getCronPattern(frequencies.notImportant), async () => {
       await addLivescoresDetailsCustomfs("unImportant");
     });
 
