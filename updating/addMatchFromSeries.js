@@ -58,7 +58,7 @@ module.exports.addMatchesForAllCurrentSeries = async function () {
         const seriesId = series.seriesId;
         console.log(`Processing series: ${series.name} ${series.type} (${seriesId})`);
         try {
-            type = series?.type?.charAt(0)?.toLowerCase()
+            type = series?.type?.charAt(0)?.toLowerCase() == 'w' ? 'i' : series?.type?.charAt(0)?.toLowerCase();
             //await Match.deleteMany({'seriesId':seriesId})
             console.log(type, 'type international')
             console.log('its international')
@@ -73,11 +73,13 @@ module.exports.addMatchesForAllCurrentSeries = async function () {
                     console.log(info, 'info')
                     const matchId = info.matchId;
                     const existing = await Match.findOne({ matchId });
+                    console.log(existing, 'is it tbc')
                     if (existing) {
-                        if (
-                            existing.teamHomeCode?.toLowerCase() === "tbc" ||
-                            existing.teamAwayCode?.toLowerCase() === "tbc"
-                        ) {
+                        if ((
+                            existing.teamHomeCode?.toLowerCase() == "tbc" ||
+                            existing.teamAwayCode?.toLowerCase() == "tbc"
+                        )) {
+                            console.log('it is tbc')
                             const teamHomeName = info.team1?.teamName?.toLowerCase();
                             const teamAwayName = info.team2?.teamName?.toLowerCase();
                             existing.teamHomeCode = info.team1?.teamSName;
@@ -87,6 +89,8 @@ module.exports.addMatchesForAllCurrentSeries = async function () {
                             existing.teamHomeId = info.team1?.teamId;
                             existing.teamAwayId = info.team2?.teamId;
                             existing.seriesId = info.seriesId;
+                            existing.type = type;
+                            existing.series = series._id;
                             let teamAwayFlagUrl = flagURLs?.findFlagUrlByCountryName(teamAwayName);
                             let teamHomeFlagUrl = flagURLs?.findFlagUrlByCountryName(teamHomeName);
                             if (!teamAwayFlagUrl) teamAwayFlagUrl = getflag(teamAwayName);
@@ -105,6 +109,7 @@ module.exports.addMatchesForAllCurrentSeries = async function () {
                         matchId: info.matchId,
                         matchTitle: info.seriesName + " - " + info.matchDesc,
                         seriesId: info.seriesId,
+                        series: series._id,
                         teamHomeName: info.team1?.teamName,
                         teamAwayName: info.team2?.teamName,
                         teamHomeId: info.team1?.teamId,
