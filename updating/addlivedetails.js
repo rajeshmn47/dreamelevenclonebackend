@@ -2,6 +2,8 @@ const request = require("request");
 const Match = require("../models/match");
 const MatchLiveDetails = require("../models/matchlive");
 const { getkeys, squadkeys } = require("../utils/apikeys");
+const { messaging } = require("../utils/firebaseinitialize");
+const { sendTweet } = require("../utils/sendTweet");
 
 const sendNotification = async (title, body, topic = "live-updates") => {
   const message = {
@@ -11,7 +13,14 @@ const sendNotification = async (title, body, topic = "live-updates") => {
     },
     topic, // Replace with a specific topic or use tokens for individual devices
   };
-}
+
+  try {
+    const response = await messaging.send(message);
+    console.log("Notification sent successfully:", response);
+  } catch (error) {
+    console.error("Error sending notification:", error);
+  }
+};
 
 function generateMatchHashtags(team1, team2, seriesName) {
   const baseTag = `#${team1.replace(/\s/g, '')}Vs${team2.replace(/\s/g, '')}`;
@@ -26,7 +35,7 @@ function generateMatchHashtags(team1, team2, seriesName) {
     // Add more as needed
   };
 
-  const normalizedSeries = seriesName.toLowerCase();
+  const normalizedSeries = seriesName?.toLowerCase();
 
   for (const [league, hashtags] of Object.entries(leagueMap)) {
     if (normalizedSeries.includes(league)) {
@@ -122,10 +131,15 @@ module.exports.addLiveDetails = async function () {
           await liveMatch.save();
 
           // Send notification / tweet
-          sendNotification(
-            `Lineups Out: ${match.teamHomeName} vs ${match.teamAwayName}`,
-            `The lineups for ${match.teamHomeName} and ${match.teamAwayName} are now available.`
-          );
+          if (match?.important) {
+            await sendNotification(
+              `Lineups Out: ${match.teamHomeName} vs ${match.teamAwayName}`,
+              `The lineups for ${match.teamHomeName} and ${match.teamAwayName} are now available.`
+            );
+            await sendTweet(
+              `Lineups Out: ${match.teamHomeName} vs ${match.teamAwayName}\nThe lineups for ${match.teamHomeName} and ${match.teamAwayName} are now available. Check out the details!\n${generateMatchHashtags(match.teamHomeName, match.teamAwayName, match.matchTitle)}`
+            );
+          }
 
           success = true;
         } catch (err) {
