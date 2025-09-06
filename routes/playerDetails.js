@@ -450,7 +450,7 @@ router.get("/withbackground-new", (req, res) => {
 router.get("/updatedatabases", async (req, res) => {
     let date = new Date();
     const endDate = new Date(date.getTime());
-    date = new Date(date.getTime() - 1200000 * 60 * 60 * 1000);
+    date = new Date(date.getTime() - 12000000 * 60 * 60 * 1000);
     const allmatches = await MatchLive.find({
         date: {
             $gte: new Date(date),

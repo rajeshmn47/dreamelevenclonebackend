@@ -8,13 +8,13 @@ async function fetchAndSaveTeams() {
     //await CricketTeam.collection.drop();
     //await CricketTeam.deleteMany({}); // Clear existing international teams
     const RAPIDAPI_KEY = await getkeys() // Put your RapidAPI key in .env
-    const cricketteams= await CricketTeam.find({});
-    console.log(cricketteams,'cricketteams')
-    const url = "https://cricbuzz-cricket.p.rapidapi.com/teams/v1/international";
+    const cricketteams = await CricketTeam.find({});
+    console.log(cricketteams, 'cricketteams')
+    const url = "https://cricbuzz-cricket.p.rapidapi.com/teams/v1/domestic";
     const options = {
         method: "GET",
         headers: {
-            "X-RapidAPI-Key": "77cac70752msh1ce13ec8cd5c240p1160fbjsn5e68d56cf5a5",
+            "X-RapidAPI-Key": RAPIDAPI_KEY,
             "X-RapidAPI-Host": "cricbuzz-cricket.p.rapidapi.com"
         }
     };

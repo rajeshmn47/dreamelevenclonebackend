@@ -784,6 +784,7 @@ router.post("/updateBank", checkloggedinuser, async (req, res) => {
 router.post("/updateUser", checkloggedinuser, async (req, res) => {
   const user = await User.findOne({ _id: req.body.uidfromtoken });
   user.username = req.body.username;
+  user.country = req.body.country
   user.save((err) => {
     if (!err) {
       res.status(200).json({
@@ -1265,10 +1266,10 @@ router.post('/cut', (req, res) => {
 });
 
 router.post('/merge', async (req, res) => {
-  console.log(req.body,'body')
+  console.log(req.body, 'body')
   const { clips } = req.body; // array of filenames, e.g., ["cut-1.mp4", "cut-2.mp4"]
   files = clips
-  console.log(clips,files,'files')
+  console.log(clips, files, 'files')
   if (!Array.isArray(files) || files.length < 2) {
     return res.status(400).json({ success: false, message: 'At least two files required to merge' });
   }

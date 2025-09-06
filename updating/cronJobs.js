@@ -86,7 +86,7 @@ async function scheduleJobs(frequencies) {
     });
 
     jobs.unimportant = cron.schedule(getCronPattern(frequencies.notImportant), async () => {
-      await addLivescoresDetailsCustom("unimportant");
+      await addLivescoresDetailsCustom("notImportant");
     });
 
     jobs.liveCommentaryTest = cron.schedule("*/15 * * * *", async () => {
@@ -99,6 +99,14 @@ async function scheduleJobs(frequencies) {
 
     jobs.liveCommentaryT20 = cron.schedule("* * * * *", async () => {
       await addLivecommentaryCustom("t20");
+    });
+
+    jobs.liveCommentaryImportant = cron.schedule(getCronPattern(frequencies.important), async () => {
+      await addLivecommentaryCustom("important");
+    });
+
+    jobs.liveCommentaryNotImportant = cron.schedule(getCronPattern(frequencies.notImportant), async () => {
+      await addLivecommentaryCustom("notImportant");
     });
 
     console.log("✅ Cron jobs scheduled for source mode");
@@ -123,7 +131,7 @@ async function scheduleJobs(frequencies) {
       await addLivescoresDetailsCustomfs("important");
     });
     jobs.unimportantFS = cron.schedule(getCronPattern(frequencies.notImportant), async () => {
-      await addLivescoresDetailsCustomfs("unImportant");
+      await addLivescoresDetailsCustomfs("notImportant");
     });
 
     console.log("ℹ️ Cron jobs scheduled for non-source mode");
