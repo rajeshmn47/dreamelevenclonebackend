@@ -107,6 +107,7 @@ router.post("/deposit", async (req, res) => {
       recieptUrl: req.body.recieptUrl,
       utr: req.body.utr,
       amount: req.body.amount,
+      userId: req.body.uidfromtoken
     });
     return res.status(200).json({
       message: "Successfully Saved",
@@ -121,14 +122,52 @@ router.post("/deposit", async (req, res) => {
 router.get("/depositData", async (req, res) => {
   console.log(req.body, "deposit");
   try {
-    let deposits = await NewPayment.find({
+    let depositse = await NewPayment.find({
       verified: false
     });
+    let deposits = await NewPayment.aggregate([
+      {
+        $match: { verified: false }
+      },
+      {
+        $match: { userId: { $type: "string", $ne: "" } } // filter out empty userId
+      },
+      {
+        $addFields: {
+          userObjId: { $toObjectId: "$userId" } // convert string -> ObjectId
+        }
+      },
+      {
+        $lookup: {
+          from: "users",              // collection name (check in MongoDB, usually "users")
+          localField: "userObjId",
+          foreignField: "_id",
+          as: "user"
+        }
+      },
+      {
+        $unwind: {
+          path: "$user",
+          preserveNullAndEmptyArrays: true
+        }
+      },
+      {
+        $project: {
+          amount: 1,
+          utr: 1,
+          recieptUrl: 1,
+          verified: 1,
+          createdAt: 1,
+          user: 1
+        }
+      }
+    ]);
     return res.status(200).json({
       message: "Successfully Fetched",
       deposits: deposits
     });
   } catch (err) {
+    console.log(err, 'err')
     return res.status(500).json({
       message: "Something Went Wrong",
     });
@@ -137,35 +176,13 @@ router.get("/depositData", async (req, res) => {
 
 router.get("/approve", async (req, res) => {
   try {
+    let deposit;
     if (mongoose.Types.ObjectId.isValid(req.query.depositId)) {
-      const deposit = await NewPayment.findById(req.query.depositId);
+      deposit = await NewPayment.findById(req.query.depositId);
       console.log(deposit, 'deposit')
       deposit.verified = true;
       await deposit.save();
-      const options = {
-        method: "POST",
-        url: "https://graph.facebook.com/v17.0/154018731120852/messages",
-        headers: {
-          'Authorization': `Bearer ${process.env.whatsappkey}`,
-          useQueryString: true,
-          'Content-Type': 'application/json'
-        },
-        body: `{ \"messaging_product\": \"whatsapp\", \"to\": \"919380899596\", \"type\": \"template\", \"template\": { \"name\": \"hello_woreeld\", \"language\": { \"code\": \"en_US\" } } }`
-      };
       // Doubt in this part, is request is synchronous or non synchronous?
-      const promise = new Promise((resolve, reject) => {
-        request(options, (error, response, body) => {
-          if (error) {
-            reject(error);
-          }
-          // console.log(body)
-          const s = JSON.parse(body);
-          resolve(s);
-        });
-      });
-      promise
-        .then(async (s) => {
-        })
     }
     if (mongoose.Types.ObjectId.isValid(req.query.userId)) {
       const user = await User.findById(req.query.userId);
