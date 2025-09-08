@@ -103,7 +103,7 @@ module.exports.addInPlayStatus = async function () {
                     //console.log(matchData, 'matchdata')
                     if (!matchData) return;
 
-                    const matchState = matchData.state.toLowerCase();
+                    const matchState = matchData.matchInfo.state.toLowerCase();
                     console.log(matchState, matchId, 'matchstate')
                     if (matchState.includes("stumps")) {
                         console.log(`Match ${matchId} is in Stumps, setting next check for next day.`);
