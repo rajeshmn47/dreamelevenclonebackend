@@ -187,27 +187,27 @@ function scoreClip(commentary, clip, batsman, bowler, team, bowl_team, series, b
 
     // Match synonyms
     console.log(clip?.labels, 'labels')
-    if (shotType && (clip?.labels[0]?.shotType?.toLowerCase() == shotType.toLowerCase())) {
+    if (shotType && (clip?.labels?.shotType?.toLowerCase() == shotType.toLowerCase())) {
         score += 5;
         scoreBreakdown.shotTypeSynonymMatch = 5;
     }
 
-    if (direction && (clip?.labels[0]?.direction?.toLowerCase() == direction.toLowerCase())) {
+    if (direction && (clip?.labels?.direction?.toLowerCase() == direction.toLowerCase())) {
         score += 5;
         scoreBreakdown.directionSynonymMatch = 5;
     }
 
-    if (ballType && (clip?.labels[0]?.ballType?.toLowerCase() == ballType?.toLowerCase())) {
+    if (ballType && (clip?.labels?.ballType?.toLowerCase() == ballType?.toLowerCase())) {
         score += 3;
         scoreBreakdown.ballTypeMatch = 3;
     }
 
-    if (connection && (clip?.labels[0]?.connection?.toLowerCase() == connection?.toLowerCase())) {
+    if (connection && (clip?.labels?.connection?.toLowerCase() == connection?.toLowerCase())) {
         score += 3;
         scoreBreakdown.connection = 3;
     }
 
-    if (connection && (clip?.labels[0]?.lofted?.toLowerCase() == lofted?.toLowerCase())) {
+    if (connection && (clip?.labels?.lofted?.toLowerCase() == lofted?.toLowerCase())) {
         score += 2;
         scoreBreakdown.lofted = 2;
     }

@@ -20,12 +20,12 @@ const clipSchema = new mongoose.Schema({
   matchId: String,
   season: String,
   duration: Number,
-  labels:
-    [
-      { shotType: { type: String } },
-      { direction: { type: String } },
-      { ballType: { type: String } }
-    ],
+  labels: {
+    shotType: { type: String },
+    direction: { type: String },
+    ballType: { type: String },
+    connection: { type: String }
+  },
   createdAt: { type: Date, default: Date.now },
 });
 
