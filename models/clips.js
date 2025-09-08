@@ -20,8 +20,14 @@ const clipSchema = new mongoose.Schema({
   matchId: String,
   season: String,
   duration: Number,
+  labels:
+    [
+      { shotType: { type: String } },
+      { direction: { type: String } },
+      { ballType: { type: String } }
+    ],
   createdAt: { type: Date, default: Date.now },
 });
 
 const Clip = mongoose.model("Clip", clipSchema);
-module.exports =Clip;
+module.exports = Clip;

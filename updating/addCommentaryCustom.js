@@ -7,6 +7,7 @@ const Team = require("../models/team");
 const getkeys = require("../utils/crickeys");
 const db = require("../utils/firebaseinitialize");
 const { getcommentary } = require("../utils/getcommentary");
+const { sendMyPlayerNotifications } = require("../utils/sendMyPlayerNotifications");
 
 const transporter = nodemailer.createTransport(
     smtpTransport({
@@ -69,7 +70,7 @@ module.exports.addLivecommentaryCustom = async function addcommentry(format) {
             });
         }
 
-        console.log(matches?.length, matches, 'matchest')
+        //console.log(matches?.length, matches, 'matchest')
 
         //  const citiesRef = db.db.collection('commentary');
         //  const snapshot = await citiesRef.get();
@@ -102,7 +103,7 @@ module.exports.addLivecommentaryCustom = async function addcommentry(format) {
         console.log(m.length, "allmatches");
         for (let i = 0; i < allMatches.length; i++) {
             if (m[i].matchId.length > 3) {
-                console.log(m[i]?.matchId, "matchid");
+                //console.log(m[i]?.matchId, "matchid");
                 //const keys = await getkeys.getkeys();
                 const options = {
                     method: "GET",
@@ -152,6 +153,7 @@ module.exports.addLivecommentaryCustom = async function addcommentry(format) {
                         const commentaryRef = db.db.collection("commentary").doc(m[i].matchId);
                         const doc = await commentaryRef.get();
                         if (!doc.exists) {
+                            await sendMyPlayerNotifications(miniscore?.batsmanStriker?.batId, miniscore?.bowler?.bowlerId)
                             const commentaryRef = db.db.collection("commentary").doc(m[i].matchId);
                             const res = await commentaryRef.set(
                                 {
@@ -168,6 +170,7 @@ module.exports.addLivecommentaryCustom = async function addcommentry(format) {
                                 let commentary = getcommentary(xyz, a);
                                 //let commentary = a;
                                 console.log(miniscore?.batsmanStriker?.batId, 'miniscore')
+                                await sendMyPlayerNotifications(miniscore?.batsmanStriker?.batId, miniscore?.bowlerStriker?.bowlerId)
                                 if (miniscore?.batsmanStriker?.batId == 12305) {
                                     transporter.sendMail(mailOptions, (error, info) => {
                                         if (error) {

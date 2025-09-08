@@ -123,7 +123,7 @@ function scoreClip(commentary, clip, batsman, bowler, team, bowl_team, series, b
     let b = matched_keywords?.join('');
     const similarity = stringSimilarity.compareTwoStrings(commentary, clip?.commentary);
     let bar = similarity * 3
-    console.log(bowl_team, 'bar')
+    //console.log(bowl_team, 'bar')
 
     {/*if (clip.shot_type && commentary.toLowerCase().includes(clip.shot_type.toLowerCase())) score += 3;
     if (batsman && clip.batsman && clip.batsman.toLowerCase() === batsman.toLowerCase()) score += 1;
@@ -186,27 +186,28 @@ function scoreClip(commentary, clip, batsman, bowler, team, bowl_team, series, b
     }
 
     // Match synonyms
-    if (shotType && (clip?.labels[0]?.shotType?.toLowerCase() === shotType.toLowerCase())) {
+    console.log(clip?.labels, 'labels')
+    if (shotType && (clip?.labels[0]?.shotType?.toLowerCase() == shotType.toLowerCase())) {
         score += 5;
         scoreBreakdown.shotTypeSynonymMatch = 5;
     }
 
-    if (direction && (clip?.labels[0]?.direction?.toLowerCase() === direction.toLowerCase())) {
+    if (direction && (clip?.labels[0]?.direction?.toLowerCase() == direction.toLowerCase())) {
         score += 5;
         scoreBreakdown.directionSynonymMatch = 5;
     }
 
-    if (ballType && (clip?.labels[0]?.ballType?.toLowerCase() === ballType?.toLowerCase())) {
+    if (ballType && (clip?.labels[0]?.ballType?.toLowerCase() == ballType?.toLowerCase())) {
         score += 3;
         scoreBreakdown.ballTypeMatch = 3;
     }
 
-    if (connection && (clip?.labels[0]?.connection?.toLowerCase() === connection?.toLowerCase())) {
+    if (connection && (clip?.labels[0]?.connection?.toLowerCase() == connection?.toLowerCase())) {
         score += 3;
         scoreBreakdown.connection = 3;
     }
 
-    if (connection && (clip?.labels[0]?.lofted?.toLowerCase() === lofted?.toLowerCase())) {
+    if (connection && (clip?.labels[0]?.lofted?.toLowerCase() == lofted?.toLowerCase())) {
         score += 2;
         scoreBreakdown.lofted = 2;
     }
@@ -367,7 +368,7 @@ async function getBestMatchingVideo(clips, event, commentary, details, bowling_t
     let battingHand = Batsman?.battingHand || "unknown";
     let bowlingHand = Bowler?.bowlingHand || "unknown";
     let bowlerType = Bowler?.bowlerType || "unknown";
-    //console.log(filteredClips.length, Batsman, Bowler, 'filtered clips length')
+    console.log(shotType, ballType, direction, 'filtered clips length')
     const scored = filteredClips.map(clip => {
         const { score, breakdown } = scoreClip(
             commentary,
@@ -410,7 +411,7 @@ async function getBestMatchingVideo(clips, event, commentary, details, bowling_t
         let commentaryList = filteredClips;
         //const gptClip = await gptFallback(commentary, filteredbyKeywords.slice(0, 25));
         const gptClip = "no clip"
-        console.log(scored[0], 'nott found')
+        //console.log(scored[0], 'nott found')
         return scored[0]?.clip.clip || "n";
     }
     //console.log(scored[0], 'all scored')
