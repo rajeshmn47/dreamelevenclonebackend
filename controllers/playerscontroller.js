@@ -38,8 +38,8 @@ router.get("/getplayers_new/:id", async (req, res) => {
   // const matchdetails = await MatchLiveDetails.findOne({ matchId: req.params.id });
   const livedetails = await LiveMatches.findOne({ matchId: req.params.id });
   const matchdetails = await Matches.findOne({ matchId: req.params.id });
-  let th = await Squad.findOne({ teamId: matchdetails?.teamHomeId })
-  let ta = await Squad.findOne({ teamId: matchdetails?.teamAwayId })
+  let th = await Squad.findOne({ teamId: matchdetails?.teamHomeId, seriesId: parseInt(matchdetails?.seriesId) })
+  let ta = await Squad.findOne({ teamId: matchdetails?.teamAwayId, seriesId: matchdetails?.seriesId })
   console.log(matchdetails?.teamHomeId, th, 'line 12');
   if (livedetails) {
     let data = {};
