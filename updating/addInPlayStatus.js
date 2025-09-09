@@ -2,6 +2,10 @@ const request = require("request");
 const MatchLive = require("../models/matchlive");
 const getkeys = require("../utils/crickeys");
 
+function delay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 module.exports.addInPlayStatus = async function () {
     try {
         //const keys = await getkeys.getkeys();
@@ -88,6 +92,8 @@ module.exports.addInPlayStatus = async function () {
                 },
             };
 
+            await delay(2000);
+
             const promise = new Promise((resolve, reject) => {
                 request(options, (error, response, body) => {
                     if (error) {
@@ -103,7 +109,7 @@ module.exports.addInPlayStatus = async function () {
                     //console.log(matchData, 'matchdata')
                     if (!matchData) return;
 
-                    const matchState = matchData.matchInfo.state.toLowerCase();
+                    const matchState = matchData.state.toLowerCase();
                     console.log(matchState, matchId, 'matchstate')
                     if (matchState.includes("stumps")) {
                         console.log(`Match ${matchId} is in Stumps, setting next check for next day.`);
