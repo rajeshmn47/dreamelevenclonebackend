@@ -22,6 +22,7 @@ const fMatches = require("./controllers/football/fMatchDB-controller.js");
 const player = require("./routes/playerDetails");
 const series = require("./routes/series");
 const admin = require("./controllers/admincontroller.js");
+const notif = require("./controllers/notifyplayer.js");
 const { startTransaction } = require("./updating/transaction.js");
 const { addMatchtoDb } = require("./updating/addMatch.js");
 const { addLivescoresDetails } = require("./updating/addlivescoresdetails.js");
@@ -79,6 +80,7 @@ app.use("/apikeys", checkloggedinuser, apikeys);
 app.use("/", checkloggedinuser, updatedata);
 app.use("/api/match", checkloggedinuser, matches);
 app.use("/api/config", configRoutes);
+app.use("/notify", checkloggedinuser, notif);
 //app.use("/", transaction);
 mongoose.Promise = global.Promise;
 mongoose.connect(
