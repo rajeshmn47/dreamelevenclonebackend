@@ -75,7 +75,6 @@ module.exports.addLiveDetailsFS = async function () {
         $lt: new Date(endDate),
       },
     });
-    console.log(matches.length, 'matches length')
     for (let i = 0; i < matches.length; i++) {
       const matchId = matches[i].matchId;
       const match = await MatchLive.findOne({ matchId: matchId });
@@ -127,8 +126,11 @@ module.exports.addLiveDetailsFS = async function () {
                 const team2Name = matches[i]?.teamAwayCode || "Team2";
                 //const matchHashtags = `#${team1Name.replace(/\s/g, '')}Vs${team2Name.replace(/\s/g, '')} #Cricket #ipl2025`;
                 const matchHashtags = generateMatchHashtags(team1Name, team2Name, matches[i]?.matchTitle || "IPL");
-                let tweetText = `The lineups for ${s.teamHomeName} and ${s.teamAwayName} are now available. Check out the details! Match Link: https://dream-11-clone-nu.vercel.app ${matchHashtags}`;
-                //sendTweet(tweetText);
+                let tweetText = `The lineups for ${s.teamHomeName} and ${s.teamAwayName} are now available. Check out the details! Match Link: https://www.cricbuzz.com/live-cricket-scores/${match?.matchId}
+                ${matchHashtags}`;
+                if (matches[i]?.important) {
+                  sendTweet(tweetText);
+                }
               }
             }
           } catch (error) {

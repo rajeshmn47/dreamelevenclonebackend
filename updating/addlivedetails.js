@@ -137,7 +137,8 @@ module.exports.addLiveDetails = async function () {
               `The lineups for ${match.teamHomeName} and ${match.teamAwayName} are now available.`
             );
             await sendTweet(
-              `Lineups Out: ${match.teamHomeName} vs ${match.teamAwayName}\nThe lineups for ${match.teamHomeName} and ${match.teamAwayName} are now available. Check out the details!\n${generateMatchHashtags(match.teamHomeName, match.teamAwayName, match.matchTitle)}`
+              `Lineups Out: ${match.teamHomeName} vs ${match.teamAwayName}\nThe lineups for ${match.teamHomeName} and ${match.teamAwayName} are now available. Check out the details!
+              https://www.cricbuzz.com/live-cricket-scores/${match?.matchId} \n${generateMatchHashtags(match.teamHomeCode, match.teamAwayCode, match.matchTitle)}`
             );
           }
 
