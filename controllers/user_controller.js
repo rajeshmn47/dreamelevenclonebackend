@@ -1159,7 +1159,7 @@ router.post("/", async (req, res) => {
 // ✅ READ all clips
 router.get("/allclips", async (req, res) => {
   try {
-    const clips = await Clip.find().sort({ createdAt: -1 });
+    const clips = await Clip.find().sort({ createdAt: 1 });
     res.json(clips);
   } catch (err) {
     res.status(500).json({ error: err.message });
