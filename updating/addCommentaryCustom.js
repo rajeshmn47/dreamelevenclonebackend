@@ -51,7 +51,7 @@ module.exports.addLivecommentaryCustom = async function addcommentry(format) {
             if (format === 'important') {
                 matches = matches.filter(m => {
                     if (!m.seriesId) return false;
-                    return m.important === true || m.series.important === true
+                    return m.important === true || m?.series?.important === true
                 });
             } else {
                 matches = matches.filter(m => {
