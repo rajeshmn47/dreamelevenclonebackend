@@ -3,6 +3,7 @@ const Match = require("../models/match");
 const MatchLive = require("../models/matchlive");
 const { getkeys } = require("../utils/crickeys");
 const { isInPlay } = require("../utils/isInPlay");
+const Series = require("../models/series");
 
 function delay(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -38,7 +39,7 @@ function convertWicketsData(wicketsData) {
 module.exports.addLivescoresDetailsCustom = async function (format) {
   let date = new Date();
   const endDate = new Date(date.getTime());
-  const b = 120 * 60 * 60 * 1000 * 1;
+  const b = 120 * 60 * 60 * 1000;
   date = new Date(date.getTime() - b);
   let matches;
   if (format === 'important' || format === 'notImportant') {
@@ -61,8 +62,14 @@ module.exports.addLivescoresDetailsCustom = async function (format) {
     }
   }
   else {
+    const importantSeries = await Series.find({ important: true }).select("_id");
+    const notImportantSeries = await Series.find({ notImportant: true }).select("_id");
+    const exclude = [...importantSeries.map(s => s._id), ...notImportantSeries.map(s => s._id)];
+    console.log(exclude?.length, format, 'excludes')
+
     matches = await Match.find({
       format: format,
+      series: { $nin: exclude },
       date: {
         $gte: new Date(date),
         $lt: new Date(endDate),
@@ -70,13 +77,11 @@ module.exports.addLivescoresDetailsCustom = async function (format) {
     });
   }
 
-  console.log(matches?.length, matches, 'matchest')
-
+  console.log(matches?.length,matches, 'matchest')
   for (let i = 0; i < matches.length; i++) {
     const matchId = matches[i].matchId;
-    const match = await MatchLive.findOne({ matchId: matchId });
-    console.log(match?.isInPlay, 'match is in play');
-    if (!match || match?.result == "Complete" || !match?.isInPlay) {
+    const match = await MatchLive.findOne({ matchId: matchId, "createdAt": { "$gte": new Date("2025-09-09T00:00:00Z"), "$lt": new Date("2025-09-10T00:00:00Z") } });
+    if ((!match) || match?.result == "Complete" || !(match?.isInPlay)) {
       continue;
     } else {
       const keys = await getkeys();
