@@ -14,6 +14,10 @@ const { default: axios } = require('axios');
 const oversJsonPath = path.join(__dirname, './../overs_with_clips.json');
 const data = JSON.parse(fs.readFileSync(oversJsonPath, 'utf-8'));
 
+function delay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 module.exports.updateSquads = async function () {
     try {
         const now = Date.now();
@@ -41,6 +45,7 @@ module.exports.updateSquads = async function () {
 
             try {
                 const response = await axios.request(options)
+                delay(1000); // 1 second delay between requests
                 const squads = response?.data?.squads || [];
 
                 for (const team of squads) {
@@ -57,7 +62,6 @@ module.exports.updateSquads = async function () {
                     try {
                         const response = await fetch(teamUrl);
                         const squadDetails = await response.json();
-                        //console.log(squadDetails)
                         let squad = squadDetails.player.filter((player) => !player.isHeader).map((player) => {
                             return {
                                 playerId: player.id,
