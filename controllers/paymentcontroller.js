@@ -11,6 +11,7 @@ const NewPayment = require("../models/newPayment");
 const Withdraw = require("../models/withdraw");
 const router = express.Router();
 const User = require("../models/user");
+const { ObjectId } = mongoose.Types;
 
 dotenv.config();
 
@@ -184,12 +185,14 @@ router.get("/approve", async (req, res) => {
       await deposit.save();
       // Doubt in this part, is request is synchronous or non synchronous?
     }
-    if (mongoose.Types.ObjectId.isValid(req.query.userId)) {
-      const user = await User.findById(req.query.userId);
+    let userId = null;
+    userId = new ObjectId(deposit.userId)
+    if (mongoose.Types.ObjectId.isValid(userId)) {
+      const user = await User.findById(userId);
       console.log(user, 'user')
 
       if (user) {
-        user.wallet = user.wallet + deposit.amount;
+        user.wallet = user.wallet + parseInt(deposit.amount);
         await user.save();
         return res.status(200).json({
           message: "Successfully Saved",
@@ -219,8 +222,8 @@ router.post("/withdraw", async (req, res) => {
         amount: req.body.amount,
         userId: req.body.uidfromtoken
       });
-      user.wallet = user.wallet - req.body.amount;
-      await user.save();
+      //user.wallet = user.wallet - req.body.amount;
+      //await user.save();
       return res.status(200).json({
         message: "Successfully Saved",
       });
@@ -279,6 +282,9 @@ router.get("/approveWithdraw", async (req, res) => {
   try {
     const withdraw = await Withdraw.findById(req.query.withdrawId);
     withdraw.isWithdrawCompleted = true;
+    const user = await User.findById(withdraw.userId)
+    user.wallet = user.wallet - withdraw.amount;
+    await user.save();
     await withdraw.save();
     return res.status(200).json({
       message: "Approved Successfully",

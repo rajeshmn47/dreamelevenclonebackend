@@ -8,6 +8,7 @@ const getkeys = require("../utils/crickeys");
 const db = require("../utils/firebaseinitialize");
 const { getcommentary } = require("../utils/getcommentary");
 const { sendMyPlayerNotifications } = require("../utils/sendMyPlayerNotifications");
+const { detectHighlights } = require("../utils/detectHighlights");
 
 const transporter = nodemailer.createTransport(
     smtpTransport({

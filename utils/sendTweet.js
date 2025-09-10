@@ -1,6 +1,7 @@
 require('dotenv').config();
 const { TwitterApi } = require('twitter-api-v2');
 const fs = require('fs');
+const { EUploadMimeType } = require("twitter-api-v2");
 
 // Twitter API credentials
 const clientId = process.env.TWITTER_CLIENT_ID;
@@ -59,4 +60,34 @@ async function sendTweetWithVideo(text, videoPath) {
   }
 }
 
-module.exports = {sendTweet,sendTweetWithVideo};
+async function sendTweetWithImage(text, imagePath) {
+  try {
+    const imageData = fs.readFileSync(imagePath);
+    const twitterClient = new TwitterApi({
+      appKey,
+      appSecret,
+      accessToken,
+      accessSecret,
+    });
+
+    // Upload image
+    //const mediaId = await twitterClient.v1.uploadMedia(imageData, { type: 'png' }); // or 'jpg'
+    const mediaId = await twitterClient.v1.uploadMedia(imageData, {
+      mimeType: EUploadMimeType.Png, // or EUploadMimeType.Jpeg, EUploadMimeType.Mp4
+    });
+
+    // Post tweet with image
+    const tweet = await twitterClient.v2.tweet({
+      text,
+      media: { media_ids: [mediaId] },
+    });
+
+    console.log("✅ Tweet with image sent successfully:", tweet.data.id);
+    return tweet.data;
+  } catch (error) {
+    console.error("❌ Error sending tweet with image:", error);
+    throw error;
+  }
+}
+
+module.exports = { sendTweet, sendTweetWithVideo, sendTweetWithImage };

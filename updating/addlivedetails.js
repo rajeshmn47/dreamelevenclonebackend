@@ -3,7 +3,8 @@ const Match = require("../models/match");
 const MatchLiveDetails = require("../models/matchlive");
 const { getkeys, squadkeys } = require("../utils/apikeys");
 const { messaging } = require("../utils/firebaseinitialize");
-const { sendTweet } = require("../utils/sendTweet");
+const { sendTweet, sendTweetWithImage } = require("../utils/sendTweet");
+const { createVsImage } = require("../utils/generateTweetImage");
 
 const sendNotification = async (title, body, topic = "live-updates") => {
   const message = {
@@ -24,7 +25,7 @@ const sendNotification = async (title, body, topic = "live-updates") => {
 
 function generateMatchHashtags(team1, team2, seriesName) {
   const baseTag = `#${team1.replace(/\s/g, '')}Vs${team2.replace(/\s/g, '')}`;
-  const tags = [baseTag, '#Cricket'];
+  const tags = [baseTag, '#Cricket', '#asiacup2025'];
 
   const leagueMap = {
     'indian premier league': ['#IPL', '#IPL2025'],
@@ -132,16 +133,15 @@ module.exports.addLiveDetails = async function () {
 
           // Send notification / tweet
           if (match?.important) {
+            let tweetText = `Lineups Out: ${match.teamHomeName} vs ${match.teamAwayName}\nThe lineups for ${match.teamHomeName} and ${match.teamAwayName} are now available. Check out the details!
+        https://www.cricbuzz.com/live-cricket-scores/${match?.matchId} \n${generateMatchHashtags(match.teamHomeCode, match.teamAwayCode, match.matchTitle)}`
             await sendNotification(
               `Lineups Out: ${match.teamHomeName} vs ${match.teamAwayName}`,
               `The lineups for ${match.teamHomeName} and ${match.teamAwayName} are now available.`
             );
-            await sendTweet(
-              `Lineups Out: ${match.teamHomeName} vs ${match.teamAwayName}\nThe lineups for ${match.teamHomeName} and ${match.teamAwayName} are now available. Check out the details!
-              https://www.cricbuzz.com/live-cricket-scores/${match?.matchId} \n${generateMatchHashtags(match.teamHomeCode, match.teamAwayCode, match.matchTitle)}`
-            );
+            await createVsImage(match.teamHomeCode, match.teamAwayCode, matchExists?.teamHomePlayers[0], matchExists?.teamAwayPlayers[0], `./images/${match.matchId}_vs_image.png`); // Assuming first player is captain
+            await sendTweetWithImage(tweetText, `./images/${match.matchId}_vs_image.png`);
           }
-
           success = true;
         } catch (err) {
           if (err.message.includes("rate limit")) {

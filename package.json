@@ -3,6 +3,7 @@
     "@google-cloud/storage": "^7.9.0",
     "axios": "^1.8.4",
     "body-parser": "^1.20.0",
+    "canvas": "^3.2.0",
     "convertapi": "^1.14.0",
     "cors": "^2.8.5",
     "country-flags-svg": "^1.1.6",
