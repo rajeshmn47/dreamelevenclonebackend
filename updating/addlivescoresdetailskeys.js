@@ -80,7 +80,7 @@ module.exports.addLivescoresDetailsCustom = async function (format) {
   console.log(matches?.length,matches, 'matchest')
   for (let i = 0; i < matches.length; i++) {
     const matchId = matches[i].matchId;
-    const match = await MatchLive.findOne({ matchId: matchId, "createdAt": { "$gte": new Date("2025-09-09T00:00:00Z"), "$lt": new Date("2025-09-10T00:00:00Z") } });
+    const match = await MatchLive.findOne({ matchId: matchId });
     if ((!match) || match?.result == "Complete" || !(match?.isInPlay)) {
       continue;
     } else {
