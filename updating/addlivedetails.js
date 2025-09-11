@@ -98,9 +98,11 @@ module.exports.addLiveDetails = async function () {
         try {
           await delay(1000);
           const data = await makeRequest(options); // this will contain only players
-          console.log(data, 'data for players')
+          console.log(data?.team1?.players, 'data for players')
           players1 = data.team1.players["playing XI"] || data.team1.players["Squad"]
           players2 = data.team2.players["playing XI"] || data.team2.players["Squad"]
+          captain1=players1.find((p)=>p.captain)
+          captain2=players2.find((p)=>p.captain)
           const team1Players = players1.map(p => ({
             playerId: p.id,
             playerName: p.name,
@@ -139,7 +141,7 @@ module.exports.addLiveDetails = async function () {
               `Lineups Out: ${match.teamHomeName} vs ${match.teamAwayName}`,
               `The lineups for ${match.teamHomeName} and ${match.teamAwayName} are now available.`
             );
-            await createVsImage(match.teamHomeCode, match.teamAwayCode, matchExists?.teamHomePlayers[0], matchExists?.teamAwayPlayers[0], `./images/${match.matchId}_vs_image.png`); // Assuming first player is captain
+            await createVsImage(match.teamHomeCode, match.teamAwayCode, captain1, captain2, `./images/${match.matchId}_vs_image.png`); // Assuming first player is captain
             await sendTweetWithImage(tweetText, `./images/${match.matchId}_vs_image.png`);
           }
           success = true;
