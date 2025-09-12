@@ -67,6 +67,9 @@ async function scheduleJobs(frequencies) {
     })
     jobs.inPlayStatus = cron.schedule("*/15 7-23 * * *", async () => {
       await addInPlayStatus()
+    }, {
+      scheduled: true,
+      timezone: "Asia/Kolkata"
     });
 
     jobs.test = cron.schedule(getCronPattern(frequencies.test), async () => {
