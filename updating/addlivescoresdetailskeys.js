@@ -4,6 +4,7 @@ const MatchLive = require("../models/matchlive");
 const { getkeys } = require("../utils/crickeys");
 const { isInPlay } = require("../utils/isInPlay");
 const Series = require("../models/series");
+const RapidApiKey = require("../models/rapidapikeys");
 
 function delay(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -105,15 +106,17 @@ module.exports.addLivescoresDetailsCustom = async function (format) {
             console.log(error, 'error');
             reject(error);
           }
-          console.log(body, 'body');
+          console.log(response.headers, 'body');
           const s = JSON.parse(body);
-          resolve(s);
+          resolve({ ...s, headers: response.headers });
         });
       });
 
       promise
         .then(async (s) => {
           console.log(s);
+          const ratelimit = parseInt(s.headers['x-ratelimit-requests-remaining']);
+          await RapidApiKey.updateOne({ apiKey: keys }, { $set: { usageCount: ratelimit } })
           if (s.matchHeader != null && s.scoreCard != 0) {
             const LiveMatchDet = new MatchLive();
             LiveMatchDet.matchId = matchId;
