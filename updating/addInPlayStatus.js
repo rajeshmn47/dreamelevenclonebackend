@@ -1,9 +1,10 @@
 const request = require("request");
 const MatchLive = require("../models/matchlive");
 const getkeys = require("../utils/crickeys");
+const RapidApiKey = require("../models/rapidapikeys");
 
 function delay(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 module.exports.addInPlayStatus = async function () {
@@ -100,7 +101,8 @@ module.exports.addInPlayStatus = async function () {
                         reject(error);
                     }
                     console.log(body, 'body')
-                    resolve(JSON.parse(body));
+                    let s = JSON.parse(body);
+                    resolve({ ...s, headers: response.headers });
                 });
             });
 
@@ -108,7 +110,8 @@ module.exports.addInPlayStatus = async function () {
                 .then(async (matchData) => {
                     //console.log(matchData, 'matchdata')
                     if (!matchData) return;
-
+                    const ratelimit = parseInt(matchData.headers['x-ratelimit-requests-remaining']);
+                    await RapidApiKey.updateOne({ apiKey: keys }, { $set: { usageCount: ratelimit } })
                     const matchState = matchData.state.toLowerCase();
                     console.log(matchState, matchId, 'matchstate')
                     if (matchState.includes("stumps")) {
