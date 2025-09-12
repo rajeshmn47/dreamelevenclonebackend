@@ -65,7 +65,7 @@ async function scheduleJobs(frequencies) {
     jobs.liveDetails = cron.schedule("*/5 * * * *", async () => {
       await addLiveDetails()
     })
-    jobs.inPlayStatus = cron.schedule("*/15 7-23 * * *", async () => {
+    jobs.inPlayStatus = cron.schedule("*/10 7-23 * * *", async () => {
       await addInPlayStatus()
     }, {
       scheduled: true,
@@ -118,8 +118,11 @@ async function scheduleJobs(frequencies) {
     jobs.liveDetailsFS = cron.schedule("*/5 * * * *", async () => {
       await addLiveDetailsFS();
     });
-    jobs.inPlayStatusFS = cron.schedule("*/15 7-23 * * *", async () => {
+    jobs.inPlayStatusFS = cron.schedule("*/10 7-23 * * *", async () => {
       await addInPlayStatusFS()
+    }, {
+      scheduled: true,
+      timezone: "Asia/Kolkata"
     });
     jobs.testFS = cron.schedule(getCronPattern(frequencies.test), async () => {
       await addLivescoresDetailsCustomfs("test");
