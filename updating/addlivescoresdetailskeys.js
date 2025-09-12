@@ -77,14 +77,14 @@ module.exports.addLivescoresDetailsCustom = async function (format) {
     });
   }
 
-  console.log(matches?.length,matches, 'matchest')
+  console.log(matches?.length, 'matchest')
   for (let i = 0; i < matches.length; i++) {
     const matchId = matches[i].matchId;
     const match = await MatchLive.findOne({ matchId: matchId });
     if ((!match) || match?.result == "Complete" || !(match?.isInPlay)) {
       continue;
     } else {
-      const keys = await getkeys();
+      const keys = await getkeys(matchId);
       console.log(matchId, 'jeys');
       const date1 = matches[i].date;
       const options = {

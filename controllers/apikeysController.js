@@ -2,6 +2,7 @@ const express = require("express");
 const RapidApiKey = require("../models/rapidapikeys");
 const User = require("../models/user");
 const config = require("../models/config");
+const ApiRequest = require("../models/apiRequest");
 
 const router = express.Router();
 
@@ -190,6 +191,54 @@ router.put("/updateUsageTier", async (req, res) => {
     res.status(400).json({ message: "Error updating usage tier", error });
   }
 });
+
+router.get("/usage_historey", async (req, res) => {
+  try {
+    const { startDate, endDate } = req.query; // optional filtering
+    const filter = {};
+    if (startDate || endDate) filter.timestamp = {};
+    if (startDate) filter.timestamp.$gte = new Date(startDate);
+    if (endDate) filter.timestamp.$lte = new Date(endDate);
+
+    const history = await ApiRequest.find(filter).sort({ timestamp: 1 });
+    res.status(200).json({ history });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error fetching usage history", error });
+  }
+});
+
+router.get("/usage_history", async (req, res) => {
+  try {
+    const data = await ApiRequest.aggregate([
+      {
+        $addFields: {
+          matchIdStr: { $toString: "$matchId" } // convert integer -> string
+        }
+      },
+      {
+        $lookup: {
+          from: "matches",            // collection with match data
+          localField: "matchIdStr",      // field in ApiRequest
+          foreignField: "matchId",    // field in Matches collection
+          as: "matchdetails"
+        }
+      },
+      {
+        $unwind: {
+          path: "$matchdetails",
+          preserveNullAndEmptyArrays: true
+        }
+      }
+    ]);
+
+    res.json({ "history": data });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
 
 // Get usage tier for a user
 

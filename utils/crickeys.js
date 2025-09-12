@@ -1,7 +1,8 @@
+const ApiRequest = require("../models/apiRequest");
 const Config = require("../models/config");
 const User = require("../models/user");
 
-module.exports.getkeys = async function () {
+module.exports.getkeys = async function (matchId) {
   let user = await User.findById(process.env.refUserId);
   const config = await Config.findOne();
   //console.log(config, 'config_file')
@@ -20,5 +21,9 @@ module.exports.getkeys = async function () {
     .replace(/ /g, "")
     .split(",");
   //console.log(keys, keyi, 'keyies')
+  await ApiRequest.create({
+    matchId: matchId,     // Cricbuzz matchId
+    apiKey: keys[keyi]
+  })
   return keys[keyi];
 };
