@@ -80,7 +80,7 @@ module.exports.addInPlayStatus = async function () {
                     continue;
                 }
             }
-            const keys = await getkeys.getkeys();
+            const keys = await getkeys.getkeys(matchId);
             console.log(matchId, 'matchId')
             const options = {
                 method: "GET",
