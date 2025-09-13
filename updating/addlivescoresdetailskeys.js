@@ -114,7 +114,7 @@ module.exports.addLivescoresDetailsCustom = async function (format) {
       try {
         promise
           .then(async (s) => {
-            console.log(s);
+            console.log(s, 'rrr');
             const ratelimit = parseInt(s.headers['x-ratelimit-requests-remaining']);
             let usageCount = 100 - ratelimit;
             if (usageCount == 100) {
@@ -134,9 +134,28 @@ module.exports.addLivescoresDetailsCustom = async function (format) {
                 console.error("⚠️ No more RapidAPI keys available!");
               }
             }
-            else {
+            else if (usageCount > 0) {
               await RapidApiKey.updateMany({ type: 'scores' }, { $set: { status: 'inactive' } })
               await RapidApiKey.updateOne({ apiKey: keys }, { $set: { usageCount: usageCount, status: 'active' } })
+            }
+            else if (!usageCount || (!keys)) {
+              console.log("mcd")
+
+              await RapidApiKey.updateOne({ type: 'scores', status: 'active' }, { $set: { status: 'inactive' } })
+              // 2. Find the *next* available key that is inactive, oldest updated first
+              const nextKey = await RapidApiKey.findOne({ type: "scores", status: "inactive" })
+                .sort({ updatedAt: 1 });
+
+              if (nextKey) {
+                // 3. Activate it
+                await RapidApiKey.updateOne(
+                  { _id: nextKey._id },
+                  { $set: { status: "active", updatedAt: new Date() } }
+                );
+                console.log("Switched to new API key:", nextKey.apiKey);
+              } else {
+                console.error("⚠️ No more RapidAPI keys available!");
+              }
             }
             if (s.matchHeader != null && s.scoreCard != 0) {
               const LiveMatchDet = new MatchLive();
@@ -336,7 +355,7 @@ module.exports.addLivescoresDetailsCustom = async function (format) {
           })
       }
       catch (error) {
-        console.log(error);
+        console.log(error, 'zerrror');
         await RapidApiKey.updateOne({ type: 'scores', status: 'active' }, { $set: { status: 'inactive' } })
         // 2. Find the *next* available key that is inactive, oldest updated first
         const nextKey = await RapidApiKey.findOne({ type: "scores", status: "inactive" })
