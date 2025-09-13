@@ -1,6 +1,7 @@
 const express = require("express");
 const Config = require("../models/config");
 const { cronjobs } = require("../updating/cronJobs");
+const RapidApiKey = require("../models/rapidapikeys");
 const router = express.Router();
 
 // Get the single config
@@ -59,6 +60,26 @@ router.post("/updateFrequencies", async (req, res) => {
     res.status(500).json({ success: false, error: "Failed to update frequencies" });
   }
 });
+
+router.post("/key/update", async (req, res) => {
+  try {
+    const key = req.body;
+    const updated = await RapidApiKey.updateOne({ _id: key._id }, { $set: { status: key.status } }, { new: true, upsert: true });
+    if (!updated) {
+      return res.status(404).json({ message: "not updated" });
+    }
+
+    if (updated) {
+      res.status(200).json({ message: "API key updated successfully", updated });
+    }
+    else {
+      res.status(400).json({ message: "Error updating API key", error });
+    }
+  } catch (error) {
+    res.status(400).json({ message: "Error updating API key", error });
+  }
+});
+
 
 module.exports = router;
 

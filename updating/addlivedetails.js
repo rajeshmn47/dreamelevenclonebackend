@@ -5,6 +5,7 @@ const { getkeys, squadkeys } = require("../utils/apikeys");
 const { messaging } = require("../utils/firebaseinitialize");
 const { sendTweet, sendTweetWithImage } = require("../utils/sendTweet");
 const { createVsImage } = require("../utils/generateTweetImage");
+const RapidApiKey = require("../models/rapidapikeys");
 
 const sendNotification = async (title, body, topic = "live-updates") => {
   const message = {
@@ -56,7 +57,7 @@ async function makeRequest(options) {
       }
       if (body) {
         const s = JSON.parse(body);
-        resolve(s);
+        resolve({ ...s, headers: response.headers });
       }
       else {
         resolve(null);
@@ -80,8 +81,8 @@ module.exports.addLiveDetails = async function () {
       const matchExists = await MatchLiveDetails.findOne({ matchId: match.matchId });
       if (matchExists) continue;
 
-      const keys = await squadkeys();
-      console.log(keys, 'keys')
+      const keys = await squadkeys(match.matchId);
+      console.log(keys, 'keyzzs')
       const options = {
         method: "GET",
         url: `https://cricbuzz-cricket2.p.rapidapi.com/mcenter/v1/${match.matchId}/teams`,
@@ -98,11 +99,35 @@ module.exports.addLiveDetails = async function () {
         try {
           await delay(1000);
           const data = await makeRequest(options); // this will contain only players
+          const ratelimit = parseInt(data.headers['x-ratelimit-requests-remaining']);
+          let usageCount = 100 - ratelimit;
+          console.log(ratelimit, 'ratelimit', usageCount)
+          if (usageCount == 100) {
+            console.log("usage count 100", 100)
+            await RapidApiKey.updateOne({ apiKey: keys }, { $set: { status: 'inactive' } })
+            // 2. Find the *next* available key that is inactive, oldest updated first
+            const nextKey = await RapidApiKey.findOne({ type: "lineups", status: "inactive" })
+              .sort({ updatedAt: 1 });
+            if (nextKey) {
+              // 3. Activate it
+              await RapidApiKey.updateOne(
+                { _id: nextKey._id },
+                { $set: { status: "active", updatedAt: new Date() } }
+              );
+              console.log("Switched to new API key:", nextKey.apiKey);
+            } else {
+              console.error("⚠️ No more RapidAPI keys available!");
+            }
+          }
+          else {
+            await RapidApiKey.updateMany({ type: 'lineups' }, { $set: { status: 'inactive' } })
+            await RapidApiKey.updateOne({ apiKey: keys }, { $set: { usageCount: usageCount, status: 'active' } })
+          }
           console.log(data?.team1?.players, 'data for players')
           players1 = data.team1.players["playing XI"] || data.team1.players["Squad"]
           players2 = data.team2.players["playing XI"] || data.team2.players["Squad"]
-          captain1=players1.find((p)=>p.captain)
-          captain2=players2.find((p)=>p.captain)
+          captain1 = players1.find((p) => p.captain)
+          captain2 = players2.find((p) => p.captain)
           const team1Players = players1.map(p => ({
             playerId: p.id,
             playerName: p.name,
@@ -158,5 +183,20 @@ module.exports.addLiveDetails = async function () {
     }
   } catch (error) {
     console.log(error);
+    await RapidApiKey.updateOne({ type: 'lineups', status: 'active' }, { $set: { status: 'inactive' } })
+    // 2. Find the *next* available key that is inactive, oldest updated first
+    const nextKey = await RapidApiKey.findOne({ type: "lineups", status: "inactive" })
+      .sort({ updatedAt: 1 });
+
+    if (nextKey) {
+      // 3. Activate it
+      await RapidApiKey.updateOne(
+        { _id: nextKey._id },
+        { $set: { status: "active", updatedAt: new Date() } }
+      );
+      console.log("Switched to new API key:", nextKey.apiKey);
+    } else {
+      console.error("⚠️ No more RapidAPI keys available!");
+    }
   }
 };

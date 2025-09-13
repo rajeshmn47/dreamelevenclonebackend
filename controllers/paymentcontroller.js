@@ -11,6 +11,7 @@ const NewPayment = require("../models/newPayment");
 const Withdraw = require("../models/withdraw");
 const router = express.Router();
 const User = require("../models/user");
+const { uploadImage } = require("../utils/firebaseinitialize");
 const { ObjectId } = mongoose.Types;
 
 dotenv.config();
@@ -128,7 +129,7 @@ router.get("/depositData", async (req, res) => {
     });
     let deposits = await NewPayment.aggregate([
       {
-        $match: { verified: false }
+        $match: {}
       },
       {
         $match: { userId: { $type: "string", $ne: "" } } // filter out empty userId
@@ -161,7 +162,10 @@ router.get("/depositData", async (req, res) => {
           createdAt: 1,
           user: 1
         }
-      }
+      },
+      {
+        $sort: { createdAt: -1 } // latest first
+      },
     ]);
     return res.status(200).json({
       message: "Successfully Fetched",
@@ -220,7 +224,8 @@ router.post("/withdraw", async (req, res) => {
     if (parseInt(user.wallet) > parseInt(req.body.amount)) {
       await Withdraw.create({
         amount: req.body.amount,
-        userId: req.body.uidfromtoken
+        userId: req.body.uidfromtoken,
+        upiId: req.body.upiId
       });
       //user.wallet = user.wallet - req.body.amount;
       //await user.save();

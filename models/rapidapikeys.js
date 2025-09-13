@@ -22,6 +22,11 @@ const rapidApiKeySchema = new mongoose.Schema(
       enum: ["active", "inactive"],
       default: "active",
     },
+    type: {
+      type: String,
+      enum: ["scores", "lineups", "matches"],
+      default: "scores"
+    }
   },
   {
     timestamps: true,
