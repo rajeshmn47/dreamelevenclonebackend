@@ -61,6 +61,21 @@ const playerSchema = new mongoose.Schema(
       default: "",
     },
 
+    bowlerType: {
+      type: String,
+      default: ""
+    },
+
+    battingHand: {
+      type: String,
+      default: ""
+    },
+
+    bowlingHand: {
+      type: String,
+      default: ""
+    },
+
     teamIds: [
       {
         type: String,

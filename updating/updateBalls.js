@@ -96,7 +96,7 @@ module.exports.updateBalls = async function () {
 
                                     //onst videoLink = await fuzzyMatchVideo(eventType, xyz[a]?.commText, xyz[a]) // your fuzzy logic to get video
                                     const clips = await Clip.find({ event: eventType })
-                                    const { videoLink, breakdown } = await fuzzyMatchVideo(clips, eventType, xyz[a]?.commText)
+                                    const { videoLink, breakdown } = await fuzzyMatchVideo(clips, eventType, xyz[a]?.commText, xyz?.[a])
                                     console.log(videoLink, 'videolinked')
                                     xyz[a].videoLink = videoLink || ''; // fallback if not found
                                     if (videoLink && breakdown) {
