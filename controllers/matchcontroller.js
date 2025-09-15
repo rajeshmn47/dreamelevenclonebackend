@@ -1001,12 +1001,12 @@ router.get("/update_live_scores/:matchId", async (req, res) => {
                     message: "match is complete or in break,no need to update",
                 });
             } else {
-                const keys = await getkeys();
+                const keys = await getkeys(matchId);
                 console.log(matchId, 'jeys')
                 const date1 = matches[i].date;
                 const options = {
                     method: "GET",
-                    url: "https://cricbuzz-cricket.p.rapidapi.com/mcenter/v1/${matchId}/hscard",
+                    url: `https://cricbuzz-cricket.p.rapidapi.com/mcenter/v1/${matchId}/hscard`,
                     headers: {
                         "x-rapidapi-host": "cricbuzz-cricket.p.rapidapi.com",
                         "X-RapidAPI-Key": keys,
