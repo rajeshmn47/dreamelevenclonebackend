@@ -4,8 +4,9 @@ module.exports.getcommentary = function (old, current) {
   let l = cur.length;
   let lastball = current[l - 1];
   let d = older.length;
-  let oldlastball = older[d - 1];
-  console.log(lastball, l, 'oldlastball')
+  older=older.filter((o)=>o.ballNbr>0);
+  let oldlastball = older[older?.length-1]
+  //console.log(lastball, l, 'oldlastball')
   if (oldlastball?.ballNbr || parseInt(oldlastball?.ballNbr) == 0) {
     let u = cur.filter((c) => c.timestamp > oldlastball?.timestamp);
     let x = older.filter((o) => o.timestamp < lastball?.timestamp);
