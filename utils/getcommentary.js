@@ -1,12 +1,11 @@
 module.exports.getcommentary = function (old, current) {
-  let cur = current;
-  let older = old.reverse();
+  let cur = current.filter((c) => c.ballNbr > 0);
+  let older = old.sort((a, b) => a.timestamp - b.timestamp);
   let l = cur.length;
   let lastball = current[l - 1];
   let d = older.length;
-  older=older.filter((o)=>o.ballNbr>0);
-  let oldlastball = older[older?.length-1]
-  //console.log(lastball, l, 'oldlastball')
+  older = older.filter((o) => o.ballNbr > 0);
+  let oldlastball = older[older?.length - 1]
   if (oldlastball?.ballNbr || parseInt(oldlastball?.ballNbr) == 0) {
     let u = cur.filter((c) => c.timestamp > oldlastball?.timestamp);
     let x = older.filter((o) => o.timestamp < lastball?.timestamp);
