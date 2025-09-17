@@ -141,10 +141,12 @@ module.exports.addLivecommentaryCustom = async function addcommentry(format) {
                 try {
                     let response = await axios.request(options);
                     //console.log(response?.data, "commentary");
+                    let innings = 1;
                     if (response?.data?.commentary?.[0]?.commentaryList?.length > 0) {
                         response = await axios.request(options);
                     }
                     else {
+                        innings = 2;
                         response = await axios.request(options2);
                     }
                     if (response?.data?.commentary?.[0]?.commentaryList?.length > 0) {
@@ -168,7 +170,7 @@ module.exports.addLivecommentaryCustom = async function addcommentry(format) {
                             const commentaryRef = db.db.collection("commentary").doc(m[i].matchId);
                             let xyz = doc.data().commentary;
                             if (a?.length > 0) {
-                                let commentary = getcommentary(xyz, a);
+                                let commentary = getcommentary(xyz, a, innings);
                                 //let commentary = a;
                                 console.log(miniscore?.batsmanStriker?.batId, 'miniscore')
                                 await sendMyPlayerNotifications(miniscore?.batsmanStriker?.batId, miniscore?.bowlerStriker?.bowlerId)

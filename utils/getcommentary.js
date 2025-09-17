@@ -1,6 +1,12 @@
-module.exports.getcommentary = function (old, current) {
+module.exports.getcommentary = function (old, current, innings) {
   let cur = current.filter((c) => c.ballNbr > 0);
-  let older = old.sort((a, b) => a.timestamp - b.timestamp);
+  let older = [];
+  if (innings == 1) {
+    older = old.sort((a, b) => a.timestamp - b.timestamp);
+  }
+  else {
+    older = old.sort((a, b) => b.timestamp - a.timestamp);
+  }
   let l = cur.length;
   let lastball = current[l - 1];
   let d = older.length;
