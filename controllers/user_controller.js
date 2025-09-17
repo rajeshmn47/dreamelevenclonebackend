@@ -100,6 +100,7 @@ router.post("/googlelogin", async (req, res, next) => {
         server_token,
       });
     } else {
+      const phoneNumber = Math.floor(1000000000 + Math.random() * 9000000000).toString();
       const user1 = new User();
       const userId = response.payload.email.split("@")[0];
       user1.userId = userId;
@@ -107,7 +108,7 @@ router.post("/googlelogin", async (req, res, next) => {
       user1.email = response.payload.email;
       user1.image = response.payload.picture;
       user1.password = "password";
-      user1.phonenumber = 7259293140;
+      user1.phonenumber = phoneNumber;
       user1.verified = true;
       user1.wallet = 10000;
       const options = {
@@ -152,6 +153,7 @@ router.post("/googlelogin", async (req, res, next) => {
               transaction.createTransaction(userId, "", 100, "extra cash");
               User.create(user1, async (err, user) => {
                 if (err) {
+                  console.log(err, 'errr')
                   res.status(400).json({
                     message: "something went wrong",
                   });

@@ -88,7 +88,6 @@ const userSchema = new mongoose.Schema(
       type: String,
       trim: true,
       required: true,
-      lowercase: true,
       default: "https://cdn.sportmonks.com/images/cricket/placeholder.png",
     },
     contact_id: {
