@@ -14,6 +14,7 @@ const Contest = require("../models/contest");
 const router = express.Router();
 const { getflag } = require("../utils/getflags");
 const flagURLs = require("country-flags-svg");
+const { squadkeys } = require("../utils/apikeys");
 
 function convertWicketsData(wicketsData) {
     return Object.keys(wicketsData).map(key => wicketsData[key]);
@@ -130,8 +131,7 @@ router.put("/update_match/:matchId", async (req, res) => {
         enddate,
         format,
         type,
-        important,
-        notImportant
+        importance
     } = req.body;
     const match = await Match.findOne({ matchId: req.params.matchId });
     if (match) {
@@ -151,8 +151,7 @@ router.put("/update_match/:matchId", async (req, res) => {
             enddate,
             format,
             type,
-            important,
-            notImportant
+            importance
         });
         await MatchLive.updateOne({ matchId }, { isInPlay: isInPlay, runsFI: runsFI, runsSI: runsSI });
         res.status(200).json({
@@ -226,11 +225,11 @@ router.post("/series/create", async (req, res) => {
 router.put("/series/:seriesId", async (req, res) => {
     try {
         const { seriesId } = req.params;
-        const { name, type, date, startDate, endDate, important, notImportant } = req.body;
+        const { name, type, date, startDate, endDate, importance } = req.body;
 
         const updatedSeries = await Series.findOneAndUpdate(
             { seriesId: Number(seriesId) }, // find by seriesId
-            { name, type, date, startDate, endDate, important, notImportant },
+            { name, type, date, startDate, endDate, importance },
             { new: true, runValidators: true }
         );
 
@@ -419,7 +418,7 @@ router.get("/update_live_scoress/:matchId", async (req, res) => {
                 message: "match is complete or in break,no need to update",
             });
         } else {
-            const keys = await getkeys();
+            const keys = await getkeys(matchId);
             console.log(matchId, 'jeys')
             const date1 = matches[i].date;
             const options = {
@@ -678,7 +677,7 @@ router.get("/update_to_lives/:matchId", async (req, res) => {
                     message: "live details of the match exists!",
                 });
             } else {
-                const keys = await getkeys();
+                const keys = await getkeys(matchId);
                 console.log('not exists')
                 const date1 = matches[i].date
                 const options = {
@@ -1387,7 +1386,7 @@ router.get("/update_to_live/:matchId", async (req, res) => {
                         message: "live details of the match exists!",
                     });
                 } else {
-                    const keys = await getkeys();
+                    const keys = await squadkeys(matchId);
                     console.log('not exists')
                     const date1 = matches[i].date
                     const options = {

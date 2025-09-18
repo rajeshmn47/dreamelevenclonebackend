@@ -29,13 +29,10 @@ const seriesSchema = new mongoose.Schema(
       type: Date,
       required: true,
     },
-    important: {
-      type: Boolean,
-      default: false,
-    },
-    notImportant: {
-      type: Boolean,
-      default: false,
+    importance: {
+      type: String,
+      enum: ["very_high", "high", "medium", "low"],
+      default: "medium"
     }
   },
   {
