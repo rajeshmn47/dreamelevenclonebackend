@@ -2,9 +2,9 @@
   "shotType": {
     "inside_out": [
       "inside out",
-      "extra cover",
-      "over covers",
-      "inside out drive"
+      "inside out",
+      "inside-out",
+      "over extra cover"
     ],
     "uppercut": [
       "upper cut",
@@ -18,7 +18,9 @@
     "reverse_sweep": [
       "reverse sweep",
       "switch hit",
-      "reverse hit"
+      "reverse hit",
+      "reverse-hit",
+      "reverse-sweep"
     ],
     "pull": [
       "pull",
@@ -28,34 +30,6 @@
       "cut",
       "square cut",
       "upper cut"
-    ],
-    "lofted": [
-      "lofted",
-      "slapped over",
-      "over mid-off",
-      "over mid-on",
-      "over midwicket",
-      "over the cover",
-      "over cover",
-      "over extra cover",
-      "aerial",
-      "over the top",
-      "slammed over",
-      "airily",
-      "lifts it",
-      "lofts",
-      "over the bowler",
-      "over deep square",
-      "over point",
-      "over long-on",
-      "over the",
-      "over long-off",
-      "loft",
-      "heave",
-      "over the infield",
-      "over the wide",
-      "over infield",
-      "slog"
     ],
     "helicopter_shot": [
       "helicopter shot",
@@ -78,8 +52,7 @@
       "block"
     ],
     "sweep": [
-      "sweep",
-      "conventional sweep"
+      "sweep"
     ],
     "paddle_sweep": [
       "paddle sweep",
@@ -182,7 +155,9 @@
     ],
     "third_man": [
       "third man",
-      "deep third man"
+      "deep third man",
+      "third-man",
+      "thirdman"
     ],
     "slip": [
       "slip",
@@ -491,6 +466,49 @@
     "bottom_edge": [
       "bottom edge",
       "bottom-edge"
+    ],
+    "well_timed": [
+      "perfect shot",
+      "great shot",
+      "timed well",
+      "timed very well",
+      "brilliant shot",
+      "excellent shot",
+      "middled it",
+      "perfect timing",
+      "beautiful shot",
+      "timed it nicely",
+      "right off the middle"
+    ]
+  },
+  "lofted": {
+    "lofted": [
+      "lofted",
+      "slapped over",
+      "over mid-off",
+      "over mid-on",
+      "over midwicket",
+      "over the cover",
+      "over cover",
+      "over extra cover",
+      "aerial",
+      "over the top",
+      "slammed over",
+      "airily",
+      "lifts it",
+      "lofts",
+      "over the bowler",
+      "over deep square",
+      "over point",
+      "over long-on",
+      "over the",
+      "over long-off",
+      "loft",
+      "heave",
+      "over the infield",
+      "over the wide",
+      "over infield",
+      "slog"
     ]
   }
 }

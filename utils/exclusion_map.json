@@ -9,6 +9,13 @@
       "upper-cut",
       "cut the angle",
       "cut back"
+    ],
+    "sweep": [
+      "reverse sweep",
+      "switch hit",
+      "reverse hit",
+      "reverse-hit",
+      "reverse-sweep"
     ]
   },
   "direction": {
@@ -17,7 +24,8 @@
       "bowled at around this point"
     ],
     "cover": [
-      "cover point"
+      "cover point",
+      "cover-point"
     ],
     "mid_off": [
       "back over the bowler's head"
@@ -76,7 +84,21 @@
   },
   "lofted": {
     "lofted": [
-      "That was hit uppishly"
+      "uijvuisfjuiji"
+    ]
+  },
+  "connection": {
+    "well_timed": [
+      "not timed well",
+      "not timed very well",
+      "never timed well",
+      "hasn't middled",
+      "Wasn't timed well",
+      "mistimes",
+      "Wasn't a great shot",
+      "Fails to connect",
+      "not right off the middle",
+      "timing is such that it's gone all the way"
     ]
   }
 }

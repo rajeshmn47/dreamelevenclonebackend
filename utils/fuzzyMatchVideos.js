@@ -186,7 +186,7 @@ function scoreClip(commentary, clip, batsman, bowler, team, bowl_team, series, b
     }
 
     // Match synonyms
-    console.log(clip?.labels, 'labels')
+    //console.log(clip?.labels, 'labels')
     if (shotType && (clip?.labels?.shotType?.toLowerCase() == shotType.toLowerCase())) {
         score += 5;
         scoreBreakdown.shotTypeSynonymMatch = 5;
@@ -207,7 +207,7 @@ function scoreClip(commentary, clip, batsman, bowler, team, bowl_team, series, b
         scoreBreakdown.connection = 3;
     }
 
-    if (connection && (clip?.labels?.lofted?.toLowerCase() == lofted?.toLowerCase())) {
+    if (connection && (clip?.labels?.lofted == lofted)) {
         score += 2;
         scoreBreakdown.lofted = 2;
     }
@@ -360,7 +360,7 @@ async function getBestMatchingVideo(clips, event, commentary, details, bowling_t
         isKeeperCatch = extractFieldFromCommentary(commentary, "keeperCatch");
     }
     if (!comesDown) comesDown = extractFieldFromCommentary(commentary, "comesDown");
-    if (!lofted) lofted = extractFieldFromCommentary(commentary, "lofted");
+    if (!lofted) lofted = extractFieldFromCommentary(commentary, "lofted") ? true : false;
     //console.log(shotType, direction, ballType, 'shotType direction ballType')
     const filteredClips = await filterClipsByEventOnly(clips, event, commentary);
     let Batsman = await Player.findOne({ name: batsman });
@@ -368,7 +368,7 @@ async function getBestMatchingVideo(clips, event, commentary, details, bowling_t
     let battingHand = Batsman?.battingHand || "unknown";
     let bowlingHand = Bowler?.bowlingHand || "unknown";
     let bowlerType = Bowler?.bowlerType || "unknown";
-    console.log(shotType, ballType, direction, 'filtered clips length')
+    console.log(shotType, ballType, direction, Batsman, batsman, 'filtered clips length')
     const scored = filteredClips.map(clip => {
         const { score, breakdown } = scoreClip(
             commentary,
@@ -422,6 +422,34 @@ function extractFieldFromCommentary(commentary, field) {
     if (!commentary) return null;
     const fieldSynonyms = cricketSynonyms[field] || {};
     const lowerCommentary = commentary.toLowerCase();
+    if (field == "lofted") {
+        const fieldSynonyms = cricketSynonyms["lofted"] || {};
+        const lowerCommentary = commentary.toLowerCase();
+        //console.log(fieldSynonyms, 'synonymn')
+        for (const key in fieldSynonyms) {
+            // Check if the main key or any of its synonyms appear in the commentary
+            const fieldExclusions = exclusionMap[field] || {};
+            const exclusions = fieldExclusions[key] || [];
+            let exit = false;
+            if (Array.isArray(exclusions)) {
+                for (const excl of exclusions) {
+                    //console.log(excl, 'exclusion')
+                    if (commentary.includes(excl.toLowerCase())) {
+                        exit = true // Exclusion found, do not match
+                    }
+                }
+            }
+            if (exit) continue;
+            if (lowerCommentary.includes(key.toLowerCase())) return key;
+            const synonyms = fieldSynonyms[key];
+            if (Array.isArray(synonyms)) {
+                for (const syn of synonyms) {
+                    if (lowerCommentary.includes(syn.toLowerCase())) return key;
+                }
+            }
+        }
+        return null;
+    }
     for (const key in fieldSynonyms) {
         // Check if the main key or any of its synonyms appear in the commentary
         const fieldExclusions = exclusionMap[field] || {};
