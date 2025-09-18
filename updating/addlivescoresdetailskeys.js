@@ -43,34 +43,23 @@ module.exports.addLivescoresDetailsCustom = async function (format) {
   const b = 120 * 60 * 60 * 1000;
   date = new Date(date.getTime() - b);
   let matches;
-  if (format === 'important' || format === 'notImportant') {
+  if (format == "low" || format == "high" || format == "very_high") {
     matches = await Match.find({
       date: {
         $gte: new Date(date),
         $lt: new Date(endDate),
       }
     }).populate("series");
-    if (format === 'important') {
-      matches = matches.filter(m => {
-        if (!m.seriesId) return false;
-        return m.important === true || m.series.important === true
-      });
-    } else {
-      matches = matches.filter(m => {
-        if (!m.seriesId) return false;
-        return m.series.notImportant === true
-      });
-    }
+    console.log(format, 'importance')
+    matches = matches.filter(m => {
+      if (!m.seriesId) return false;
+      return m.importance == format || m.series.importance == format
+    });
   }
   else {
-    const importantSeries = await Series.find({ important: true }).select("_id");
-    const notImportantSeries = await Series.find({ notImportant: true }).select("_id");
-    const exclude = [...importantSeries.map(s => s._id), ...notImportantSeries.map(s => s._id)];
-    console.log(exclude?.length, format, 'excludes')
-
     matches = await Match.find({
       format: format,
-      series: { $nin: exclude },
+      importance: "medium",
       date: {
         $gte: new Date(date),
         $lt: new Date(endDate),
@@ -78,7 +67,7 @@ module.exports.addLivescoresDetailsCustom = async function (format) {
     });
   }
 
-  console.log(matches?.length, 'matchest')
+  console.log(matches?.length, 'matchestz')
   for (let i = 0; i < matches.length; i++) {
     const matchId = matches[i].matchId;
     const match = await MatchLive.findOne({ matchId: matchId });

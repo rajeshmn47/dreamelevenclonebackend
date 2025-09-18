@@ -42,36 +42,29 @@ module.exports.addLivecommentaryCustom = async function addcommentry(format) {
         const endDate = new Date(date.getTime());
         date = new Date(date.getTime() - 120 * 60 * 60 * 1000);
         let matches;
-        if (format === 'important' || format === 'notImportant') {
+        if (format == "low" || format == "high" || format == "very_high") {
             matches = await Matches.find({
                 date: {
                     $gte: new Date(date),
                     $lt: new Date(endDate),
                 }
             }).populate("series");
-            if (format === 'important') {
-                matches = matches.filter(m => {
-                    if (!m.seriesId) return false;
-                    return m.important === true || m?.series?.important === true
-                });
-            } else {
-                matches = matches.filter(m => {
-                    if (!m.seriesId) return false;
-                    return m.series.notImportant === true
-                });
-            }
+            console.log(format, 'importance')
+            matches = matches.filter(m => {
+                if (!m.seriesId) return false;
+                return m.importance == format || m.series.importance == format
+            });
         }
         else {
             matches = await Matches.find({
                 format: format,
+                importance: "medium",
                 date: {
                     $gte: new Date(date),
                     $lt: new Date(endDate),
                 },
             });
         }
-
-        //console.log(matches?.length, matches, 'matchest')
 
         //  const citiesRef = db.db.collection('commentary');
         //  const snapshot = await citiesRef.get();
@@ -104,7 +97,7 @@ module.exports.addLivecommentaryCustom = async function addcommentry(format) {
         console.log(m.length, "allmatches");
         for (let i = 0; i < allMatches.length; i++) {
             if (m[i].matchId.length > 3) {
-                //console.log(m[i]?.matchId, "matchid");
+                console.log(m[i]?.matchId, "matchid");
                 //const keys = await getkeys.getkeys();
                 const options = {
                     method: "GET",
@@ -183,7 +176,7 @@ module.exports.addLivecommentaryCustom = async function addcommentry(format) {
                                         }
                                     });
                                 }
-                                console.log(commentary, 'commentary')
+                                //console.log(commentary, 'commentary')
 
                                 const res = await commentaryRef.set(
                                     {

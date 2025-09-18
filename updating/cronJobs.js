@@ -26,9 +26,14 @@ const isSource = process.env.SOURCE === "true";
 let jobs = {}; // store references to all cron jobs
 
 function getCronPattern(minutes) {
-  if (minutes < 1) return "* * * * *";
+  if (minutes < 1) {
+    const seconds = Math.round(minutes * 60);
+    return `*/${seconds} * * * * *`; // seconds-level cron
+  }
   return `*/${minutes} * * * *`;
 }
+
+console.log(getCronPattern(0.5), 'pattern')
 
 // Stop all existing cron jobs
 function stopAllJobs() {
@@ -84,12 +89,16 @@ async function scheduleJobs(frequencies) {
       await addLivescoresDetailsCustom("t20");
     });
 
-    jobs.important = cron.schedule(getCronPattern(frequencies.important), async () => {
-      await addLivescoresDetailsCustom("important");
+    jobs.high = cron.schedule(getCronPattern(frequencies.high), async () => {
+      await addLivescoresDetailsCustom("high");
     });
 
-    jobs.unimportant = cron.schedule(getCronPattern(frequencies.notImportant), async () => {
-      await addLivescoresDetailsCustom("notImportant");
+    jobs.very_high = cron.schedule(getCronPattern(frequencies.very_high), async () => {
+      await addLivescoresDetailsCustom("very_high");
+    });
+
+    jobs.low = cron.schedule(getCronPattern(frequencies.low), async () => {
+      await addLivescoresDetailsCustom("low");
     });
 
     jobs.liveCommentaryTest = cron.schedule("*/15 * * * *", async () => {
@@ -133,11 +142,17 @@ async function scheduleJobs(frequencies) {
     jobs.t20FS = cron.schedule(getCronPattern(frequencies.t20), async () => {
       await addLivescoresDetailsCustomfs("t20");
     });
-    jobs.importantFS = cron.schedule(getCronPattern(frequencies.important), async () => {
-      await addLivescoresDetailsCustomfs("important");
+
+    jobs.high = cron.schedule(getCronPattern(frequencies.high), async () => {
+      await addLivescoresDetailsCustomfs("high");
     });
-    jobs.unimportantFS = cron.schedule(getCronPattern(frequencies.notImportant), async () => {
-      await addLivescoresDetailsCustomfs("notImportant");
+
+    jobs.very_high = cron.schedule(getCronPattern(frequencies.very_high), async () => {
+      await addLivescoresDetailsCustomfs("very_high");
+    });
+
+    jobs.low = cron.schedule(getCronPattern(frequencies.low), async () => {
+      await addLivescoresDetailsCustomfs("low");
     });
 
     console.log("ℹ️ Cron jobs scheduled for non-source mode");
@@ -165,6 +180,7 @@ async function scheduleJobs(frequencies) {
 // Initialize cron jobs on startup
 async function cronjobs() {
   const cfg = await config.findOne();
+  console.log(cfg?.frequencies, 'frequencies')
   const frequencies = cfg?.frequencies || { t20: 2, odi: 5, test: 15, important: 1 };
   await scheduleJobs(frequencies);
 }

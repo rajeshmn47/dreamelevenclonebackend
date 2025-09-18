@@ -2,6 +2,7 @@ const fetch = require("node-fetch");
 const Match = require("../models/match");
 const MatchLive = require("../models/matchlive");
 const { isInPlay } = require("../utils/isInPlay");
+const { getkeys } = require("../utils/crickeys");
 
 function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -29,25 +30,17 @@ module.exports.addLivescoresDetailsCustomfs = async function (format) {
     date = new Date(date.getTime() - b);
     const URL = process.env.BACKEND_URL
     let matches;
-    if (format === 'important' || format === 'notImportant') {
-        if (format === 'important') {
-            matches = await Match.find({
-                date: {
-                    $gte: new Date(date),
-                    $lt: new Date(endDate),
-                }, important: true
-            });
-        } else {
-            matches = await Match.find({
-                date: {
-                    $gte: new Date(date),
-                    $lt: new Date(endDate),
-                }, notImportant: true
-            });
-        }
+    if (format === 'low' || format === 'high' || format == 'very_high') {
+        matches = await Match.find({
+            date: {
+                $gte: new Date(date),
+                $lt: new Date(endDate),
+            }, importance: format
+        });
     }
     else {
         matches = await Match.find({
+            importance: "medium",
             format: format,
             date: {
                 $gte: new Date(date),
@@ -64,7 +57,7 @@ module.exports.addLivescoresDetailsCustomfs = async function (format) {
             continue;
         }
         const apiUrl = `${URL}/api/match/live-scores/${matchId}`;
-
+        await getkeys(matchId)
         try {
             await delay(100);
             const res = await fetch(apiUrl, {
