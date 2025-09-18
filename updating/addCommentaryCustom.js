@@ -134,12 +134,12 @@ module.exports.addLivecommentaryCustom = async function addcommentry(format) {
                 try {
                     let response = await axios.request(options);
                     //console.log(response?.data, "commentary");
-                    let innings = 1;
+                    let innings = 2;
                     if (response?.data?.commentary?.[0]?.commentaryList?.length > 0) {
                         response = await axios.request(options);
                     }
                     else {
-                        innings = 2;
+                        innings = 1;
                         response = await axios.request(options2);
                     }
                     if (response?.data?.commentary?.[0]?.commentaryList?.length > 0) {
