@@ -1391,10 +1391,11 @@ router.get("/update_to_live/:matchId", async (req, res) => {
                     const date1 = matches[i].date
                     const options = {
                         method: "GET",
-                        url: `https://cricbuzz-cricket.p.rapidapi.com/mcenter/v1/${matchId}`,
+                        // url: `https://cricbuzz-cricket.p.rapidapi.com/mcenter/v1/${matchId}`,
+                        url: `https://cricbuzz-cricket2.p.rapidapi.com/mcenter/v1/${matchId}/teams`,
                         headers: {
-                            "x-rapidapi-host": "cricbuzz-cricket.p.rapidapi.com",
-                            "X-RapidAPI-Key": keys,
+                            "x-rapidapi-host": "cricbuzz-cricket2.p.rapidapi.com",
+                            "x-rapidapi-key": keys,
                             useQueryString: true,
                         },
                     };
@@ -1411,55 +1412,48 @@ router.get("/update_to_live/:matchId", async (req, res) => {
                         .then(async (s) => {
                             try {
                                 console.log(s, 's')
-                                if (s.matchInfo?.team1 != null && s.matchInfo?.team1.length != 0) {
-                                    const LiveMatchDet = new MatchLive();
-                                    LiveMatchDet.matchId = matchId;
-                                    LiveMatchDet.date = date1;
-                                    const r = [];
-                                    for (const x of s.matchInfo.team1.playerDetails) {
-                                        if (x.role == "Unknown") {
-                                            x.position = "Batsman";
-                                        }
-                                        const a = {
-                                            playerId: x.id,
-                                            playerName: x.name,
-                                            image: x.faceImageId,
-                                            points: 4,
-                                            position: x.role,
-                                            batOrder: -1,
-                                        };
-                                        r.push(a);
-                                    }
-                                    const y = [];
-                                    for (const x of s.matchInfo.team2.playerDetails) {
-                                        if (x.role == "Unknown") {
-                                            x.position = "Batsman";
-                                        }
-                                        const playerDet = {
-                                            playerId: x.id,
-                                            playerName: x.name,
-                                            points: 4,
-                                            image: x.faceImageId,
-                                            position: x.role,
-                                            batOrder: -1,
-                                        };
-                                        y.push(playerDet);
-                                    }
-                                    LiveMatchDet.teamHomePlayers = r;
-                                    LiveMatchDet.teamAwayPlayers = y;
-                                    LiveMatchDet.teamHomeId = s.matchInfo.team1.id;
-                                    LiveMatchDet.teamAwayId = s.matchInfo.team2.id;
-                                    LiveMatchDet.isInPlay = true;
-                                    const m = await MatchLive.findOne({ matchId });
-                                    const match = await MatchLive.create(LiveMatchDet);
-                                    if (match) {
-                                        console.log(
-                                            "Live Details of match is successfully added in db! "
-                                        );
-                                        res.status(200).json({
-                                            message: "updated live details of match successfully",
-                                        });
-                                    }
+                                const data = s; // this will contain only players
+                                console.log(data?.team1?.players, 'data for players')
+                                players1 = data.team1.players["playing XI"] || data.team1.players["Squad"]
+                                players2 = data.team2.players["playing XI"] || data.team2.players["Squad"]
+                                captain1 = players1.find((p) => p.captain)
+                                captain2 = players2.find((p) => p.captain)
+                                const team1Players = players1.map(p => ({
+                                    playerId: p.id,
+                                    playerName: p.name,
+                                    image: p.faceImageId,
+                                    points: 4,
+                                    position: p.role === "Unknown" ? "Batsman" : p.role,
+                                    batOrder: -1
+                                }));
+
+                                const team2Players = players2.map(p => ({
+                                    playerId: p.id,
+                                    playerName: p.name,
+                                    image: p.faceImageId,
+                                    points: 4,
+                                    position: p.role === "Unknown" ? "Batsman" : p.role,
+                                    batOrder: -1
+                                }));
+
+                                const liveMatch = new MatchLive({
+                                    matchId: matchId,
+                                    date: matches[i].date,
+                                    teamHomeId: matches[i].teamHomeId,
+                                    teamAwayId: matches[i].teamAwayId,
+                                    teamHomePlayers: team1Players,
+                                    teamAwayPlayers: team2Players,
+                                    isInPlay: true
+                                });
+
+                                await liveMatch.save();
+                                if (liveMatch) {
+                                    console.log(
+                                        "Live Details of match is successfully added in db! "
+                                    );
+                                    res.status(200).json({
+                                        message: "updated live details of match successfully",
+                                    });
                                 }
                             } catch (err) {
                                 console.log(err);
