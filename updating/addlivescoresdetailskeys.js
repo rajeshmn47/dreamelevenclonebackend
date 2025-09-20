@@ -59,7 +59,6 @@ module.exports.addLivescoresDetailsCustom = async function (format) {
   }
   else {
     matches = await Match.find({
-      matchId: "116822",
       format: format,
       importance: "medium",
       date: {
