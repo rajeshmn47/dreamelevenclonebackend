@@ -149,7 +149,7 @@ module.exports.addLivecommentaryCustom = async function addcommentry(format) {
                         const commentaryRef = db.db.collection("commentary").doc(m[i].matchId);
                         const doc = await commentaryRef.get();
                         if (!doc.exists) {
-                            await sendMyPlayerNotifications(miniscore?.batsmanStriker?.batId, miniscore?.bowler?.bowlerId)
+                            await sendMyPlayerNotifications(miniscore?.batsmanStriker?.batId, miniscore?.bowlerStriker?.bowlId)
                             const commentaryRef = db.db.collection("commentary").doc(m[i].matchId);
                             const res = await commentaryRef.set(
                                 {
@@ -166,7 +166,7 @@ module.exports.addLivecommentaryCustom = async function addcommentry(format) {
                                 let commentary = getcommentary(xyz, a, innings);
                                 //let commentary = a;
                                 console.log(miniscore?.batsmanStriker?.batId, 'miniscore')
-                                await sendMyPlayerNotifications(miniscore?.batsmanStriker?.batId, miniscore?.bowlerStriker?.bowlerId)
+                                await sendMyPlayerNotifications(miniscore?.batsmanStriker?.batId, miniscore?.bowlerStriker?.bowlId)
                                 if (miniscore?.batsmanStriker?.batId == 12305) {
                                     transporter.sendMail(mailOptions, (error, info) => {
                                         if (error) {
