@@ -90,4 +90,30 @@ async function sendTweetWithImage(text, imagePath) {
   }
 }
 
-module.exports = { sendTweet, sendTweetWithVideo, sendTweetWithImage };
+async function sendTweetWithPoll(text, options = ["Option 1", "Option 2"], durationMinutes = 1440) {
+  try {
+    const twitterClient = new TwitterApi({
+      appKey,
+      appSecret,
+      accessToken,
+      accessSecret,
+    });
+
+    // Create a tweet with a poll
+    const tweet = await twitterClient.v2.tweet({
+      text,
+      poll: {
+        options,
+        duration_minutes: durationMinutes, // max: 10080 minutes (7 days)
+      },
+    });
+
+    console.log("✅ Poll tweeted successfully:", tweet.data.id);
+    return tweet.data;
+  } catch (error) {
+    console.error("❌ Error sending poll tweet:", error);
+    throw error;
+  }
+}
+
+module.exports = { sendTweet, sendTweetWithVideo, sendTweetWithImage, sendTweetWithPoll };

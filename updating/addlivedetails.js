@@ -3,7 +3,7 @@ const Match = require("../models/match");
 const MatchLiveDetails = require("../models/matchlive");
 const { getkeys, squadkeys } = require("../utils/apikeys");
 const { messaging } = require("../utils/firebaseinitialize");
-const { sendTweet, sendTweetWithImage } = require("../utils/sendTweet");
+const { sendTweet, sendTweetWithImage, sendTweetWithPoll } = require("../utils/sendTweet");
 const { createVsImage } = require("../utils/generateTweetImage");
 const RapidApiKey = require("../models/rapidapikeys");
 
@@ -160,12 +160,14 @@ module.exports.addLiveDetails = async function () {
             if (match?.importance == "very_high" || match?.importance == "high") {
               let tweetText = `Lineups Out: ${match.teamHomeName} vs ${match.teamAwayName}\nThe lineups for ${match.teamHomeName} and ${match.teamAwayName} are now available. Check out the details!
         https://www.cricbuzz.com/live-cricket-scores/${match?.matchId} \n${generateMatchHashtags(match.teamHomeCode, match.teamAwayCode, match.matchTitle)}`
-              await sendNotification(
-                `Lineups Out: ${match.teamHomeName} vs ${match.teamAwayName}`,
-                `The lineups for ${match.teamHomeName} and ${match.teamAwayName} are now available.`
+              await sendNotification(`Lineups Out: ${match.teamHomeName} vs ${match.teamAwayName}`, `The lineups for ${match.teamHomeName} and ${match.teamAwayName} are now available.`
               );
-              await createVsImage(match.teamHomeCode, match.teamAwayCode, captain1, captain2, `./images/${match.matchId}_vs_image.png`); // Assuming first player is captain
+              await createVsImage(match.teamHomeCode, match.teamAwayCode, captain1, captain2, `./images/${match.matchId}_vs_image.png`, match?.date); // Assuming first player is captain
               await sendTweetWithImage(tweetText, `./images/${match.matchId}_vs_image.png`);
+              delay(2000)
+              let pollTweet = `who will win man of the match? \n${generateMatchHashtags(match.teamHomeCode, match.teamAwayCode, match.matchTitle)}`
+              let players = [...liveMatch.teamHomePlayers.slice(0, 2).map((h) => h.playerName), ...liveMatch.teamAwayPlayers.slice(0, 2).map((h) => h.playerName)]
+              await sendTweetWithPoll(pollTweet, [...players])
             }
             success = true;
           } catch (err) {
