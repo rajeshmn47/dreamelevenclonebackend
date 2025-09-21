@@ -18,6 +18,12 @@ const withdrawSchema = new mongoose.Schema(
       ref: 'User'
     },
 
+    status: {
+      type: String,
+      enum: ["pending", "processing", "completed", "failed"],
+      default: "pending",
+    },
+
     isWithdrawCompleted: {
       type: Boolean,
       trim: true,

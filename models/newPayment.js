@@ -15,12 +15,18 @@ const newPaymentSchema = new mongoose.Schema(
 
     userId: {
       type: String,
-      default:""
+      default: ""
     },
 
     recieptUrl: {
       type: String,
       required: true,
+    },
+
+    status: {
+      type: String,
+      enum: ["pending", "approved", "rejected"],
+      default: "pending",
     },
 
     verified: {
