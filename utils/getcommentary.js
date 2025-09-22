@@ -1,22 +1,27 @@
 module.exports.getcommentary = function (old, current, innings) {
-  current = current.sort((a,b)=>a.timestamp-b.timestam)
+  if (innings == 1) {
+    current = current.sort((a, b) => b.timestamp - a.timestamp)
+  }
+  else {
+    current = current.sort((a, b) => b.timestamp - a.timestamp)
+  }
   let cur = current.filter((c) => c.ballNbr > 0);
   let older = [];
   if (innings == 1) {
-    older = old.sort((a, b) => a.timestamp - b.timestamp);
+    older = old.sort((a, b) => b.timestamp - a.timestamp);
   }
   else {
     older = old.sort((a, b) => b.timestamp - a.timestamp);
   }
   let l = cur.length;
-  let lastball = current[l - 1];
+  let lastball = current[0];
   let d = older.length;
   older = older.filter((o) => o.ballNbr > 0);
-  let oldlastball = older[older?.length - 1]
+  let oldlastball = older[0]
   if (oldlastball?.ballNbr || parseInt(oldlastball?.ballNbr) == 0) {
     let u = cur.filter((c) => c.timestamp > oldlastball?.timestamp);
     let x = older.filter((o) => o.timestamp < lastball?.timestamp);
-    console.log(x?.length, u?.length, lastball, innings, 'x')
+    console.log(older?.map((o) => o.videoLink), (cur?.map((c) => c.ballNbr)), u.length, x.length, 'x')
     x.push(...u);
     let commentary = [];
     if (Array.isArray(x)) {

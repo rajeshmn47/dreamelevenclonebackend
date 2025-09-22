@@ -150,7 +150,7 @@ module.exports.addLivescoresDetailsCustom = async function (format) {
                   console.error("⚠️ No more RapidAPI keys available!");
                 }
               }
-              if (s.scorecard != 0) {
+              if (s.scorecard != 0 && s.scorecard.length > 0) {
                 const LiveMatchDet = new MatchLive();
                 LiveMatchDet.matchId = matchId;
                 LiveMatchDet.date = date1;
@@ -190,11 +190,10 @@ module.exports.addLivescoresDetailsCustom = async function (format) {
                   wickets_fi = s.scorecard[0].wickets;
                   fow_fi = s.scorecard[0].wickets;
                   extrasDetails_fi = s.scorecard[0].extras.total;
-                  wicketsDataFI = convertWicketsData(s.scorecard[0].wickets);
+                  wicketsDataFI = s.scorecard[0].fow.fow;
                 }
-                console.log(s.scorecard,s.scorecard.length,"batting")
+                console.log(s.scorecard, s.scorecard.length, "batting")
                 if (s.scorecard.length > 1) {
-                  console.log(s.scorecard[1].batsman, "bat man")
                   batting2 = s.scorecard[1].batsman;
                   bowling2 = s.scorecard[1].bowler;
                   title_si = s.scorecard[1].batteamname;
@@ -203,11 +202,11 @@ module.exports.addLivescoresDetailsCustom = async function (format) {
                   wickets_si = s.scorecard[1].wickets;
                   fow_si = s.scorecard[1].wickets;
                   extrasDetails_si = s.scorecard[1].extras.total;
-                  wicketsDataSI = convertWicketsData(s.scorecard[1].wickets);
+                  wicketsDataSI = s.scorecard[1].fow.fow;
                 }
                 const { teamHomePlayers } = match;
                 const { teamAwayPlayers } = match;
-                console.log(teamHomePlayers, teamAwayPlayers, "playing 11")
+                //console.log(teamHomePlayers, teamAwayPlayers, "playing 11")
                 const batting = [];
                 const ke = Object.keys(batting1);
                 for (let i = 0; i < ke.length; i++) {
@@ -236,7 +235,7 @@ module.exports.addLivescoresDetailsCustom = async function (format) {
                       teamHomePlayers[i].fours = batter.boundaries;
                       teamHomePlayers[i].sixes = batter.sixes;
                       teamHomePlayers[i].strikeRate = batter.strikeRate;
-                      teamHomePlayers[i].howOut = batter.outDesc;
+                      teamHomePlayers[i].howOut = batter.outdec;
                       teamHomePlayers[i].batOrder = 0;
                     }
                   }
@@ -272,7 +271,7 @@ module.exports.addLivescoresDetailsCustom = async function (format) {
                       teamAwayPlayers[i].fours = batter.boundaries;
                       teamAwayPlayers[i].sixes = batter.sixes;
                       teamAwayPlayers[i].strikeRate = batter.strikeRate;
-                      teamAwayPlayers[i].howOut = batter.outDesc;
+                      teamAwayPlayers[i].howOut = batter.outdec;
                       teamAwayPlayers[i].batOrder = 0;
                     }
                   }
@@ -346,6 +345,9 @@ module.exports.addLivescoresDetailsCustom = async function (format) {
                       },
                     }
                   );
+                }
+                else {
+                  console.log('lkb')
                 }
               }
             })
