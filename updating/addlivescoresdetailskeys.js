@@ -252,7 +252,7 @@ module.exports.addLivescoresDetailsCustom = async function (format) {
                     }
                   }
                   teamHomePlayers[i].points = pointCalculator(
-                    teamHomePlayers[i].runsConceded,
+                    teamHomePlayers[i].runs,
                     teamHomePlayers[i].fours,
                     teamHomePlayers[i].sixes,
                     teamHomePlayers[i].strikeRate,
@@ -288,7 +288,7 @@ module.exports.addLivescoresDetailsCustom = async function (format) {
                     }
                   }
                   teamAwayPlayers[i].points = pointCalculator(
-                    teamAwayPlayers[i].runsConceded,
+                    teamAwayPlayers[i].runs,
                     teamAwayPlayers[i].fours,
                     teamAwayPlayers[i].sixes,
                     teamAwayPlayers[i].strikeRate,
