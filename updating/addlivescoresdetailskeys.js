@@ -232,9 +232,9 @@ module.exports.addLivescoresDetailsCustom = async function (format) {
                     if (batter.id == playerId) {
                       teamHomePlayers[i].runs = batter.runs;
                       teamHomePlayers[i].balls = batter.balls;
-                      teamHomePlayers[i].fours = batter.boundaries;
+                      teamHomePlayers[i].fours = batter.fours;
                       teamHomePlayers[i].sixes = batter.sixes;
-                      teamHomePlayers[i].strikeRate = batter.strikeRate;
+                      teamHomePlayers[i].strikeRate = batter.strikerate;
                       teamHomePlayers[i].howOut = batter.outdec;
                       teamHomePlayers[i].batOrder = 0;
                     }
@@ -268,9 +268,9 @@ module.exports.addLivescoresDetailsCustom = async function (format) {
                     if (batter.id == playerId) {
                       teamAwayPlayers[i].runs = batter.runs;
                       teamAwayPlayers[i].balls = batter.balls;
-                      teamAwayPlayers[i].fours = batter.boundaries;
+                      teamAwayPlayers[i].fours = batter.fours;
                       teamAwayPlayers[i].sixes = batter.sixes;
-                      teamAwayPlayers[i].strikeRate = batter.strikeRate;
+                      teamAwayPlayers[i].strikeRate = batter.strikerate;
                       teamAwayPlayers[i].howOut = batter.outdec;
                       teamAwayPlayers[i].batOrder = 0;
                     }
