@@ -168,6 +168,10 @@ module.exports.addLiveDetails = async function () {
               let pollTweet = `who will win man of the match? \n${generateMatchHashtags(match.teamHomeCode, match.teamAwayCode, match.matchTitle)}`
               let players = [...liveMatch.teamHomePlayers.slice(0, 2).map((h) => h.playerName), ...liveMatch.teamAwayPlayers.slice(0, 2).map((h) => h.playerName)]
               await sendTweetWithPoll(pollTweet, [...players])
+              await delay(2000)
+              let pollTweet2 =`who will win the match? \n${generateMatchHashtags(match.teamHomeCode, match.teamAwayCode, match.matchTitle)}`
+              let teams = [matches[i].teamHomeName,matches[i].teamAwayName]
+              await sendTweetWithPoll(pollTweet2, [...teams])
             }
             success = true;
           } catch (err) {
