@@ -20,6 +20,7 @@ const clipSchema = new mongoose.Schema({
   matchId: String,
   season: String,
   duration: Number,
+  reported: { type: Boolean, default: false }, // simple true/false
   labels: {
     shotType: { type: String },
     direction: { type: String },
