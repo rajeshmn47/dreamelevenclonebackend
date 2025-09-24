@@ -165,13 +165,16 @@ module.exports.addLiveDetails = async function () {
               await createVsImage(match.teamHomeCode, match.teamAwayCode, captain1, captain2, `./images/${match.matchId}_vs_image.png`, match?.date); // Assuming first player is captain
               await sendTweetWithImage(tweetText, `./images/${match.matchId}_vs_image.png`);
               delay(2000)
+              let time = Math.floor(
+                (new Date(match.enddate) - new Date(match.date)) / (1000 * 60)
+              );
               let pollTweet = `who will win man of the match? \n${generateMatchHashtags(match.teamHomeCode, match.teamAwayCode, match.matchTitle)}`
               let players = [...liveMatch.teamHomePlayers.slice(0, 2).map((h) => h.playerName), ...liveMatch.teamAwayPlayers.slice(0, 2).map((h) => h.playerName)]
-              await sendTweetWithPoll(pollTweet, [...players])
+              await sendTweetWithPoll(pollTweet, [...players], time)
               await delay(2000)
-              let pollTweet2 =`who will win the match? \n${generateMatchHashtags(match.teamHomeCode, match.teamAwayCode, match.matchTitle)}`
-              let teams = [matches[i].teamHomeName,matches[i].teamAwayName]
-              await sendTweetWithPoll(pollTweet2, [...teams])
+              let pollTweet2 = `who will win the match? \n${generateMatchHashtags(match.teamHomeCode, match.teamAwayCode, match.matchTitle)}`
+              let teams = [match.teamHomeName, match.teamAwayName]
+              await sendTweetWithPoll(pollTweet2, [...teams], time)
             }
             success = true;
           } catch (err) {
