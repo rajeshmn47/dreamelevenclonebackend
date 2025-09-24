@@ -37,6 +37,7 @@ const mailOptions = {
 // Add a new document with a generated id.
 module.exports.addLivecommentaryCustom = async function addcommentry(format) {
     try {
+        await Series.updateMany({}, { $set: { importance: "medium" } })
         let date = new Date();
         let allMatches = [];
         const endDate = new Date(date.getTime());
