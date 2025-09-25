@@ -54,7 +54,7 @@ module.exports.addLivescoresDetailsCustom = async function (format) {
     console.log(format, 'importance')
     matches = matches.filter(m => {
       if (!m.seriesId) return false;
-      return m.importance == format || m.series.importance == format
+      return m.importance == format || m?.series?.importance == format
     });
   }
   else {
