@@ -7,29 +7,44 @@ const fetch = require("node-fetch");
 function formatMatchStart(dateString) {
     const date = new Date(dateString);
 
-    // Format time in hh:mm AM/PM
-    let hours = date.getHours();
-    const minutes = date.getMinutes().toString().padStart(2, "0");
-    const ampm = hours >= 12 ? "PM" : "AM";
-    hours = hours % 12 || 12; // convert to 12-hour format
-    const time = `${hours}:${minutes} ${ampm}`;
+    // Format time in IST (Asia/Kolkata)
+    const timeOptions = {
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true,
+        timeZone: "Asia/Kolkata",
+    };
+    const time = new Intl.DateTimeFormat("en-US", timeOptions).format(date);
 
-    // Check if it's today
-    const today = new Date();
-    const isToday =
-        date.getDate() === today.getDate() &&
-        date.getMonth() === today.getMonth() &&
-        date.getFullYear() === today.getFullYear();
+    // Get today's and match date in IST
+    const todayIST = new Date(
+        new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" })
+    );
+    const dateIST = new Date(
+        date.toLocaleString("en-US", { timeZone: "Asia/Kolkata" })
+    );
 
-    if (isToday) {
+    // Normalize dates to midnight for easy comparison
+    const todayMidnight = new Date(todayIST.setHours(0, 0, 0, 0));
+    const matchMidnight = new Date(dateIST.setHours(0, 0, 0, 0));
+
+    const diffDays = Math.round(
+        (matchMidnight - todayMidnight) / (1000 * 60 * 60 * 24)
+    );
+
+    if (diffDays === 0) {
         return `Match starts at ${time} today`;
+    } else if (diffDays === 1) {
+        return `Match starts at ${time} tomorrow`;
     } else {
-        const day = date.toLocaleDateString("en-US", {
+        const dayOptions = {
             weekday: "short",
             month: "short",
             day: "numeric",
-        });
-        return `Match starts at ${time} Today`;
+            timeZone: "Asia/Kolkata",
+        };
+        const day = new Intl.DateTimeFormat("en-US", dayOptions).format(date);
+        return `Match starts at ${time} on ${day}`;
     }
 }
 
