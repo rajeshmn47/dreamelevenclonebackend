@@ -127,8 +127,7 @@ module.exports.addLivescoresDetailsCustom = async function (format) {
                   console.error("⚠️ No more RapidAPI keys available!");
                 }
               }
-              else if (usageCount > 0) {
-                await RapidApiKey.updateMany({ type: 'scores' }, { $set: { status: 'inactive' } })
+              else if (usageCount < 100) {
                 await RapidApiKey.updateOne({ apiKey: keys }, { $set: { usageCount: usageCount, status: 'active' } })
               }
               else if (!usageCount || (!keys)) {
