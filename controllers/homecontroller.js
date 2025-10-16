@@ -446,6 +446,7 @@ router.get("/homeMatches", async (req, res) => {
       $gte: new Date(startDate),
       $lt: new Date(endDate),
     },
+    type: { $ne: "test" }
   });
   const promises = matches.map((fruit) =>
     LiveMatches.findOne({ matchId: fruit.matchId })
