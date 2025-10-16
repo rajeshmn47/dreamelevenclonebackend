@@ -73,18 +73,20 @@ function delay(ms) {
 module.exports.addLiveDetails = async function () {
   try {
     // 2️⃣ Find the most recently updated key
-
+    const startDate = new Date("2025-01-01T00:00:00Z");
+    const endDate = new Date("2025-12-31T23:59:59Z");
     const matches = await Match.find({
-      date: { $gte: new Date(Date.now() - 10 * 60 * 60 * 1000), $lt: new Date(Date.now() + 0.5 * 60 * 60 * 1000) },
+      date: { $gte: startDate, $lt: endDate },
     });
     console.log(matches?.length, 'matchest')
 
     for (let match of matches) {
       try {
-        console.log(match?.matchId,'its matchid')
+        console.log(match?.matchId, 'its matchid')
         const matchExists = await MatchLiveDetails.findOne({ matchId: match.matchId });
+        console.log
         if (matchExists) continue;
-        const keys = await squadkeys(match.matchId);
+        const keys = await squadkeys(match?.matchId) //await squadkeys(match.matchId);
         console.log(keys, 'keyzzs')
         const options = {
           method: "GET",
@@ -121,15 +123,15 @@ module.exports.addLiveDetails = async function () {
               await RapidApiKey.updateOne({ apiKey: keys }, { $set: { usageCount: usageCount, status: 'active' } })
             }
             console.log(ratelimit, 'ratelimit', usageCount)
-            console.log(data?.team1?.players, 'data for players')
-            players1 = data.team1.players["playing XI"] || data.team1.players["Squad"]
-            players2 = data.team2.players["playing XI"] || data.team2.players["Squad"]
+            console.log(data?.team1?.players?.[0].player, 'data for players')
+            players1 = data.team1.players?.[0].player || data.team1.players["Squad"]
+            players2 = data.team2.players?.[0].player || data.team2.players["Squad"]
             captain1 = players1.find((p) => p.captain)
             captain2 = players2.find((p) => p.captain)
             const team1Players = players1.map(p => ({
               playerId: p.id,
               playerName: p.name,
-              image: p.faceImageId,
+              image: p.faceimageid,
               points: 4,
               position: p.role === "Unknown" ? "Batsman" : p.role,
               batOrder: -1
@@ -138,7 +140,7 @@ module.exports.addLiveDetails = async function () {
             const team2Players = players2.map(p => ({
               playerId: p.id,
               playerName: p.name,
-              image: p.faceImageId,
+              image: p.faceimageid,
               points: 4,
               position: p.role === "Unknown" ? "Batsman" : p.role,
               batOrder: -1
