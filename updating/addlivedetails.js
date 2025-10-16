@@ -75,8 +75,11 @@ module.exports.addLiveDetails = async function () {
     // 2️⃣ Find the most recently updated key
     const startDate = new Date("2025-01-01T00:00:00Z");
     const endDate = new Date("2025-12-31T23:59:59Z");
+    const date = new Date()
+    const b = new Date(date.getTime() - 10 * 60 * 60 * 1000);
+    const a = new Date(date.getTime() + 0.5 * 60 * 60 * 1000);
     const matches = await Match.find({
-      date: { $gte: startDate, $lt: endDate },
+      date: { $gte: b, $lt: a },
     });
     console.log(matches?.length, 'matchest')
 

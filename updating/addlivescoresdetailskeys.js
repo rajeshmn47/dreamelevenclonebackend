@@ -88,10 +88,12 @@ function generateMatchHashtags(team1, team2, seriesName) {
 module.exports.addLivescoresDetailsCustom = async function (format) {
   //await Match.updateMany({},{$set:{importance:'medium'}})
   let date = new Date();
-  const b = 180000 * 60 * 60 * 1000;
+  const b = 120 * 60 * 60 * 1000;
   date = new Date(date.getTime() - b);
   const startDate = new Date("2025-01-01T00:00:00Z");
   const endDate = new Date("2025-12-31T23:59:59Z");
+  // const b = new Date(date.getTime() - 10 * 60 * 60 * 1000);
+  const a = new Date(date.getTime() + 0.5 * 60 * 60 * 1000);
   let matches;
   if (format == "low" || format == "high" || format == "very_high") {
     matches = await Match.find({
@@ -112,8 +114,8 @@ module.exports.addLivescoresDetailsCustom = async function (format) {
       //format: format,
       //importance: "medium",
       date: {
-        $gte: new Date(startDate),
-        $lt: new Date(endDate)
+        $gte: date,
+        $lt: new Date()
       },
     });
   }
