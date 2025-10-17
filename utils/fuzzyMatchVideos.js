@@ -115,7 +115,7 @@ function matchesWithSynonyms(fieldValue, filterValue, field) {
     return synonyms.some(syn => fieldVal.includes(syn.toLowerCase()));
 }
 
-function scoreClip(commentary, clip, batsman, bowler, team, bowl_team, series, battingHand, bowlingHand, bowlerType, shotType, direction, ballType, connection, sixType, comesDown, isKeeperCatch, lofted) {
+function scoreClip(commentary, clip, batsman, bowler, team, bowl_team, series, battingHand, bowlingHand, bowlerType, shotType, direction, ballType, connection, sixType, comesDown, isKeeperCatch, lofted, powerplay) {
     let score = 0;
     const matched_input_keywords = getkeyWords(commentary)
     const matched_keywords = getkeyWords(clip?.commentary);
@@ -225,6 +225,10 @@ function scoreClip(commentary, clip, batsman, bowler, team, bowl_team, series, b
     if (bowlerType && bowlerType !== "unknown" && clip?.bowlerType?.toLowerCase() === bowlerType?.toLowerCase()) {
         score += 5;
         scoreBreakdown.bowlerTypeMatch = 5;
+    }
+    if (powerplay == "powerplay") {
+        score += 1;
+        scoreBreakdown.powerplay = 1;
     }
 
     const clipBatColor = getJerseyColor(clip.batting_team);
@@ -355,19 +359,22 @@ async function getBestMatchingVideo(clips, event, commentary, details, bowling_t
     let isKeeperCatch;
     let isCaught;
     let lofted;
+    console.log(details, 'details')
+    let overNumber = details.overNumber;
 
-    if (!shotType) shotType = extractFieldFromCommentary(commentary, "shotType");
-    if (!direction) direction = extractFieldFromCommentary(commentary, "direction");
-    if (!ballType) ballType = extractFieldFromCommentary(commentary, "ballType");
-    connection = extractFieldFromCommentary(commentary, "connection");
+    if (!shotType) shotType = extractFieldFromCommentary(commentary, "shotType", overNumber);
+    if (!direction) direction = extractFieldFromCommentary(commentary, "direction", overNumber);
+    if (!ballType) ballType = extractFieldFromCommentary(commentary, "ballType", overNumber);
+    connection = extractFieldFromCommentary(commentary, "connection", overNumber);
     if (event?.includes("SIX")) {
-        sixType = extractFieldFromCommentary(commentary, "sixType");
+        sixType = extractFieldFromCommentary(commentary, "sixType", overNumber);
     }
     if ((commentary?.toLowerCase().includes("caught") || commentary?.toLowerCase().includes("catch")) && event?.includes("WICKET")) {
-        isKeeperCatch = extractFieldFromCommentary(commentary, "keeperCatch");
+        isKeeperCatch = extractFieldFromCommentary(commentary, "keeperCatch", overNumber);
     }
-    if (!comesDown) comesDown = extractFieldFromCommentary(commentary, "comesDown");
-    if (!lofted) lofted = extractFieldFromCommentary(commentary, "lofted") ? true : false;
+    if (!comesDown) comesDown = extractFieldFromCommentary(commentary, "comesDown", overNumber);
+    if (!lofted) lofted = extractFieldFromCommentary(commentary, "lofted", overNumber) ? true : false;
+    let powerplay = extractFieldFromCommentary(commentary, "powerplay", overNumber);
     //console.log(shotType, direction, ballType, 'shotType direction ballType')
     const filteredClips = await filterClipsByEventOnly(clips, event, commentary);
     let Batsman = await Player.findOne({ name: batsman });
@@ -395,7 +402,8 @@ async function getBestMatchingVideo(clips, event, commentary, details, bowling_t
             sixType,
             comesDown,
             isKeeperCatch,
-            lofted
+            lofted,
+            powerplay
         );
 
         return {
@@ -425,10 +433,15 @@ async function getBestMatchingVideo(clips, event, commentary, details, bowling_t
     return { videoLink: scored[0]?.clip.clip || "n", breakdown: scored[0]?.breakdown || { 'abcd': 'none' } };
 }
 
-function extractFieldFromCommentary(commentary, field) {
+function extractFieldFromCommentary(commentary, field, over) {
     if (!commentary) return null;
     const fieldSynonyms = cricketSynonyms[field] || {};
     const lowerCommentary = commentary.toLowerCase();
+    if (field == "powerplay") {
+        if (over <= 6) {
+            return 'powerplay'
+        }
+    }
     if (field == "lofted") {
         const fieldSynonyms = cricketSynonyms["lofted"] || {};
         const lowerCommentary = commentary.toLowerCase();
