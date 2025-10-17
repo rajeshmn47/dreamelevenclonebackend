@@ -250,7 +250,7 @@ router.get("/withdrawData", async (req, res) => {
   console.log(req.body, "deposit");
   try {
     let withdrawals = await Withdraw.aggregate(
-      [{ $match: { isWithdrawCompleted: false } },
+      [{ $match: { } },
       {
         $lookup: {
           from: "users",//your schema name from mongoDB

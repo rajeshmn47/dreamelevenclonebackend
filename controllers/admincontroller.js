@@ -10,8 +10,73 @@ const axios = require("axios");
 const { default: mongoose } = require("mongoose");
 const NewPayment = require("../models/newPayment");
 const Withdraw = require("../models/withdraw");
+const Transaction = require("../models/transaction");
 
 const router = express.Router();
+
+router.get("/dashboard-data", async (req, res) => {
+  try {
+    const users = await User.find();
+    res.status(200).json({ success: true, users });
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    res.status(500).json({ success: false, message: "Failed to fetch users" });
+  }
+});
+
+router.get("/sidebar-data", async (req, res) => {
+  try {
+    // Transactions
+    const pendingWithdrawals = await Withdraw.countDocuments({
+      verified: false,
+    });
+
+    const pendingDeposits = await NewPayment.countDocuments({
+      verified: false,
+    });
+
+    const pendingUsers = await User.find({ verifed: false })
+    const oneMonthAgo = new Date();
+    oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+
+    const oldMatches = await Matches.find({
+      date: { $lt: oneMonthAgo }
+    });
+
+    const currentDate = new Date();
+
+    const filteredMatches = oldMatches.filter(match => {
+      const matchDate = new Date(match.date);
+      const matchEndDate = new Date(match.enddate);
+
+      // 1️⃣ Status filter
+      let statusPass = false;
+      if (currentDate > matchDate) {
+        const result = match.matchlive?.[0]?.result?.toLowerCase();
+        statusPass = (
+          !match.matchlive ||
+          !result ||
+          (currentDate > matchEndDate && !(result === 'complete' || result === 'abandon'))
+        );
+      }
+      return statusPass
+    });
+
+    // Send response
+    res.status(200).json({
+      success: true,
+      data: {
+        pendingUsers: pendingUsers?.length,
+        pendingwithdrawals: pendingWithdrawals?.length,
+        pendingMatches: filteredMatches.length,
+        pendingDeposits: pendingDeposits?.length
+      },
+    });
+  } catch (error) {
+    console.error("Error fetching dashboard data:", error);
+    res.status(500).json({ success: false, message: "Failed to fetch dashboard data" });
+  }
+});
 
 // --------------------
 // GET all users

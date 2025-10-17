@@ -77,11 +77,11 @@ module.exports.detectHighlights = function (commentaryList) {
             clips: clips
         };
 
-        if (wicketCount >= 10) highlights.push({ type: "2+ Wickets", count: wicketCount, ...meta });
-        if (sixCount >= 10) highlights.push({ type: "3+ Sixes", count: sixCount, ...meta });
-        if (fourCount >= 10) highlights.push({ type: "4+ Fours", count: fourCount, ...meta });
+        if (wicketCount >= 3) highlights.push({ type: "2+ Wickets", count: wicketCount, ...meta });
+        if (sixCount >= 3) highlights.push({ type: "3+ Sixes", count: sixCount, ...meta });
+        if (fourCount >= 3) highlights.push({ type: "4+ Fours", count: fourCount, ...meta });
 
-        if (maxConsWicket >= 2) {
+        if (maxConsWicket >= 3) {
             console.log(maxConsWicket, 'wicket length')
             highlights.push({ type: "Consecutive Wickets", count: maxConsWicket, ...meta });
         }

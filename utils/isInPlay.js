@@ -1,6 +1,6 @@
 module.exports.isInPlay = function isInPlay(r, date) {
     let result = r?.toLowerCase()
-    console.log(date, r, 're')
+    //console.log(date, r, 're')
     if (result == 'upcoming') {
         if (new Date() > new Date(date)) {
             console.log(date, r, 'r')
@@ -10,6 +10,6 @@ module.exports.isInPlay = function isInPlay(r, date) {
             return true;
         }
     }
-    let isinplay = result === "stumps" ? false : result === "abandon" ? false : result == 'innings break' ? false : result == 'delay' ? false : result == 'lunch' ? false : true
+    let isinplay = result === "stumps" ? false : result === "abandon" ? false : result == 'innings break' ? false : result == 'delay' ? false : result == 'lunch' ? false : result == 'complete' ? false : true
     return isinplay;
 }

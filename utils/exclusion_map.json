@@ -8,7 +8,8 @@
       "cut short",
       "upper-cut",
       "cut the angle",
-      "cut back"
+      "cut back",
+      "consecutive"
     ],
     "sweep": [
       "reverse sweep",
@@ -25,7 +26,8 @@
     ],
     "cover": [
       "cover point",
-      "cover-point"
+      "cover-point",
+      "ground to cover"
     ],
     "mid_off": [
       "back over the bowler's head"

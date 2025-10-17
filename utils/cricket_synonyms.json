@@ -99,6 +99,9 @@
     "square_drive": [
       "square drive",
       "square cut"
+    ],
+    "byes": [
+      "byes"
     ]
   },
   "direction": {
@@ -142,7 +145,8 @@
     ],
     "deep_square_leg": [
       "deep square leg",
-      "square leg boundary"
+      "square leg boundary",
+      "deep square"
     ],
     "deep_fine_leg": [
       "deep fine leg",
@@ -157,7 +161,8 @@
       "third man",
       "deep third man",
       "third-man",
-      "thirdman"
+      "thirdman",
+      "deep third"
     ],
     "slip": [
       "slip",
@@ -184,7 +189,6 @@
     "square_leg": [
       "square leg",
       "backward square leg",
-      "deep square",
       "backward square"
     ],
     "leg_gully": [
@@ -254,7 +258,8 @@
     "good_length": [
       "good length",
       "perfect length",
-      "good length ball"
+      "good length ball",
+      "length delivery"
     ],
     "short_of_length": [
       "short of a length",
@@ -430,7 +435,8 @@
       "caught †",
       "caught †wicketkeeper",
       "caught by †",
-      "caught by †wicketkeeper"
+      "caught by †wicketkeeper",
+      "went to the keeper"
     ]
   },
   "isCleanBowled": {

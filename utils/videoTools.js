@@ -21,7 +21,14 @@ async function combineMatchVideos(inputPaths, outputPath) {
         .outputOptions(["-c copy"]) // no re-encoding, fast
         .output(outputPath)
         .on("end", () => {
-          fs.unlinkSync(listFilePath); // cleanup
+          if (fs.existsSync(listFilePath)) {
+            try {
+              fs.unlinkSync(listFilePath); // cleanup
+              console.log('✅ concat_list.txt deleted');
+            } catch (err) {
+              console.error('Failed to delete concat_list.txt:', err);
+            }
+          }
           resolve();
         })
         .on("error", (err) => {

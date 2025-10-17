@@ -15,24 +15,24 @@ const oversJsonPath = path.join(__dirname, './../overs_with_clips.json');
 const data = JSON.parse(fs.readFileSync(oversJsonPath, 'utf-8'));
 
 function delay(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 module.exports.updateSquads = async function () {
     try {
         const now = Date.now();
-
+        let date = new Date();
         // Step 1: Get all ongoing series from DB
+        const tenDaysLater = new Date(date.getTime() + 10 * 24 * 60 * 60 * 1000); // 10 days ahead
         const ongoingSeries = await Series.find({
-            startDate: { $lte: now },
-            endDate: { $gte: now }
+            startDate: { $gt: now, $lte: tenDaysLater }
         });
 
         console.log(ongoingSeries, `Found ${ongoingSeries.length} ongoing series`);
 
         for (const series of ongoingSeries) {
             const seriesId = series.seriesId;
-            const key = await getkeys()
+            const key = await getkeys('123456')
             const options = {
                 method: 'GET',
                 hostname: 'cricbuzz-cricket.p.rapidapi.com',

@@ -181,8 +181,8 @@ router.post('/report', async (req, res) => {
 
     try {
         // Set reported to true (simple flag)
-        const clip = await Clip.findByIdAndUpdate(
-            clipId,
+        const clip = await Clip.findOneAndUpdate(
+            { clip: clipId },
             { reported: true },
             { new: true } // return the updated document
         );

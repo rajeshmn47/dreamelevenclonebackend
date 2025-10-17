@@ -9,8 +9,8 @@ const router = express.Router();
 // Create a new API key
 router.post("/create", async (req, res) => {
   try {
-    const { apiKey, status } = req.body;
-    const newApiKey = new RapidApiKey({ apiKey, status });
+    const { apiKey, status, type } = req.body;
+    const newApiKey = new RapidApiKey({ apiKey, status, type });
     await newApiKey.save();
     res.status(201).json({ message: "API key created successfully", newApiKey });
   } catch (error) {
@@ -23,6 +23,18 @@ router.post("/multiple", async (req, res) => {
   try {
     const { keys } = req.body;
     const apiKeys = keys.map(key => ({ apiKey: key.apiKey, status: "active" }));
+    await RapidApiKey.insertMany(apiKeys);
+    res.status(201).json({ message: "API keys created successfully", apiKeys });
+  } catch (error) {
+    res.status(400).json({ message: "Error creating API keys", error });
+  }
+});
+
+router.post("/create-key", async (req, res) => {
+  try {
+    const { keys } = req.body;
+    console.log(keys,keys)
+    const apiKeys = keys.map(key => ({ apiKey: key.apiKey, status: key.status, type: key.type }));
     await RapidApiKey.insertMany(apiKeys);
     res.status(201).json({ message: "API keys created successfully", apiKeys });
   } catch (error) {

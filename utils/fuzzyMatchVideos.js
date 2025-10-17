@@ -236,6 +236,7 @@ function scoreClip(commentary, clip, batsman, bowler, team, bowl_team, series, b
     const clipBowlGroup = getColorGroup(clipBowlColor);
     const userBatGroup = getColorGroup(userBatColor);
     const userBowlGroup = getColorGroup(userBowlColor);
+    console.log(bowl_team, 'bat color')
 
     if (clipBatColor === userBatColor) {
         score += 2;
@@ -247,11 +248,17 @@ function scoreClip(commentary, clip, batsman, bowler, team, bowl_team, series, b
 
     // Bowling color match
     if (clipBowlColor === userBowlColor) {
+        //console.log('layer', clipBowlColor, userBowlColor, team, 'bat coolor')
         score += 2;
         scoreBreakdown.bowlingColorExact = 2;
     } else if (clipBowlGroup && clipBowlGroup === userBowlGroup) {
         score += 1;
         scoreBreakdown.bowlingColorGroup = 1;
+    }
+
+    if (clipBowlColor === userBowlColor && clipBatColor === userBatColor) {
+        score += 4;
+        scoreBreakdown.bothMatched = 4;
     }
 
     // Add custom bar score
@@ -368,7 +375,7 @@ async function getBestMatchingVideo(clips, event, commentary, details, bowling_t
     let battingHand = Batsman?.battingHand || "unknown";
     let bowlingHand = Bowler?.bowlingHand || "unknown";
     let bowlerType = Bowler?.bowlerType || "unknown";
-    console.log(shotType, ballType, direction, Batsman, batsman, 'filtered clips length')
+    //console.log(details, 'filtered clips length')
     const scored = filteredClips.map(clip => {
         const { score, breakdown } = scoreClip(
             commentary,
@@ -477,8 +484,10 @@ function extractFieldFromCommentary(commentary, field) {
 
 function getJerseyColor(team) {
     let color = ''
-    let matched_team = jerseysMap?.find((map_team_2) => map_team_2?.short == team)
-    return matched_team?.jerseyColor || ''
+    let matched_team = jerseysMap?.find((map_team_2) => map_team_2?.short?.toLowerCase() == team?.toLowerCase() ||
+        map_team_2?.team?.toLowerCase() == team?.toLowerCase())
+    //console.log(matched_team, 'matched team')
+    return matched_team?.jerseyColor || 'not found'
 }
 
 function getColorGroup(jerseyColor) {

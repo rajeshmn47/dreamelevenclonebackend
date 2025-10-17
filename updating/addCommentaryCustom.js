@@ -3,13 +3,14 @@ const nodemailer = require("nodemailer");
 const smtpTransport = require("nodemailer-smtp-transport");
 const MatchLiveDetails = require("../models/matchlive");
 const Matches = require("../models/match");
-const Team = require("../models/team");
 const getkeys = require("../utils/crickeys");
 const db = require("../utils/firebaseinitialize");
 const { getcommentary } = require("../utils/getcommentary");
 const { sendMyPlayerNotifications } = require("../utils/sendMyPlayerNotifications");
 const { detectHighlights } = require("../utils/detectHighlights");
 const Series = require("../models/series");
+const MatchLiveCommentary = require("../models/matchCommentary");
+const { homegraph } = require("googleapis/build/src/apis/homegraph");
 
 const transporter = nodemailer.createTransport(
     smtpTransport({
@@ -38,11 +39,11 @@ const mailOptions = {
 // Add a new document with a generated id.
 module.exports.addLivecommentaryCustom = async function addcommentry(format) {
     try {
-        await Series.updateMany({}, { $set: { importance: "medium" } })
+       // await Series.updateMany({}, { $set: { importance: "medium" } })
         let date = new Date();
         let allMatches = [];
         const endDate = new Date(date.getTime());
-        date = new Date(date.getTime() - 120 * 60 * 60 * 1000);
+        date = new Date(date.getTime() - 12000 * 60 * 60 * 1000);
         let matches;
         if (format == "low" || format == "high" || format == "very_high") {
             matches = await Matches.find({
@@ -58,9 +59,11 @@ module.exports.addLivecommentaryCustom = async function addcommentry(format) {
             });
         }
         else {
+            console.log(format, 'mediumz')
             matches = await Matches.find({
                 format: format,
-                importance: "medium",
+                //importance: "medium",
+                //matchId: "116828",
                 date: {
                     $gte: new Date(date),
                     $lt: new Date(endDate),
@@ -90,17 +93,20 @@ module.exports.addLivecommentaryCustom = async function addcommentry(format) {
             const matchid = matches[i].matchId;
             //const teams = await Team.find({ matchId: matchid });
             const teams = ['1']
+            console.log(matchid, 'jio')
             const match = await MatchLiveDetails.findOne({ matchId: matchid });
             if (match && (!(match.result == "Complete")) && (match?.isInPlay)) {
                 allMatches.push(matches[i]);
             }
         }
         const m = allMatches;
-        console.log(m.length, "allmatches");
+        console.log(m.length, "cricket allmatches");
         for (let i = 0; i < allMatches.length; i++) {
             if (m[i].matchId.length > 3) {
                 console.log(m[i]?.matchId, "matchid");
                 //const keys = await getkeys.getkeys();
+                let teamHomeCommentary = [];
+                let teamAwayCommentary = [];
                 const options = {
                     method: "GET",
                     //url: `https://cricbuzz-cricket.p.rapidapi.com/mcenter/v1/${m[i].matchId}/comm`,
@@ -143,6 +149,12 @@ module.exports.addLivecommentaryCustom = async function addcommentry(format) {
                     else {
                         innings = 1;
                         response = await axios.request(options2);
+                          await MatchLiveCommentary.updateOne({ matchId: m[i]?.matchId }, {
+                            $set: {
+                                teamHomeCommentary: response?.data?.commentary?.[0].commentaryList
+                            }
+                        }
+                        )
                     }
                     if (response?.data?.commentary?.[0]?.commentaryList?.length > 0) {
                         const a = response?.data?.commentary?.[0]?.commentaryList.reverse();
@@ -179,6 +191,8 @@ module.exports.addLivecommentaryCustom = async function addcommentry(format) {
                                     });
                                 }
                                 //console.log(commentary, 'commentary')
+                                await MatchLiveCommentary.updateOne({ matchId: m?.[i]?.matchId },
+                                    { $set: { teamHomeCommentary: home, teamAwayCommentary: away } })
 
                                 const res = await commentaryRef.set(
                                     {

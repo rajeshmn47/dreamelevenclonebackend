@@ -36,7 +36,7 @@ module.exports.sendMyPlayerNotifications = async function (batsman, bowler) {
             const user = await User.findById(notif.user_id);
             if (!user) continue;
             for (const p of notif.players) {
-                 console.log(p,'p')
+                 //console.log(p,'p')
                 if ((!p.battingNotified || !p.bowlingNotified)&&(p.player_id==batsman||p.player_id==bowler)) {
                     console.log(p.player_id, batsman, bowler, 'batsman')
                     const action = batsman == p.player_id
@@ -44,7 +44,7 @@ module.exports.sendMyPlayerNotifications = async function (batsman, bowler) {
                         : bowler == p.player_id
                             ? 'bowling'
                             : 'playing';
-                    console.log(p, action, 'p')
+                    //console.log(p, action, 'p')
                     let player = await Player.findOne({ id: p.player_id })
                     const title = `Player Alert`;
                     const body = `${player?.name} is now ${action}`;

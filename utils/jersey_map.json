@@ -1,6 +1,7 @@
 [
     {
         "teamName": "India",
+        "short": "Ind",
         "jerseyColor": "Blue"
     },
     {
@@ -9,15 +10,18 @@
     },
     {
         "teamName": "England",
-        "jerseyColor": "Light Blue"
+        "jerseyColor": "Light Blue",
+        "short": "ENG"
     },
     {
         "teamName": "Pakistan",
+        "short": "Pak",
         "jerseyColor": "Green"
     },
     {
         "teamName": "South Africa",
-        "jerseyColor": "Dark Green"
+        "jerseyColor": "Dark Green",
+        "short":"RSA"
     },
     {
         "teamName": "New Zealand",
@@ -25,11 +29,13 @@
     },
     {
         "teamName": "Sri Lanka",
-        "jerseyColor": "Dark Blue"
+        "jerseyColor": "Dark Blue",
+        "short": "SL"
     },
     {
         "teamName": "Bangladesh",
-        "jerseyColor": "Green"
+        "jerseyColor": "Green",
+        "short": "BAN"
     },
     {
         "teamName": "West Indies",
@@ -37,7 +43,8 @@
     },
     {
         "teamName": "Afghanistan",
-        "jerseyColor": "Blue"
+        "jerseyColor": "Blue",
+        "short": "AFG"
     },
     {
         "team": "Chennai Super Kings",
@@ -45,7 +52,8 @@
     },
     {
         "team": "Mumbai Indians",
-        "jerseyColor": "Blue"
+        "jerseyColor": "Blue",
+        "short": "MI"
     },
     {
         "team": "Royal Challengers Bangalore",
@@ -61,7 +69,8 @@
     },
     {
         "team": "Delhi Capitals",
-        "jerseyColor": "Blue"
+        "jerseyColor": "Blue",
+        "short": "DC"
     },
     {
         "team": "Sunrisers Hyderabad",
@@ -69,23 +78,28 @@
     },
     {
         "team": "Lucknow Super Giants",
-        "jerseyColor": "Light Blue"
+        "jerseyColor": "Light Blue",
+        "short": "LSG"
     },
     {
         "team": "Gujarat Titans",
-        "jerseyColor": "Dark Blue"
+        "jerseyColor": "Dark Blue",
+        "short": "GT"
     },
     {
         "team": "Karachi Kings",
-        "jerseyColor": "Blue"
+        "jerseyColor": "Blue",
+        "short": "KK"
     },
     {
         "team": "Lahore Qalandars",
-        "jerseyColor": "Green"
+        "jerseyColor": "Green",
+        "short": "LQ"
     },
     {
         "team": "Peshawar Zalmi",
-        "jerseyColor": "Yellow"
+        "jerseyColor": "Yellow",
+        "short": "PZ"
     },
     {
         "team": "Islamabad United",
@@ -93,23 +107,28 @@
     },
     {
         "team": "Quetta Gladiators",
-        "jerseyColor": "Purple"
+        "jerseyColor": "Purple",
+        "short": "QG"
     },
     {
         "team": "Multan Sultans",
-        "jerseyColor": "Green"
+        "jerseyColor": "Green",
+        "short": "MS"
     },
     {
         "team": "MI New York",
-        "jerseyColor": "Blue"
+        "jerseyColor": "Blue",
+        "short": "MINY"
     },
     {
         "team": "San Francisco Unicorns",
-        "jerseyColor": "Navy"
+        "jerseyColor": "Navy",
+        "short": "SFU"
     },
     {
         "team": "Seattle Orcas",
-        "jerseyColor": "Green"
+        "jerseyColor": "Green",
+        "short": "SOC"
     },
     {
         "team": "Washington Freedom",
@@ -185,7 +204,8 @@
     },
     {
         "team": "Guyana Amazon Warriors",
-        "jerseyColor": "Green"
+        "jerseyColor": "Green",
+        "short": "GAW"
     },
     {
         "team": "Jamaica Tallawahs",
@@ -209,7 +229,8 @@
     },
     {
         "team": "United Arab Emirates",
-        "jerseyColor": "White"
+        "jerseyColor": "White",
+        "short": "UAE"
     },
     {
         "team": "Scotland",
@@ -233,7 +254,8 @@
     },
     {
         "team": "USA",
-        "jerseyColor": "Blue"
+        "jerseyColor": "Blue",
+        "short": "USA"
     },
     {
         "team": "Canada",
