@@ -39,7 +39,7 @@ const mailOptions = {
 // Add a new document with a generated id.
 module.exports.addLivecommentaryCustom = async function addcommentry(format) {
     try {
-       // await Series.updateMany({}, { $set: { importance: "medium" } })
+        // await Series.updateMany({}, { $set: { importance: "medium" } })
         let date = new Date();
         let allMatches = [];
         const endDate = new Date(date.getTime());
@@ -149,12 +149,6 @@ module.exports.addLivecommentaryCustom = async function addcommentry(format) {
                     else {
                         innings = 1;
                         response = await axios.request(options2);
-                          await MatchLiveCommentary.updateOne({ matchId: m[i]?.matchId }, {
-                            $set: {
-                                teamHomeCommentary: response?.data?.commentary?.[0].commentaryList
-                            }
-                        }
-                        )
                     }
                     if (response?.data?.commentary?.[0]?.commentaryList?.length > 0) {
                         const a = response?.data?.commentary?.[0]?.commentaryList.reverse();
@@ -191,9 +185,8 @@ module.exports.addLivecommentaryCustom = async function addcommentry(format) {
                                     });
                                 }
                                 //console.log(commentary, 'commentary')
-                                await MatchLiveCommentary.updateOne({ matchId: m?.[i]?.matchId },
-                                    { $set: { teamHomeCommentary: home, teamAwayCommentary: away } })
-
+                                let home = matches?.[i].teamHomeName
+                                let away = matches?.[i].teamAwayName
                                 const res = await commentaryRef.set(
                                     {
                                         commentary: [...commentary],
