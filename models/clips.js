@@ -26,6 +26,7 @@ const clipSchema = new mongoose.Schema({
     direction: { type: String },
     ballType: { type: String },
     connection: { type: String },
+    slowball: { type: String },
     lofted: { type: Boolean, default: false }
   },
   createdAt: { type: Date, default: Date.now },

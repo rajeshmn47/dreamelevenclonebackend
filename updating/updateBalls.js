@@ -86,7 +86,9 @@ module.exports.updateBalls = async function () {
                             const event = xyz[a].event;
                             if (!xyz[a]?.videoLink) {
                                 let eventType = event.split('over-break,').join('')
-                                let anyEvent = eventType === 'FOUR' || eventType === 'SIX' || eventType === 'WICKET' || eventType === 'HUNDRED' || eventType === 'FIFTY'
+                                const clips = await Clip.find({ event: eventType, reported: false })
+                                //console.log(clips?.length, 'lungth')
+                                let anyEvent = eventType.includes('FOUR') || eventType.includes('SIX') || eventType.includes('WICKET') || eventType === 'HUNDRED' || eventType === 'FIFTY'
                                 if (anyEvent && xyz[a]?.commText?.length > 60) {
                                     const batsmanName = xyz[a]?.commText || 'batsman';
                                     const teamName = matchess[i]?.battingTeam?.replace(/ /g, "_") || 'team';
