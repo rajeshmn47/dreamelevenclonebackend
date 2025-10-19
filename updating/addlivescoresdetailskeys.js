@@ -111,8 +111,8 @@ module.exports.addLivescoresDetailsCustom = async function (format) {
   else {
     console.log('inside else')
     matches = await Match.find({
-      //format: format,
-      //importance: "medium",
+      format: format,
+      importance: "medium",
       date: {
         $gte: date,
         $lt: new Date()
