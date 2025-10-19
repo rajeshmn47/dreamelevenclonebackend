@@ -101,13 +101,13 @@ async function scheduleJobs(frequencies) {
       await addLivescoresDetailsCustom("low");
     });
 
-    jobs.liveCommentaryTest = cron.schedule("*/15 * * * *", async () => {
+    jobs.liveCommentaryTest = cron.schedule(getCronPattern(frequencies.test), async () => {
       await addLivecommentaryCustom("test");
     });
-    jobs.liveCommentaryOdi = cron.schedule("*/10 * * * *", async () => {
+    jobs.liveCommentaryOdi = cron.schedule(getCronPattern(frequencies.odi), async () => {
       await addLivecommentaryCustom("odi");
     });
-    jobs.liveCommentaryT20 = cron.schedule("* * * * *", async () => {
+    jobs.liveCommentaryT20 = cron.schedule(getCronPattern(frequencies.t20), async () => {
       await addLivecommentaryCustom("t20");
     });
     jobs.liveCommentaryImportant = cron.schedule(getCronPattern(frequencies.very_high), async () => {
