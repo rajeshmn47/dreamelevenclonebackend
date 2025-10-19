@@ -129,7 +129,7 @@ module.exports.addLivescoresDetailsCustom = async function (format) {
       const matchId = matches[i].matchId;
       const match = await MatchLive.findOne({ matchId: matchId });
       //console.log(match,'much')
-      if ((!match) || match?.result == "Complete" || (match?.isInPlay)) {
+      if ((!match) || match?.result == "Complete" || (!match?.isInPlay)) {
         console.log(match?.matchId, i, 'matchId')
         continue;
       } else {
