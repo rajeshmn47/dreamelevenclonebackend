@@ -97,6 +97,7 @@ module.exports.addLivescoresDetailsCustom = async function (format) {
   let matches;
   if (format == "low" || format == "high" || format == "very_high") {
     matches = await Match.find({
+      importance: format,
       date: {
         $gte: new Date(date),
         $lt: new Date(),
