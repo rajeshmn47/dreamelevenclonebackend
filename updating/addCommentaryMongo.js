@@ -134,7 +134,9 @@ module.exports.addLivecommentaryMongo = async function addcommentry(format) {
                         )
                         //console.log(match, 'away')
                         let runs_fi = match?.runFI;
-                        if (match?.teamAwayPlayers && match?.result == "Complete" && (importance == 'high' || importance == 'very_high')) {
+                        const match_result = response?.data?.matchDetails?.matchHeader?.state?.toLowerCase()
+                        console.log(match_result, importance, 'away')
+                        if (match_result == "complete" && (importance == 'high' || importance == 'very_high')) {
                             let players = [...match?.teamHomePlayers, ...match?.teamAwayPlayers]
                             const manofthematch = response?.data?.matchDetails?.matchHeader?.playersOfTheMatch
                             let a = players.find((p) => p?.playerId == manofthematch[0].id)
@@ -155,7 +157,6 @@ module.exports.addLivecommentaryMongo = async function addcommentry(format) {
                             await sendTweetWithImage(tweetText, `./images/mom/mom_${matches[i].matchId}.png`);
                         }
                         //console.log(response?.data?.matchDetails?.matchHeader?.state?.toLowerCase(), 'innings break test')
-                        const match_result = response?.data?.matchDetails?.matchHeader?.state?.toLowerCase()
                         console.log(match_result, 'match resultr')
                         console.log('abcdefgh')
                         if ((match_result == 'innings break' && (importance == 'high' || importance == 'very_high'))) {
