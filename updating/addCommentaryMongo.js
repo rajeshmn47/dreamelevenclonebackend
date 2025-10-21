@@ -226,52 +226,6 @@ module.exports.addLivecommentaryMongo = async function addcommentry(format) {
                             );
                         }
                     }
-                    if (response?.data?.commentary?.[0]?.commentaryList?.length > 0) {
-                        const a = response?.data?.commentary?.[0]?.commentaryList.reverse();
-                        const matchdata = response.data.matchDetails?.matchHeader;
-                        const { miniscore } = response.data?.matchDetails;
-                        const commentaryRef = db.db.collection("commentary").doc(m[i].matchId);
-                        const doc = await commentaryRef.get();
-                        if (!doc.exists) {
-                            await sendMyPlayerNotifications(miniscore?.batsmanStriker?.batId, miniscore?.bowlerStriker?.bowlId)
-                            const commentaryRef = db.db.collection("commentary").doc(m[i].matchId);
-                            const res = await commentaryRef.set(
-                                {
-                                    commentary: [...a],
-                                    livedata: matchdata,
-                                    miniscore,
-                                },
-                                { merge: true }
-                            );
-                        } else {
-                            const commentaryRef = db.db.collection("commentary").doc(m[i].matchId);
-                            let xyz = doc.data().commentary;
-                            if (a?.length > 0) {
-                                let commentary = getcommentary(xyz, a, innings);
-                                //let commentary = a;
-                                //console.log(miniscore?.batsmanStriker?.batId, 'miniscore')
-                                const res = await commentaryRef.set(
-                                    {
-                                        commentary: [...a],
-                                        livedata: matchdata,
-                                        miniscore,
-                                    },
-                                    { merge: true }
-                                );
-                                await sendMyPlayerNotifications(miniscore?.batsmanStriker?.batId, miniscore?.bowlerStriker?.bowlId)
-                                if (miniscore?.batsmanStriker?.batId == 12305) {
-                                    transporter.sendMail(mailOptions, (error, info) => {
-                                        if (error) {
-                                            console.log(error);
-                                        } else {
-                                            console.log(`Email sent: ${info.response}`);
-                                        }
-                                    });
-                                }
-                                //console.log(commentary, 'commentary')
-                            }
-                        }
-                    }
                 } catch (error) {
                     console.error(error);
                 }
