@@ -15,6 +15,7 @@ const router = express.Router();
 const { getflag } = require("../utils/getflags");
 const flagURLs = require("country-flags-svg");
 const { squadkeys } = require("../utils/apikeys");
+const { makeRequest } = require("../utils/helpers");
 
 function convertWicketsData(wicketsData) {
     return Object.keys(wicketsData).map(key => wicketsData[key]);
@@ -1013,229 +1014,220 @@ router.get("/update_live_scores/:matchId", async (req, res) => {
                     },
                 };
 
-                const promise = new Promise((resolve, reject) => {
-                    request(options, (error, response, body) => {
-                        if (error) {
-                            console.log(error, 'error')
-                            reject(error);
+                const response = await makeRequest(options);
+                console.log(response, 'response')
+                let s = response;
+                if (s.scorecard != 0 && s.scorecard?.length > 0) {
+                    const LiveMatchDet = new MatchLive();
+                    LiveMatchDet.matchId = matchId;
+                    LiveMatchDet.date = date1;
+                    const inPlay = "Yes";
+                    const { status } = s.status;
+                    const toss = matches[i]?.teamHomeName;
+                    const result = s.ismatchcomplete ? "Complete" : "In Progress";
+                    let isinplay = isInPlay(result, matches[i].date);
+                    let title_fi = "";
+                    let home_first = false;
+                    let overs_fi = 0;
+                    let runs_fi = 0;
+                    let wickets_fi = 0;
+                    let fow_fi = "";
+                    let extrasDetails_fi = "";
+                    let batting1 = [];
+                    let bowling1 = [];
+                    let title_si = "";
+                    let overs_si = 0;
+                    let runs_si = 0;
+                    let wickets_si = 0;
+                    let fow_si = "";
+                    let extrasDetails_si = "";
+                    let batting2 = [];
+                    let bowling2 = [];
+                    let wicketsDataFI = [];
+                    let wicketsDataSI = [];
+                    if (s.scorecard.length > 0) {
+                        batting1 = s.scorecard[0].batsman;
+                        bowling1 = s.scorecard[0].bowler;
+                        title_fi = s.scorecard[0].batteamname;
+                        home_first =
+                            matches[i].teamHomeName.toLowerCase() ==
+                            s.scorecard[0].batteamname.toLowerCase();
+                        overs_fi = s.scorecard[0].overs;
+                        runs_fi = s.scorecard[0].score;
+                        wickets_fi = s.scorecard[0].wickets;
+                        fow_fi = s.scorecard[0].wickets;
+                        extrasDetails_fi = s.scorecard[0].extras.total;
+                        wicketsDataFI = s.scorecard[0].fow?.fow || [];
+                    }
+                    //console.log(s.scorecard, s.scorecard?.length, "batting")
+                    if (s.scorecard.length > 1) {
+                        batting2 = s.scorecard[1].batsman;
+                        bowling2 = s.scorecard[1].bowler;
+                        title_si = s.scorecard[1].batteamname;
+                        overs_si = s.scorecard[1].overs;
+                        runs_si = s.scorecard[1].score;
+                        wickets_si = s.scorecard[1].wickets;
+                        fow_si = s.scorecard[1].wickets;
+                        extrasDetails_si = s.scorecard[1].extras.total;
+                        wicketsDataSI = s.scorecard[1].fow?.fow || [];
+                    }
+                    const { teamHomePlayers } = match;
+                    const { teamAwayPlayers } = match;
+                    console.log(title_fi, title_si, "playing 11")
+                    const batting = [];
+                    const ke = Object.keys(batting1);
+                    for (let i = 0; i < ke.length; i++) {
+                        batting.push(batting1[ke[i]]);
+                    }
+                    const kf = Object.keys(batting2);
+                    for (let i = 0; i < kf.length; i++) {
+                        batting.push(batting2[kf[i]]);
+                    }
+                    const bowling = [];
+                    const kg = Object.keys(bowling1);
+                    for (let i = 0; i < kg.length; i++) {
+                        bowling.push(bowling1[kg[i]]);
+                    }
+                    const kh = Object.keys(bowling2);
+                    for (let i = 0; i < kh.length; i++) {
+                        bowling.push(bowling2[kh[i]]);
+                    }
+                    for (let i = 0; i < teamHomePlayers.length; i++) {
+                        const player = teamHomePlayers[i];
+                        const { playerId } = player;
+                        for (const batter of batting) {
+                            if (batter.id == playerId) {
+                                teamHomePlayers[i].runs = batter.runs;
+                                teamHomePlayers[i].balls = batter.balls;
+                                teamHomePlayers[i].fours = batter.fours;
+                                teamHomePlayers[i].sixes = batter.sixes;
+                                teamHomePlayers[i].strikeRate = batter.strikerate;
+                                teamHomePlayers[i].howOut = batter.outdec;
+                                teamHomePlayers[i].batOrder = 0;
+                            }
                         }
-                        const s = JSON.parse(body);
-                        resolve(s);
-                    });
-                });
 
-                // Use a closure to capture the current value of i
-                (function (i) {
-                    promise
-                        .then(async (s) => {
-                            if (s.matchHeader != null && s.scoreCard != 0) {
-                                const LiveMatchDet = new MatchLive();
-                                LiveMatchDet.matchId = matchId;
-                                LiveMatchDet.date = date1;
-                                const inPlay = "Yes";
-                                const { status } = s.matchHeader;
-                                const toss = s.matchHeader.tossResults.tossWinnerName;
-                                const result = s.matchHeader.state;
-                                let isinplay = isInPlay(result, date1);
-                                let title_fi = "";
-                                let home_first = false;
-                                let overs_fi = 0;
-                                let runs_fi = 0;
-                                let wickets_fi = 0;
-                                let fow_fi = "";
-                                let extrasDetails_fi = "";
-                                let batting1 = [];
-                                let bowling1 = [];
-                                let title_si = "";
-                                let overs_si = 0;
-                                let runs_si = 0;
-                                let wickets_si = 0;
-                                let fow_si = "";
-                                let extrasDetails_si = "";
-                                let batting2 = [];
-                                let bowling2 = [];
-                                if (s.scoreCard.length > 0) {
-                                    batting1 = s.scoreCard[0].batTeamDetails.batsmenData;
-                                    bowling1 = s.scoreCard[0].bowlTeamDetails.bowlersData;
-                                    title_fi = s.scoreCard[0].batTeamDetails.batTeamName;
-                                    home_first =
-                                        matches[i].teamHomeName.toLowerCase() ==
-                                        s.scoreCard[0].batTeamDetails.batTeamName.toLowerCase();
-                                    overs_fi = s.scoreCard[0].scoreDetails.overs;
-                                    runs_fi = s.scoreCard[0].scoreDetails.runs;
-                                    wickets_fi = s.scoreCard[0].scoreDetails.wickets;
-                                    fow_fi = s.scoreCard[0].scoreDetails.wickets;
-                                    extrasDetails_fi = s.scoreCard[0].extrasData.total;
-                                }
-                                if (s.scoreCard.length > 1) {
-                                    batting2 = s.scoreCard[1].batTeamDetails.batsmenData;
-                                    bowling2 = s.scoreCard[1].bowlTeamDetails.bowlersData;
-                                    title_si = s.scoreCard[1].batTeamDetails.batTeamName;
-                                    overs_si = s.scoreCard[1].scoreDetails.overs;
-                                    runs_si = s.scoreCard[1].scoreDetails.runs;
-                                    wickets_si = s.scoreCard[1].scoreDetails.wickets;
-                                    fow_si = s.scoreCard[1].scoreDetails.wickets;
-                                    extrasDetails_si = s.scoreCard[1].extrasData.total;
-                                }
-                                const { teamHomePlayers } = match;
-                                const { teamAwayPlayers } = match;
-                                const batting = [];
-                                const ke = Object.keys(batting1);
-                                for (let j = 0; j < ke.length; j++) {
-                                    batting.push(batting1[ke[j]]);
-                                }
-                                const kf = Object.keys(batting2);
-                                for (let j = 0; j < kf.length; j++) {
-                                    batting.push(batting2[kf[j]]);
-                                }
-                                const bowling = [];
-                                const kg = Object.keys(bowling1);
-                                for (let j = 0; j < kg.length; j++) {
-                                    bowling.push(bowling1[kg[j]]);
-                                }
-                                const kh = Object.keys(bowling2);
-                                for (let j = 0; j < kh.length; j++) {
-                                    bowling.push(bowling2[kh[j]]);
-                                }
-                                for (let j = 0; j < teamHomePlayers.length; j++) {
-                                    const player = teamHomePlayers[j];
-                                    const { playerId } = player;
-                                    for (const batter of batting) {
-                                        if (batter.batId == playerId) {
-                                            teamHomePlayers[j].runs = batter.runs;
-                                            teamHomePlayers[j].balls = batter.balls;
-                                            teamHomePlayers[j].fours = batter.boundaries;
-                                            teamHomePlayers[j].sixes = batter.sixes;
-                                            teamHomePlayers[j].strikeRate = batter.strikeRate;
-                                            teamHomePlayers[j].howOut = batter.outDesc;
-                                            teamHomePlayers[j].batOrder = 0;
-                                        }
-                                    }
-
-                                    for (const bowler of bowling) {
-                                        const player = teamHomePlayers[j];
-                                        const { playerId } = player;
-                                        if (bowler.bowlerId == playerId) {
-                                            teamHomePlayers[j].overs = bowler.overs;
-                                            teamHomePlayers[j].maidens = bowler.maidens;
-                                            teamHomePlayers[j].runsConceded = bowler.runs;
-                                            teamHomePlayers[j].wickets = bowler.wickets;
-                                            teamHomePlayers[j].economy = bowler.economy;
-                                        }
-                                    }
-                                    teamHomePlayers[j].points = pointCalculator(
-                                        teamHomePlayers[j].runs,
-                                        teamHomePlayers[j].fours,
-                                        teamHomePlayers[j].sixes,
-                                        teamHomePlayers[j].strikeRate,
-                                        teamHomePlayers[j].wickets,
-                                        teamHomePlayers[j].economy,
-                                        teamHomePlayers[j].balls
-                                    );
-                                }
-                                for (let j = 0; j < teamAwayPlayers.length; j++) {
-                                    const player = teamAwayPlayers[j];
-                                    const { playerId } = player;
-                                    for (const batter of batting) {
-                                        if (batter.batId == playerId) {
-                                            teamAwayPlayers[j].runs = batter.runs;
-                                            teamAwayPlayers[j].balls = batter.balls;
-                                            teamAwayPlayers[j].fours = batter.boundaries;
-                                            teamAwayPlayers[j].sixes = batter.sixes;
-                                            teamAwayPlayers[j].strikeRate = batter.strikeRate;
-                                            teamAwayPlayers[j].howOut = batter.outDesc;
-                                            teamAwayPlayers[j].batOrder = 0;
-                                        }
-                                    }
-
-                                    for (const bowler of bowling) {
-                                        const player = teamAwayPlayers[j];
-                                        const { playerId } = player;
-                                        if (bowler.bowlerId == playerId) {
-                                            teamAwayPlayers[j].overs = bowler.overs;
-                                            teamAwayPlayers[j].maidens = bowler.maidens;
-                                            teamAwayPlayers[j].runsConceded = bowler.runs;
-                                            teamAwayPlayers[j].wickets = bowler.wickets;
-                                            teamAwayPlayers[j].economy = bowler.economy;
-                                        }
-                                    }
-                                    teamAwayPlayers[j].points = pointCalculator(
-                                        teamAwayPlayers[j].runs,
-                                        teamAwayPlayers[j].fours,
-                                        teamAwayPlayers[j].sixes,
-                                        teamAwayPlayers[j].strikeRate,
-                                        teamAwayPlayers[j].wickets,
-                                        teamAwayPlayers[j].economy,
-                                        teamAwayPlayers[j].balls
-                                    );
-                                }
-                                try {
-                                    const matchUpdate = await MatchLive.updateOne(
-                                        { matchId },
-                                        {
-                                            $set: {
-                                                inPlay,
-                                                status,
-                                                toss,
-                                                result,
-                                                isInPlay: isinplay,
-                                                teamHomePlayers,
-                                                teamAwayPlayers,
-                                                date: matches[i].date,
-                                                titleFI: title_fi,
-                                                isHomeFirst: home_first,
-                                                oversFI: overs_fi,
-                                                wicketsFI: wickets_fi,
-                                                runFI: runs_fi,
-                                                fowFI: fow_fi,
-                                                extrasDetailFI: extrasDetails_fi,
-                                                titleSI: title_si,
-                                                oversSI: overs_si,
-                                                wicketsSI: wickets_si,
-                                                runSI: runs_si,
-                                                fowSI: fow_si,
-                                                extrasDetailSI: extrasDetails_si,
-                                            },
-                                        }
-                                    );
-                                    res.status(200).json({
-                                        message: "updated live scores of the match successfully!",
-                                    });
-                                } catch (err) {
-                                    console.log('Error : ${ err }');
-                                    res.status(400).json({
-                                        message: "error while updating live details of match",
-                                    });
-                                }
+                        for (const bowler of bowling) {
+                            const player = teamHomePlayers[i];
+                            const { playerId } = player;
+                            if (bowler.id == playerId) {
+                                teamHomePlayers[i].overs = bowler.overs;
+                                teamHomePlayers[i].maidens = bowler.maidens;
+                                teamHomePlayers[i].runsConceded = bowler.runs;
+                                teamHomePlayers[i].wickets = bowler.wickets;
+                                teamHomePlayers[i].economy = bowler.economy;
                             }
-                            else {
-                                if (s?.matchHeader) {
-                                    const { status } = s?.matchHeader;
-                                    const toss = s.matchHeader.tossResults.tossWinnerName;
-                                    const result = s.matchHeader.state;
-                                    console.log(s.matchHeader.state, 'result')
-                                    let isinplay = isInPlay(result, matches[i].date);
-                                    const matchUpdate = await MatchLive.updateOne(
-                                        { matchId },
-                                        {
-                                            $set: {
-                                                isInPlay: isinplay,
-                                                result: result
-                                            }
-                                        })
-                                    res.status(200).json({
-                                        message: "updated live scores of the match successfully!",
-                                    });
-                                }
+                        }
+                        teamHomePlayers[i].points = pointCalculator(
+                            teamHomePlayers[i].runs,
+                            teamHomePlayers[i].fours,
+                            teamHomePlayers[i].sixes,
+                            teamHomePlayers[i].strikeRate,
+                            teamHomePlayers[i].wickets,
+                            teamHomePlayers[i].economy,
+                            teamHomePlayers[i].balls
+                        );
+                    }
+                    for (let i = 0; i < teamAwayPlayers.length; i++) {
+                        const player = teamAwayPlayers[i];
+                        const { playerId } = player;
+                        for (const batter of batting) {
+                            if (batter.id == playerId) {
+                                teamAwayPlayers[i].runs = batter.runs;
+                                teamAwayPlayers[i].balls = batter.balls;
+                                teamAwayPlayers[i].fours = batter.fours;
+                                teamAwayPlayers[i].sixes = batter.sixes;
+                                teamAwayPlayers[i].strikeRate = batter.strikerate;
+                                teamAwayPlayers[i].howOut = batter.outdec;
+                                teamAwayPlayers[i].batOrder = 0;
                             }
-                        })
-                        .catch((error) => {
-                            console.log(error)
-                            res.status(400).json({
-                                message: "error while updating live details of match",
-                            });
+                        }
+
+                        for (const bowler of bowling) {
+                            const player = teamAwayPlayers[i];
+                            const { playerId } = player;
+                            if (bowler.id == playerId) {
+                                teamAwayPlayers[i].overs = bowler.overs;
+                                teamAwayPlayers[i].maidens = bowler.maidens;
+                                teamAwayPlayers[i].runsConceded = bowler.runs;
+                                teamAwayPlayers[i].wickets = bowler.wickets;
+                                teamAwayPlayers[i].economy = bowler.economy;
+                            }
+                        }
+                        teamAwayPlayers[i].points = pointCalculator(
+                            teamAwayPlayers[i].runs,
+                            teamAwayPlayers[i].fours,
+                            teamAwayPlayers[i].sixes,
+                            teamAwayPlayers[i].strikeRate,
+                            teamAwayPlayers[i].wickets,
+                            teamAwayPlayers[i].economy,
+                            teamAwayPlayers[i].balls
+                        );
+                    }
+                    try {
+                        const matchUpdate = await MatchLive.updateOne(
+                            { matchId },
+                            {
+                                $set: {
+                                    inPlay,
+                                    status,
+                                    toss,
+                                    result,
+                                    isInPlay: isinplay,
+                                    teamHomePlayers,
+                                    teamAwayPlayers,
+                                    date: matches[i].date,
+                                    titleFI: title_fi,
+                                    isHomeFirst: home_first,
+                                    oversFI: overs_fi,
+                                    wicketsFI: wickets_fi,
+                                    runFI: runs_fi,
+                                    fowFI: fow_fi,
+                                    extrasDetailFI: extrasDetails_fi,
+                                    titleSI: title_si,
+                                    oversSI: overs_si,
+                                    wicketsSI: wickets_si,
+                                    runSI: runs_si,
+                                    fowSI: fow_si,
+                                    extrasDetailSI: extrasDetails_si,
+                                    wicketsDataFI: wicketsDataFI,
+                                    wicketsDataSI: wicketsDataSI,
+                                },
+                            }
+                        );
+                        if (result == "Complete") {
+                            console.log(title_fi, 'i')
+                            let winner = runs_fi > runs_si ? title_fi : title_si;
+                            let tweetText = `Lineups Out: ${matches[i].teamHomeName} vs ${match.teamAwayName}\nThe lineups for ${matches[i].teamHomeName} and ${matches[i].teamAwayName} are now available. Check out the details!
+                       https://www.cricbuzz.com/live-cricket-scores/${match?.matchId} \n${generateMatchHashtags(matches[i].teamHomeCode, matches[i].teamAwayCode, matches[i].matchTitle)}`
+                            await createResultImage(matches[i].teamHomeCode, matches[i].teamAwayCode, title_fi,
+                                title_si, runs_fi, runs_si, winner, `./images/completed/${match.matchId}_vs_image.png`, matches?.[i]?.date); // Assuming first player is captain
+                            //await sendTweetWithImage(tweetText, `./images/completed/${match.matchId}_vs_image.png`);
+                        }
+                    } catch (err) {
+                        console.log(`Error : ${err}`);
+                    }
+                }
+                else {
+                    if (s?.matchHeader) {
+                        const { status } = s?.matchHeader;
+                        const toss = s.matchHeader.tossResults.tossWinnerName;
+                        const result = s.matchHeader.state;
+                        console.log(s.matchHeader.state, 'result')
+                        let isinplay = isInPlay(result, matches[i].date);
+                        const matchUpdate = await MatchLive.updateOne(
+                            { matchId },
+                            {
+                                $set: {
+                                    isInPlay: isinplay,
+                                    result: result
+                                }
+                            })
+                        res.status(200).json({
+                            message: "updated live scores of the match successfully!",
                         });
-                })(i); // Pass the current value of i to the closure
+                    }
+                }
             }
         }
     }
@@ -1414,14 +1406,14 @@ router.get("/update_to_live/:matchId", async (req, res) => {
                                 console.log(s, 's')
                                 const data = s; // this will contain only players
                                 console.log(data?.team1?.players, 'data for players')
-                                players1 = data.team1.players["playing XI"] || data.team1.players["Squad"]
-                                players2 = data.team2.players["playing XI"] || data.team2.players["Squad"]
+                                players1 = data.team1.players?.[0].player || data.team1.players["Squad"]
+                                players2 = data.team2.players?.[0].player || data.team2.players["Squad"]
                                 captain1 = players1.find((p) => p.captain)
                                 captain2 = players2.find((p) => p.captain)
                                 const team1Players = players1.map(p => ({
                                     playerId: p.id,
                                     playerName: p.name,
-                                    image: p.faceImageId,
+                                    image: p.faceimageid,
                                     points: 4,
                                     position: p.role === "Unknown" ? "Batsman" : p.role,
                                     batOrder: -1
@@ -1430,7 +1422,7 @@ router.get("/update_to_live/:matchId", async (req, res) => {
                                 const team2Players = players2.map(p => ({
                                     playerId: p.id,
                                     playerName: p.name,
-                                    image: p.faceImageId,
+                                    image: p.faceimageid,
                                     points: 4,
                                     position: p.role === "Unknown" ? "Batsman" : p.role,
                                     batOrder: -1
