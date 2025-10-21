@@ -134,7 +134,7 @@ module.exports.addLivecommentaryMongo = async function addcommentry(format) {
                         )
                         //console.log(match, 'away')
                         let runs_fi = match?.runFI;
-                        if (match?.teamAwayPlayers && match?.result == "Complete" && match?.isInPlay && (importance == 'high' || importance == 'very_high')) {
+                        if (match?.teamAwayPlayers && match?.result == "Complete" && (importance == 'high' || importance == 'very_high')) {
                             let players = [...match?.teamHomePlayers, ...match?.teamAwayPlayers]
                             const manofthematch = response?.data?.matchDetails?.matchHeader?.playersOfTheMatch
                             let a = players.find((p) => p?.playerId == manofthematch[0].id)
