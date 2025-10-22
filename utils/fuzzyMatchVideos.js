@@ -115,7 +115,7 @@ function matchesWithSynonyms(fieldValue, filterValue, field) {
     return synonyms.some(syn => fieldVal.includes(syn.toLowerCase()));
 }
 
-function scoreClip(commentary, clip, batsman, bowler, team, bowl_team, series, battingHand, bowlingHand, bowlerType, shotType, direction, ballType, connection, sixType, comesDown, isKeeperCatch, lofted, powerplay, slowball) {
+function scoreClip(commentary, clip, batsman, bowler, team, bowl_team, series, battingHand, bowlingHand, bowlerType, shotType, direction, lengthType, ballType, connection, sixType, comesDown, isKeeperCatch, lofted, powerplay, slowball) {
     let score = 0;
     const matched_input_keywords = getkeyWords(commentary)
     const matched_keywords = getkeyWords(clip?.commentary);
@@ -197,6 +197,11 @@ function scoreClip(commentary, clip, batsman, bowler, team, bowl_team, series, b
         scoreBreakdown.directionSynonymMatch = 5;
     }
 
+     if (lengthType && (clip?.labels?.lengthType?.toLowerCase() == lengthType.toLowerCase())) {
+        score += 5;
+        scoreBreakdown.lengthType = 5;
+    }
+
     if (ballType && (clip?.labels?.ballType?.toLowerCase() == ballType?.toLowerCase())) {
         score += 3;
         scoreBreakdown.ballTypeMatch = 3;
@@ -207,9 +212,14 @@ function scoreClip(commentary, clip, batsman, bowler, team, bowl_team, series, b
         scoreBreakdown.connection = 3;
     }
 
-    if (connection && (clip?.labels?.lofted == lofted)) {
-        score += 2;
-        scoreBreakdown.lofted = 2;
+    if (lofted && (clip?.labels?.lofted)) {
+        score += 5;
+        scoreBreakdown.lofted = 5;
+    }
+
+    if (!lofted && (clip?.labels?.lofted)) {
+        score += -2;
+        scoreBreakdown.lofted = -2;
     }
 
     if (battingHand && battingHand !== "unknown" && clip?.battingHand?.toLowerCase() === battingHand.toLowerCase()) {
@@ -232,9 +242,15 @@ function scoreClip(commentary, clip, batsman, bowler, team, bowl_team, series, b
     }
 
     if (slowball) {
-        console.log(slowball, 'slowball')
+        //console.log(slowball, 'slowball')
         score += 1;
         scoreBreakdown.slowball = 1;
+    }
+
+    if (comesDown && comesDown == clip?.labels?.comesDown) {
+        console.log(comesDown, 'comes down')
+        score += 3;
+        scoreBreakdown.comesDown = 3;
     }
 
     const clipBatColor = getJerseyColor(clip.batting_team);
@@ -245,30 +261,30 @@ function scoreClip(commentary, clip, batsman, bowler, team, bowl_team, series, b
     const clipBatGroup = getColorGroup(clipBatColor);
     const clipBowlGroup = getColorGroup(clipBowlColor);
     const userBatGroup = getColorGroup(userBatColor);
-    const userBowlGroup = getColorGroup(userBowlColor);
-    console.log(bowl_team, 'bat color')
+    const userBowlGroup = getColorGroup(userBowlColor)
 
-    if (clipBatColor === userBatColor) {
-        score += 2;
-        scoreBreakdown.battingColorExact = 2;
+    if (clipBatColor === userBatColor && (!(clipBatColor == "not found"))) {
+        console.log(clipBatColor, userBatColor, team, bowl_team, clip?.batting_team, clip?.bowling_team, 'bat color')
+        score += 100;
+        scoreBreakdown.battingColorExact = 1;
     } else if (clipBatGroup && clipBatGroup === userBatGroup) {
-        score += 1;
-        scoreBreakdown.battingColorGroup = 1;
+        score += 0.5;
+        scoreBreakdown.battingColorGroup = 0.5;
     }
 
     // Bowling color match
-    if (clipBowlColor === userBowlColor) {
+    if (clipBowlColor === userBowlColor && (!(clipBatColor == "not found"))) {
         //console.log('layer', clipBowlColor, userBowlColor, team, 'bat coolor')
-        score += 2;
-        scoreBreakdown.bowlingColorExact = 2;
+        score += 100;
+        scoreBreakdown.bowlingColorExact = 1;
     } else if (clipBowlGroup && clipBowlGroup === userBowlGroup) {
-        score += 1;
-        scoreBreakdown.bowlingColorGroup = 1;
+        score += 0.5;
+        scoreBreakdown.bowlingColorGroup = 0.5;
     }
 
-    if (clipBowlColor === userBowlColor && clipBatColor === userBatColor) {
-        score += 4;
-        scoreBreakdown.bothMatched = 4;
+    if (clipBowlColor === userBowlColor && clipBatColor === userBatColor && (!(clipBatColor == "not found"))) {
+        score += 200;
+        scoreBreakdown.bothMatched = 2;
     }
 
     // Add custom bar score
@@ -360,17 +376,19 @@ async function getBestMatchingVideo(clips, event, commentary, details, bowling_t
     let shotType = details?.shotType;
     let direction = details?.direction;
     let ballType = details?.ballType;
+    let lengthType = details?.lengthType;
     let sixType;
     let comesDown;
     let isKeeperCatch;
     let isCaught;
     let lofted;
-    console.log(details, 'details')
+    //console.log(details, 'details')
     let overNumber = details.overNumber;
 
     if (!shotType) shotType = extractFieldFromCommentary(commentary, "shotType", overNumber);
     if (!direction) direction = extractFieldFromCommentary(commentary, "direction", overNumber);
     if (!ballType) ballType = extractFieldFromCommentary(commentary, "ballType", overNumber);
+    if (!lengthType) lengthType = extractFieldFromCommentary(commentary, "lengthType", overNumber);
     connection = extractFieldFromCommentary(commentary, "connection", overNumber);
     if (event?.includes("SIX")) {
         sixType = extractFieldFromCommentary(commentary, "sixType", overNumber);
@@ -379,10 +397,10 @@ async function getBestMatchingVideo(clips, event, commentary, details, bowling_t
         isKeeperCatch = extractFieldFromCommentary(commentary, "keeperCatch", overNumber);
     }
     if (!comesDown) comesDown = extractFieldFromCommentary(commentary, "comesDown", overNumber);
-    if (!lofted) lofted = extractFieldFromCommentary(commentary, "lofted", overNumber) ? true : false;
+    if (!lofted) lofted = extractFieldFromCommentary(commentary, "lofted", overNumber) ? 'lofted' : false;
     let powerplay = extractFieldFromCommentary(commentary, "powerplay", overNumber);
     let slowball = extractFieldFromCommentary(commentary, "slowball", overNumber)
-    //console.log(shotType, direction, ballType, 'shotType direction ballType')
+    //console.log(slowball, lofted, 'slowball test')
     const filteredClips = await filterClipsByEventOnly(clips, event, commentary);
     let Batsman = await Player.findOne({ name: batsman });
     let Bowler = await Player.findOne({ name: bowler });
@@ -404,6 +422,7 @@ async function getBestMatchingVideo(clips, event, commentary, details, bowling_t
             bowlerType,
             shotType,
             direction,
+            lengthType,
             ballType,
             connection,
             sixType,
