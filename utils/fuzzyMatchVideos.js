@@ -115,7 +115,7 @@ function matchesWithSynonyms(fieldValue, filterValue, field) {
     return synonyms.some(syn => fieldVal.includes(syn.toLowerCase()));
 }
 
-function scoreClip(commentary, clip, batsman, bowler, team, bowl_team, series, battingHand, bowlingHand, bowlerType, shotType, direction, ballType, connection, sixType, comesDown, isKeeperCatch, lofted, powerplay) {
+function scoreClip(commentary, clip, batsman, bowler, team, bowl_team, series, battingHand, bowlingHand, bowlerType, shotType, direction, ballType, connection, sixType, comesDown, isKeeperCatch, lofted, powerplay, slowball) {
     let score = 0;
     const matched_input_keywords = getkeyWords(commentary)
     const matched_keywords = getkeyWords(clip?.commentary);
@@ -229,6 +229,12 @@ function scoreClip(commentary, clip, batsman, bowler, team, bowl_team, series, b
     if (powerplay == "powerplay") {
         score += 1;
         scoreBreakdown.powerplay = 1;
+    }
+
+    if (slowball) {
+        console.log(slowball, 'slowball')
+        score += 1;
+        scoreBreakdown.slowball = 1;
     }
 
     const clipBatColor = getJerseyColor(clip.batting_team);
@@ -375,6 +381,7 @@ async function getBestMatchingVideo(clips, event, commentary, details, bowling_t
     if (!comesDown) comesDown = extractFieldFromCommentary(commentary, "comesDown", overNumber);
     if (!lofted) lofted = extractFieldFromCommentary(commentary, "lofted", overNumber) ? true : false;
     let powerplay = extractFieldFromCommentary(commentary, "powerplay", overNumber);
+    let slowball = extractFieldFromCommentary(commentary, "slowball", overNumber)
     //console.log(shotType, direction, ballType, 'shotType direction ballType')
     const filteredClips = await filterClipsByEventOnly(clips, event, commentary);
     let Batsman = await Player.findOne({ name: batsman });
@@ -403,7 +410,8 @@ async function getBestMatchingVideo(clips, event, commentary, details, bowling_t
             comesDown,
             isKeeperCatch,
             lofted,
-            powerplay
+            powerplay,
+            slowball
         );
 
         return {

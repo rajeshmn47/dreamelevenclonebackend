@@ -7,7 +7,7 @@ require("dotenv").config();
 async function fetchAndSaveTeams() {
     //await CricketTeam.collection.drop();
     //await CricketTeam.deleteMany({}); // Clear existing international teams
-    const RAPIDAPI_KEY = await getkeys() // Put your RapidAPI key in .env
+    const RAPIDAPI_KEY = await getkeys('12345') // Put your RapidAPI key in .env
     const cricketteams = await CricketTeam.find({});
     console.log(cricketteams, 'cricketteams')
     const url = "https://cricbuzz-cricket.p.rapidapi.com/teams/v1/domestic";
