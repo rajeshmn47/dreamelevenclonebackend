@@ -43,7 +43,7 @@ module.exports.addLivecommentaryCustom = async function addcommentry(format) {
         let date = new Date();
         let allMatches = [];
         const endDate = new Date(date.getTime());
-        date = new Date(date.getTime() - 12000 * 60 * 60 * 1000);
+        date = new Date(date.getTime() - 120 * 60 * 60 * 1000);
         let matches;
         if (format == "low" || format == "high" || format == "very_high") {
             matches = await Matches.find({
