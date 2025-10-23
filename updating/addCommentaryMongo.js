@@ -108,11 +108,11 @@ module.exports.addLivecommentaryMongo = async function addcommentry(format) {
                 //const keys = await getkeys.getkeys();
                 const options = {
                     method: "GET",
-                    url: `https://www.cricbuzz.com/api/cricket-match/${m[i].matchId}/full-commentary/1`,
+                    url: `https://www.cricbuzz.com/api/mcenter/${m[i].matchId}/full-commentary/1`,
                 };
                 const options2 = {
                     method: "GET",
-                    url: `https://www.cricbuzz.com/api/cricket-match/${m[i].matchId}/full-commentary/2`,
+                    url: `https://www.cricbuzz.com/api/mcenter/${m[i].matchId}/full-commentary/2`,
                 };
                 try {
                     let response = await axios.request(options);

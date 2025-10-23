@@ -111,7 +111,7 @@ module.exports.addLivecommentaryCustom = async function addcommentry(format) {
                     method: "GET",
                     //url: `https://cricbuzz-cricket.p.rapidapi.com/mcenter/v1/${m[i].matchId}/comm`,
                     //url: `https://m.cricbuzz.com/api/mcenter/highlights/${m[i].matchId}/2`,
-                    url: `https://www.cricbuzz.com/api/cricket-match/${m[i].matchId}/full-commentary/2`,
+                    url: `https://www.cricbuzz.com/api/mcenter/${m[i].matchId}/full-commentary/2`,
                     headers: {
                         //"X-RapidAPI-Key": 'b9ac58be1fmsh1dc31cbe511d761p103bb8jsn4389ec6b3355',
                         //"X-RapidAPI-Key":"f39c66c5a9mshe4e04348c634a6ap1f75edjsn3d3394bd6fc0",
@@ -127,7 +127,7 @@ module.exports.addLivecommentaryCustom = async function addcommentry(format) {
                     method: "GET",
                     //url: `https://cricbuzz-cricket.p.rapidapi.com/mcenter/v1/${m[i].matchId}/comm`,
                     //url: `https://m.cricbuzz.com/api/mcenter/highlights/${m[i].matchId}/2`,
-                    url: `https://www.cricbuzz.com/api/cricket-match/${m[i].matchId}/full-commentary/1`,
+                    url: `https://www.cricbuzz.com/api/mcenter/${m[i].matchId}/full-commentary/1`,
                     headers: {
                         //"X-RapidAPI-Key": 'b9ac58be1fmsh1dc31cbe511d761p103bb8jsn4389ec6b3355',
                         //"X-RapidAPI-Key":"f39c66c5a9mshe4e04348c634a6ap1f75edjsn3d3394bd6fc0",
