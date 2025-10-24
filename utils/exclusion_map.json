@@ -9,7 +9,19 @@
       "upper-cut",
       "cut the angle",
       "cut back",
-      "consecutive"
+      "consecutive",
+      "off-cutter",
+      "off cutter",
+      "offcutter",
+      "leg-cutter",
+      "legcutter",
+      "leg cutter"
+    ],
+    "pull": [
+      "pull off"
+    ],
+    "flick": [
+      "probably flick"
     ],
     "sweep": [
       "reverse sweep",
@@ -32,8 +44,14 @@
     "mid_off": [
       "back over the bowler's head"
     ],
+    "mid_on": [
+      "just wide of the non-striker"
+    ],
     "long_on": [
       "No chance for long-on"
+    ],
+    "long_off": [
+      "over the bowler's head"
     ],
     "mid_wicket": [],
     "square_leg": [],
@@ -51,13 +69,16 @@
       "slip under",
       "slips in the",
       "let it slip",
-      "slip deeper"
+      "slip deeper",
+      "slips it"
     ]
   },
   "ballType": {
     "good_length": [
       "short of a good length",
-      "shorter than good length"
+      "shorter than good length",
+      "fuller length",
+      "full length"
     ],
     "yorker": [
       "full toss",
@@ -101,6 +122,10 @@
       "Fails to connect",
       "not right off the middle",
       "timing is such that it's gone all the way"
+    ],
+    "inside_edge": [
+      "gets beaten on the inside edge",
+      "turns in past the inside edge"
     ]
   }
 }

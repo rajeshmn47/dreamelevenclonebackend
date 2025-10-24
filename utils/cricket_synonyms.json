@@ -13,14 +13,17 @@
     "scoop": [
       "scoop",
       "ramp shot",
-      "paddle scoop"
+      "paddle scoop",
+      "helps it on its way with the lap",
+      "lap shot"
     ],
     "reverse_sweep": [
       "reverse sweep",
       "switch hit",
       "reverse hit",
       "reverse-hit",
-      "reverse-sweep"
+      "reverse-sweep",
+      "premeditated reverse"
     ],
     "pull": [
       "pull",
@@ -28,8 +31,11 @@
     ],
     "cut": [
       "cut",
-      "square cut",
-      "upper cut"
+      "square cut"
+    ],
+    "slash": [
+      "slash",
+      "cut-slap"
     ],
     "helicopter_shot": [
       "helicopter shot",
@@ -38,6 +44,9 @@
     "glance": [
       "glance",
       "leg glance"
+    ],
+    "punch": [
+      "punch"
     ],
     "flick": [
       "flick",
@@ -98,7 +107,7 @@
     ],
     "square_drive": [
       "square drive",
-      "square cut"
+      "drive square"
     ],
     "byes": [
       "byes"
@@ -125,11 +134,13 @@
     ],
     "mid_on": [
       "mid on",
+      "midon",
       "mid-on",
       "straight mid on"
     ],
     "mid_off": [
       "mid off",
+      "midoff",
       "mid-off",
       "straight mid off"
     ],
@@ -147,6 +158,11 @@
       "deep square leg",
       "square leg boundary",
       "deep square"
+    ],
+    "long_leg": [
+      "long leg",
+      "long-leg",
+      "longleg"
     ],
     "deep_fine_leg": [
       "deep fine leg",
@@ -186,6 +202,16 @@
       "point",
       "backward point"
     ],
+    "cover_point": [
+      "cover-point",
+      "cover point",
+      "coverpoint"
+    ],
+    "sweeper_cover": [
+      "sweeper cover",
+      "sweeper-cover",
+      "sweepercover"
+    ],
     "square_leg": [
       "square leg",
       "backward square leg",
@@ -195,16 +221,17 @@
       "leg gully"
     ],
     "short_leg": [
-      "short leg",
-      "bat pad"
+      "short leg"
     ],
     "silly_point": [
-      "silly point"
+      "silly point",
+      "silly-point"
     ],
     "mid_wicket": [
       "mid wicket",
       "deep mid wicket",
-      "mid-wicket"
+      "mid-wicket",
+      "midwicket"
     ],
     "backward_point": [
       "backward point",
@@ -238,45 +265,16 @@
       "straight down the ground",
       "straight field",
       "straight hit",
-      "over the bowler"
+      "over the bowler",
+      "flat-bats it straight",
+      "over the bowler's head",
+      "just wide of the non-striker"
+    ],
+    "behind": [
+      "escapes past the diving keeper"
     ]
   },
   "ballType": {
-    "yorker": [
-      "yorker",
-      "blockhole",
-      "block hole",
-      "toe crusher",
-      "in the blockhole",
-      "very full"
-    ],
-    "full_toss": [
-      "full toss",
-      "full toss ball",
-      "full-toss"
-    ],
-    "good_length": [
-      "good length",
-      "perfect length",
-      "good length ball",
-      "length delivery"
-    ],
-    "short_of_length": [
-      "short of a length",
-      "short length"
-    ],
-    "bouncer": [
-      "bouncer",
-      "banged in short"
-    ],
-    "slow_ball": [
-      "slow ball",
-      "slower ball",
-      "slower one",
-      "slow",
-      "off pace",
-      "off-pace"
-    ],
     "off_cutter": [
       "off cutter",
       "off break cutter"
@@ -292,34 +290,6 @@
     "no_ball": [
       "no ball",
       "noball"
-    ],
-    "beamer": [
-      "beamer",
-      "waist high full toss"
-    ],
-    "length_ball": [
-      "length ball",
-      "good length"
-    ],
-    "full_length": [
-      "full length",
-      "full length ball"
-    ],
-    "half_volley": [
-      "half volley",
-      "half-volley",
-      "overpitched",
-      "over-pitched",
-      "pitched up",
-      "pitched-up"
-    ],
-    "short_ball": [
-      "short ball",
-      "short pitched"
-    ],
-    "back_of_length": [
-      "back of a length",
-      "back length"
     ],
     "overpitched": [
       "overpitched",
@@ -419,6 +389,71 @@
       "other"
     ]
   },
+  "lengthType": {
+    "yorker": [
+      "yorker",
+      "blockhole",
+      "block hole",
+      "toe crusher",
+      "in the blockhole",
+      "very full"
+    ],
+    "full_toss": [
+      "full toss",
+      "full toss ball",
+      "full-toss"
+    ],
+    "good_length": [
+      "good length",
+      "perfect length",
+      "good length ball",
+      "length delivery"
+    ],
+    "short_of_length": [
+      "short of a length",
+      "short length",
+      "Shortish ball"
+    ],
+    "bouncer": [
+      "bouncer",
+      "banged in short"
+    ],
+    "full_length": [
+      "full length",
+      "full length ball",
+      "fuller length delivery",
+      "full ball"
+    ],
+    "half_volley": [
+      "half volley",
+      "half-volley",
+      "overpitched",
+      "over-pitched",
+      "pitched up",
+      "pitched-up"
+    ],
+    "short_ball": [
+      "short ball",
+      "short pitched",
+      "Shortish ball"
+    ],
+    "back_of_length": [
+      "back of a length",
+      "back length"
+    ],
+    "overpitched": [
+      "overpitched",
+      "over pitched"
+    ],
+    "beamer": [
+      "beamer",
+      "waist high full toss"
+    ],
+    "length_ball": [
+      "length ball",
+      "good length"
+    ]
+  },
   "keeperCatch": {
     "keeper_catch": [
       "keeper catch",
@@ -473,6 +508,10 @@
       "bottom edge",
       "bottom-edge"
     ],
+    "leading_edge": [
+      "leading edge",
+      "leading-edge"
+    ],
     "well_timed": [
       "perfect shot",
       "great shot",
@@ -494,6 +533,7 @@
       "over mid-off",
       "over mid-on",
       "over midwicket",
+      "over mid-wicket",
       "over the cover",
       "over cover",
       "over extra cover",
@@ -514,7 +554,31 @@
       "over the infield",
       "over the wide",
       "over infield",
-      "slog"
+      "over square leg",
+      "over square-leg",
+      "over backward square leg",
+      "slog",
+      "takes the aerial route",
+      "flies over the lone slip"
+    ]
+  },
+  "slow_ball": {
+    "slow_ball": [
+      "slow ball",
+      "slower ball",
+      "slower length ball",
+      "slower one",
+      "slow",
+      "off pace",
+      "off-pace",
+      "pace off",
+      "pace-off"
+    ]
+  },
+  "comesDown": {
+    "comes_down": [
+      "comes down the track",
+      "comes down track"
     ]
   }
 }

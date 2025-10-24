@@ -214,7 +214,7 @@ module.exports.addLivecommentaryMongo = async function addcommentry(format) {
                                 }
                             }, { upsert: true }
                             )
-                            console.log(match_result, 'resulty')
+                            let capitalize_result = response?.data?.matchDetails?.matchHeader?.state
                             let isin_play = isInPlay(match_result, matches[i].date);
                             console.log(isin_play, match_result, 'isinplay value')
                             const matchUpdate = await MatchLiveDetails.updateOne(
@@ -222,6 +222,7 @@ module.exports.addLivecommentaryMongo = async function addcommentry(format) {
                                 {
                                     $set: {
                                         isInPlay: isin_play,
+                                        result: capitalize_result
                                     },
                                 }
                             );

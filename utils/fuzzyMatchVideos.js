@@ -197,7 +197,7 @@ function scoreClip(commentary, clip, batsman, bowler, team, bowl_team, series, b
         scoreBreakdown.directionSynonymMatch = 5;
     }
 
-     if (lengthType && (clip?.labels?.lengthType?.toLowerCase() == lengthType.toLowerCase())) {
+    if (lengthType && (clip?.labels?.lengthType?.toLowerCase() == lengthType.toLowerCase())) {
         score += 5;
         scoreBreakdown.lengthType = 5;
     }
@@ -264,27 +264,26 @@ function scoreClip(commentary, clip, batsman, bowler, team, bowl_team, series, b
     const userBowlGroup = getColorGroup(userBowlColor)
 
     if (clipBatColor === userBatColor && (!(clipBatColor == "not found"))) {
-        console.log(clipBatColor, userBatColor, team, bowl_team, clip?.batting_team, clip?.bowling_team, 'bat color')
-        score += 100;
+        score += 2;
         scoreBreakdown.battingColorExact = 1;
     } else if (clipBatGroup && clipBatGroup === userBatGroup) {
-        score += 0.5;
+        score += 2;
         scoreBreakdown.battingColorGroup = 0.5;
     }
 
     // Bowling color match
-    if (clipBowlColor === userBowlColor && (!(clipBatColor == "not found"))) {
+    if (clipBowlColor === userBowlColor && (!(clipBowlColor == "not found"))) {
         //console.log('layer', clipBowlColor, userBowlColor, team, 'bat coolor')
-        score += 100;
+        score += 2;
         scoreBreakdown.bowlingColorExact = 1;
     } else if (clipBowlGroup && clipBowlGroup === userBowlGroup) {
         score += 0.5;
         scoreBreakdown.bowlingColorGroup = 0.5;
     }
 
-    if (clipBowlColor === userBowlColor && clipBatColor === userBatColor && (!(clipBatColor == "not found"))) {
-        score += 200;
-        scoreBreakdown.bothMatched = 2;
+    if (clipBowlColor === userBowlColor && clipBatColor === userBatColor && (!(clipBatColor == "not found")) && (!(clipBowlColor == "not found"))) {
+        score += 5;
+        scoreBreakdown.bothMatched = 5;
     }
 
     // Add custom bar score
