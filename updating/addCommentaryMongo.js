@@ -99,10 +99,10 @@ module.exports.addLivecommentaryMongo = async function addcommentry(format) {
         console.log(m.length, "cricket allmatches");
         for (let i = 0; i < matches.length; i++) {
             const match = await MatchLiveDetails.findOne({ matchId: matches[i].matchId });
-            //console.log(match, 'the match')
+            console.log(match?.isInPlay, 'the match')
             const livecommentary = await MatchLiveCommentary.findOne({ matchId: match?.matchId })
             if (!match || (!match?.isInPlay)) continue
-            console.log(matches[i].matchId, match?.isInPlay, 'matchid')
+            //console.log(match, 'matchid')
             if (m[i].matchId.length > 3) {
                 //console.log(m[i]?.matchId, "id matchid");
                 //const keys = await getkeys.getkeys();
@@ -141,8 +141,18 @@ module.exports.addLivecommentaryMongo = async function addcommentry(format) {
                             const manofthematch = response?.data?.matchDetails?.matchHeader?.playersOfTheMatch
                             let a = players.find((p) => p?.playerId == manofthematch[0].id)
                             //console.log(a, 'player')
+                            let perfText = "";
+                            if (a?.runs !== undefined && a?.balls !== undefined && a.runs > 0) {
+                                perfText += `${a.runs} runs off ${a.balls} balls`;
+                            }
+                            // check bowling stats
+                            if (a?.wickets !== undefined && a?.runsConceded !== undefined && a.wickets > 0) {
+                                if (perfText) perfText += " & ";
+                                perfText += `${a.wickets} wickets for ${a.runsConceded} runs`;
+                            }
+                            console.log(perfText,match?.runs,'perf text')
                             let tweetText = `🏆 Man of the Match: ${manofthematch[0]?.name} (${manofthematch[0]?.teamName})\n\n` +
-                                `${a.runs} runs off ${a.balls} balls\n\n` +
+                                `${perfText}` +
                                 `Full match details 👉 https://www.cricbuzz.com/live-cricket-scores/${matches[i]?.matchId}\n\n` +
                                 `${generateMatchHashtags(matches[i].teamHomeCode, matches[i].teamAwayCode, matches[i].matchTitle)}`
 
@@ -157,8 +167,8 @@ module.exports.addLivecommentaryMongo = async function addcommentry(format) {
                             await sendTweetWithImage(tweetText, `./images/mom/mom_${matches[i].matchId}.png`);
                         }
                         //console.log(response?.data?.matchDetails?.matchHeader?.state?.toLowerCase(), 'innings break test')
-                        console.log(match_result, 'match resultr')
-                        console.log('abcdefgh')
+                        //console.log(match_result, 'match resultr')
+                        //console.log('abcdefgh')
                         if ((match_result == 'innings break' && (importance == 'high' || importance == 'very_high'))) {
                             let score = `${match?.runFI}/${match?.wicketsFI} (${match?.oversFI} overs)`
                             //console.log(match, 'match')
@@ -175,16 +185,16 @@ module.exports.addLivecommentaryMongo = async function addcommentry(format) {
                             ${generateMatchHashtags(matches?.[i].teamHomeName, matches?.[i].teamAwayName, matches?.[i].matchTitle)}`
                             await sendTweetWithImage(tweetText, `./images/ib/ib_${matches[i].matchId}.png`);
                         }
-                        console.log('ijklmnop')
+                        //console.log('ijklmnop')
                         if (match_result == "complete" && (importance == 'high' || importance == 'very_high')) {
                             //continue
                             let title_fi = match?.titleFI;
                             let title_si = match?.titleSI;
-                            console.log(title_fi, 'i')
+                            //console.log(title_fi, 'i')
                             let abandoned = false;
                             let winner = match?.runFI > match?.runSI ? title_fi : title_si;
-                            let tweetText = `Lineups Out: ${matches[i].teamHomeName} vs ${match.teamAwayName}\nThe lineups for ${matches[i].teamHomeName} and ${matches[i].teamAwayName} are now available. Check out the details!
-                                https://www.cricbuzz.com/live-cricket-scores/${match?.matchId} \n${generateMatchHashtags(matches[i].teamHomeCode, matches[i].teamAwayCode, matches[i].matchTitle)}`
+                            let tweetText = `match Result: ${winner} wins!\n${title_fi} scored ${match?.runFI} runs while ${title_si} managed ${match?.runSI} runs.\nFull match details 👉 https://www.cricbuzz.com/live-cricket-scores/${match?.matchId}\n${generateMatchHashtags(matches[i].teamHomeCode, matches[i].teamAwayCode, matches[i].matchTitle)}`
+                            //console.log(tweetText, 'tweet text')
                             await createResultImage(matches[i].teamHomeCode, matches[i].teamAwayCode, title_fi,
                                 title_si, match?.runFI, match?.runSI, winner, `./images/completed/${match.matchId}_vs_image.png`, matches?.[i]?.date, abandoned); // Assuming first player is captain
                             await sendTweetWithImage(tweetText, `./images/completed/${match.matchId}_vs_image.png`);
@@ -196,16 +206,15 @@ module.exports.addLivecommentaryMongo = async function addcommentry(format) {
                             let title_si = match?.titleSI;
                             let abandoned = true;
                             let winner = match?.runFI > match?.runSI ? title_fi : title_si;
-                            let tweetText = `Lineups Out: ${matches[i].teamHomeName} vs ${match.teamAwayName}\nThe lineups for ${matches[i].teamHomeName} and ${matches[i].teamAwayName} are now available. Check out the details!
-                                https://www.cricbuzz.com/live-cricket-scores/${match?.matchId} \n${generateMatchHashtags(matches[i].teamHomeCode, matches[i].teamAwayCode, matches[i].matchTitle)}`
+                            let tweetText = `match Abandoned! https://www.cricbuzz.com/live-cricket-scores/${match?.matchId} \n${generateMatchHashtags(matches[i].teamHomeCode, matches[i].teamAwayCode, matches[i].matchTitle)}`
                             await createResultImage(matches[i].teamHomeCode, matches[i].teamAwayCode, title_fi,
                                 title_si, match?.runFI, match?.runSI, winner, `./images/completed/${match.matchId}_vs_image.png`, matches?.[i]?.date, abandoned); // Assuming first player is captain
                             await sendTweetWithImage(tweetText, `./images/completed/${match.matchId}_vs_image.png`);
                         }
-                        console.log('abcdef')
+                        //console.log('abcdef')
                         innings = 1;
                         response = await axios.request(options2);
-                        console.log(match_result, response?.data?.commentary?.[0]?.commentaryList?.length, 'resulty')
+                        //console.log(match_result, response?.data?.commentary?.[0]?.commentaryList?.length, 'resulty')
                         if (response?.data?.commentary?.[0]?.commentaryList?.length > 0) {
                             const match_result = response?.data?.matchDetails?.matchHeader?.state?.toLowerCase()
                             await MatchLiveCommentary.updateOne({ matchId: m[i]?.matchId }, {

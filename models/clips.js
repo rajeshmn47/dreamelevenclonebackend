@@ -25,9 +25,12 @@ const clipSchema = new mongoose.Schema({
     shotType: { type: String },
     direction: { type: String },
     ballType: { type: String },
+    lengthType: { type: String },
     connection: { type: String },
     slowball: { type: String },
-    lofted: { type: Boolean, default: false }
+    lofted: { type: Boolean, default: false },
+    comesDown: { type: String },
+    powerplay: { type: String }
   },
   createdAt: { type: Date, default: Date.now },
 });
