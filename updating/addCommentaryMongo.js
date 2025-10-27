@@ -179,9 +179,10 @@ module.exports.addLivecommentaryMongo = async function addcommentry(format) {
                                 matches?.[i]?.date,
                                 null
                             );
+                            titleSI = match?.titleSI ? match?.titleSI : match?.titleFI?.toLowerCase() == matches[i]?.teamHomeName?.toLowerCase() ? matches[i]?.teamAwayName : matches[i]?.teamHomeName
                             const tweetText = `Innings Break!
-                            ${matches?.[i].teamHomeName} post ${score} in their 1st innings.
-                            Stay tuned as ${matches?.[i].teamAwayName} gears up for the chase! 🔥
+                            ${match.titleFI} post ${score} in their 1st innings.
+                            Stay tuned as ${titleSI} gears up for the chase! 🔥
                             ${generateMatchHashtags(matches?.[i].teamHomeName, matches?.[i].teamAwayName, matches?.[i].matchTitle)}`
                             await sendTweetWithImage(tweetText, `./images/ib/ib_${matches[i].matchId}.png`);
                         }
