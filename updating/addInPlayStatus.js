@@ -85,12 +85,7 @@ module.exports.addInPlayStatus = async function () {
             console.log(matchId, 'matchId')
             const options = {
                 method: "GET",
-                url: `https://cricbuzz-cricket.p.rapidapi.com/mcenter/v1/${matchId}`,
-                headers: {
-                    "x-rapidapi-host": "cricbuzz-cricket.p.rapidapi.com",
-                    "X-RapidAPI-Key": keys,
-                    useQueryString: true,
-                },
+                url: `https://www.cricbuzz.com/api/mcenter/${matchId}/full-commentary/1`
             };
 
             await delay(2000);
@@ -108,11 +103,9 @@ module.exports.addInPlayStatus = async function () {
 
             promise
                 .then(async (matchData) => {
-                    //console.log(matchData, 'matchdata')
+                    console.log(matchData, 'matchdata')
                     if (!matchData) return;
-                    const ratelimit = parseInt(matchData.headers['x-ratelimit-requests-remaining']);
-                    await RapidApiKey.updateOne({ apiKey: keys }, { $set: { usageCount: ratelimit } })
-                    const matchState = matchData.state.toLowerCase();
+                    const matchState = matchData.matchDetails.matchHeader.state.toLowerCase();
                     console.log(matchState, matchId, 'matchstate')
                     if (matchState.includes("stumps")) {
                         console.log(`Match ${matchId} is in Stumps, setting next check for next day.`);
@@ -126,7 +119,7 @@ module.exports.addInPlayStatus = async function () {
                         console.log(`Match ${matchId} in innings break, checking after ${breakDuration / 60000} min.`);
                         return;
                     }
-                    
+
                     console.log(matchState, 'matchstate')
                     if (matchState?.includes("in progress") || matchState?.includes("inprogress")) {
                         await MatchLive.updateOne({ matchId }, { isInPlay: true });
