@@ -122,7 +122,7 @@ function scoreClip(commentary, clip, batsman, bowler, team, bowl_team, series, b
     let a = matched_input_keywords?.join('')
     let b = matched_keywords?.join('');
     const similarity = stringSimilarity.compareTwoStrings(commentary, clip?.commentary);
-    let bar = similarity * 3
+    let bar = similarity * 5
     //console.log(bowl_team, 'bar')
 
     {/*if (clip.shot_type && commentary.toLowerCase().includes(clip.shot_type.toLowerCase())) score += 3;
@@ -267,9 +267,11 @@ function scoreClip(commentary, clip, batsman, bowler, team, bowl_team, series, b
         score += 2;
         scoreBreakdown.battingColorExact = 1;
     } else if (clipBatGroup && clipBatGroup === userBatGroup) {
-        score += 2;
+        //console.log(clipBatGroup, userBatGroup, 'group color')
+        score += 0.5;
         scoreBreakdown.battingColorGroup = 0.5;
     }
+    //console.log(clipBatGroup, userBatGroup, 'group coolor')
 
     // Bowling color match
     if (clipBowlColor === userBowlColor && (!(clipBowlColor == "not found"))) {
@@ -304,30 +306,34 @@ async function filterClipsByEventOnly(clips, event, commentary) {
     //console.log(clips.length, 'clips length')
     if (commentary.toLowerCase()?.includes("stumped") && event?.includes("WICKET")) {
         //console.log(commentary, 'commentary stumped link')
-        return clips.filter(clip => clip.event.split('over-break,').join('') === event.split('over-break,').join('')).filter(clip => (clip.season == "2022") || (clip.season == "2024") || (clip.season == "season") || (clip.season == "2025")).filter(clip => clip.commentary.includes("stumped"));
+        return clips.filter(clip => clip.event.split('over-break,').join('') === event.split('over-break,').join('')).filter(clip => clip.commentary.includes("stumped"));
     }
     if (commentary.toLowerCase()?.includes("caught&bowled") && event?.includes("WICKET")) {
         //console.log(commentary, clips.filter(clip => clip.event.split('over-break,').join('') === event.split('over-break,').join('')).filter(clip => (clip.season == "2022") || (clip.season == "2024") || (clip.season == "season")).filter(clip => clip.commentary?.toLowerCase().includes("caught&bowled")), 'commentary caught&bowled link')
-        return clips.filter(clip => clip.event.split('over-break,').join('') === event.split('over-break,').join('')).filter(clip => (clip.season == "2022") || (clip.season == "2024") || (clip.season == "2021") || (clip.season == "2025")).filter(clip => clip.commentary?.toLowerCase().includes("caught&bowled"));
+        return clips.filter(clip => clip.event.split('over-break,').join('') === event.split('over-break,').join('')).filter(clip => clip.commentary?.toLowerCase().includes("caught&bowled"));
     }
     if (commentary.toLowerCase()?.includes("bowled") && event?.includes("WICKET") && (!(commentary.toLowerCase()?.includes("caught&bowled")))) {
         //console.log(commentary,clips.filter(clip => clip.event.split('over-break,').join('') === event.split('over-break,').join('')).filter(clip => (clip.season == "2022") || (clip.season == "2024") || (clip.season == "2021")).filter(clip => clip.commentary.includes("bowled!")).filter(clip => (!(clip.commentary.includes("bowled out"))) || (!(clip.commentary.includes("caught&bowled!")))), 'commentary bowled link')
         //console.log(clips.filter(clip => clip.event.split('over-break,').join('') === event.split('over-break,').join('')).filter(clip => (clip.season == "2022") || (clip.season == "2024") || (clip.season == "2021")).filter(clip => clip.commentary?.toLowerCase().includes("bowled!")).filter(clip => (!(clip.commentary?.toLowerCase().includes("bowled out"))) || (!(clip.commentary?.toLowerCase().includes("caught&bowled!")))).filter((clip) => (!(clip.commentary?.toLowerCase().includes("caught&bowled!")))), "bowled")
-        return clips.filter(clip => clip.event.split('over-break,').join('') === event.split('over-break,').join('')).filter(clip => (clip.season == "2022") || (clip.season == "2024") || (clip.season == "2021") || (clip.season == "2025")).filter(clip => clip.commentary?.toLowerCase().includes("bowled!")).filter(clip => (!(clip.commentary?.toLowerCase().includes("bowled out"))) || (!(clip.commentary?.toLowerCase().includes("caught&bowled!")))).filter((clip) => (!(clip.commentary?.toLowerCase().includes("caught&bowled!"))));
+        return clips.filter(clip => clip.event.split('over-break,').join('') === event.split('over-break,').join('')).filter(clip => clip.commentary?.toLowerCase().includes("bowled!")).filter(clip => (!(clip.commentary?.toLowerCase().includes("bowled out"))) || (!(clip.commentary?.toLowerCase().includes("caught&bowled!")))).filter((clip) => (!(clip.commentary?.toLowerCase().includes("caught&bowled!"))));
     }
     if (commentary.toLowerCase()?.includes("caught") && event?.includes("WICKET")) {
         //console.log(commentary, 'commentary caught link')
-        return clips.filter(clip => clip.event.split('over-break,').join('') === event.split('over-break,').join('')).filter(clip => (clip.season == "2022") || (clip.season == "2024") || (clip.season == "2021") || (clip.season == "2025")).filter(clip => clip.commentary?.toLowerCase().includes("caught"));
+        return clips.filter(clip => clip.event.split('over-break,').join('') === event.split('over-break,').join('')).filter(clip => clip.commentary?.toLowerCase().includes("caught"));
     }
     if ((commentary.toLowerCase()?.includes("run out") || commentary.toLowerCase()?.includes("runout")) && event?.includes("WICKET")) {
         //console.log(commentary, 'commentary run out link')
-        return clips.filter(clip => clip.event.split('over-break,').join('') === event.split('over-break,').join('')).filter(clip => (clip.season == "2022") || (clip.season == "2024") || (clip.season == "2021") || (clip.season == "2025")).filter(clip => clip.commentary?.toLowerCase().includes("run out") || clip.commentary?.toLowerCase().includes("runout"));
+        return clips.filter(clip => clip.event.split('over-break,').join('') === event.split('over-break,').join('')).filter(clip => clip.commentary?.toLowerCase().includes("run out") || clip.commentary?.toLowerCase().includes("runout"));
     }
     if (commentary.toLowerCase()?.includes("lbw") && event?.includes("WICKET")) {
         //console.log(commentary, 'commentary lbw link')
-        return clips.filter(clip => clip.event.split('over-break,').join('') === event.split('over-break,').join('')).filter(clip => (clip.season == "2022") || (clip.season == "2024") || (clip.season == "2021") || (clip.season == "2025")).filter(clip => clip.commentary?.toLowerCase().includes("lbw"));
+        return clips.filter(clip => clip.event.split('over-break,').join('') === event.split('over-break,').join('')).filter(clip => clip.commentary?.toLowerCase().includes("lbw"));
     }
-    return clips.filter(clip => clip.event.split('over-break,').join('') === event.split('over-break,').join('')).filter(clip => (clip.season == "2021") || (clip.season == "2025"));
+        if (commentary.toLowerCase()?.includes("hit wkt") && event?.includes("WICKET")) {
+        //console.log(commentary, 'commentary lbw link')
+        return clips.filter(clip => clip.event.split('over-break,').join('') === event.split('over-break,').join('')).filter(clip => clip.commentary?.toLowerCase().includes("hit kt"));
+    }
+    return clips.filter(clip => clip.event.split('over-break,').join('') === event.split('over-break,').join(''));
 }
 
 async function gptFallback(commentary, filteredClips) {

@@ -120,7 +120,7 @@ async function scheduleJobs(frequencies) {
     jobs.liveCommentaryNotImportant = cron.schedule(getCronPattern(frequencies.low), async () => {
       await addLivecommentaryCustom("low");
     });
-    jobs.liveCommentaryTest = cron.schedule(getCronPattern(frequencies.test), async () => {
+    {/*jobs.liveCommentaryTest = cron.schedule(getCronPattern(frequencies.test), async () => {
       await addLivecommentaryMongo("test");
     });
     jobs.liveCommentaryOdi = cron.schedule(getCronPattern(frequencies.odi), async () => {
@@ -138,7 +138,7 @@ async function scheduleJobs(frequencies) {
     jobs.liveCommentaryNotImportant = cron.schedule(getCronPattern(frequencies.low), async () => {
       await addLivecommentaryMongo("low");
     });
-
+*/}
     console.log("✅ Cron jobs scheduled for source mode");
   } else {
     // Non-source mode
