@@ -21,6 +21,7 @@ const { addLiveDetailsFS } = require("./addlivedetailsFS.js");
 const config = require("../models/config.js");
 const { addInPlayStatusFS } = require("./addInPlayStatusFS.js");
 const { addLivecommentaryMongo } = require("./addCommentaryMongo.js");
+const { resetPlayerNotifiedFlags } = require("./resetNotifiedFlags.js");
 
 const isSource = process.env.SOURCE === "true";
 
@@ -64,6 +65,10 @@ async function scheduleJobs(frequencies) {
 
   jobs.teamStandings = cron.schedule("*/2 * * * *", async () => {
     await addTeamstandingstodb()
+  });
+
+  jobs.teamStandings = cron.schedule("0 0 * * *", async () => {
+    await resetPlayerNotifiedFlags()
   });
 
   // Source mode jobs
@@ -120,25 +125,6 @@ async function scheduleJobs(frequencies) {
     jobs.liveCommentaryNotImportant = cron.schedule(getCronPattern(frequencies.low), async () => {
       await addLivecommentaryCustom("low");
     });
-    {/*jobs.liveCommentaryTest = cron.schedule(getCronPattern(frequencies.test), async () => {
-      await addLivecommentaryMongo("test");
-    });
-    jobs.liveCommentaryOdi = cron.schedule(getCronPattern(frequencies.odi), async () => {
-      await addLivecommentaryMongo("odi");
-    });
-    jobs.liveCommentaryT20 = cron.schedule(getCronPattern(frequencies.t20), async () => {
-      await addLivecommentaryMongo("t20");
-    });
-    jobs.liveCommentaryImportant = cron.schedule(getCronPattern(frequencies.very_high), async () => {
-      await addLivecommentaryMongo("very_high");
-    });
-    jobs.liveCommentaryNotImportant = cron.schedule(getCronPattern(frequencies.high), async () => {
-      await addLivecommentaryMongo("high");
-    });
-    jobs.liveCommentaryNotImportant = cron.schedule(getCronPattern(frequencies.low), async () => {
-      await addLivecommentaryMongo("low");
-    });
-*/}
     console.log("✅ Cron jobs scheduled for source mode");
   } else {
     // Non-source mode
@@ -172,25 +158,6 @@ async function scheduleJobs(frequencies) {
     jobs.low = cron.schedule(getCronPattern(frequencies.low), async () => {
       await addLivescoresDetailsCustomfs("low");
     });
-    jobs.liveCommentaryTest = cron.schedule(getCronPattern(frequencies.test), async () => {
-      await addLivecommentaryMongo("test");
-    });
-    jobs.liveCommentaryOdi = cron.schedule(getCronPattern(frequencies.odi), async () => {
-      await addLivecommentaryMongo("odi");
-    });
-    jobs.liveCommentaryT20 = cron.schedule(getCronPattern(frequencies.t20), async () => {
-      await addLivecommentaryMongo("t20");
-    });
-    jobs.liveCommentaryImportant = cron.schedule(getCronPattern(frequencies.very_high), async () => {
-      await addLivecommentaryMongo("very_high");
-    });
-    jobs.liveCommentaryNotImportant = cron.schedule(getCronPattern(frequencies.high), async () => {
-      await addLivecommentaryMongo("high");
-    });
-    jobs.liveCommentaryNotImportant = cron.schedule(getCronPattern(frequencies.low), async () => {
-      await addLivecommentaryMongo("low");
-    });
-
     console.log("ℹ️ Cron jobs scheduled for non-source mode");
   }
 
