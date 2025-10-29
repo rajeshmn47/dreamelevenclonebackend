@@ -15,7 +15,7 @@ const router = express.Router();
 const { getflag } = require("../utils/getflags");
 const flagURLs = require("country-flags-svg");
 const { squadkeys } = require("../utils/apikeys");
-const { makeRequest } = require("../utils/helpers");
+const { makeRequest, generateMatchHashtags } = require("../utils/helpers");
 
 function convertWicketsData(wicketsData) {
     return Object.keys(wicketsData).map(key => wicketsData[key]);
