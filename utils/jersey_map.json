@@ -1,11 +1,12 @@
 [
     {
         "teamName": "India",
-        "short": "Ind",
+        "short": "IND",
         "jerseyColor": "Blue"
     },
     {
         "teamName": "Australia",
+        "short": "AUS",
         "jerseyColor": "Yellow"
     },
     {
@@ -21,10 +22,11 @@
     {
         "teamName": "South Africa",
         "jerseyColor": "Dark Green",
-        "short":"RSA"
+        "short": "RSA"
     },
     {
         "teamName": "New Zealand",
+        "short": "NZ",
         "jerseyColor": "Black"
     },
     {
@@ -39,7 +41,8 @@
     },
     {
         "teamName": "West Indies",
-        "jerseyColor": "Maroon"
+        "jerseyColor": "Maroon",
+        "short": "WI"
     },
     {
         "teamName": "Afghanistan",
@@ -48,7 +51,8 @@
     },
     {
         "team": "Chennai Super Kings",
-        "jerseyColor": "Yellow"
+        "jerseyColor": "Yellow",
+        "short": "CSK"
     },
     {
         "team": "Mumbai Indians",
@@ -57,15 +61,18 @@
     },
     {
         "team": "Royal Challengers Bangalore",
-        "jerseyColor": "Red"
+        "jerseyColor": "Red",
+        "short": "RCB"
     },
     {
         "team": "Kolkata Knight Riders",
-        "jerseyColor": "Purple"
+        "jerseyColor": "Purple",
+        "short": "KKR"
     },
     {
         "team": "Rajasthan Royals",
-        "jerseyColor": "Pink"
+        "jerseyColor": "Pink",
+        "short": "RR"
     },
     {
         "team": "Delhi Capitals",
@@ -74,7 +81,8 @@
     },
     {
         "team": "Sunrisers Hyderabad",
-        "jerseyColor": "Orange"
+        "jerseyColor": "Orange",
+        "short": "SRH"
     },
     {
         "team": "Lucknow Super Giants",
@@ -132,15 +140,18 @@
     },
     {
         "team": "Washington Freedom",
-        "jerseyColor": "Red"
+        "jerseyColor": "Red",
+        "short": "WAF"
     },
     {
         "team": "Texas Super Kings",
-        "jerseyColor": "Yellow"
+        "jerseyColor": "Yellow",
+        "short": "TSK"
     },
     {
         "team": "Los Angeles Knight Riders",
-        "jerseyColor": "Purple"
+        "jerseyColor": "Purple",
+        "short": "LAKR"
     },
     {
         "team": "Birmingham Phoenix",
@@ -200,7 +211,8 @@
     },
     {
         "team": "Barbados Royals",
-        "jerseyColor": "Blue"
+        "jerseyColor": "Blue",
+        "short": "BR"
     },
     {
         "team": "Guyana Amazon Warriors",
@@ -209,18 +221,22 @@
     },
     {
         "team": "Jamaica Tallawahs",
+        "short": "JT",
         "jerseyColor": "Yellow"
     },
     {
         "team": "Saint Lucia Kings",
+        "short": "SLK",
         "jerseyColor": "Red"
     },
     {
         "team": "Trinbago Knight Riders",
+        "short": "TKR",
         "jerseyColor": "Black"
     },
     {
         "team": "St Kitts & Nevis Patriots",
+        "short": "SNP",
         "jerseyColor": "Red"
     },
     {

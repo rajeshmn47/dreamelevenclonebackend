@@ -156,7 +156,8 @@ async function createResultImage(
     awayScore,
     winnerTeamName,
     outputPath,
-    matchDate
+    matchDate,
+    abandoned = false
 ) {
     try {
         console.log(teamHomeCode,
@@ -212,7 +213,12 @@ async function createResultImage(
         // Winner text
         ctx.font = "bold 46px Sans-serif";
         ctx.fillStyle = "#ffffff";
-        ctx.fillText(`Winner: ${winnerTeamName} 🎉`, width / 2, 450);
+        if (abandoned) {
+            ctx.fillText(`Match Abandoned`, width / 2, 450);
+        }
+        else {
+            ctx.fillText(`Winner: ${winnerTeamName} 🎉`, width / 2, 450);
+        }
 
         // Date
         ctx.font = "28px Sans-serif";
@@ -342,7 +348,7 @@ async function createMOMImage(playerImage, playerName, teamName, stats, outputPa
     //ctx.fillText(`${stats}`, 50, 250);
     let perf = playerInfo;
     let perfText = "";
-    console.log(perf, 'perf')
+    //console.log(perf, 'perf')
     // check batting stats
     if (perf?.runs !== undefined && perf?.balls !== undefined && perf.runs > 0) {
         perfText += `${perf.runs} runs off ${perf.balls} balls`;

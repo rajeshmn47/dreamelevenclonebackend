@@ -61,7 +61,8 @@
       "block"
     ],
     "sweep": [
-      "sweep"
+      "sweep",
+      "swept fine"
     ],
     "paddle_sweep": [
       "paddle sweep",
@@ -268,10 +269,12 @@
       "over the bowler",
       "flat-bats it straight",
       "over the bowler's head",
-      "just wide of the non-striker"
+      "just wide of the non-striker",
+      "over the umpire's head"
     ],
     "behind": [
-      "escapes past the diving keeper"
+      "escapes past the diving keeper",
+      "over the keeper's head"
     ]
   },
   "ballType": {
@@ -293,7 +296,8 @@
     ],
     "overpitched": [
       "overpitched",
-      "over pitched"
+      "over pitched",
+      "over-pitched"
     ],
     "inswinger": [
       "inswinger",
@@ -412,7 +416,8 @@
     "short_of_length": [
       "short of a length",
       "short length",
-      "Shortish ball"
+      "shortish ball",
+      "dug in short"
     ],
     "bouncer": [
       "bouncer",
@@ -422,7 +427,8 @@
       "full length",
       "full length ball",
       "fuller length delivery",
-      "full ball"
+      "full ball",
+      "fuller length"
     ],
     "half_volley": [
       "half volley",
@@ -430,12 +436,15 @@
       "overpitched",
       "over-pitched",
       "pitched up",
-      "pitched-up"
+      "pitched-up",
+      "slot ball",
+      "ball in the slot"
     ],
     "short_ball": [
       "short ball",
       "short pitched",
-      "Shortish ball"
+      "Shortish ball",
+      "dug in short"
     ],
     "back_of_length": [
       "back of a length",
@@ -471,7 +480,8 @@
       "caught †wicketkeeper",
       "caught by †",
       "caught by †wicketkeeper",
-      "went to the keeper"
+      "went to the keeper",
+      "edge to the keeper"
     ]
   },
   "isCleanBowled": {
@@ -511,6 +521,9 @@
     "leading_edge": [
       "leading edge",
       "leading-edge"
+    ],
+    "edge": [
+      "edge"
     ],
     "well_timed": [
       "perfect shot",
@@ -559,7 +572,10 @@
       "over backward square leg",
       "slog",
       "takes the aerial route",
-      "flies over the lone slip"
+      "flies over the lone slip",
+      "over vacant first slip",
+      "hit it uppishly",
+      "over the umpire's head"
     ]
   },
   "slow_ball": {
@@ -572,13 +588,20 @@
       "off pace",
       "off-pace",
       "pace off",
-      "pace-off"
+      "pace-off",
+      "off-speed",
+      "off speed"
     ]
   },
   "comesDown": {
     "comes_down": [
       "comes down the track",
-      "comes down track"
+      "comes down track",
+      "shimmies down the pitch",
+      "saunters down the track",
+      "tried to dance down",
+      "steps out",
+      "dances out to the pitch"
     ]
   }
 }

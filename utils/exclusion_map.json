@@ -18,7 +18,8 @@
       "leg cutter"
     ],
     "pull": [
-      "pull off"
+      "pull off",
+      "pulls his length back"
     ],
     "flick": [
       "probably flick"
@@ -70,10 +71,12 @@
       "slips in the",
       "let it slip",
       "slip deeper",
-      "slips it"
+      "slips it",
+      "slipping"
     ]
   },
-  "ballType": {
+  "ballType": {},
+  "lengthType": {
     "good_length": [
       "short of a good length",
       "shorter than good length",
@@ -102,7 +105,8 @@
       "tries a wide yorker but fails to keep it inside the marker",
       "misses the wide yorker",
       "missed the yorker",
-      "The yorker is missed"
+      "The yorker is missed",
+      "missed it by a long way "
     ]
   },
   "lofted": {
@@ -111,6 +115,21 @@
     ]
   },
   "connection": {
+    "edge": [
+      "leading edge",
+      "leading-edge",
+      "thick inside edge",
+      "thick inside-edge",
+      "top edge",
+      "top-edge",
+      "bottom edge",
+      "bottom-edge",
+      "outside edge",
+      "outside-edge",
+      "inside edge",
+      "inside-edge",
+      "edge of the circle"
+    ],
     "well_timed": [
       "not timed well",
       "not timed very well",
@@ -125,7 +144,8 @@
     ],
     "inside_edge": [
       "gets beaten on the inside edge",
-      "turns in past the inside edge"
+      "turns in past the inside edge",
+      "beaten on the inside edge"
     ]
   }
 }
