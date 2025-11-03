@@ -198,5 +198,105 @@ router.post('/report', async (req, res) => {
     }
 });
 
+// GET /allclips?search=&batsman=&bowler=&matchType=&series=&shotType=&direction=&page=1&limit=10&sort=desc
+router.get("/all_clips", async (req, res) => {
+    try {
+        const {
+            search = "",
+            batsman,
+            bowler,
+            event,
+            matchType,
+            series,
+            batting_team,
+            bowling_team,
+            season,
+            shotType,
+            direction,
+            ballType,
+            lengthType,
+            connection,
+            slowball,
+            lofted,
+            comesDown,
+            powerplay,
+            page = 1,
+            limit = 20,
+            sort = "desc",
+        } = req.query;
+
+        // Build filter dynamically
+        const filter = {};
+        console.log(event, 'event')
+
+        // 🔍 Text search across multiple fields (including labels)
+        if (search) {
+            filter.$or = [
+                { event: { $regex: "FOUR", $options: "i" } },
+                { commentary: { $regex: search, $options: "i" } },
+                { subEvent: { $regex: search, $options: "i" } },
+                { batsman: { $regex: search, $options: "i" } },
+                { bowler: { $regex: search, $options: "i" } },
+                { batting_team: { $regex: search, $options: "i" } },
+                { bowling_team: { $regex: search, $options: "i" } },
+                { series: { $regex: search, $options: "i" } },
+                { matchType: { $regex: search, $options: "i" } },
+                { "labels.shotType": { $regex: search, $options: "i" } },
+                { "labels.direction": { $regex: search, $options: "i" } },
+                { "labels.ballType": { $regex: search, $options: "i" } },
+                { "labels.lengthType": { $regex: search, $options: "i" } },
+                { "labels.connection": { $regex: search, $options: "i" } },
+                { "labels.slowball": { $regex: search, $options: "i" } },
+                { "labels.comesDown": { $regex: search, $options: "i" } },
+                { "labels.powerplay": { $regex: search, $options: "i" } },
+            ];
+        }
+
+        // 🎯 Field-based filters (both top-level and nested)
+        if (event) filter.event = { $regex: event, $options: "i" };
+        if (batsman) filter.batsman = { $regex: batsman, $options: "i" };
+        if (bowler) filter.bowler = { $regex: bowler, $options: "i" };
+        if (matchType) filter.matchType = matchType;
+        if (series) filter.series = { $regex: series, $options: "i" };
+        if (season) filter.season = { $regex: season, $options: "i" };
+        if (batting_team) filter.batting_team = { $regex: batting_team, $options: "i" };
+        if (bowling_team) filter.bowling_team = { $regex: bowling_team, $options: "i" };
+        if (shotType) filter["labels.shotType"] = { $regex: shotType, $options: "i" };
+        if (direction) filter["labels.direction"] = { $regex: direction, $options: "i" };
+        if (ballType) filter["labels.ballType"] = { $regex: ballType, $options: "i" };
+        if (lengthType) filter["labels.lengthType"] = { $regex: lengthType, $options: "i" };
+        if (connection) filter["labels.connection"] = { $regex: connection, $options: "i" };
+        if (slowball) filter["labels.slowball"] = { $regex: slowball, $options: "i" };
+        if (comesDown) filter["labels.comesDown"] = { $regex: comesDown, $options: "i" };
+        if (powerplay) filter["labels.powerplay"] = { $regex: powerplay, $options: "i" };
+
+        // Boolean filter for lofted
+        if (lofted !== undefined) filter["labels.lofted"] = lofted === "true";
+
+        // Pagination
+        const skip = (parseInt(page) - 1) * parseInt(limit);
+
+        // Fetch clips
+        const clips = await Clip.find(filter)
+            .sort({ createdAt: sort === "asc" ? 1 : -1 })
+            .skip(skip)
+            .limit(parseInt(limit));
+
+        // Total count for pagination
+        const total = await Clip.countDocuments(filter);
+
+        res.json({
+            total,
+            page: parseInt(page),
+            limit: parseInt(limit),
+            totalPages: Math.ceil(total / limit),
+            clips,
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: err.message });
+    }
+});
+
 
 module.exports = router;
