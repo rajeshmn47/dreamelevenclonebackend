@@ -210,6 +210,9 @@ router.get("/all_clips", async (req, res) => {
             series,
             batting_team,
             bowling_team,
+            battingHand,
+            bowlingHand,
+            bowlerType,
             season,
             shotType,
             direction,
@@ -261,6 +264,9 @@ router.get("/all_clips", async (req, res) => {
         if (season) filter.season = { $regex: season, $options: "i" };
         if (batting_team) filter.batting_team = { $regex: batting_team, $options: "i" };
         if (bowling_team) filter.bowling_team = { $regex: bowling_team, $options: "i" };
+        if (battingHand) filter.battingHand = { $regex: battingHand, $options: "i" };
+        if (bowlingHand) filter.bowlingHand = { $regex: bowlingHand, $options: "i" };
+        if (bowlerType) filter.bowlerType = { $regex: bowlerType, $options: "i" };
         if (shotType) filter["labels.shotType"] = { $regex: shotType, $options: "i" };
         if (direction) filter["labels.direction"] = { $regex: direction, $options: "i" };
         if (ballType) filter["labels.ballType"] = { $regex: ballType, $options: "i" };
