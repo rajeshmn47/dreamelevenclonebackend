@@ -628,6 +628,7 @@ router.post("/verifyPhoneOtp", async (req, res) => {
         userId: user._id,
         role: user.role,
         token: token,
+        user: user,
         message: 'Login successful.',
         expiresIn: '50000000m',
       });
