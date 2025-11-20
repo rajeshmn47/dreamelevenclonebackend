@@ -578,23 +578,27 @@ router.post('/phoneLogin', async (req, res) => {
         userFound.otp = OTP;
         await userFound.save();
       }
-      var req = unirest("GET", "https://www.fast2sms.com/dev/bulkV2");
+      const req = unirest("GET", "http://136.243.135.116/http-tokenkeyapi.php");
 
       req.query({
-        "authorization": process.env.fast2sms,
-        "message": `enter this otp for logging in: ${OTP}`,
-        "language": "english",
-        "route": "q",
-        "numbers": `${phoneNumber}`
+        "authentic-key": "31334c49465954454348534d533130301750328458",  // store key in .env
+        "senderid": "TEXTOO",
+        "route": "1",
+        "number": phoneNumber,
+        "message": `Dear Customer Your Login otp is ${OTP} Text2`,
+        "templateid": "1607100000000349121"
       });
 
       req.headers({
         "cache-control": "no-cache"
       });
+
       req.end(function (res) {
         if (res.error) {
-          console.log(res.error, 'error')
+          console.log(res.error, 'error sending OTP');
           throw new Error(res.error);
+        } else {
+          console.log(res,`OTP sent to ${phoneNumber} successfully`);
         }
       });
       return res.status(201).json({ success: 'ok', message: 'OTP sent successfully successfully.' });
