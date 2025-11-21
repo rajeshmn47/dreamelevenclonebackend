@@ -158,6 +158,7 @@ router.get("/depositData", async (req, res) => {
           amount: 1,
           utr: 1,
           recieptUrl: 1,
+          status: 1,
           verified: 1,
           createdAt: 1,
           user: 1
@@ -169,7 +170,8 @@ router.get("/depositData", async (req, res) => {
     ]);
     return res.status(200).json({
       message: "Successfully Fetched",
-      deposits: deposits
+      deposits: deposits,
+      depositse: depositse
     });
   } catch (err) {
     console.log(err, 'err')
@@ -186,6 +188,7 @@ router.get("/approve", async (req, res) => {
       deposit = await NewPayment.findById(req.query.depositId);
       console.log(deposit, 'deposit')
       deposit.verified = true;
+      deposit.status = "approved";
       await deposit.save();
       // Doubt in this part, is request is synchronous or non synchronous?
     }
@@ -287,6 +290,7 @@ router.get("/approveWithdraw", async (req, res) => {
   try {
     const withdraw = await Withdraw.findById(req.query.withdrawId);
     withdraw.isWithdrawCompleted = true;
+    withdraw.status = "completed";
     const user = await User.findById(withdraw.userId)
     user.wallet = user.wallet - withdraw.amount;
     await user.save();
