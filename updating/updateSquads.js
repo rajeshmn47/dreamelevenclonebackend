@@ -24,9 +24,15 @@ module.exports.updateSquads = async function () {
         let date = new Date();
         // Step 1: Get all ongoing series from DB
         const tenDaysLater = new Date(date.getTime() + 10 * 24 * 60 * 60 * 1000); // 10 days ahead
+        // Fetch ongoing and upcoming series
         const ongoingSeries = await Series.find({
-            startDate: { $gt: now, $lte: tenDaysLater }
-        });
+            $or: [
+                // Ongoing series
+                { startDate: { $lte: now }, endDate: { $gt: now } },
+                // Upcoming series within 10 days
+                { startDate: { $gt: now, $lte: tenDaysLater } }
+            ]
+        }).sort({ startDate: 1 }); // Optional: sort by startDate
 
         console.log(ongoingSeries, `Found ${ongoingSeries.length} ongoing series`);
 
