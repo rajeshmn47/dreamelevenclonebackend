@@ -187,7 +187,7 @@ router.get("/reJoinCn/:id", async (req, res) => {
 
 
 // Route to create a new contest type
-router.post("/createContestType", async (req, res) => {
+router.post("/cruateContestType", async (req, res) => {
   try {
     console.log(req.body,'req body')
     const contestType = new ContestType(req.body);
@@ -197,6 +197,51 @@ router.post("/createContestType", async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 });
+
+router.post("/createContestType", async (req, res) => {
+  try {
+    console.log(req.body, 'req body')
+    const contestType = new ContestType(req.body);
+    await contestType.save();
+
+    // Get all upcoming matches
+    const upcomingMatches = await Match.find({ date: { $gte: new Date() } });
+
+    for (const match of upcomingMatches) {
+      // Prepare prizeDetails
+      const prizeDetails = contestType.prizes.map(prize => ({
+        prize: prize.amount,
+        prizeHolder: ""
+      }));
+
+      // Create new contest for this match
+      const contest = new Contest({
+        price: contestType.prize,
+        totalSpots: contestType.totalSpots,
+        spotsLeft: contestType.totalSpots,
+        matchId: match.matchId,
+        prizeDetails,
+        numWinners: contestType.numWinners,
+        entryFee: contestType.entryFee,
+      });
+
+      try {
+        const savedContest = await Contest.create(contest);
+        if (savedContest) {
+          match.contestId.push(savedContest._id);
+          await match.save();
+        }
+      } catch (err) {
+        console.log(`Error creating contest for match ${match.matchId}: ${err}`);
+      }
+    }
+
+    res.status(201).json(contestType);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
 
 // Route to get all contest types
 router.get("/contestTypes", async (req, res) => {
