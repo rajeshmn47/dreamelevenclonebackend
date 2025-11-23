@@ -206,7 +206,7 @@ function checkloggedinuser(req, res, next) {
   }
 }
 
-router.post("/register", async (req, res) => {
+router.post("/registerr", async (req, res) => {
   const otp = otpGenerator.generate(8, {
     lowerCaseAlphabets: false,
     upperCaseAlphabets: false,
@@ -222,6 +222,12 @@ router.post("/register", async (req, res) => {
   user1.phonenumber = req.body.phoneNumber;
   user1.wallet = 10000;
   user1.otp = otp;
+  let role = req.body.role;
+  if (role) {
+    user1.role = role;
+  }
+
+  
 
   const options = {
     method: "POST",
@@ -303,6 +309,182 @@ router.post("/register", async (req, res) => {
       });
     })
     .catch((err) => { });
+});
+
+router.post("/register", async (req, res) => {
+  const otp = otpGenerator.generate(8, {
+    lowerCaseAlphabets: false,
+    upperCaseAlphabets: false,
+    specialChars: false,
+    specialChars: false,
+  });
+
+  const user1 = new User();
+  const userId = req.body.email.split("@")[0];
+  user1.userId = userId;
+  user1.username = req.body.username;
+  user1.email = req.body.email;
+  user1.password = req.body.password;
+  user1.phonenumber = req.body.phoneNumber;
+  user1.wallet = 10000;
+  user1.otp = otp;
+
+  let role = req.body.role;
+  if (role) {
+    user1.role = role;
+  }
+
+  const options = {
+    method: "POST",
+    url: "https://api.razorpay.com/v1/contacts",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization:
+        "Basic cnpwX3Rlc3RfT0N0MTBGeGpuWFROV0s6RlpyNW9YQjFCWnFtbDBhUlRhd0IwSUh1",
+    },
+    body: JSON.stringify({
+      name: req.body.username,
+      email: req.body.email,
+      contact: req.body.phoneNumber,
+      type: "employee",
+      reference_id: "Domino Contact ID 12345",
+      notes: {
+        random_key_1: "Make it so.",
+        random_key_2: "Tea. Earl Grey. Hot.",
+      },
+    }),
+  };
+
+  let contact_id = "";
+  const promise = new Promise((resolve, reject) => {
+    request(options, (error, response) => {
+      if (error) reject(error);
+
+      const s = JSON.parse(response.body);
+      contact_id = s.id;
+
+      user1.contact_id = contact_id;
+      resolve();
+    });
+  });
+
+  promise
+    .then(async () => {
+      User.findOne({ email: req.body.email }, async (err, user) => {
+        if (err) {
+          console.log(err, "Error in finding user in Sign-in ");
+          return res.status(400).json({
+            message: "something went wrong",
+          });
+        }
+
+        // ------------------------------
+        // USER DOES NOT EXIST
+        // ------------------------------
+        if (!user) {
+          transaction.createTransaction(userId, "", 100, "extra cash");
+
+          User.create(user1, async (err, user) => {
+            if (err) {
+              console.log(err, "err");
+              return res.status(400).json({
+                message:
+                  "The username or phone number is already registered. Please try a different one.",
+              });
+            } else {
+              const userid = user._id;
+
+              const token = jwt.sign({ userid }, activatekey, {
+                expiresIn: "5000000m",
+              });
+
+              // --------------------------------------------
+              // SEND OTP USING MAILEROO (Added Here)
+              // --------------------------------------------
+              await axios.post(
+                "https://smtp.maileroo.com/api/v2/emails",
+                {
+                  from: {
+                    address: "noreply@dreamcricket11.com",
+                    display_name: "Dreamcricket 11",
+                  },
+                  to: [
+                    {
+                      address: req.body.email,
+                      display_name: req.body.username,
+                    },
+                  ],
+                  subject: "Your OTP Verification Code",
+                  html: `Dear ${req.body.username},<br><br>Your OTP is: <b>${otp}</b><br>This OTP is valid for 10 minutes.<br><br>Regards,<br>Rummy Rambo Team`,
+                },
+                {
+                  headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${process.env.MAILEROO_TOKEN}`,
+                  },
+                }
+              );
+
+              return res.status(200).json({
+                message:
+                  "you are registered successfully.please log in!",
+                success: true,
+              });
+            }
+          });
+
+          // ------------------------------
+          // USER EXISTS BUT NOT VERIFIED
+          // ------------------------------
+        } else if (!user.verified) {
+          user.otp = otp;
+          await user.save();
+
+          // --------------------------------------------
+          // SEND OTP USING MAILEROO HERE TOO
+          // --------------------------------------------
+          await axios.post(
+            "https://smtp.maileroo.com/api/v2/emails",
+            {
+              from: {
+                address: "noreply@rummyrambo.com",
+                display_name: "Rummy Rambo",
+              },
+              to: [
+                {
+                  address: req.body.email,
+                  display_name: req.body.username,
+                },
+              ],
+              subject: "Your OTP Verification Code",
+              html: `Dear ${req.body.username},<br><br>Your OTP is: <b>${otp}</b><br>This OTP is valid for 10 minutes.<br><br>Regards,<br>Rummy Rambo Team`,
+            },
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${process.env.MAILEROO_TOKEN}`,
+              },
+            }
+          );
+
+          return res.status(200).json({
+            message: "registered successfully! please login",
+            success: true,
+          });
+        } else {
+          // ------------------------------
+          // USER EXISTS & VERIFIED
+          // ------------------------------
+          return res.status(200).json({
+            message: "user already exists,please log in",
+            success: false,
+          });
+        }
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 router.post("/registerold", async (req, res) => {
@@ -617,6 +799,7 @@ router.post("/verifyPhoneOtp", async (req, res) => {
     const { otp, phoneNumber } = req.body;
     console.log(req.body, 'verify otp')
     // Find the user by username
+    console.log(phoneNumber.split('+91')[1], 'phone number')
     const user = await User.findOne({ phonenumber: phoneNumber.split('+91')[1] });
     console.log(user)
     // Check if the user exists and the password matches
@@ -646,7 +829,7 @@ router.post("/verifyPhoneOtp", async (req, res) => {
   }
 });
 
-router.get("/forgot-password/:email", async (req, res) => {
+router.get("/forgot-passwordd/:email", async (req, res) => {
   const otp = otpGenerator.generate(8, {
     lowerCaseAlphabets: false,
     upperCaseAlphabets: false,
@@ -699,6 +882,84 @@ The ${name} Team`,
     }
   } catch (err) {
     res.status(200).json({
+      message: "their was some error",
+      success: false,
+    });
+  }
+});
+
+router.get("/forgot-password/:email", async (req, res) => {
+  const otp = otpGenerator.generate(8, {
+    lowerCaseAlphabets: false,
+    upperCaseAlphabets: false,
+    specialChars: false,
+    specialChars: false,
+  });
+
+  const config = await Config.findOne({});
+  const name = config?.name ? config?.name : "fantasy11";
+
+  try {
+    const user1 = await User.findOne({ email: req.params.email });
+
+    if (user1) {
+      user1.otp = otp;
+
+      // ------------------------------
+      // MAILEROO PASSWORD RESET EMAIL
+      // ------------------------------
+      await axios.post(
+        "https://smtp.maileroo.com/api/v2/emails",
+        {
+          from: {
+            address: "noreply@rummyrambo.com", // your sending domain
+            display_name: name,
+          },
+          to: [
+            {
+              address: req.params.email,
+              display_name: user1.username || "User",
+            },
+          ],
+          subject: "Reset Your Password",
+          html: `
+          Dear User,<br><br>
+          We received a request to reset your password.<br><br>
+          <b>OTP: ${otp}</b><br><br>
+          If you did not request this, ignore this message.<br><br>
+          Regards,<br>
+          ${name} Team
+        `,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${process.env.MAILEROO_TOKEN}`,
+          },
+        }
+      );
+
+      // Save OTP in DB
+      await user1.save();
+
+      const userid = user1._id;
+      const token = jwt.sign({ userid }, activatekey, {
+        expiresIn: "500m",
+      });
+
+      return res.status(200).json({
+        message: "enter otp recieved on your mail to activate your account",
+        success: true,
+      });
+    } else {
+      return res.status(200).json({
+        message: "could not send",
+        success: false,
+      });
+    }
+  } catch (err) {
+    console.log(err);
+    return res.status(200).json({
       message: "their was some error",
       success: false,
     });
