@@ -415,7 +415,7 @@ router.post("/register", async (req, res) => {
                     },
                   ],
                   subject: "Your OTP Verification Code",
-                  html: `Dear ${req.body.username},<br><br>Your OTP is: <b>${otp}</b><br>This OTP is valid for 10 minutes.<br><br>Regards,<br>Rummy Rambo Team`,
+                  html: `Dear ${req.body.username},<br><br>Your OTP is: <b>${otp}</b><br>This OTP is valid for 10 minutes.<br><br>Regards,<br>Dreamcricket 11 Team`,
                 },
                 {
                   headers: {
@@ -448,7 +448,7 @@ router.post("/register", async (req, res) => {
             {
               from: {
                 address: "noreply@rummyrambo.com",
-                display_name: "Rummy Rambo",
+                display_name: "Dreamcricket 11",
               },
               to: [
                 {
@@ -457,7 +457,7 @@ router.post("/register", async (req, res) => {
                 },
               ],
               subject: "Your OTP Verification Code",
-              html: `Dear ${req.body.username},<br><br>Your OTP is: <b>${otp}</b><br>This OTP is valid for 10 minutes.<br><br>Regards,<br>Rummy Rambo Team`,
+              html: `Dear ${req.body.username},<br><br>Your OTP is: <b>${otp}</b><br>This OTP is valid for 10 minutes.<br><br>Regards,<br>Dreamcricket 11 Team`,
             },
             {
               headers: {
