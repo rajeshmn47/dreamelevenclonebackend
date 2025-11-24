@@ -142,6 +142,7 @@ router.post("/create", async (req, res) => {
       orderId,
       txnId: response.data.data.txn_id,
       status: "pending",
+      action: "deposit"
     });
 
     return res.json({
