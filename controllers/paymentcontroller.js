@@ -95,6 +95,7 @@ router.post("/create", async (req, res) => {
     const { userId, amount } = req.body;
     console.log(req.body, 'paykuber create req body')
     const user = await User.findById(userId);
+    console.log(user, 'user')
     if (!user) return res.status(400).json({ message: "User not found" });
 
     // 1️⃣ Generate token
