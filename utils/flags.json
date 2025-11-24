@@ -173,6 +173,14 @@
       "flag": "https://cricketvectors.akamaized.net/Teams/55.png?impolicy=default_web"
     },
     {
+      "teamname": "wellington",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/313300/313338.logo.png"
+    },
+    {
+      "teamname": "northern knights",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/338700/338766.jpg"
+    },
+    {
       "teamname": "new zealand",
       "flag": "https://assets-icc.sportz.io/static-assets/buildv3-stg/images/teams/5.png?v=7"
     },
@@ -190,6 +198,10 @@
     },
     {
       "teamname": "uganda",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_80/lsci/db/PICTURES/CMS/381800/381856.png"
+    },
+    {
+      "teamname": "uganda women",
       "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_80/lsci/db/PICTURES/CMS/381800/381856.png"
     },
     {
@@ -250,7 +262,7 @@
     },
     {
       "teamname": "papua new guinea",
-      "flag": "https://v2.convertapi.com/d/q43qtyeo7bs41cgxar6s5et5dodcla9k/Flag_of_Papua_New_Guinea.png"
+      "flag": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTB3rDzuyI8PwSCXlz5GGsHUXwMjG8D2X7bZuTgYFMmWEg9ZRv0B4Bd9shpJM&s=10"
     },
     {
       "teamname": "israel",
@@ -294,6 +306,10 @@
     },
     {
       "teamname": "tanzania",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/313200/313219.logo.png"
+    },
+    {
+      "teamname": "tanzania women",
       "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/313200/313219.logo.png"
     },
     {
@@ -345,7 +361,15 @@
       "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/340500/340503.png"
     },
     {
+      "teamname": "zimbabwe women",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/340500/340503.png"
+    },
+    {
       "teamname": "scotland",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/313100/313150.logo.png"
+    },
+    {
+      "teamname": "scotland women",
       "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/313100/313150.logo.png"
     },
     {
@@ -402,6 +426,10 @@
     },
     {
       "teamname": "thailand",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_80/lsci/db/PICTURES/CMS/313200/313217.logo.png"
+    },
+    {
+      "teamname": "thailand women",
       "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_80/lsci/db/PICTURES/CMS/313200/313217.logo.png"
     },
     {
@@ -571,6 +599,266 @@
     {
       "teamname": "karachi kings",
       "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_80/lsci/db/PICTURES/CMS/313500/313520.logo.png"
+    },
+    {
+      "teamname": "adelaide strikers",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/313500/313509.logo.png"
+    },
+    {
+      "teamname": "hobart hurricanes",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/313500/313510.logo.png"
+    },
+    {
+      "teamname": "brisbane heat",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/313500/313503.logo.png"
+    },
+    {
+      "teamname": "melbourne renegades",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/313500/313508.logo.png"
+    },
+    {
+      "teamname": "melbourne stars",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/313400/313470.logo.png"
+    },
+    {
+      "teamname": "sydney sixers",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/313500/313505.logo.png"
+    },
+    {
+      "teamname": "sydney thunder",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/313500/313505.logo.png"
+    },
+    {
+      "teamname": "perth scorchers",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/313500/313507.logo.png"
+    },
+    {
+      "teamname": "ajman titans",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/409300/409377.png"
+    },
+    {
+      "teamname": "ajman bolts",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/391000/391065.png"
+    },
+    {
+      "teamname": "vista riders",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/409300/409381.png"
+    },
+    {
+      "teamname": "aspin stallions",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/409300/409378.png"
+    },
+    {
+      "teamname": "deccan gladiators",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/371900/371941.png"
+    },
+    {
+      "teamname": "uae bulls",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/409400/409404.png"
+    },
+    {
+      "teamname": "northern warriors",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/371900/371937.png"
+    },
+    {
+      "teamname": "quetta qavalry",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/409300/409379.png"
+    },
+    {
+      "teamname": "royal champs",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/409300/409380.png"
+    },
+    {
+      "teamname": "chhattisgarh",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/317200/317260.png"
+    },
+    {
+      "teamname": "vidarbha",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/313300/313321.logo.png"
+    },
+    {
+      "teamname": "uttar pradesh",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/313300/313320.logo.png"
+    },
+    {
+      "teamname": "goa",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/313300/313302.logo.png"
+    },
+    {
+      "teamname": "gujarat",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/317200/317261.png"
+    },
+    {
+      "teamname": "services",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/327900/327915.jpg"
+    },
+    {
+      "teamname": "karnataka",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/313300/313311.logo.png"
+    },
+    {
+      "teamname": "uttarakhand",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/317300/317352.png"
+    },
+    {
+      "teamname": "mizoram",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/317300/317353.png"
+    },
+    {
+      "teamname": "nagaland",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/317300/317355.png"
+    },
+    {
+      "teamname": "railways",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/327900/327910.jpg"
+    },
+    {
+      "teamname": "mumbai",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/317100/317125.png"
+    },
+    {
+      "teamname": "maharashtra",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/394600/394637.png"
+    },
+    {
+      "teamname": "jammu and kashmir",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/317300/317303.png"
+    },
+    {
+      "teamname": "punjab",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/317200/317262.png"
+    },
+    {
+      "teamname": "himachal pradesh",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/313300/313303.logo.png"
+    },
+    {
+      "teamname": "saurashtra",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/313300/313316.logo.png"
+    },
+    {
+      "teamname": "tripura",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/313300/313319.logo.png"
+    },
+    {
+      "teamname": "meghalaya",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/327900/327931.png"
+    },
+    {
+      "teamname": "sikkim",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/313300/313317.logo.png"
+    },
+    {
+      "teamname": "odisha",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/317200/317265.png"
+    },
+    {
+      "teamname": "kerala",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/313300/313310.logo.png"
+    },
+    {
+      "teamname": "hyderabad",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/313300/313305.logo.png"
+    },
+    {
+      "teamname": "madhya pradesh",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/313300/313313.logo.png"
+    },
+    {
+      "teamname": "puducherry",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/313500/313571.logo.png"
+    },
+    {
+      "teamname": "tamil nadu",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/313300/313318.logo.png"
+    },
+    {
+      "teamname": "bengal",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/313200/313297.logo.png"
+    },
+    {
+      "teamname": "haryana",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/313300/313304.logo.png"
+    },
+    {
+      "teamname": "rajasthan",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/389100/389108.png"
+    },
+    {
+      "teamname": "chandigarh",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/394000/394027.png"
+    },
+    {
+      "teamname": "bihar",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/369800/369849.png"
+    },
+    {
+      "teamname": "jharkhand",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/317200/317266.png"
+    },
+    {
+      "teamname": "baroda",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/313200/313296.logo.png"
+    },
+    {
+      "teamname": "delhi",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/313300/313301.logo.png"
+    },
+    {
+      "teamname": "assam",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/313200/313295.logo.png"
+    },
+    {
+      "teamname": "andhra",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/313200/313294.logo.png"
+    },
+    {
+      "teamname": "arunachal pradesh",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/317300/317354.jpg"
+    },
+    {
+      "teamname": "manipur",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/313300/313314.logo.png"
+    },
+    {
+      "teamname": "united arab emirates",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/382100/382186.png"
+    },
+    {
+      "teamname": "myanmar",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/313600/313601.logo.png"
+    },
+    {
+      "teamname": "dubai capitals",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/349600/349619.jpg"
+    },
+    {
+      "teamname": "gulf giants",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/349600/349621.jpg"
+    },
+    {
+      "teamname": "mi emirates",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/344000/344077.png"
+    },
+    {
+      "teamname": "desert vipers",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/349600/349618.jpg"
+    },
+    {
+      "teamname": "abu dhabi knight riders",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/349600/349617.png"
+    },
+    {
+      "teamname": "sharjah warriorz",
+      "flag": "https://img1.hscicdn.com/image/upload/f_auto,t_ds_square_w_160,q_50/lsci/db/PICTURES/CMS/394600/394631.png"
+    },
+    {
+      "teamname": "",
+      "flag": ""
+    },
+    {
+      "teamname": "",
+      "flag": ""
     },
     {
       "teamname": "",

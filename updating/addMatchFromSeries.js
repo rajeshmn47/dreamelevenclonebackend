@@ -13,6 +13,23 @@ function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+// Special logic for Ireland (and other similar teams)
+function fixSpecialTeamFlag(teamName) {
+    const specialFlags = {
+        Ireland: "https://flagcdn.com/w320/ie.png",
+        Scotland: "https://flagcdn.com/w320/gb-sct.png",
+        England: "https://flagcdn.com/w320/gb-eng.png",
+        Wales: "https://flagcdn.com/w320/gb-wls.png",
+        UAE: "https://flagcdn.com/w320/ae.png",
+        HongKong: "https://flagcdn.com/w320/hk.png",
+        PapuaNewGuinea: "https://flagcdn.com/w320/pg.png",
+    };
+
+    const key = teamName.replace(/\s+/g, ""); // handle "Hong Kong" => "HongKong"
+
+    return specialFlags[key];
+}
+
 async function getMatchesFromSeries(seriesId) {
     let key = await matchkeys()
     console.log(key, 'leys')
@@ -40,14 +57,20 @@ async function getMatchesFromSeries(seriesId) {
 }
 
 async function getCurrentSeries() {
-    const now = new Date();
-    const startOf2023 = new Date("2016-01-01T00:00:00.000Z");
-    const endOf2022 = new Date("2022-12-31T23:59:59.999Z");
-    const currentSeries = await Series.find({
-        startDate: { $lte: now },
-        endDate: { $gte: now }
-    });
-    return currentSeries;
+    let now = new Date();
+    let date = new Date();
+    // Step 1: Get all ongoing series from DB
+    const tenDaysLater = new Date(date.getTime() + 10 * 24 * 60 * 60 * 1000); // 10 days ahead
+    // Fetch ongoing and upcoming series
+    const ongoingSeries = await Series.find({
+        $or: [
+            // Ongoing series
+            { startDate: { $lte: now }, endDate: { $gt: now } },
+            // Upcoming series within 10 days
+            { startDate: { $gt: now, $lte: tenDaysLater } }
+        ]
+    }).sort({ startDate: 1 }); // Optional: sort by startDate
+    return ongoingSeries;
 }
 
 module.exports.addMatchesForAllCurrentSeries = async function () {
@@ -93,6 +116,12 @@ module.exports.addMatchesForAllCurrentSeries = async function () {
                             existing.series = series._id;
                             let teamAwayFlagUrl = flagURLs?.findFlagUrlByCountryName(teamAwayName);
                             let teamHomeFlagUrl = flagURLs?.findFlagUrlByCountryName(teamHomeName);
+                            if (teamHomeName == "ireland") {
+                                teamHomeFlagUrl = fixSpecialTeamFlag(teamHomeName);
+                            }
+                            if (teamAwayName == "ireland") {
+                                teamAwayFlagUrl = fixSpecialTeamFlag(teamAwayName);
+                            }
                             if (!teamAwayFlagUrl) teamAwayFlagUrl = getflag(teamAwayName);
                             if (!teamHomeFlagUrl) teamHomeFlagUrl = getflag(teamHomeName);
                             existing.teamHomeFlagUrl = teamHomeFlagUrl || "https://via.placeholder.com/150?text=Team+Logo+Unavailable";
@@ -137,6 +166,12 @@ module.exports.addMatchesForAllCurrentSeries = async function () {
                     let teamHomeFlagUrl = flagURLs?.findFlagUrlByCountryName(
                         teamHomeName
                     );
+                    if (teamHomeName == "ireland") {
+                        teamHomeFlagUrl = fixSpecialTeamFlag(teamHomeName);
+                    }
+                    if (teamAwayName == "ireland") {
+                        teamAwayFlagUrl = fixSpecialTeamFlag(teamAwayName);
+                    }
                     if (!teamAwayFlagUrl) {
                         teamAwayFlagUrl = getflag(teamAwayName);
                     }
