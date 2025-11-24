@@ -21,7 +21,7 @@
     },
     {
         "teamName": "South Africa",
-        "jerseyColor": "Dark Green",
+        "jerseyColor": "Green",
         "short": "RSA"
     },
     {
@@ -48,6 +48,11 @@
         "teamName": "Afghanistan",
         "jerseyColor": "Blue",
         "short": "AFG"
+    },
+    {
+        "teamName": "Zimbabwe",
+        "jerseyColor": "Red",
+        "short": "ZIM"
     },
     {
         "team": "Chennai Super Kings",
