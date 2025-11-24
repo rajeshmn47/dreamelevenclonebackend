@@ -71,6 +71,129 @@ router.post("/capture/:paymentId/:amount", (req, res) => {
   }
 });
 
+async function generatePaykuberToken() {
+  const payload = {
+    midKey: process.env.PAYKUBER_MID_KEY,
+    saltKey: process.env.PAYKUBER_SALT_KEY,
+    apiKey: process.env.PAYKUBER_API_KEY
+  };
+
+  const res = await axios.post(
+    `${process.env.PAYKUBER_BASE_URL}/token/generate`,
+    payload,
+    { headers: { "Content-Type": "application/json" } }
+  );
+
+  if (!res.data.token) throw new Error("Paykuber token generation failed");
+
+  return res.data.token;
+}
+
+// ------- CREATE PAYMENT REQUEST -------
+router.post("/create", async (req, res) => {
+  try {
+    const { userId, amount } = req.body;
+    console.log(req.body, 'paykuber create req body')
+    const user = await User.findById(userId);
+    if (!user) return res.status(400).json({ message: "User not found" });
+
+    // 1️⃣ Generate token
+    const token = await generatePaykuberToken();
+
+    // 2️⃣ Payment request payload
+    const orderId = "PK_" + Date.now();
+
+    const payload = {
+      amount: String(amount),
+      currency: "INR",
+      order_id: orderId,
+      sub_pay_mode: "intent",
+      merchant_id: process.env.PAYKUBER_MID_KEY,
+      cust_name: user.name,
+      cust_email: user.email,
+      callback_url: "https://admin.rummyrambo.com/api/paykuber/callback",
+      redirect_url: `https://admin.rummyrambo.com/payment-status/${orderId}`
+    };
+
+    // 3️⃣ Create payment request
+    const response = await axios.post(
+      `${process.env.PAYKUBER_BASE_URL}/pay-request`,
+      payload,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    if (!response.data.data.paymentLink)
+      return res
+        .status(400)
+        .json({ message: "Payment URL not generated", raw: response.data });
+
+    // Save transaction
+    await Transaction.create({
+      userId,
+      amount,
+      type: "deposit",
+      gateway: "paykuber",
+      orderId,
+      txnId: response.data.data.txn_id,
+      status: "pending",
+    });
+
+    return res.json({
+      status: "ok",
+      paymentLink: response.data.data.paymentLink,
+      orderId,
+    });
+  } catch (error) {
+    console.error("Paykuber Create Error:", error);
+    return res.status(400).json({ error: error.message });
+  }
+});
+
+router.post("/callback", async (req, res) => {
+  try {
+    const data = req.body;
+
+    // Optional: signature validation if Paykuber provides signature
+    // const signature = req.headers["x-signature"];
+    // const expected = crypto.createHmac("sha256", process.env.PAYKUBER_CALLBACK_SECRET)
+    //   .update(JSON.stringify(req.body))
+    //   .digest("hex");
+
+    // if (signature !== expected) {
+    //   return res.status(400).send("Invalid Signature");
+    // }
+
+    const { order_id, status } = data;
+
+    const txn = await Transaction.findOne({ orderId: order_id });
+    if (!txn) return res.status(400).send("Transaction not found");
+
+    if (status === "success") {
+      const user = await User.findById(txn.userId);
+
+      user.wallet += txn.amount;
+      user.totalAmountAdded += txn.amount;
+      await user.save();
+
+      txn.status = "success";
+      await txn.save();
+    } else {
+      txn.status = "failed";
+      await txn.save();
+    }
+
+    return res.send("OK");
+  } catch (error) {
+    console.error("Paykuber Callback Error:", error);
+    return res.status(400).send("Callback Error");
+  }
+});
+
 router.get("/alltransactions", async (req, res) => {
   try {
     const transactions = await Transaction.find();
