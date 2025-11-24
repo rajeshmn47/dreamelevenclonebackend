@@ -110,7 +110,7 @@ router.post("/create", async (req, res) => {
       order_id: orderId,
       sub_pay_mode: "intent",
       merchant_id: process.env.PAYKUBER_MID_KEY,
-      cust_name: user.name,
+      cust_name: user.username,
       cust_email: user.email,
       callback_url: "https://admin.rummyrambo.com/api/paykuber/callback",
       redirect_url: `https://admin.rummyrambo.com/payment-status/${orderId}`
