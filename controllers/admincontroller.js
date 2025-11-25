@@ -28,12 +28,14 @@ router.get("/sidebar-data", async (req, res) => {
   try {
     // Transactions
     const pendingWithdrawals = await Withdraw.countDocuments({
-      verified: false,
+       status: "pending"
     });
 
     const pendingDeposits = await NewPayment.countDocuments({
-      verified: false,
+      status: "pending"
     });
+
+    const contests = await ContestType.countDocuments();
 
     const pendingUsers = await User.find({ verifed: false })
     const oneMonthAgo = new Date();
@@ -67,9 +69,10 @@ router.get("/sidebar-data", async (req, res) => {
       success: true,
       data: {
         pendingUsers: pendingUsers?.length,
-        pendingwithdrawals: pendingWithdrawals?.length,
+        pendingWithdrawals: pendingWithdrawals,
         pendingMatches: filteredMatches.length,
-        pendingDeposits: pendingDeposits?.length
+        pendingDeposits: pendingDeposits,
+        contests: contests
       },
     });
   } catch (error) {
