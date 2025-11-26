@@ -72,6 +72,19 @@ router.put("/verify/:id", async (req, res) => {
     kyc.verifiedAt = new Date();
     kyc.adminComment = adminComment || "";
     await kyc.save();
+    // NOTIFY USER WHO SUBMITTED THE KYC
+    await Notification.create({
+      recipientId: kyc.userId,          // 👈 notify that user
+      recipientType: "user",
+      type: "kyc",
+      title: `KYC ${status === "approved" ? "Approved" : "Rejected"}`,
+      message:
+        status === "approved"
+          ? "Your KYC has been successfully approved!"
+          : "Your KYC was rejected. Please submit again.",
+      targetId: kyc._id,
+      isRead: false,               // 👈 make sure user sees unread count
+    });
 
     res.status(200).json({ message: "KYC updated successfully", kyc });
   } catch (err) {
