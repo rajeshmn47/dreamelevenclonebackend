@@ -583,7 +583,7 @@ router.put("/player/update/:id", async (req, res) => {
 // Delete Player
 router.delete("/player/delete/:id", async (req, res) => {
     try {
-        const result = await Player.findOneAndDelete({ id: req.params.id });
+        const result = await Player.findOneAndDelete({ _id: req.params.id });
         if (!result) return res.status(404).json({ message: "Player not found" });
 
         res.json({ message: "Player deleted" });

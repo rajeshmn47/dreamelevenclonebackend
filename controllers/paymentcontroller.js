@@ -12,6 +12,7 @@ const Withdraw = require("../models/withdraw");
 const router = express.Router();
 const User = require("../models/user");
 const { uploadImage } = require("../utils/firebaseinitialize");
+const Notification = require("../models/notification");
 const { ObjectId } = mongoose.Types;
 
 dotenv.config();
@@ -243,6 +244,13 @@ router.post("/deposit", async (req, res) => {
       amount: req.body.amount,
       userId: req.body.uidfromtoken
     });
+    await Notification.create({
+      userId: req.body.uidfromtoken,      // user who submitted
+      recipientType: "admin",          // admin receives this
+      type: "deposit",
+      title: "deposed approval requested",
+      message: `New deposit request!`
+    });
     return res.status(200).json({
       message: "Successfully Saved",
     });
@@ -369,6 +377,13 @@ router.post("/withdraw", async (req, res) => {
         status: "pending",
         action: "withdraw"
       });
+      await Notification.create({
+        userId: req.body.uidfromtoken,      // user who submitted
+        recipientType: "admin",          // admin receives this
+        type: "withdraw",
+        title: "withdrawal approval requested",
+        message: `New withdrawal request!`
+      });
       //user.wallet = user.wallet - req.body.amount;
       //await user.save();
       return res.status(200).json({
@@ -381,6 +396,7 @@ router.post("/withdraw", async (req, res) => {
       });
     }
   } catch (err) {
+    console.log(err,'err')
     return res.status(500).json({
       message: "Something Went Wrong",
     });

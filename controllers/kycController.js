@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Kyc = require("../models/kyc");
+const Notification = require("../models/notification");
 
 // ----------------------
 // User submits KYC URLs
@@ -24,6 +25,16 @@ router.post("/submit", async (req, res) => {
     });
 
     await kyc.save();
+    // After KYC submission
+    await Notification.create({
+      userId: userId,      // user who submitted
+      recipientType: "admin",          // admin receives this
+      type: "kyc",
+      title: "New KYC Submission",
+      message: `New kyc request!`,
+      targetId: kyc._id
+    });
+
     res.status(200).json({ message: "KYC submitted successfully", kyc });
   } catch (err) {
     console.error(err);
