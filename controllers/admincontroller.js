@@ -108,6 +108,17 @@ router.get("/userseee/:id", async (req, res) => {
   }
 });
 
+router.get("/profile", async (req, res) => {
+  try {
+    const user = await User.findById(req.body.uidfromtoken);
+    if (!user) return res.status(404).json({ success: false, message: "User not found" });
+    res.status(200).json({ success: true, user });
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    res.status(500).json({ success: false, message: "Failed to fetch user" });
+  }
+});
+
 router.get("/users/:userId", async (req, res) => {
   try {
     const { userId } = req.params;

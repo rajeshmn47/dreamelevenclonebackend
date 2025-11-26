@@ -230,6 +230,13 @@ router.patch("/addamount", async (req, res) => {
 router.post("/deposit", async (req, res) => {
   console.log(req.body, "deposit");
   try {
+    await Transaction.create({
+      userId: req.body.uidfromtoken,
+      amount: req.body.amount,
+      type: "deposit",
+      status: "pending",
+      action: "deposit"
+    });
     await NewPayment.create({
       recieptUrl: req.body.recieptUrl,
       utr: req.body.utr,
@@ -355,6 +362,13 @@ router.post("/withdraw", async (req, res) => {
         userId: req.body.uidfromtoken,
         upiId: req.body.upiId
       });
+      await Transaction.create({
+        userId: req.body.uidfromtoken,
+        amount: req.body.amount,
+        type: "withdraw",
+        status: "pending",
+        action: "withdraw"
+      });
       //user.wallet = user.wallet - req.body.amount;
       //await user.save();
       return res.status(200).json({
@@ -378,7 +392,7 @@ router.get("/withdrawData", async (req, res) => {
   console.log(req.body, "deposit");
   try {
     let withdrawals = await Withdraw.aggregate(
-      [{ $match: { } },
+      [{ $match: {} },
       {
         $lookup: {
           from: "users",//your schema name from mongoDB
@@ -548,5 +562,22 @@ router.post("/phonepeStatus", async (req, res) => {
     });
 });
 
+router.get("/my-transactions/:userId", async (req, res) => {
+  const { userId } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(userId))
+    return res.status(400).json({ message: "Invalid userId" });
+
+  try {
+    const transactions = await Transaction.find({ userId })
+      .sort({ createdAt: -1 })
+      .lean();
+
+    res.status(200).json(transactions);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
 
 module.exports = router;
