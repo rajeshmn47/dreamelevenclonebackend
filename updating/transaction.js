@@ -5,6 +5,7 @@ const MatchLive = require("../models/matchlive");
 const User = require("../models/user");
 const express = require("express");
 const { messaging } = require("../utils/firebaseinitialize");
+const Transaction = require("../models/transaction");
 
 // function prizeBreakupRules(prize, numWinners){
 //     let prizeMoneyBreakup = [];
@@ -51,6 +52,12 @@ module.exports.startTransaction = async function () {
             const user = await User.findById(teams[j].userId);
             //console.log(user, "user");
             user.wallet += contests[k].prizeDetails[j].prize;
+            await Transaction.create({
+              userId: user?._id,
+              amount: contests[k].prizeDetails[j].prize,
+              action: "winnings",
+              transactionId: contests[k]._id
+            });
             user.totalAmountWon += contests[k].prizeDetails[j].prize;
             try {
               await user.save();

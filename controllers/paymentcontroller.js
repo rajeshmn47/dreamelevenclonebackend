@@ -460,6 +460,26 @@ router.get("/approveWithdraw", async (req, res) => {
   }
 });
 
+router.get("/rejectWithdraw", async (req, res) => {
+  console.log(req.body, "withdraw");
+  try {
+    const withdraw = await Withdraw.findById(req.query.withdrawId);
+    withdraw.isWithdrawCompleted = true;
+    withdraw.status = "rejected";
+    //const user = await User.findById(withdraw.userId)
+    //user.wallet = user.wallet - withdraw.amount;
+    //await user.save();
+    await withdraw.save();
+    return res.status(200).json({
+      message: "Rejected Successfully",
+    });
+  } catch (err) {
+    return res.status(500).json({
+      message: "Something Went Wrong",
+    });
+  }
+});
+
 router.delete("/withdraw", async (req, res) => {
   console.log(req.body, "withdraw");
   try {

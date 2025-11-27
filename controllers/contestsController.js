@@ -5,6 +5,7 @@ const Team = require("../models/team");
 const User = require("../models/user");
 const Match = require("../models/match");
 const ContestType = require("../models/contestType");
+const Transaction = require("../models/transaction");
 
 const router = express.Router();
 
@@ -141,6 +142,12 @@ router.get("/joincontest/:id", async (req, res) => {
       contest.userIds.push(req.body.uidfromtoken);
       contest.teamsId.push(req.query.teamid);
       contest.spotsLeft -= 1;
+      await Transaction.create({
+        userId: req.body.uidfromtoken,
+        amount: contest.price / contest.totalSpots,
+        action: "entry fee",
+        transactionId: contest._id
+      });
       await contest.save();
       await user.save();
       res.status(200).json({

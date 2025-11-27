@@ -20,10 +20,15 @@ router.get("/all", async (req, res) => {
         const { recipientId, unreadOnly } = req.query;
         const query = {};
         //if (recipientId) query.recipientId = recipientId;
-        if (unreadOnly === "true") query.read = false;
+        //if (unreadOnly === "true") query.read = false;
+        query.recipientType = "admin";
 
         const notifications = await Notification.find(query).sort({ createdAt: -1 });
-        res.json(notifications);
+        const count = await Notification.countDocuments({
+            recipientType: "admin",
+            read: false,
+        });
+        res.json({ notifications: notifications, unread: count });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -32,7 +37,7 @@ router.get("/all", async (req, res) => {
 router.get("/admin-unread-count/:userId", async (req, res) => {
     try {
         const count = await Notification.countDocuments({
-            recipienType: "admin",
+            recipientType: "admin",
             read: false,
         });
 
@@ -100,6 +105,20 @@ router.put("/mark-read/:userId", async (req, res) => {
     try {
         await Notification.updateMany(
             { recipientId: req.params.userId, read: false },
+            { $set: { read: true } }
+        );
+
+        res.json({ message: "All notifications marked as read" });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+router.put("/admin-mark-read", async (req, res) => {
+    try {
+        await Notification.updateMany(
+
+            { recipientType: "admin", read: false },
             { $set: { read: true } }
         );
 
