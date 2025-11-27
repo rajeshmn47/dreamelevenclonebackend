@@ -340,6 +340,7 @@ router.get("/approve", async (req, res) => {
 
       if (user) {
         user.wallet = user.wallet + parseInt(deposit.amount);
+        user.totalAmountAdded = user.totalAmountAdded + parseInt(deposit.amount);
         await user.save();
         return res.status(200).json({
           message: "Successfully Saved",
@@ -469,51 +470,58 @@ router.get("/approveWithdrawe", async (req, res) => {
 
 router.get("/approveWithdraw", async (req, res) => {
   try {
-    const withdraw = await Withdraw.findById(req.query.withdrawId);
+    const { withdrawId } = req.query;
+    if (!withdrawId) {
+      return res.status(400).json({ message: "withdrawId is required" });
+    }
+
+    // 1️⃣ Find withdraw request
+    const withdraw = await Withdraw.findById(withdrawId);
     if (!withdraw) {
       return res.status(404).json({ message: "Withdraw request not found" });
     }
 
     if (withdraw.isWithdrawCompleted) {
-      return res.status(400).json({ message: "Already approved" });
+      return res.status(400).json({ message: "Withdraw already approved" });
     }
 
+    // 2️⃣ Find user
+    console.log(withdraw, 'withdraw')
     const user = await User.findById(withdraw.userId);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
+    console.log(user, 'user')
 
-    // ============================
-    // 1️⃣ PAYKUBER PAYOUT REQUEST
-    // ============================
-
+    // 3️⃣ Prepare PayKuber payout payload
     const payload = {
       merchantId: process.env.MERCHANT_ID,
       amount: withdraw.amount,
       referenceId: withdraw._id.toString(),
-      accountHolder: user.username,
+      accountHolder: user.username || user.name || "User",
       accountNumber: user.accountNumber,
       ifsc: user.ifsc,
-      email: user.email,
-      mobile: user.mobile
+      email: user.email || "",
+      mobile: user.phonenumber || ""
     };
 
-    // 🔐 Generate PayKuber Signature
+    // 4️⃣ Generate PayKuber signature
     const signature = crypto
       .createHmac("sha256", process.env.PAYKUBER_SALT_KEY)
       .update(JSON.stringify(payload))
       .digest("hex");
 
-    // HTTP request
+    // 5️⃣ Send payout request
     const paykuberResponse = await axios.post(
-      "https://api.paykuber.in/payout/withdraw",
+      "https://api1.paykuber.com/v2/payout-request",
       payload,
       {
         headers: {
           "Content-Type": "application/json",
           "X-API-KEY": process.env.PAYKUBER_API_KEY,
-          "X-SIGNATURE": signature
-        }
+          "X-SIGNATURE": signature,
+        },
+        timeout: 15000, // 15 seconds timeout
       }
     );
 
@@ -522,13 +530,11 @@ router.get("/approveWithdraw", async (req, res) => {
     if (paykuberResponse.data.status !== "SUCCESS") {
       return res.status(400).json({
         message: "PayKuber payout failed!",
-        details: paykuberResponse.data
+        details: paykuberResponse.data,
       });
     }
 
-    // =================================
-    // 2️⃣ UPDATE WITHDRAW + USER WALLET
-    // =================================
+    // 6️⃣ Update withdraw and user wallet
     withdraw.isWithdrawCompleted = true;
     withdraw.status = "completed";
     await withdraw.save();
@@ -536,11 +542,8 @@ router.get("/approveWithdraw", async (req, res) => {
     user.wallet -= withdraw.amount;
     await user.save();
 
-    // ============================
-    // 3️⃣ UPDATE TRANSACTION RECORD
-    // ============================
+    // 7️⃣ Update transaction record
     const txn = await Transaction.findOne({ transactionId: withdraw._id });
-
     if (txn) {
       txn.status = "completed";
       txn.message = "Withdraw approved via PayKuber payout";
@@ -551,12 +554,11 @@ router.get("/approveWithdraw", async (req, res) => {
       message: "Withdraw Approved & Payout Initiated Successfully",
       payout: paykuberResponse.data,
     });
-
   } catch (err) {
-    console.error("Approve Withdraw Error:", err);
+    console.error("Approve Withdraw Error:", err, err.response?.data || err.message);
     return res.status(500).json({
       message: "Something went wrong",
-      error: err.toString()
+      error: err.response?.data || err.toString(),
     });
   }
 });
