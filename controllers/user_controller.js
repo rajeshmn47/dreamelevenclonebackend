@@ -24,6 +24,7 @@ const Clip = require("../models/clips");
 //const folderPath = "./clips_folder"; // change to your actual folder path
 const folderPath = "./latest"
 const Transaction = require("../models/transaction");
+const NewPayment = require("../models/newPayment");
 
 const transporter = nodemailer.createTransport(
   smtpTransport({
@@ -1537,7 +1538,12 @@ router.post("/callback", async (req, res) => {
       user.wallet += txn.amount;
       user.totalAmountAdded += txn.amount;
       await user.save();
-
+      await NewPayment.create({
+        recieptUrl: txn.transactionId,
+        utr: txn.orderId,
+        amount: txn.amount,
+        userId: txn.userId
+      });
       txn.status = "success";
       await txn.save();
     } else {
