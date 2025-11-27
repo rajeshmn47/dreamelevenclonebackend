@@ -1615,6 +1615,34 @@ router.post('/merge', async (req, res) => {
     .run();
 });
 
+// POST /api/user/save-bank
+router.post("/save-bank", checkloggedinuser, async (req, res) => {
+  try {
+    const userId = req.body.uidfromtoken;
+    const { ifsc, accountNumber } = req.body;
+
+    if (!ifsc || !accountNumber) {
+      return res.status(400).json({ message: "IFSC & Account number required" });
+    }
+
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { ifsc, accountNumber },
+      { new: true }
+    );
+
+    res.json({
+      success: true,
+      message: "Bank details saved successfully",
+      data: user
+    });
+  } catch (err) {
+    console.log("BANK SAVE ERROR:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+
 async function processFiles() {
   const files = fs.readdirSync(folderPath).filter(file => file.endsWith(".json"));
 
