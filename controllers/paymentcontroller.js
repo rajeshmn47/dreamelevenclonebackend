@@ -368,7 +368,7 @@ router.post("/withdraw", async (req, res) => {
       const withdraw = await Withdraw.create({
         amount: req.body.amount,
         userId: req.body.uidfromtoken,
-        upiId: req.body.upiId
+        upiId: "abcdefgh"
       });
       await Transaction.create({
         userId: req.body.uidfromtoken,
@@ -441,7 +441,7 @@ router.get("/withdrawData", async (req, res) => {
   }
 });
 
-router.get("/approveWithdraw", async (req, res) => {
+router.get("/approveWithdrawe", async (req, res) => {
   console.log(req.body, "withdraw");
   try {
     const withdraw = await Withdraw.findById(req.query.withdrawId);
@@ -463,6 +463,100 @@ router.get("/approveWithdraw", async (req, res) => {
   } catch (err) {
     return res.status(500).json({
       message: "Something Went Wrong",
+    });
+  }
+});
+
+router.get("/approveWithdraw", async (req, res) => {
+  try {
+    const withdraw = await Withdraw.findById(req.query.withdrawId);
+    if (!withdraw) {
+      return res.status(404).json({ message: "Withdraw request not found" });
+    }
+
+    if (withdraw.isWithdrawCompleted) {
+      return res.status(400).json({ message: "Already approved" });
+    }
+
+    const user = await User.findById(withdraw.userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // ============================
+    // 1️⃣ PAYKUBER PAYOUT REQUEST
+    // ============================
+
+    const payload = {
+      merchantId: process.env.MERCHANT_ID,
+      amount: withdraw.amount,
+      referenceId: withdraw._id.toString(),
+      accountHolder: user.username,
+      accountNumber: user.accountNumber,
+      ifsc: user.ifsc,
+      email: user.email,
+      mobile: user.mobile
+    };
+
+    // 🔐 Generate PayKuber Signature
+    const signature = crypto
+      .createHmac("sha256", process.env.PAYKUBER_SALT_KEY)
+      .update(JSON.stringify(payload))
+      .digest("hex");
+
+    // HTTP request
+    const paykuberResponse = await axios.post(
+      "https://api.paykuber.in/payout/withdraw",
+      payload,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "X-API-KEY": process.env.PAYKUBER_API_KEY,
+          "X-SIGNATURE": signature
+        }
+      }
+    );
+
+    console.log("PayKuber Response:", paykuberResponse.data);
+
+    if (paykuberResponse.data.status !== "SUCCESS") {
+      return res.status(400).json({
+        message: "PayKuber payout failed!",
+        details: paykuberResponse.data
+      });
+    }
+
+    // =================================
+    // 2️⃣ UPDATE WITHDRAW + USER WALLET
+    // =================================
+    withdraw.isWithdrawCompleted = true;
+    withdraw.status = "completed";
+    await withdraw.save();
+
+    user.wallet -= withdraw.amount;
+    await user.save();
+
+    // ============================
+    // 3️⃣ UPDATE TRANSACTION RECORD
+    // ============================
+    const txn = await Transaction.findOne({ transactionId: withdraw._id });
+
+    if (txn) {
+      txn.status = "completed";
+      txn.message = "Withdraw approved via PayKuber payout";
+      await txn.save();
+    }
+
+    return res.status(200).json({
+      message: "Withdraw Approved & Payout Initiated Successfully",
+      payout: paykuberResponse.data,
+    });
+
+  } catch (err) {
+    console.error("Approve Withdraw Error:", err);
+    return res.status(500).json({
+      message: "Something went wrong",
+      error: err.toString()
     });
   }
 });
