@@ -23,7 +23,7 @@ const clips = require('../overs_with_clips.json');
 const Clip = require("../models/clips");
 //const folderPath = "./clips_folder"; // change to your actual folder path
 const folderPath = "./latest"
-
+const Transaction = require("../models/transaction");
 
 const transporter = nodemailer.createTransport(
   smtpTransport({
@@ -1509,6 +1509,46 @@ router.post("/delete-multiple", async (req, res) => {
   } catch (err) {
     console.error("Delete clips error:", err);
     res.status(500).json({ success: false, message: "Server error" });
+  }
+});
+
+router.post("/callback", async (req, res) => {
+  try {
+    const data = req.body;
+
+    // Optional: signature validation if Paykuber provides signature
+    // const signature = req.headers["x-signature"];
+    // const expected = crypto.createHmac("sha256", process.env.PAYKUBER_CALLBACK_SECRET)
+    //   .update(JSON.stringify(req.body))
+    //   .digest("hex");
+
+    // if (signature !== expected) {
+    //   return res.status(400).send("Invalid Signature");
+    // }
+    console.log(data, 'data')
+    const { order_id, status } = data;
+    console.log(data, 'data')
+    const txn = await Transaction.findOne({ orderId: order_id });
+    if (!txn) return res.status(400).send("Transaction not found");
+
+    if (status === "completed") {
+      const user = await User.findById(txn.userId);
+
+      user.wallet += txn.amount;
+      user.totalAmountAdded += txn.amount;
+      await user.save();
+
+      txn.status = "success";
+      await txn.save();
+    } else {
+      txn.status = "failed";
+      await txn.save();
+    }
+
+    return res.send("OK");
+  } catch (error) {
+    console.error("Paykuber Callback Error:", error);
+    return res.status(400).send("Callback Error");
   }
 });
 
