@@ -18,6 +18,11 @@ const transactionSchema = new mongoose.Schema(
       required: true,
     },
 
+    orderId: {
+      type: String,
+      trim: true,
+    },
+
     transactionId: {
       type: String,
       trim: true,
