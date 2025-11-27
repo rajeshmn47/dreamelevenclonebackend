@@ -1526,12 +1526,12 @@ router.post("/callback", async (req, res) => {
     //   return res.status(400).send("Invalid Signature");
     // }
     console.log(data, 'data')
-    const { order_id, status } = data;
+    const { order_id, status } = data.data;
     console.log(data, 'data')
     const txn = await Transaction.findOne({ orderId: order_id });
     if (!txn) return res.status(400).send("Transaction not found");
 
-    if (status === "SUCCESS") {
+    if (status === "completed") {
       const user = await User.findById(txn.userId);
 
       user.wallet += txn.amount;
