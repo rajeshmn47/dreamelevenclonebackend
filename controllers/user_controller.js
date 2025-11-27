@@ -1531,7 +1531,7 @@ router.post("/callback", async (req, res) => {
     const txn = await Transaction.findOne({ orderId: order_id });
     if (!txn) return res.status(400).send("Transaction not found");
 
-    if (status === "completed") {
+    if (status === "SUCCESS") {
       const user = await User.findById(txn.userId);
 
       user.wallet += txn.amount;
