@@ -146,6 +146,7 @@ router.get("/joincontest/:id", async (req, res) => {
         userId: req.body.uidfromtoken,
         amount: contest.price / contest.totalSpots,
         action: "entry fee",
+        status: "completed",
         transactionId: contest._id
       });
       await contest.save();

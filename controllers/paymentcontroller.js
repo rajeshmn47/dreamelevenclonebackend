@@ -224,18 +224,19 @@ router.patch("/addamount", async (req, res) => {
 router.post("/deposit", async (req, res) => {
   console.log(req.body, "deposit");
   try {
+    const deposit = await NewPayment.create({
+      recieptUrl: req.body.recieptUrl,
+      utr: req.body.utr,
+      amount: req.body.amount,
+      userId: req.body.uidfromtoken
+    });
     await Transaction.create({
       userId: req.body.uidfromtoken,
       amount: req.body.amount,
       type: "deposit",
       status: "pending",
-      action: "deposit"
-    });
-    await NewPayment.create({
-      recieptUrl: req.body.recieptUrl,
-      utr: req.body.utr,
-      amount: req.body.amount,
-      userId: req.body.uidfromtoken
+      action: "deposit",
+      transactionId: deposit?._id
     });
     await Notification.create({
       userId: req.body.uidfromtoken,      // user who submitted
@@ -323,6 +324,12 @@ router.get("/approve", async (req, res) => {
       deposit.verified = true;
       deposit.status = "approved";
       await deposit.save();
+      const txn = await Transaction.findOne({ transactionId: deposit._id });
+      if (txn) {
+        txn.status = "completed";
+        txn.message = "Deposit approved manually";
+        await txn.save();
+      }
       // Doubt in this part, is request is synchronous or non synchronous?
     }
     let userId = null;
@@ -358,7 +365,7 @@ router.post("/withdraw", async (req, res) => {
   try {
     const user = await User.findById(req.body.uidfromtoken);
     if (parseInt(user.wallet) > parseInt(req.body.amount)) {
-      await Withdraw.create({
+      const withdraw = await Withdraw.create({
         amount: req.body.amount,
         userId: req.body.uidfromtoken,
         upiId: req.body.upiId
@@ -366,6 +373,7 @@ router.post("/withdraw", async (req, res) => {
       await Transaction.create({
         userId: req.body.uidfromtoken,
         amount: req.body.amount,
+        transactionId: withdraw?._id,
         type: "withdraw",
         status: "pending",
         action: "withdraw"
@@ -441,6 +449,12 @@ router.get("/approveWithdraw", async (req, res) => {
     withdraw.status = "completed";
     const user = await User.findById(withdraw.userId)
     user.wallet = user.wallet - withdraw.amount;
+    const txn = await Transaction.findOne({ transactionId: withdraw._id });
+    if (txn) {
+      txn.status = "completed";
+      txn.message = "Withdraw approved manually";
+      await txn.save();
+    }
     await user.save();
     await withdraw.save();
     return res.status(200).json({

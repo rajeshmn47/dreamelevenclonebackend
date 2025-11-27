@@ -56,6 +56,7 @@ module.exports.startTransaction = async function () {
               userId: user?._id,
               amount: contests[k].prizeDetails[j].prize,
               action: "winnings",
+              status: "completed",
               transactionId: contests[k]._id
             });
             user.totalAmountWon += contests[k].prizeDetails[j].prize;
