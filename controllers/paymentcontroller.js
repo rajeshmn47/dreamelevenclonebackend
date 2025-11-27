@@ -113,8 +113,8 @@ router.post("/create", async (req, res) => {
       merchant_id: process.env.PAYKUBER_MID_KEY,
       cust_name: user.username,
       cust_email: user.email,
-      callback_url: "https://admin.rummyrambo.com/api/paykuber/callback",
-      redirect_url: `https://admin.rummyrambo.com/payment-status/${orderId}`
+      callback_url: "https://dream11-api.insenc.in/payment/callback",
+      redirect_url: `https://dream11.insenc.in/payment-status/${orderId}`
     };
 
     // 3️⃣ Create payment request
@@ -194,6 +194,39 @@ router.post("/callback", async (req, res) => {
   } catch (error) {
     console.error("Paykuber Callback Error:", error);
     return res.status(400).send("Callback Error");
+  }
+});
+
+// ------- GET PAYMENT STATUS -------
+router.get("/status", async (req, res) => {
+  try {
+    const { orderId } = req.query;
+
+    if (!orderId) return res.status(400).json({ message: "orderId required" });
+
+    const txn = await Transaction.findOne({ orderId });
+
+    if (!txn) return res.status(404).json({ message: "Transaction not found" });
+
+    const user = await User.findById(txn.userId);
+    const status = "success"
+
+    return res.json({
+      orderId,
+      amount: txn.amount,
+      status: txn.status, // success | failed | pending
+      username: user?.username,
+      updatedAt: txn.updatedAt,
+      message:
+        status === "success"
+          ? "Payment added to wallet"
+          : txn.status === "failed"
+            ? "Payment failed"
+            : "Payment is pending",
+    });
+  } catch (error) {
+    console.error("Payment Status Error:", error);
+    return res.status(400).json({ message: "Error fetching status" });
   }
 });
 
@@ -396,7 +429,7 @@ router.post("/withdraw", async (req, res) => {
       });
     }
   } catch (err) {
-    console.log(err,'err')
+    console.log(err, 'err')
     return res.status(500).json({
       message: "Something Went Wrong",
     });
