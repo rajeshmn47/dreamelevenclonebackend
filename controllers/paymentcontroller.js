@@ -172,11 +172,11 @@ router.post("/callback", async (req, res) => {
     // }
 
     const { order_id, status } = data;
-
+    console.log(data, 'data')
     const txn = await Transaction.findOne({ orderId: order_id });
     if (!txn) return res.status(400).send("Transaction not found");
 
-    if (status === "success") {
+    if (status === "completed") {
       const user = await User.findById(txn.userId);
 
       user.wallet += txn.amount;
@@ -209,7 +209,7 @@ router.get("/status", async (req, res) => {
     if (!txn) return res.status(404).json({ message: "Transaction not found" });
 
     const user = await User.findById(txn.userId);
-    const status = "success"
+    const status = "completed"
 
     return res.json({
       orderId,
@@ -218,7 +218,7 @@ router.get("/status", async (req, res) => {
       username: user?.username,
       updatedAt: txn.updatedAt,
       message:
-        status === "success"
+        status === "completed"
           ? "Payment added to wallet"
           : txn.status === "failed"
             ? "Payment failed"
