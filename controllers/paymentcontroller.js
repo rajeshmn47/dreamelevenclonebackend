@@ -510,6 +510,7 @@ router.get("/approveWithdraw", async (req, res) => {
       .createHmac("sha256", process.env.PAYKUBER_SALT_KEY)
       .update(JSON.stringify(payload))
       .digest("hex");
+    const token = await generatePaykuberToken();
 
     // 5️⃣ Send payout request
     const paykuberResponse = await axios.post(
@@ -520,6 +521,7 @@ router.get("/approveWithdraw", async (req, res) => {
           "Content-Type": "application/json",
           "X-API-KEY": process.env.PAYKUBER_API_KEY,
           "X-SIGNATURE": signature,
+          Authorization: `Bearer ${token}`,
         },
         timeout: 15000, // 15 seconds timeout
       }
