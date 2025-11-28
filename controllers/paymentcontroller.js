@@ -497,6 +497,7 @@ router.get("/approveWithdraw", async (req, res) => {
     const payload = {
       merchant_id: process.env.PAYKUBER_MID_KEY,
       amount: withdraw.amount,
+      currency: "INR",
       pay_mode:"NB",
       sub_pay_mode: "IMPS",
       referenceId: withdraw._id.toString(),
