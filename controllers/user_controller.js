@@ -111,7 +111,7 @@ router.post("/googlelogin", async (req, res, next) => {
       user1.password = "password";
       user1.phonenumber = phoneNumber;
       user1.verified = true;
-      user1.wallet = 10000;
+      user1.wallet = 0;
       const options = {
         method: "POST",
         url: "https://api.razorpay.com/v1/contacts",
@@ -327,7 +327,7 @@ router.post("/register", async (req, res) => {
   user1.email = req.body.email;
   user1.password = req.body.password;
   user1.phonenumber = req.body.phoneNumber;
-  user1.wallet = 10000;
+  user1.wallet = 0;
   user1.otp = otp;
 
   let role = req.body.role;
@@ -502,7 +502,7 @@ router.post("/registerold", async (req, res) => {
   user1.email = req.body.email;
   user1.password = req.body.password;
   user1.phonenumber = req.body.phoneNumber;
-  user1.wallet = 10000;
+  user1.wallet = 0;
   user1.otp = otp;
   const config = await Config.findOne({});
   const appName = config?.name ? config?.name : 'fantasy11'
@@ -1281,7 +1281,7 @@ router.get("/githublogin", async (req, res, next) => {
         user1.password = "password";
         user1.phonenumber = phoneNumber;
         user1.verified = true;
-        user1.wallet = 10000;
+        user1.wallet = 0;
         const options = {
           method: "POST",
           url: "https://api.razorpay.com/v1/contacts",
