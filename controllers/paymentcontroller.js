@@ -495,14 +495,16 @@ router.get("/approveWithdraw", async (req, res) => {
 
     // 3️⃣ Prepare PayKuber payout payload
     const payload = {
-      merchantId: process.env.PAYKUBER_MID_KEY,
+      merchant_id: process.env.PAYKUBER_MID_KEY,
       amount: withdraw.amount,
+      pay_mode:"NB",
+      sub_pay_mode: "IMPS",
       referenceId: withdraw._id.toString(),
-      accountHolder: user.username || user.name || "User",
-      accountNumber: user.accountNumber,
-      ifsc: user.ifsc,
-      email: user.email || "",
-      mobile: user.phonenumber || ""
+      bene_name: user.username || user.name || "User",
+      account_number: user.accountNumber,
+      bank_ifsc: user.ifsc,
+      order_id: withdraw?._id,
+      remarks: "winning payout"
     };
 
     // 4️⃣ Generate PayKuber signature
