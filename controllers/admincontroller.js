@@ -374,7 +374,7 @@ router.post("/deposit", async (req, res) => {
       amount: req.body.amount,
       userId: req.body.userId,
       verified: true,
-      status: "completed"
+      status: "approved"
     });
     await Transaction.create({
       userId: req.body.userId,
