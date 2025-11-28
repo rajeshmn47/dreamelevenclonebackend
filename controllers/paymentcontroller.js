@@ -495,7 +495,7 @@ router.get("/approveWithdraw", async (req, res) => {
 
     // 3️⃣ Prepare PayKuber payout payload
     const payload = {
-      merchantId: process.env.MERCHANT_ID,
+      merchantId: process.env.PAYKUBER_MID_KEY,
       amount: withdraw.amount,
       referenceId: withdraw._id.toString(),
       accountHolder: user.username || user.name || "User",

@@ -368,15 +368,25 @@ router.delete("/users/:id", async (req, res) => {
 router.post("/deposit", async (req, res) => {
   console.log(req.body, "deposit");
   try {
-    await NewPayment.create({
+    const deposit = await NewPayment.create({
       recieptUrl: 'https://adminurl.png',
       utr: 'admin',
       amount: req.body.amount,
       userId: req.body.userId,
       verified: true,
+      status: "completed"
+    });
+    await Transaction.create({
+      userId: req.body.userId,
+      amount: req.body.amount,
+      type: "deposit",
+      status: "completed",
+      action: "deposit",
+      transactionId: deposit?._id
     });
     User.findById(req.body.userId).then(async (user) => {
       user.wallet = user.wallet + parseInt(req.body.amount);
+      user.totalAmountAdded = user.totalAmountAdded + parseInt(req.body.amount);
       await user.save();
     });
     return res.status(200).json({
