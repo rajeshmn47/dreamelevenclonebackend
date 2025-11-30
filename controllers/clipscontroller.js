@@ -4,17 +4,6 @@ const path = require('path');
 const fs = require("fs");
 const ffmpeg = require("fluent-ffmpeg");
 const Matches = require("../models/match");
-const Contest = require("../models/contest");
-const Team = require("../models/team");
-const User = require("../models/user");
-const Match = require("../models/match");
-const ContestType = require("../models/contestType");
-const request = require("request");
-const axios = require("axios");
-const { default: mongoose } = require("mongoose");
-const NewPayment = require("../models/newPayment");
-const Withdraw = require("../models/withdraw");
-const Transaction = require("../models/transaction");
 const Player = require("../models/players");
 
 const router = express.Router();
@@ -196,13 +185,40 @@ router.delete("/delete-clip/:id", async (req, res) => {
 
 // ✅ BULK INSERT (from earlier)
 router.post("/bulk-insert", async (req, res) => {
-    try {
-        const clips = req.body; // Or define statically if needed
-        const result = await Clip.insertMany(clips);
-        res.status(201).json({ success: true, count: result.length });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
+  try {
+    // Accept either raw array or { clips: [...] }
+    const raw = Array.isArray(req.body) ? req.body : req.body.clips;
+    if (!Array.isArray(raw) || raw.length === 0) {
+      return res.status(400).json({ success: false, message: "No clips provided" });
     }
+
+    // Normalize items
+    const clips = raw.map((c) => {
+      const item = { ...c };
+      if (item.matchId !== undefined && item.matchId !== null) item.matchId = String(item.matchId);
+      if (!item.createdAt) item.createdAt = new Date();
+      return item;
+    });
+
+    // Insert - don't stop on first error (ordered: false)
+    const inserted = await Clip.insertMany(clips, { ordered: false });
+
+    return res.status(201).json({
+      success: true,
+      insertedCount: inserted.length,
+      insertedIds: inserted.map((d) => d._id),
+    });
+  } catch (err) {
+    // Partial success handling: insertedDocs may exist when ordered:false
+    const insertedCount = (err && err.insertedDocs && Array.isArray(err.insertedDocs)) ? err.insertedDocs.length : 0;
+    console.error("bulk-insert error:", err.message || err);
+    return res.status(500).json({
+      success: false,
+      message: "Bulk insert failed",
+      insertedCount,
+      error: err.message || String(err),
+    });
+  }
 });
 
 router.post("/delete-multiple", async (req, res) => {
