@@ -185,40 +185,40 @@ router.delete("/delete-clip/:id", async (req, res) => {
 
 // ✅ BULK INSERT (from earlier)
 router.post("/bulk-insert", async (req, res) => {
-  try {
-    // Accept either raw array or { clips: [...] }
-    const raw = Array.isArray(req.body) ? req.body : req.body.clips;
-    if (!Array.isArray(raw) || raw.length === 0) {
-      return res.status(400).json({ success: false, message: "No clips provided" });
+    try {
+        // Accept either raw array or { clips: [...] }
+        const raw = Array.isArray(req.body) ? req.body : req.body.clips;
+        if (!Array.isArray(raw) || raw.length === 0) {
+            return res.status(400).json({ success: false, message: "No clips provided" });
+        }
+
+        // Normalize items
+        const clips = raw.map((c) => {
+            const item = { ...c };
+            if (item.matchId !== undefined && item.matchId !== null) item.matchId = String(item.matchId);
+            if (!item.createdAt) item.createdAt = new Date();
+            return item;
+        });
+
+        // Insert - don't stop on first error (ordered: false)
+        const inserted = await Clip.insertMany(clips, { ordered: false });
+
+        return res.status(201).json({
+            success: true,
+            insertedCount: inserted.length,
+            insertedIds: inserted.map((d) => d._id),
+        });
+    } catch (err) {
+        // Partial success handling: insertedDocs may exist when ordered:false
+        const insertedCount = (err && err.insertedDocs && Array.isArray(err.insertedDocs)) ? err.insertedDocs.length : 0;
+        console.error("bulk-insert error:", err.message || err);
+        return res.status(500).json({
+            success: false,
+            message: "Bulk insert failed",
+            insertedCount,
+            error: err.message || String(err),
+        });
     }
-
-    // Normalize items
-    const clips = raw.map((c) => {
-      const item = { ...c };
-      if (item.matchId !== undefined && item.matchId !== null) item.matchId = String(item.matchId);
-      if (!item.createdAt) item.createdAt = new Date();
-      return item;
-    });
-
-    // Insert - don't stop on first error (ordered: false)
-    const inserted = await Clip.insertMany(clips, { ordered: false });
-
-    return res.status(201).json({
-      success: true,
-      insertedCount: inserted.length,
-      insertedIds: inserted.map((d) => d._id),
-    });
-  } catch (err) {
-    // Partial success handling: insertedDocs may exist when ordered:false
-    const insertedCount = (err && err.insertedDocs && Array.isArray(err.insertedDocs)) ? err.insertedDocs.length : 0;
-    console.error("bulk-insert error:", err.message || err);
-    return res.status(500).json({
-      success: false,
-      message: "Bulk insert failed",
-      insertedCount,
-      error: err.message || String(err),
-    });
-  }
 });
 
 router.post("/delete-multiple", async (req, res) => {
@@ -446,5 +446,113 @@ router.get("/all_players", async (req, res) => {
     }
 });
 
+const Series = require("../models/series");
+const Match = require("../models/match");
+
+// GET /series/completed - completed & important series with clips info
+router.get("/series/completed", async (req, res) => {
+    try {
+        const { teamHomeName, teamAwayName,
+            ballType, shotType, direction, lengthType, connection, slowball, lofted, comesDown, powerplay,
+            season, fromDate, type, toDate, page = 1, limit = 20, perClipLimit = 3, includeClips = "false"
+        } = req.query;
+
+        const pageNum = Math.max(1, parseInt(page, 10));
+        const pageSize = Math.max(1, parseInt(limit, 10));
+        const skip = (pageNum - 1) * pageSize;
+        const include = includeClips === "true";
+        const perLimit = Math.max(1, parseInt(perClipLimit, 10));
+
+        // Label filters for clips
+        const labelFilters = {};
+        if (ballType) labelFilters["labels.ballType"] = { $regex: ballType, $options: "i" };
+        if (shotType) labelFilters["labels.shotType"] = { $regex: shotType, $options: "i" };
+        if (direction) labelFilters["labels.direction"] = { $regex: direction, $options: "i" };
+        if (lengthType) labelFilters["labels.lengthType"] = { $regex: lengthType, $options: "i" };
+        if (connection) labelFilters["labels.connection"] = { $regex: connection, $options: "i" };
+        if (slowball) labelFilters["labels.slowball"] = { $regex: slowball, $options: "i" };
+        if (comesDown) labelFilters["labels.comesDown"] = { $regex: comesDown, $options: "i" };
+        if (powerplay) labelFilters["labels.powerplay"] = { $regex: powerplay, $options: "i" };
+        if (lofted !== undefined) labelFilters["labels.lofted"] = lofted === "true";
+
+        // Only completed and important series
+        const now = new Date();
+        const seriesFilter = {
+            endDate: { $lte: now }, importance: { $ne: "low" }
+        };
+
+        // Optionally filter by season/date
+        if (season) seriesFilter.season = season;
+        if (fromDate || toDate) {
+            seriesFilter.endDate = seriesFilter.endDate || {};
+            if (fromDate) seriesFilter.endDate.$gte = new Date(fromDate);
+            if (toDate) seriesFilter.endDate.$lte = new Date(toDate);
+        }
+        let matchFilter = {};
+        if (teamHomeName) matchFilter.teamHomeName = teamHomeName;
+        if (teamAwayName) matchFilter.teamAwayName = teamAwayName;
+        if (type) matchFilter.type = type;
+
+        let matches = [];
+        matches = await Match.find(matchFilter);
+        if (matches.length > 0) {
+            const seriesIds = matches.map(m => String(m.seriesId));
+            seriesFilter.seriesId = { $in: seriesIds };
+        }
+        // Get all completed & important series (paginated)
+        const allSeries = await Series.find(seriesFilter).sort({ endDate: -1 }).lean();
+        const pagedSeries = allSeries;
+
+        const seriesResults = [];
+        for (const series of pagedSeries) {
+            // Find all matches for this series
+            const matches = await Matches.find({ seriesId: String(series.seriesId) }).lean();
+            if (!matches.length) continue;
+
+            const matchIds = matches.map(m => String(m.matchId));
+            const homeTeams = [...new Set(matches.map(m => m.teamHomeName).filter(Boolean))];
+            const awayTeams = [...new Set(matches.map(m => m.teamAwayName).filter(Boolean))];
+
+            // Count clips for this series (with label filters)
+            const clipsCount = await Clip.countDocuments({
+                matchId: { $in: matchIds },
+                ...labelFilters
+            });
+
+            // Optionally include sample clips
+            let clips = [];
+            if (include && clipsCount > 0) {
+                clips = await Clip.find({
+                    matchId: { $in: matchIds },
+                    ...labelFilters
+                })
+                    .sort({ createdAt: -1 })
+                    .limit(perLimit)
+                    .lean();
+            }
+
+            seriesResults.push({
+                seriesId: series.seriesId,
+                name: series.name,
+                endDate: series.endDate,
+                homeTeams,
+                awayTeams,
+                clipsCount,
+                clips,
+            });
+        }
+
+        res.json({
+            total: allSeries.length,
+            page: pageNum,
+            limit: pageSize,
+            totalPages: Math.ceil(allSeries.length / pageSize),
+            series: seriesResults,
+        });
+    } catch (err) {
+        console.error("Error fetching completed series with clips:", err);
+        res.status(500).json({ error: err.message });
+    }
+});
 
 module.exports = router;
