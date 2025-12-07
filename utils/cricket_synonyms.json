@@ -19,6 +19,7 @@
     ],
     "reverse_sweep": [
       "reverse sweep",
+      "reverse swept",
       "switch hit",
       "reverse hit",
       "reverse-hit",
@@ -112,6 +113,10 @@
     ],
     "byes": [
       "byes"
+    ],
+    "leg_byes": [
+      "leg byes",
+      "leg-byes"
     ]
   },
   "direction": {
@@ -264,6 +269,7 @@
       "straight back",
       "down the ground",
       "straight down the ground",
+      "driven past the stumps",
       "straight field",
       "straight hit",
       "over the bowler",
@@ -355,7 +361,8 @@
       "goes straight on",
       "slides on",
       "the one that goes on with the arm",
-      "went with the arm"
+      "went with the arm",
+      "sliding in with the arm"
     ],
     "seam_up": [
       "seam up",
@@ -393,6 +400,16 @@
       "other"
     ]
   },
+  "connection": {
+    "inside_edge": [
+      "inside edge",
+      "inside-edge"
+    ],
+    "outside_edge": [
+      "outside edge",
+      "outside-edge"
+    ]
+  },
   "lengthType": {
     "yorker": [
       "yorker",
@@ -411,7 +428,8 @@
       "good length",
       "perfect length",
       "good length ball",
-      "length delivery"
+      "length delivery",
+      "hard length"
     ],
     "short_of_length": [
       "short of a length",
@@ -428,7 +446,9 @@
       "full length ball",
       "fuller length delivery",
       "full ball",
-      "fuller length"
+      "fuller length",
+      "full delivery",
+      "full and wide"
     ],
     "half_volley": [
       "half volley",
@@ -438,13 +458,16 @@
       "pitched up",
       "pitched-up",
       "slot ball",
-      "ball in the slot"
+      "ball in the slot",
+      "in the slot"
     ],
     "short_ball": [
       "short ball",
       "short pitched",
-      "Shortish ball",
-      "dug in short"
+      "shortish ball",
+      "dug in short",
+      "shortish delivery",
+      "short and wide"
     ],
     "back_of_length": [
       "back of a length",
@@ -601,7 +624,9 @@
       "saunters down the track",
       "tried to dance down",
       "steps out",
-      "dances out to the pitch"
+      "dances out to the pitch",
+      "comes charging down",
+      "skip down the track"
     ]
   }
 }

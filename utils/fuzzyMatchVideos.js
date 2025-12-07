@@ -208,8 +208,19 @@ function scoreClip(commentary, clip, batsman, bowler, team, bowl_team, series, b
     }
 
     if (connection && (clip?.labels?.connection?.toLowerCase() == connection?.toLowerCase())) {
-        score += 3;
-        scoreBreakdown.connection = 3;
+        //console.log(connection, clip?.labels?.connectio, 'connection matched')
+        score += 5;
+        scoreBreakdown.connection = 5;
+    }
+
+    if (!lofted && (clip?.labels?.lofted)) {
+        score += -2;
+        scoreBreakdown.lofted = -2;
+    }
+
+    if (!connection && ((clip?.labels?.connection))) {
+        score -= 3;
+        scoreBreakdown.connection = -3;
     }
 
     if (lofted && (clip?.labels?.lofted)) {
@@ -248,7 +259,7 @@ function scoreClip(commentary, clip, batsman, bowler, team, bowl_team, series, b
     }
 
     if (comesDown && comesDown == clip?.labels?.comesDown) {
-        console.log(comesDown, 'comes down')
+        //console.log(comesDown, 'comes down')
         score += 3;
         scoreBreakdown.comesDown = 3;
     }
@@ -265,11 +276,11 @@ function scoreClip(commentary, clip, batsman, bowler, team, bowl_team, series, b
 
     if (clipBatColor === userBatColor && (!(clipBatColor == "not found"))) {
         score += 2;
-        scoreBreakdown.battingColorExact = 1;
+        scoreBreakdown.battingColorExact = 2;
     } else if (clipBatGroup && clipBatGroup === userBatGroup) {
         //console.log(clipBatGroup, userBatGroup, 'group color')
-        score += 0.5;
-        scoreBreakdown.battingColorGroup = 0.5;
+        score += 1;
+        scoreBreakdown.battingColorGroup = 1;
     }
     //console.log(clipBatGroup, userBatGroup, 'group coolor')
 
@@ -277,10 +288,17 @@ function scoreClip(commentary, clip, batsman, bowler, team, bowl_team, series, b
     if (clipBowlColor === userBowlColor && (!(clipBowlColor == "not found"))) {
         //console.log('layer', clipBowlColor, userBowlColor, team, 'bat coolor')
         score += 2;
-        scoreBreakdown.bowlingColorExact = 1;
+        scoreBreakdown.bowlingColorExact = 2;
     } else if (clipBowlGroup && clipBowlGroup === userBowlGroup) {
-        score += 0.5;
-        scoreBreakdown.bowlingColorGroup = 0.5;
+        //console.log(clipBowlGroup, userBowlGroup, 'bowling group color')
+        score += 1;
+        scoreBreakdown.bowlingColorGroup = 1;
+    }
+
+     if (clipBowlGroup &&clipBowlGroup === userBowlGroup&&clipBatGroup && clipBatGroup === userBatGroup && (!(userBowlGroup == "not found")) && (!(clipBatGroup == "not found"))) {
+        //console.log("group matched")
+        score += 3;
+        scoreBreakdown.bothGroupMatched = 3;
     }
 
     if (clipBowlColor === userBowlColor && clipBatColor === userBatColor && (!(clipBatColor == "not found")) && (!(clipBowlColor == "not found"))) {
@@ -329,7 +347,7 @@ async function filterClipsByEventOnly(clips, event, commentary) {
         //console.log(commentary, 'commentary lbw link')
         return clips.filter(clip => clip.event.split('over-break,').join('') === event.split('over-break,').join('')).filter(clip => clip.commentary?.toLowerCase().includes("lbw"));
     }
-        if (commentary.toLowerCase()?.includes("hit wkt") && event?.includes("WICKET")) {
+    if (commentary.toLowerCase()?.includes("hit wkt") && event?.includes("WICKET")) {
         //console.log(commentary, 'commentary lbw link')
         return clips.filter(clip => clip.event.split('over-break,').join('') === event.split('over-break,').join('')).filter(clip => clip.commentary?.toLowerCase().includes("hit kt"));
     }
