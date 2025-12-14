@@ -96,7 +96,7 @@ module.exports.updateBalls = async function () {
                                     const keyword = `${teamName}_${batsmanName}_${shotType}`;
 
                                     //onst videoLink = await fuzzyMatchVideo(eventType, xyz[a]?.commText, xyz[a]) // your fuzzy logic to get video
-                                    const bowling_team = ((teamName == matches[i].teamHomeCode)) ? matches[i].teamHomeCode : matches[i].teamAwayCode;
+                                    const bowling_team = ((xyz?.[a]?.batTeamName.toLowerCase() == matches[i].teamHomeCode?.toLowerCase())) ? matches[i].teamAwayCode : matches[i].teamHomeCode;
                                     const { videoLink, breakdown } = await fuzzyMatchVideo(clips, eventType, xyz[a]?.commText, xyz?.[a], bowling_team)
                                     console.log(videoLink, 'videolinked')
                                     xyz[a].videoLink = videoLink || ''; // fallback if not found
