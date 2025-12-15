@@ -317,5 +317,35 @@
     {
         "team": "Cayman Islands",
         "jerseyColor": "Blue"
+    },
+    {
+        "team": "Abu Dhabi Knight Riders",
+        "jerseyColor": "Purple",
+        "short": "ADKR"
+    },
+    {
+        "team": "Desert Vipers",
+        "jerseyColor": "Red",
+        "short": "DV"
+    },
+    {
+        "team": "Dubai Capitals",
+        "jerseyColor": "Blue",
+        "short": "DC"
+    },
+    {
+        "team": "Gulf Giants",
+        "jerseyColor": "Orange",
+        "short": "GG"
+    },
+    {
+        "team": "MI Emirates",
+        "jerseyColor": "Blue",
+        "short": "MIE"
+    },
+    {
+        "team": "Sharjah Warriors",
+        "jerseyColor": "Green",
+        "short": "SW"
     }
 ]
