@@ -1,5 +1,10 @@
 {
   "shotType": {
+    "upper_cut": [
+      "upper cut",
+      "uppercut",
+      "upper-cut"
+    ],
     "inside_out": [
       "inside out",
       "inside out",
@@ -24,7 +29,9 @@
       "reverse hit",
       "reverse-hit",
       "reverse-sweep",
-      "premeditated reverse"
+      "premeditated reverse",
+      "reverse-scoop",
+      "reverse scoop"
     ],
     "pull": [
       "pull",
@@ -251,7 +258,8 @@
       "leg-slip"
     ],
     "short_third_man": [
-      "short third man"
+      "short third man",
+      "short third"
     ],
     "silly_mid_off": [
       "silly mid off"
