@@ -356,11 +356,15 @@ router.get("/all_clips", async (req, res) => {
             lofted,
             comesDown,
             powerplay,
+            isCleanBowled,
+            isLBW,
+            isStumping,
+            isRunout,
+            isCatch,
             page = 1,
             limit = 20,
             sort = "desc",
         } = req.query;
-
         // Build filter dynamically
         const filter = {};
         console.log(event, 'event')
@@ -408,7 +412,11 @@ router.get("/all_clips", async (req, res) => {
         if (slowball) filter["labels.slowball"] = { $regex: slowball, $options: "i" };
         if (comesDown) filter["labels.comesDown"] = { $regex: comesDown, $options: "i" };
         if (powerplay) filter["labels.powerplay"] = { $regex: powerplay, $options: "i" };
-
+        if (isCleanBowled) filter["labels.wicketType"] = "bowled";
+        if (isLBW) filter["labels.wicketType"] = "lbw";
+        if (isStumping) filter["labels.wicketType"] = "stumped";
+        if (isRunout) filter["labels.wicketType"] = "runout";
+        if (isCatch) filter["labels.wicketType"] = "caught";
         // Boolean filter for lofted
         if (lofted !== undefined) filter["labels.lofted"] = lofted === "true";
 
