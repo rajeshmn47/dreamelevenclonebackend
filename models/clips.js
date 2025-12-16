@@ -30,7 +30,8 @@ const clipSchema = new mongoose.Schema({
     slowball: { type: String },
     lofted: { type: Boolean, default: false },
     comesDown: { type: String },
-    powerplay: { type: String }
+    powerplay: { type: String },
+    wicketType: { type: String, enum: ['bowled', 'caught', 'runout', 'stumped', 'lbw', 'hitwicket', 'obstructingthefield', 'retiredhurt', 'timedout'] }
   },
   createdAt: { type: Date, default: Date.now },
 });
