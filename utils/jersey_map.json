@@ -325,7 +325,7 @@
     },
     {
         "team": "Desert Vipers",
-        "jerseyColor": "Red",
+        "jerseyColor": "Green",
         "short": "DV"
     },
     {
@@ -345,7 +345,47 @@
     },
     {
         "team": "Sharjah Warriors",
-        "jerseyColor": "Green",
+        "jerseyColor": "Yellow",
         "short": "SW"
+    },
+    {
+        "team": "Sydney Sixers",
+        "jerseyColor": "Magenta",
+        "short": "SYS"
+    },
+    {
+        "team": "Sydney Thunder",
+        "jerseyColor": "Lime Green",
+        "short": "SYT"
+    },
+    {
+        "team": "Melbourne Stars",
+        "jerseyColor": "Green",
+        "short": "MLS"
+    },
+    {
+        "team": "Melbourne Renegades",
+        "jerseyColor": "Red",
+        "short": "MLR"
+    },
+    {
+        "team": "Brisbane Heat",
+        "jerseyColor": "Teal",
+        "short": "BRH"
+    },
+    {
+        "team": "Adelaide Strikers",
+        "jerseyColor": "Blue",
+        "short": "ADS"
+    },
+    {
+        "team": "Perth Scorchers",
+        "jerseyColor": "Orange",
+        "short": "PRS"
+    },
+    {
+        "team": "Hobart Hurricanes",
+        "jerseyColor": "Purple",
+        "short": "HBH"
     }
 ]
