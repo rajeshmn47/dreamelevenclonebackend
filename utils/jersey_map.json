@@ -192,11 +192,13 @@
     },
     {
         "team": "Joburg Super Kings",
-        "jerseyColor": "Yellow"
+        "jerseyColor": "Yellow",
+        "short": "JSK"
     },
     {
         "team": "Pretoria Capitals",
-        "jerseyColor": "Blue"
+        "jerseyColor": "Blue",
+        "short": "PC"
     },
     {
         "team": "Cape Town Samp Army",
@@ -204,15 +206,23 @@
     },
     {
         "team": "Durban's Super Giants",
-        "jerseyColor": "Yellow"
+        "jerseyColor": "Blue",
+        "short": "DSG"
     },
     {
         "team": "MI Cape Town",
-        "jerseyColor": "Blue"
+        "jerseyColor": "Blue",
+        "short": "MICT"
+    },
+    {
+        "team": "Paarl Royals",
+        "jerseyColor": "Pink",
+        "short": "PR"
     },
     {
         "team": "Sunrisers Eastern Cape",
-        "jerseyColor": "Orange"
+        "jerseyColor": "Orange",
+        "short": "SEC"
     },
     {
         "team": "Barbados Royals",
