@@ -184,7 +184,7 @@ module.exports.addLivecommentaryMongo = async function addcommentry(format) {
                             ${match.titleFI} post ${score} in their 1st innings.
                             Stay tuned as ${titleSI} gears up for the chase! 🔥
                             ${generateMatchHashtags(matches?.[i].teamHomeName, matches?.[i].teamAwayName, matches?.[i].matchTitle)}`
-                            await sendTweetWithImage(tweetText, `./images/ib/ib_${matches[i].matchId}.png`);
+                            //await sendTweetWithImage(tweetText, `./images/ib/ib_${matches[i].matchId}.png`);
                         }
                         //console.log('ijklmnop')
                         if (match_result == "complete" && (importance == 'high' || importance == 'very_high')) {
