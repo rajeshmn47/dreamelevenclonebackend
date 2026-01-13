@@ -8,7 +8,7 @@ const RapidApiKey = require("../models/rapidapikeys");
 const util = require('util');
 const { createVsImage, createResultImage } = require("../utils/generateTweetImage");
 const { sendTweetWithImage } = require("../utils/sendTweet");
-const { generateMatchHashtags, makeRequest } = require("../utils/helpers");
+const { generateMatchHashtags, makeRequest, ensureSingleActiveKey } = require("../utils/helpers");
 const { addLivecommentaryMongo } = require("./addCommentaryMongo");
 const requestPromise = util.promisify(require('request'));
 
@@ -336,6 +336,7 @@ module.exports.addLivescoresDetailsCustom = async function (format) {
                 }
               );
               await addLivecommentaryMongo(format)
+              await ensureSingleActiveKey('scores');
               if (result == "Complete") {
                 console.log(title_fi, 'i')
                 let winner = runs_fi > runs_si ? title_fi : title_si;

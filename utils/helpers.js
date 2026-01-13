@@ -1,4 +1,5 @@
 const request = require("request");
+const RapidApiKey = require("../models/rapidapikeys");
 
 async function makeRequest(options) {
     //console.log(options, 'options')
@@ -44,4 +45,23 @@ function generateMatchHashtags(team1, team2, seriesName) {
     return tags.join(' ');
 }
 
-module.exports = { makeRequest, generateMatchHashtags };
+async function ensureSingleActiveKey(type = "scores") {
+  const lastActiveKey = await RapidApiKey.findOne({
+    type,
+    status: "active"
+  }).sort({ updatedAt: -1 });
+
+  if (!lastActiveKey) return;
+
+  await RapidApiKey.updateMany(
+    {
+      type,
+      status: "active",
+      _id: { $ne: lastActiveKey._id }
+    },
+    { $set: { status: "inactive" } }
+  );
+}
+
+
+module.exports = { makeRequest, generateMatchHashtags, ensureSingleActiveKey };
