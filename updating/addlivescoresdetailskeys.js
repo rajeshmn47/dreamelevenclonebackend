@@ -337,16 +337,6 @@ module.exports.addLivescoresDetailsCustom = async function (format) {
                 }
               );
               await addLivecommentaryMongo(format)
-              await ensureSingleActiveKey('scores');
-              if (result == "Complete") {
-                console.log(title_fi, 'i')
-                let winner = runs_fi > runs_si ? title_fi : title_si;
-                let tweetText = `Lineups Out: ${matches[i].teamHomeName} vs ${match.teamAwayName}\nThe lineups for ${matches[i].teamHomeName} and ${matches[i].teamAwayName} are now available. Check out the details!
-        https://www.cricbuzz.com/live-cricket-scores/${match?.matchId} \n${generateMatchHashtags(matches[i].teamHomeCode, matches[i].teamAwayCode, matches[i].matchTitle)}`
-                await createResultImage(matches[i].teamHomeCode, matches[i].teamAwayCode, title_fi,
-                  title_si, runs_fi, runs_si, winner, `./images/completed/${match.matchId}_vs_image.png`, matches?.[i]?.date); // Assuming first player is captain
-                //await sendTweetWithImage(tweetText, `./images/completed/${match.matchId}_vs_image.png`);
-              }
             } catch (err) {
               console.log(`Error : ${err}`);
             }
