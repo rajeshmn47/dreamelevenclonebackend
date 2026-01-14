@@ -82,6 +82,7 @@ module.exports.addLivescoresDetailsCustom = async function (format) {
   // await delay(10)
   // await RapidApiKey.updateMany({}, { $set: { status: 'inactive' } })
   //console.log(matches, 'matches')
+  await ensureSingleActiveKey('scores');
   for (let i = 0; i < matches.length; i++) {
     try {
       const matchId = matches[i].matchId;
