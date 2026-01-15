@@ -238,6 +238,13 @@ router.put("/series/:seriesId", async (req, res) => {
             return res.status(404).json({ message: "Series not found" });
         }
 
+        // Update importance for future matches linked to this series
+        const now = new Date();
+        await Match.updateMany(
+            { series: updatedSeries._id, date: { $gte: now } },
+            { importance: updatedSeries.importance }
+        );
+
         res.json({ message: "Series updated successfully", series: updatedSeries });
     } catch (err) {
         console.error(err);
