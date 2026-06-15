@@ -14,6 +14,10 @@ const configSchema = new mongoose.Schema(
       low: { type: Number, default: 60 },      // every 1 hour
       very_high: { type: Number, default: 0.5 } //
     },
+    cookies: {
+      hotstar: { type: String, default: "" },
+      youtube: { type: String, default: "" },
+    }
   },
   { timestamps: true }
 );

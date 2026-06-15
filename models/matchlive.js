@@ -302,6 +302,15 @@ const matchDetailsSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
+    teamHomeKeeperPlayerId: { type: String, default: null },
+    teamAwayKeeperPlayerId: { type: String, default: null },
+    seriesId: {
+      type: String,
+      trim: true,
+      default: "",
+    },
+    // Add to your existing matchDetailsSchema
+    finalised: { type: Boolean, default: false }
   },
   {
     timestamps: true,

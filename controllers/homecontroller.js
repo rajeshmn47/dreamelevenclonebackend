@@ -1099,10 +1099,10 @@ router.get("/allmatchese", async (req, res) => {
   });
 });
 
-router.get("/allmatches", async (req, res) => {
+router.get("/allmatchesss", async (req, res) => {
   try {
     var start = new Date();
-    start.setMonth(start.getMonth() - 100000); // Set the start date to one month ago
+    start.setMonth(start.getMonth() - 100000);
     start.setUTCHours(0, 0, 0, 0);
     var end = new Date();
     end.setUTCHours(23, 59, 59, 999);
@@ -1169,6 +1169,203 @@ router.get("/alllivematches", async (req, res) => {
     message: "teams got successfully",
     livematches,
   });
+});
+
+router.get("/allmatches", async (req, res) => {
+  try {
+    let page = parseInt(req.query.page) || 1;
+    let limit = parseInt(req.query.limit) || 20;
+    let skip = (page - 1) * limit;
+
+    const {
+      status = "all",
+      format = "all",
+      type = "all",
+      seriesId = "all",
+    } = req.query;
+
+    const currentDate = new Date();
+
+    // Base match condition
+    let matchStage = {};
+
+    // Format filter
+    if (format !== "all") {
+      matchStage.format = format;
+    }
+
+    // Category filter
+    if (type !== "all") {
+      matchStage.type = type;
+    }
+
+    // Series filter
+    if (seriesId !== "all") {
+      matchStage.seriesId = seriesId;
+    }
+
+    // Aggregation pipeline
+    const pipeline = [
+      { $match: matchStage },
+
+      {
+        $lookup: {
+          from: "matchlivedetails",
+          localField: "matchId",
+          foreignField: "matchId",
+          as: "matchlive",
+        },
+      },
+
+      // Add computed fields (IMPORTANT)
+      {
+        $addFields: {
+          result: { $toLower: { $arrayElemAt: ["$matchlive.result", 0] } },
+        },
+      },
+    ];
+
+    /**
+     * STATUS FILTER LOGIC (Converted from your frontend)
+     */
+
+    if (status === "ongoing") {
+      pipeline.push({
+        $match: {
+          date: { $lte: currentDate },
+          enddate: { $gte: currentDate },
+        },
+      });
+    }
+
+    else if (status === "upcoming") {
+      pipeline.push({
+        $match: {
+          date: { $gt: currentDate },
+        },
+      });
+    }
+
+    else if (status === "completed") {
+      pipeline.push({
+        $match: {
+          result: "complete",
+          date: { $lte: currentDate, $gt: new Date(currentDate.getTime() - 5 * 24 * 60 * 60 * 1000) }, // Only consider matches that started at least 24 hours ago
+        },
+      });
+    }
+
+    else if (status === "delayedOrAbandoned") {
+      pipeline.push({
+        $match: {
+          enddate: { $lt: currentDate },
+          result: { $in: ["delayed", "abandon"] },
+        },
+      });
+    }
+
+    else if (status === "notUpdated") {
+      pipeline.push({
+        $match: {
+          enddate: { $lt: currentDate },
+          $or: [
+            { matchlive: { $size: 0 } },
+            { result: null },
+            {
+              $and: [
+                { enddate: { $lt: currentDate, $gte: new Date(currentDate.getTime() - 15 * 24 * 60 * 60 * 1000) } },
+                { result: { $nin: ["completed", "abandon"] } },
+              ],
+            },
+          ],
+        },
+      });
+    }
+
+    // Sort
+    pipeline.push({ $sort: { date: -1 } });
+
+    // Count BEFORE pagination
+    const countPipeline = [...pipeline, { $count: "total" }];
+    const countResult = await Match.aggregate(countPipeline);
+    const totalMatches = countResult[0]?.total || 0;
+
+    // Pagination
+    pipeline.push({ $skip: skip }, { $limit: limit });
+
+    const matches = await Match.aggregate(pipeline);
+
+    res.status(200).json({
+      message: "Matches fetched successfully",
+      page,
+      limit,
+      totalMatches,
+      totalPages: Math.ceil(totalMatches / limit),
+      matches,
+    });
+  } catch (error) {
+    console.error("Error fetching matches:", error);
+    res.status(500).json({
+      message: "Error fetching matches",
+      error: error.message,
+    });
+  }
+});
+
+router.get("/allmatcheees", async (req, res) => {
+  try {
+    // Pagination inputs
+    let page = parseInt(req.query.page) || 1;
+    let limit = parseInt(req.query.limit) || 20;
+    let skip = (page - 1) * limit;
+
+    // Date filter
+    var start = new Date();
+    start.setMonth(start.getMonth() - 100000);
+    start.setUTCHours(0, 0, 0, 0);
+
+    console.log("Fetching matches page:", page);
+
+    // Count total documents BEFORE pagination
+    const totalMatches = await Match.countDocuments({
+      date: { $gte: start },
+    });
+
+    // Aggregation with pagination
+    const matches = await Match.aggregate([
+      {
+        $match: {
+          date: { $gte: start },
+        },
+      },
+      {
+        $lookup: {
+          from: "matchlivedetails",
+          localField: "matchId",
+          foreignField: "matchId",
+          as: "matchlive",
+        },
+      },
+      { $sort: { date: -1 } },
+      { $skip: skip },
+      { $limit: limit },
+    ]);
+
+    res.status(200).json({
+      message: "Matches fetched successfully",
+      page,
+      limit,
+      totalMatches,
+      totalPages: Math.ceil(totalMatches / limit),
+      matches,
+    });
+  } catch (error) {
+    console.error("Error fetching matches:", error);
+    res.status(500).json({
+      message: "Error fetching matches",
+      error: error.message,
+    });
+  }
 });
 
 router.get("/matchList", async (req, res) => {
