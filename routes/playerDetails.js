@@ -13,6 +13,8 @@ const { default: axios } = require("axios");
 const DetailScores = require("../models/detailscores");
 const Squad = require("../models/squad");
 const Series = require("../models/series");
+const cricketteam = require("../models/cricketteam");
+const MatchLiveDetails = require("../models/matchlive");
 
 router.get("/allplayers", async (req, res) => {
     //const directoryPath = './images/backgroundremovalneeded';
@@ -257,7 +259,6 @@ router.get("/playerSeriesDetails/:playerId/:seriesId", async (req, res) => {
     const player = await Player.findOne({ id: parseInt(req.params.playerId) });
     let a = [{ teamAwayId: player?.teamId?.toString() }, { teamHomeId: player?.teamId?.toString() }]
     if (player) {
-        console.log(player, 'player');
         let matches = [];
         let playerInnings = [];
         for (let i = 0; i < player.teamIds.length; i++) {
@@ -282,7 +283,7 @@ router.get("/playerSeriesDetails/:playerId/:seriesId", async (req, res) => {
             if (w.length > 0) {
                 matches.push(...w)
             }
-            console.log(w[0], 'wlength')
+            //console.log(w[0], 'wlength')
             w.forEach((wo) => {
                 if (wo.matchdetails[0]?.teamAwayPlayers.length > 0) {
                     let a = wo.matchdetails[0]?.teamAwayPlayers.find((p) => p.playerId == player.id)
@@ -448,81 +449,75 @@ router.get("/withbackground-new", (req, res) => {
 });
 
 router.get("/updatedatabases", async (req, res) => {
-    let date = new Date();
-    const endDate = new Date(date.getTime());
-    date = new Date(date.getTime() - 12000000 * 60 * 60 * 1000);
-    const allmatches = await MatchLive.find({
-        date: {
-            $gte: new Date(date),
-            $lt: new Date(endDate),
-        },
-    });
-    console.log(allmatches?.length, 'allmatches')
     try {
-        for (let i = 0; i < allmatches?.length; i++) {
-            for (let k = 0; k < allmatches[i]?.teamAwayPlayers?.length; + k++) {
-                if (!(allmatches[i]?.teamHomeId == '106' || allmatches[i]?.teamAwayId == '106')) {
-                    let player = await Player.findOne({ id: allmatches[i].teamAwayPlayers[k].playerId });
-                    console.log(player, 'player');
-                    if (!player) {
-                        await Player.create({
-                            name: allmatches[i].teamAwayPlayers[k].playerName,
-                            id: allmatches[i].teamAwayPlayers[k].playerId,
-                            image: allmatches[i].teamAwayPlayers[k].image,
-                            teamId: allmatches[i].teamAwayId
-                        })
-                        console.log('player added successfully');
-                    }
-                    else if (!player.teamIds.includes(allmatches[i].teamAwayId)) {
-                        await Player.updateOne(
-                            { id: allmatches[i].teamAwayPlayers[k].playerId },
-                            {
-                                $set: {
-                                    teamIds: [...player.teamIds, allmatches[i].teamAwayId],
-                                },
-                            }
-                        );
-                    }
+        const now = new Date();
+        const hoursBack = 2400; // adjustable
+        const startDate = new Date(now.getTime() - hoursBack * 60 * 60 * 1000);
+
+        const allmatches = await MatchLive.find({
+            date: { $gte: startDate, $lt: now },
+        });
+
+        console.log(`${allmatches.length} matches found`);
+
+        let playersAdded = 0;
+        let playersUpdated = 0;
+
+        for (const match of allmatches) {
+            // Optional: skip matches involving team 106 if needed
+            if (match.teamHomeId === '106' || match.teamAwayId === '106') continue;
+
+            // Process away players
+            if (match.teamAwayPlayers) {
+                for (const p of match.teamAwayPlayers) {
+                    const result = await processPlayer(p, match.teamAwayId);
+                    if (result === 'added') playersAdded++;
+                    else if (result === 'updated') playersUpdated++;
                 }
             }
-            for (let k = 0; k < allmatches[i]?.teamHomePlayers?.length; + k++) {
-                if (!(allmatches[i]?.teamHomeId == '106' || allmatches[i]?.teamAwayId == '106')) {
-                    let player = await Player.findOne({ id: allmatches[i].teamHomePlayers[k].playerId });
-                    console.log(player, 'homeplayer');
-                    if (!player) {
-                        await Player.create({
-                            name: allmatches[i].teamHomePlayers[k].playerName,
-                            id: allmatches[i].teamHomePlayers[k].playerId,
-                            image: allmatches[i].teamHomePlayers[k].image,
-                            teamId: allmatches[i].teamHomeId
-                        })
-                        console.log('player added successfully');
-                    }
-                    else if (!player.teamIds.includes(allmatches[i].teamHomeId)) {
-                        await Player.updateOne(
-                            { id: allmatches[i].teamHomePlayers[k].playerId },
-                            {
-                                $set: {
-                                    teamIds: [...player.teamIds, allmatches[i].teamHomeId],
-                                },
-                            }
-                        );
-                    }
+
+            // Process home players
+            if (match.teamHomePlayers) {
+                for (const p of match.teamHomePlayers) {
+                    const result = await processPlayer(p, match.teamHomeId);
+                    if (result === 'added') playersAdded++;
+                    else if (result === 'updated') playersUpdated++;
                 }
             }
         }
+
         res.status(200).json({
-            message: "players added successfully",
-            matches: allmatches
+            message: "Players processed",
+            playersAdded,
+            playersUpdated,
+            matchesProcessed: allmatches.length,
         });
-    }
-    catch (e) {
-        //console.log(e);
-        res.status(400).json({
-            message: e,
-        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: err.message });
     }
 });
+
+// Helper function
+async function processPlayer(playerData, teamId) {
+    let player = await Player.findOne({ id: playerData.playerId });
+    if (!player) {
+        await Player.create({
+            name: playerData.playerName,
+            id: playerData.playerId,
+            image: playerData.image,
+            teamIds: [teamId],
+        });
+        return 'added';
+    } else if (!player.teamIds.includes(teamId)) {
+        await Player.updateOne(
+            { id: playerData.playerId },
+            { $addToSet: { teamIds: teamId } }
+        );
+        return 'updated';
+    }
+    return 'none';
+}
 
 router.get("/updateball-details", async (req, res) => {
     const allmatches = await DetailScores.find();
@@ -544,7 +539,7 @@ router.post("/player/create", async (req, res) => {
     try {
         console.log(req.body, 'body');
         let = data = req.body;
-        data.country_id=91;
+        data.country_id = 91;
         const exists = await Player.findOne({ id: req.body.id });
         if (exists) return res.status(400).json({ message: "Player already exists" });
 
@@ -558,49 +553,40 @@ router.post("/player/create", async (req, res) => {
     }
 });
 
-// Get All Players
-router.get("/player/all", async (req, res) => {
-    try {
-        const players = await Player.find().sort({ createdAt: -1 });
-        res.json(players);
-    } catch (err) {
-        res.status(500).json({ message: "Error fetching players" });
-    }
-});
-
-// Edit Player
-router.put("/player/update/:id", async (req, res) => {
-    try {
-        const player = await Player.findOneAndUpdate({ id: req.params.id }, req.body, { new: true });
-        if (!player) return res.status(404).json({ message: "Player not found" });
-
-        res.json({ message: "Player updated", player });
-    } catch (err) {
-        res.status(500).json({ message: "Error updating player" });
-    }
-});
-
-// Delete Player
-router.delete("/player/delete/:id", async (req, res) => {
-    try {
-        const result = await Player.findOneAndDelete({ _id: req.params.id });
-        if (!result) return res.status(404).json({ message: "Player not found" });
-
-        res.json({ message: "Player deleted" });
-    } catch (err) {
-        res.status(500).json({ message: "Error deleting player" });
-    }
-});
-
 router.get("/series/all", async (req, res) => {
     try {
-        const series = await Series.find();
+        const { league, playerId } = req.query;
+
+        const seriesQuery = {};
+
+        if (league && league !== 'all') {
+            seriesQuery.league = { $regex: new RegExp(`^${league}$`, 'i') };
+        }
+
+        if (playerId && String(playerId).trim() !== '') {
+            const playerIdStr = String(playerId).trim();
+
+            const matchSeriesIds = await MatchLiveDetails.distinct("seriesId", {
+                $or: [
+                    { "teamHomePlayers.playerId": playerIdStr },
+                    { "teamAwayPlayers.playerId": playerIdStr }
+                ]
+            });
+            if (matchSeriesIds.length === 0) {
+                return res.status(200).json([]);
+            }
+            seriesQuery.seriesId = { $in: matchSeriesIds };
+        }
+
+        // ✅ SORT: latest startDate first
+        const series = await Series.find(seriesQuery).sort({ startDate: -1 });
+        console.log(series.length, "series length");
+
         res.status(200).json(series);
     } catch (error) {
+        console.error(error);
         res.status(500).json({ message: "Error fetching series", error });
     }
 });
-
-
 
 module.exports = router;

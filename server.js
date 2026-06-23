@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 var express = require("express");
 const path = require('path');
+const fs = require("fs");
 const bodyParser = require("body-parser");
 const home = require("./controllers/homecontroller");
 const video = require("./controllers/video/videocontroller.js");
@@ -46,7 +47,7 @@ const { startCryptoTransaction } = require("./updating/cryptoTransaction.js");
 const configRoutes = require("./controllers/configurationController.js");
 const { addLivecommentaryCustom } = require("./updating/addCommentaryCustom.js");
 const { addLivescoresDetailsCustomfs } = require("./updating/addScoredetailsCustom.js");
-const { addLivescoresDetailsCustom } = require("./updating/addlivescoresdetailskeys.js");
+const { addLivescoresDetailsCustom } = require("./updating/addcustomlivescoresdetails.js");
 const { updateSeries } = require("./updating/addSeries.js");
 const { updateSquads } = require("./updating/updateSquads.js");
 //const { generateShotTypes } = require("./generate_shottype.js");
@@ -57,6 +58,10 @@ const { updateSeriesArchives } = require("./updating/addSeriesArchives.js");
 const Clip = require("./models/clips.js");
 const { default: axios } = require("axios");
 const { addInPlayStatusFS } = require("./updating/addInPlayStatusFS.js");
+const { addLivecommentaryMongo } = require("./updating/addCommentaryMongo.js");
+const { generatePendingTasks } = require("./updating/generatePendingTasks.js");
+const { finaliseStaleMatches } = require("./updating/finaliseStaleMatches.js");
+const { runconfigurations } = require("./updating/configurations.js");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
@@ -64,14 +69,22 @@ app.use(cors({ origin: "*", credentials: false }));
 app.use('/images', express.static(path.join('images')));
 app.use('/mockvideos', express.static(path.join('sachinshots')));
 app.use('/mockvideos', express.static(path.join('allvideos')));
-app.use('/mockvideos', express.static(path.join('allclips')));
+app.use('/mockvideos', (req, res, next) => {
+  res.setHeader("Cross-Origin-Resource-Policy", "cross-origin");
+  next();
+}, express.static(path.join('D:/compressed_240p')));
 app.use('/mockvideos', express.static(path.join('../dream11/CricketShotClassification/allclips')));
+app.use('/mockvideos', express.static(path.join("D:/cricketvideos/allclips_testcricket3")));
+app.use('/mockvideos', express.static(path.join("D:/cricketvideos/allclips_testcricket2")));
+app.use('/mockvideos', express.static(path.join("D:/cricketvideos/iplclips")));
+app.use('/mockvideos', express.static(path.join("D:/cricketvideos/allclips")));
 app.use('/highlights', express.static(path.join('public/final_videos')));
 app.use('/', video);
 app.use("/auth", auth);
+app.use("/clips", clips);
 app.use("/", player);
 app.use("/", series);
-app.use("/admin", checkloggedinuser, admin)
+app.use("/admin", checkloggedinadmin, admin)
 app.use("/payment", checkloggedinuser, payments);
 app.use("/crypto", checkloggedinuser, cryptoPaymentController);
 app.use("/cryptocontest", checkloggedinuser, cryptoContestController);
@@ -86,7 +99,6 @@ app.use("/kyc", checkloggedinuser, kyc);
 app.use("/notifications", checkloggedinuser, notifications)
 app.use("/api/config", configRoutes);
 app.use("/notify", checkloggedinuser, notif);
-app.use("/clips", checkloggedinuser, clips)
 //app.use("/", transaction);
 mongoose.Promise = global.Promise;
 mongoose.connect(
@@ -102,9 +114,10 @@ mongoose.connect(
   }
 );
 
-cronjobs()
-// createDefaultContestTypes()
-// updateBalls();
+// addMatchFieldsToClips();
+// addMatchesForAllCurrentSeries();
+// cronjobs();
+// createDefaultContestTypes();
 // addMatchtoDb();
 // addLiveDetails();
 // addLivePlayers();
@@ -115,23 +128,31 @@ cronjobs()
 // addTeamstandingstodbAPI();
 // addPlayersAPI();
 // startTransaction();
-// addLivecommentary();
-// addLivecommentaryCustom('odi')
-// addLivescoresDetailsCustom('t20')
-// addLivescoresDetailsCustomfs('t20')
+// addLivecommentaryMongo("t20")
+// addLivecommentaryCustom('very_high');
+// addLivescoresDetailsCustom('t20');
+// addLivescoresDetailsCustom("odi");
+// addLivescoresDetailsCustom("test");
+// finaliseStaleMatches();
+// addingkeys();
+// addLivescoresDetailsCustomfs('test');
 // updateBalls();
-// addInPlayStatus();
+// addInPlayStatus()
 // startCryptoTransaction();
 // updateSeries()
 // updateSquads()
-// generateShotTypes()
 // fetchAndSaveTeams();
-// addMatchesForAllCurrentSeries()
-// addLiveDetailsFS()
+// addLiveDetails()
 // updateSeriesArchives()
-// addMissingPlayers()
-// addInPlayStatusFS()
-
+// addInPlayStatus()
+// fetchAndSaveTeams()
+// startTransaction()
+// addLivecommentaryMongo('t20')
+// fetchAndSaveTeams();
+// runPipeline();
+// generatePendingTasks();
+// finaliseStaleMatches();
+// runconfigurations();
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {

@@ -23,6 +23,7 @@ const squadSchema = new mongoose.Schema(
             trim: true,
             required: true,
         },
+        keeperPriority: { type: [String], default: [] },
         players: [
             {
                 playerId: {
