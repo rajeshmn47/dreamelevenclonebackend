@@ -156,6 +156,7 @@ module.exports.addLiveDetails = async function () {
               teamAwayId: match.teamAwayId,
               teamHomePlayers: team1Players,
               teamAwayPlayers: team2Players,
+              seriesId: match.seriesId,
               isInPlay: true
             });
 
