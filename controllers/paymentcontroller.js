@@ -13,6 +13,7 @@ const router = express.Router();
 const User = require("../models/user");
 const { uploadImage } = require("../utils/firebaseinitialize");
 const Notification = require("../models/notification");
+const { checkloggedinadmin } = require("../utils/checkUser");
 const { ObjectId } = mongoose.Types;
 
 dotenv.config();
@@ -190,7 +191,7 @@ router.get("/status", async (req, res) => {
   }
 });
 
-router.get("/alltransactions", async (req, res) => {
+router.get("/alltransactions", checkloggedinadmin, async (req, res) => {
   try {
     const transactions = await Transaction.find();
     return res.status(200).send(transactions);
@@ -315,7 +316,7 @@ router.get("/depositData", async (req, res) => {
   }
 });
 
-router.get("/approve", async (req, res) => {
+router.get("/approve", checkloggedinadmin, async (req, res) => {
   try {
     let deposit;
     if (mongoose.Types.ObjectId.isValid(req.query.depositId)) {
@@ -406,7 +407,7 @@ router.post("/withdraw", async (req, res) => {
 });
 
 
-router.get("/withdrawData", async (req, res) => {
+router.get("/withdrawData", checkloggedinadmin, async (req, res) => {
   console.log(req.body, "deposit");
   try {
     let withdrawals = await Withdraw.aggregate(
@@ -468,7 +469,7 @@ router.get("/approveWithdrawe", async (req, res) => {
   }
 });
 
-router.get("/approveWithdraw", async (req, res) => {
+router.get("/approveWithdraw", checkloggedinadmin, async (req, res) => {
   try {
     const { withdrawId } = req.query;
     if (!withdrawId) {
@@ -498,7 +499,7 @@ router.get("/approveWithdraw", async (req, res) => {
       merchant_id: process.env.PAYKUBER_MID_KEY,
       amount: withdraw.amount,
       currency: "INR",
-      pay_mode:"NB",
+      pay_mode: "NB",
       sub_pay_mode: "IMPS",
       referenceId: withdraw._id.toString(),
       bene_name: user.username || user.name || "User",
@@ -568,7 +569,7 @@ router.get("/approveWithdraw", async (req, res) => {
   }
 });
 
-router.get("/rejectWithdraw", async (req, res) => {
+router.get("/rejectWithdraw", checkloggedinadmin, async (req, res) => {
   console.log(req.body, "withdraw");
   try {
     const withdraw = await Withdraw.findById(req.query.withdrawId);
