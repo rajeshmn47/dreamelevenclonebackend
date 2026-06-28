@@ -12,7 +12,7 @@ This project is a backend for clone of DREAM 11 It has various features like
 <p>9)constant updating of the players points</p>
 <p>10)secure backend to prevent various bot attacks</p>
 
-// Find this line in server.js:
+Find this line in server.js:
 // runconfigurations();
 
 // Uncomment it:
