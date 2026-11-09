@@ -16,6 +16,7 @@ const { getflag } = require("../utils/getflags");
 const flagURLs = require("country-flags-svg");
 const { squadkeys } = require("../utils/apikeys");
 const { makeRequest, generateMatchHashtags } = require("../utils/helpers");
+const ApiRequest = require("../models/apiRequest");
 
 function convertWicketsData(wicketsData) {
     return Object.keys(wicketsData).map(key => wicketsData[key]);
@@ -1202,13 +1203,25 @@ router.get("/update_live_scores/:matchId", async (req, res) => {
                                 },
                             }
                         );
+                        res.status(200).json({
+                            message: "updated live scores of the match successfully!",
+                        });
+                        await ApiRequest.create({
+                            matchId: match.matchId,
+                            apiKey: keys,
+                            success: true,
+                            message: "Match updated"
+                        });
                         if (result == "Complete") {
                             console.log(title_fi, 'i')
+                            res.status(200).json({
+                                message: "updated live scores of the match successfully!",
+                            });
                             let winner = runs_fi > runs_si ? title_fi : title_si;
                             let tweetText = `Lineups Out: ${matches[i].teamHomeName} vs ${match.teamAwayName}\nThe lineups for ${matches[i].teamHomeName} and ${matches[i].teamAwayName} are now available. Check out the details!
                        https://www.cricbuzz.com/live-cricket-scores/${match?.matchId} \n${generateMatchHashtags(matches[i].teamHomeCode, matches[i].teamAwayCode, matches[i].matchTitle)}`
-                            await createResultImage(matches[i].teamHomeCode, matches[i].teamAwayCode, title_fi,
-                                title_si, runs_fi, runs_si, winner, `./images/completed/${match.matchId}_vs_image.png`, matches?.[i]?.date); // Assuming first player is captain
+                            //await createResultImage(matches[i].teamHomeCode, matches[i].teamAwayCode, title_fi,
+                            //    title_si, runs_fi, runs_si, winner, `./images/completed/${match.matchId}_vs_image.png`, matches?.[i]?.date); // Assuming first player is captain
                             //await sendTweetWithImage(tweetText, `./images/completed/${match.matchId}_vs_image.png`);
                         }
                     } catch (err) {
@@ -1216,24 +1229,26 @@ router.get("/update_live_scores/:matchId", async (req, res) => {
                     }
                 }
                 else {
-                    if (s?.matchHeader) {
-                        const { status } = s?.matchHeader;
-                        const toss = s.matchHeader.tossResults.tossWinnerName;
-                        const result = s.matchHeader.state;
-                        console.log(s.matchHeader.state, 'result')
-                        let isinplay = isInPlay(result, matches[i].date);
-                        const matchUpdate = await MatchLive.updateOne(
-                            { matchId },
-                            {
-                                $set: {
-                                    isInPlay: isinplay,
-                                    result: result
-                                }
-                            })
-                        res.status(200).json({
-                            message: "updated live scores of the match successfully!",
-                        });
-                    }
+                    const { status } = s;
+                    const result = s.ismatchcomplete ? "Complete" : "In Progress";
+                    let isinplay = isInPlay(result, matches[i].date);
+                    const matchUpdate = await MatchLive.updateOne(
+                        { matchId },
+                        {
+                            $set: {
+                                isInPlay: isinplay,
+                                result: result
+                            }
+                        })
+                    await ApiRequest.create({
+                        matchId: match.matchId,
+                        apiKey: keys,
+                        success: true,
+                        message: "Match updated"
+                    });
+                    res.status(200).json({
+                        message: "updated live scores of the match successfully!",
+                    });
                 }
             }
         }
@@ -1387,8 +1402,9 @@ router.get("/update_to_live/:matchId", async (req, res) => {
                 } else {
                     const keys = await squadkeys(matchId);
                     console.log('not exists')
-                    const date1 = matches[i].date
-                    const options = {
+                    const date1 = matches[i].date;
+
+                    const optionse = {
                         method: "GET",
                         // url: `https://cricbuzz-cricket.p.rapidapi.com/mcenter/v1/${matchId}`,
                         url: `https://cricbuzz-cricket2.p.rapidapi.com/mcenter/v1/${matchId}/teams`,
@@ -1398,6 +1414,17 @@ router.get("/update_to_live/:matchId", async (req, res) => {
                             useQueryString: true,
                         },
                     };
+
+                    const options = {
+                        method: "GET",
+                        gzip: true,
+                        url: `https://cricbuzz-cricket2.p.rapidapi.com/mcenter/v1/${matchId}/teams`,
+                        headers: {
+                            "x-rapidapi-host": "cricbuzz-cricket2.p.rapidapi.com",
+                            "x-rapidapi-key": keys
+                        },
+                    };
+
                     const promise = new Promise((resolve, reject) => {
                         request(options, (error, response, body) => {
                             if (error) {
@@ -1436,14 +1463,17 @@ router.get("/update_to_live/:matchId", async (req, res) => {
                                 }));
 
                                 const liveMatch = new MatchLive({
-                                    matchId: matchId,
+                                    matchId: matches[i].matchId,
                                     date: matches[i].date,
                                     teamHomeId: matches[i].teamHomeId,
                                     teamAwayId: matches[i].teamAwayId,
                                     teamHomePlayers: team1Players,
                                     teamAwayPlayers: team2Players,
+                                    seriesId: matches[i].seriesId,
                                     isInPlay: true
                                 });
+
+
 
                                 await liveMatch.save();
                                 if (liveMatch) {
@@ -1453,9 +1483,21 @@ router.get("/update_to_live/:matchId", async (req, res) => {
                                     res.status(200).json({
                                         message: "updated live details of match successfully",
                                     });
+                                    await ApiRequest.create({
+                                        matchId: match.matchId,
+                                        apiKey: keys,
+                                        success: false,
+                                        message: "match created"
+                                    });
                                 }
                             } catch (err) {
                                 console.log(err);
+                                await ApiRequest.create({
+                                    matchId: match.matchId,
+                                    apiKey: keys,
+                                    success: false,
+                                    message: err.message
+                                });
                                 res.status(400).json({
                                     message: "error while updating live details of match",
                                 });
@@ -1463,8 +1505,20 @@ router.get("/update_to_live/:matchId", async (req, res) => {
                         })
                         .catch((error) => {
                             console.log(error)
-                            res.status(400).json({
-                                message: "error while updating live details of match",
+                            ApiRequest.create({
+                                matchId: match.matchId,
+                                apiKey: keys,
+                                success: false,
+                                message: err.message
+                            }).then(() => {
+                                res.status(400).json({
+                                    message: "error while updating live details of match",
+                                });
+                            }).catch((err) => {
+                                console.log(err);
+                                res.status(400).json({
+                                    message: "error while updating live details of match",
+                                });
                             });
                         });
                 }
